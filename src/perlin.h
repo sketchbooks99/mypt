@@ -72,16 +72,16 @@ class perlin {
         }
 
         double noise(const vec3& p) const {
-            auto u = p.x() - floor(p.x());
-            auto v = p.y() - floor(p.y());
-            auto w = p.z() - floor(p.z());
+            auto u = p.x - floor(p.x);
+            auto v = p.y - floor(p.y);
+            auto w = p.z - floor(p.z);
             u = u*u*(3-2*u);
             v = v*v*(3-2*v);
             w = w*w*(3-2*w);
 
-            int i = floor(p.x());
-            int j = floor(p.y());
-            int k = floor(p.z());
+            int i = floor(p.x);
+            int j = floor(p.y);
+            int k = floor(p.z);
             vec3 c[2][2][2];
 
             for(int di=0; di<2; di++) {

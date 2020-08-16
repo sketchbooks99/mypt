@@ -13,6 +13,7 @@
 #include "moving_sphere.h"
 #include "camera.h"
 #include "material.h"
+#include "../scene/triangle_test.h"
 
 #include <iostream>
 
@@ -27,8 +28,8 @@ hittable_list random_scene() {
     world.add(make_shared<sphere>(
         vec3(0, -1000, 0), 1000, make_shared<lambertian>(checker)));
     
-    for(int a = -11; a < 11; a++) {
-        for(int b = -11; b < 11; b++) {
+    for(int a = -5; a < 5; a++) {
+        for(int b = -5; b < 5; b++) {
             auto choose_mat = random_double();
             vec3 center(a + 0.9*random_double(), 0.2, b + 0.9*random_double());
             if((center - vec3(4, 0.2, 0)).length() > 0.9) {
@@ -85,20 +86,20 @@ vec3 ray_color(const ray& r, const hittable& world, int depth) {
         return vec3(0, 0, 0);
     }
     vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5 * (unit_direction.y() + 1.0);
+    auto t = 0.5 * (unit_direction.y + 1.0);
     return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
 }
 
 int main(int argc, const char * argv[]) {
     const int image_width = 500;
     const int image_height = 250;
-    const int samples_per_pixel = 100;
+    const int samples_per_pixel = 10;
     const int max_depth = 50;
     const auto aspect_ratio = double(image_width) / image_height;
     
     std::cout << "P3\n" << image_width << '_' << image_height << "\n255\n";
 
-    auto world = two_perlin_spheres();
+    auto world = scene();
 
     vec3 lookfrom(13,2,3);
     vec3 lookat(0, 0, 0);

@@ -28,7 +28,7 @@ class checker_texture : public texture {
         checker_texture(shared_ptr<texture> t0, shared_ptr<texture> t1) : even(t0), odd(t1) {}
 
         virtual vec3 value(double u, double v, const vec3& p) const {
-            auto sines = sin(10*p.x()) * sin(10*p.y()) * sin(10 * p.z());
+            auto sines = sin(10*p.x) * sin(10*p.y) * sin(10 * p.z);
             if(sines < 0) 
                 return odd->value(u, v, p);
             else
@@ -46,7 +46,7 @@ class noise_texture : public texture {
         noise_texture(double sc) : scale(sc) {}
 
         virtual vec3 value(double u, double v, const vec3& p) const {
-            return vec3(1,1,1) * 0.5 * (1 + sin(scale * p.z() + 10 * noise.turb(p)));
+            return vec3(1,1,1) * 0.5 * (1 + sin(scale * p.z + 10 * noise.turb(p)));
         }
     public:
         perlin noise;
