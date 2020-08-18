@@ -1,7 +1,7 @@
-#ifndef perlin_h
-#define perlin_h
+#ifndef Perlin_h
+#define Perlin_h
 
-#include "rtweekend.h"
+#include "util.h"
 
 inline double trilinear_interp(double c[2][2][2], double u, double v, double w) {
     auto accum = 0.0;
@@ -17,7 +17,7 @@ inline double trilinear_interp(double c[2][2][2], double u, double v, double w) 
     return accum;
 }
 
-inline double perlin_interp(vec3 c[2][2][2], double u, double v, double w) {
+inline double Perlin_interp(vec3 c[2][2][2], double u, double v, double w) {
             auto uu = u*u*(3-2*u);
             auto vv = v*v*(3-2*v);
             auto ww = w*w*(3-2*w);
@@ -37,20 +37,20 @@ inline double perlin_interp(vec3 c[2][2][2], double u, double v, double w) {
             return accum;
         }
 
-class perlin {
+class Perlin {
     public:
-        perlin() {
+        Perlin() {
             ranvec = new vec3[point_count];
             for(int i = 0; i < point_count; i++) {
                 ranvec[i] = unit_vector(vec3::random(-1, 1));
             }
 
-            perm_x = perlin_generate_perm();
-            perm_y = perlin_generate_perm();
-            perm_z = perlin_generate_perm();
+            perm_x = Perlin_generate_perm();
+            perm_y = Perlin_generate_perm();
+            perm_z = Perlin_generate_perm();
         }
 
-        ~perlin() {
+        ~Perlin() {
             delete[] ranvec;
             delete[] perm_x;
             delete[] perm_y;
@@ -95,7 +95,7 @@ class perlin {
                     }
                 }
             }
-            return perlin_interp(c, u, v, w);
+            return Perlin_interp(c, u, v, w);
         }
 
     private:
@@ -105,10 +105,10 @@ class perlin {
         int* perm_y;
         int* perm_z;
 
-        static int* perlin_generate_perm() {
+        static int* Perlin_generate_perm() {
             auto p = new int[point_count];
 
-            for(int i = 0; i < perlin::point_count; i++) {
+            for(int i = 0; i < Perlin::point_count; i++) {
                 p[i] = i;
             }
 

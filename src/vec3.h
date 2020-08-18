@@ -12,7 +12,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "rtweekend.h"
+#include "Util.h"
 
 class vec3 {
 public:
@@ -22,14 +22,14 @@ public:
     
     vec3 operator-() const { return vec3(-x, -y, -z); }
     double operator[](int i) const { 
-        double val;
-        if(i == 0) val = x; else if(i == 1) val = y; else val = z;
-        return val;
+        if(i == 0) return x;
+        else if(i == 1) return y;
+        else if(i == 2) return z;
     }
     double& operator[](int i) {
-        double val;
-        if(i == 0) val = x; else if(i == 1) val = y; else val = z;
-        return val;
+        if(i == 0) return x;
+        else if(i == 1) return y;
+        else if(i == 2) return z;
     }
     
     vec3& operator+=(const vec3 &v) {

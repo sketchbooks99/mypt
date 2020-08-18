@@ -1,20 +1,20 @@
 //
-//  ray.h
+//  Ray.h
 //  RayTracing
 //
 //  Created by 木内舜司 on 2020/04/11.
 //  Copyright © 2020 木内舜司. All rights reserved.
 //
 
-#ifndef ray_h
-#define ray_h
+#ifndef Ray_h
+#define Ray_h
 
 #include "vec3.h"
 
-class ray {
+class Ray {
 public:
-    ray() {}
-    ray(const vec3& origin, const vec3& direction, double time = 0.0)
+    Ray() {}
+    Ray(const vec3& origin, const vec3& direction, double time = 0.0)
     : orig(origin), dir(direction), tm(time)
     {}
     
@@ -33,4 +33,4 @@ public:
 };
 
 
-#endif /* ray_h */
+#endif /* Ray_h */

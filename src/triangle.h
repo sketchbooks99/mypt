@@ -1,97 +1,86 @@
-#ifndef triangle_h
-#define triangle_h
+#ifndef Triangle_h
+#define Triangle_h
 
-#include "hittable.h"
+#include "Hittable.h"
 #include "vec3.h"
 
-class triangle : public hittable {
+class Triangle : public Hittable {
     public:
-        triangle() {}
-        triangle(vec3 p0, vec3 p1, vec3 p2, shared_ptr<material> m)
-            : v{p0, p1, p2}, mat_ptr(m) {};
-        
-        virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const;
-        virtual bool bounding_box(double t0, double t1, aabb& output_box) const;
+        Triangle() {}
+        Triangle(vec3 p0, vec3 p1, vec3 p2, shared_ptr<Material> m)
+            : v{p0, p1, p2}, mat_ptr(m) {
+            // Calculate corner vertex of AABB
+            for(auto p : {p0, p1, p2}) {
+                if (p.x < min.x) min.x = p.x;
+                if (p.x > max.x) max.x = p.x;
 
-    public:
+                if (p.y < min.y) min.y = p.y;
+                if (p.y > max.y) max.y = p.y;
+
+                if (p.z < min.z) min.z = p.z;
+                if (p.z > max.z) max.z = p.z;
+            }
+        }
+        
+        virtual bool hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const;
+        virtual bool bounding_box(double t0, double t1, AABB& output_box) const;
+
+        vec3 get_normal() const { 
+            return unit_vector(cross(v[2]-v[0], v[1]-v[0]));
+        }
+
+        vec3 get_vertices() const {
+            return v[3];
+        }
+
+    private:
         vec3 v[3];
-        shared_ptr<material> mat_ptr;
+        shared_ptr<Material> mat_ptr;
+        vec3 min, max; // For AABB
 
 };
 
-// See reference: https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution
-bool triangle::hit(const ray& r, double t_min, double t_max, hit_record& rec) const {
-    // compute normal
-    vec3 v0v1 = v[1] - v[0];
-    vec3 v0v2 = v[2] - v[0];
-    auto normal = cross(v0v1, v0v2);
-    auto area2 = normal.length();
+// ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
+bool Triangle::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const {
+    float kEps = 1e-6f;
 
-    // Step 1: Finding P
+    vec3 e1 = v[1] - v[0];
+    vec3 e2 = v[2] - v[0];
 
-    // Validation of ray and triangle intersection. 
-    // If ray and triangle plane are parallel, return FALSE.
-    float ndot_rdir = dot(normal, r.direction());
-    float eps = 0.0001;
-    if(fabs(ndot_rdir) < eps) 
-        return false;
+    vec3 alpha = cross(r.direction(), e2);
+    float det = dot(e1, alpha);
 
-    // Compute d
-    float d = dot(normal, v[0]);
+    if(det < fabs(kEps)) return false;
 
-    // Compute t
-    float t = (dot(normal, r.origin()) + d) / ndot_rdir;
-    // Validation of ray position with respect to triangle.
-    if (t < 0) return false;
+    float invDet = 1.0 / det;
+    vec3 ov0 = r.origin() - v[0];
 
-    // Compute the intersection point.
-    auto p = r.origin() + t * r.direction();
+    // Check if u satisfies 0 <= u <= 1
+    float u = dot(alpha, ov0) * invDet;
+    if(u < 0.0f || u > 1.0f) return false;
 
-    // Step 2: inside-outside test
-    vec3 c; // vector perpendicular to triangle's plane
+    vec3 beta = cross(ov0, e1);
 
-    // MEMO: What is "right side"? 
-    // I have to create readme about this intesection algorithm.
-    // Edge 0
-    vec3 edge0 = v[1] - v[0];
-    vec3 vp0 = p - v[0];
-    c = cross(edge0, vp0);
-    if (dot(normal, c) < 0) return false; // P is on the right side
+    // Check if v satisfies 0 <= v <= 1 & u + v <= 1
+    // This can be interpreted to check if v satisfies 0 <= v <= 1-u
+    float v = dot(r.direction(), beta) * invDet;
+    if(v < 0.0f || u + v > 1.0f) return false;
 
-    // Edge 1
-    vec3 edge1 = v[2] - v[1];
-    vec3 vp1 = p - v[1];
-    c = cross(edge1, vp1);
-    if (dot(normal, c) < 0) return false; // P is on the right side
+    // Check if Ray are behind polygon
+    float t = dot(e2, beta) * invDet;
+    if (t < 0.0f) return false;
 
-    // Edge 2
-    vec3 edge2 = v[0] - v[2];
-    vec3 vp2 = p - v[2];
-    c = cross(edge2, vp2);
-    if (dot(normal, c) < 0) return false; // P is on the right side
-
-    // This ray hits the triangle.
     rec.t = t;
-    rec.p = p;
+    rec.p = r.at(rec.t);
+    auto normal = unit_vector(cross(e2, e1));
     rec.set_face_normal(r, normal);
     rec.mat_ptr = mat_ptr;
+
     return true;
 }
 
-bool triangle::bounding_box(double t0, double t1, aabb& output_box) const {
-    vec3 min, max;
-    for(auto p : v) {
-        if (p.x < min.x) min.x = p.x;
-        if (p.x > max.x) max.x = p.x;
-
-        if (p.y < min.y) min.y = p.y;
-        if (p.y > max.y) max.y = p.y;
-
-        if (p.z < min.z) min.z = p.z;
-        if (p.z > max.z) max.z = p.z;
-    }
-
-    output_box = aabb(min, max);
+bool Triangle::bounding_box(double t0, double t1, AABB& output_box) const {
+    output_box = AABB(min, max);
     return true;
 }
 

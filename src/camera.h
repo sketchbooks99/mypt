@@ -1,11 +1,11 @@
-#ifndef camera_h
-#define camera_h
+#ifndef Camera_h
+#define Camera_h
 
-#include "rtweekend.h"
+#include "Util.h"
 
-class camera {
+class Camera {
     public: 
-        camera(
+        Camera(
             vec3 lookfrom, vec3 lookat, vec3 vup,
             double vfov, // top to botton, in degrees
             double aspect, double aperture, double focus_dist, double t0 = 0, double t1 = 0
@@ -32,11 +32,11 @@ class camera {
             vertical = 2 * half_height * focus_dist * v;
         }
 
-        ray get_ray(double s, double t) {
+        Ray get_ray(double s, double t) {
             vec3 rd = lens_radius * random_in_unit_disk();
             vec3 offset = u * rd.x + v * rd.y;
 
-            return ray(
+            return Ray(
                 origin + offset, 
                 lower_left_corner + s * horizontal + t*vertical - origin - offset,
                 random_double(time0, time1)
