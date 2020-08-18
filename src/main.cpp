@@ -91,9 +91,9 @@ vec3 ray_color(const Ray& r, const Hittable& world, int depth) {
 }
 
 int main(int argc, const char * argv[]) {
-    const int image_width = 500;
+    const int image_width = 250;
     const int image_height = 250;
-    const int samples_per_pixel = 1;
+    const int samples_per_pixel = 10;
     const int max_depth = 50;
     const auto aspect_ratio = double(image_width) / image_height;
     
@@ -101,7 +101,7 @@ int main(int argc, const char * argv[]) {
 
     auto world = scene();
 
-    vec3 lookfrom(13,2,3);
+    vec3 lookfrom(7,2,3);
     vec3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 10.0;

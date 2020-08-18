@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Triangle.h"
 #include "vec3.h"
+#include "BVH.h"
 
 class Triangle_mesh : public Hittable {
 public:
@@ -81,10 +82,6 @@ public:
                 normals[i] /= counts[i];
             }
         }
-
-        std::cerr << "vertices.size(): " << vertices.size() << std::endl;
-        std::cerr << "faces.size(): " << faces.size() << std::endl;
-        std::cerr << "triangle.size(): " << triangles.size() << std::endl;
     }
     
     virtual bool hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const;
@@ -93,7 +90,7 @@ public:
 private: 
     std::vector<vec3> vertices, normals;
     std::vector<std::vector<int>> faces;
-    std::vector<const Triangle*> triangles;
+    std::vector<shared_ptr<Triangle>> triangles;
     shared_ptr<Material> mat_ptr;
     vec3 min, max;
 };
@@ -101,7 +98,6 @@ private:
 bool Triangle_mesh::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const {
     for(auto triangle : triangles) {
         auto hitted = triangle->hit(r, t_min, t_max, rec);
-        // if(hitted) std::cerr << "Hitted!" << std::endl; 
         if(hitted) return true;
     }
     return false;
