@@ -102,4 +102,8 @@ bool BVH_Node::bounding_box(double t0, double t1, AABB& output_box) const {
     return true;
 }
 
+void constructBVH_internal(std::vector<shared_ptr<Triangle>> &triangles, int nodeIndex) {
+    
+}
+
 #endif
