@@ -27,9 +27,4 @@
 #include "../texture/Constant.h"
 #include "../texture/Noise.h"
 
-
-class PBRenderer {
-
-}
-
 #endif

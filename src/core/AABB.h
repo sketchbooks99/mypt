@@ -49,7 +49,7 @@ inline bool AABB::intersect(const ray& r, double tmin, double tmax) const {
 }
 */
 
-AABB bounding(AABB box0, AABB box1) {
+AABB surrounding(AABB box0, AABB box1) {
     vec3 small(ffmin(box0.min().x, box1.min().x),
                ffmin(box0.min().y, box1.min().y),
                ffmin(box0.min().z, box1.min().z));

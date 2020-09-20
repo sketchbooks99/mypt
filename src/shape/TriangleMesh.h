@@ -1,16 +1,16 @@
-#ifndef Triangle_mesh_h
-#define Triangle_mesh_h
+#ifndef TRIANGLEMESH_H
+#define TRIANGLEMESH_H
 
 #include <vector>
 #include <fstream>
 #include "Triangle.h"
-#include "vec3.h"
-#include "BVH.h"
+#include "../core/vec3.h"
+// #include "../core/BVH.h"
 
-class Triangle_mesh : public Hittable {
+class TriangleMesh : public Shape {
 public:
-    Triangle_mesh() {}
-    Triangle_mesh(const std::string &filename, vec3 position, float size, vec3 axis, shared_ptr<Material> m)
+    TriangleMesh() {}
+    TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, std::shared_ptr<Material> m)
         : mat_ptr(m) 
     {
         if(filename.substr(filename.length() - 4) == ".obj") {
@@ -84,26 +84,26 @@ public:
         }
     }
     
-    virtual bool hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const;
-    virtual bool bounding_box(double t0, double t1, AABB& output_box) const;
+    virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
+    virtual bool bounding(double t0, double t1, AABB& output_box) const;
 
 private: 
     std::vector<vec3> vertices, normals;
     std::vector<std::vector<int>> faces;
-    std::vector<shared_ptr<Triangle>> triangles;
-    shared_ptr<Material> mat_ptr;
+    std::vector<std::shared_ptr<Triangle>> triangles;
+    std::shared_ptr<Material> mat_ptr;
     vec3 min, max;
 };
 
-bool Triangle_mesh::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const {
+bool TriangleMesh::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     for(auto triangle : triangles) {
-        auto hitted = triangle->hit(r, t_min, t_max, rec);
-        if(hitted) return true;
+        auto intersectted = triangle->intersect(r, t_min, t_max, rec);
+        if(intersectted) return true;
     }
     return false;
 }
 
-bool Triangle_mesh::bounding_box(double t0, double t1, AABB& output_box) const {
+bool TriangleMesh::bounding(double t0, double t1, AABB& output_box) const {
     output_box = AABB(min, max);
     return true;
 }

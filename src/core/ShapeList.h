@@ -44,7 +44,7 @@ bool ShapeList::bounding(double t0, double t1, AABB& output_box) const {
 
     for(const auto& object : objects) {
         if(!object->bounding(t0, t1, temp_box)) return false;
-        output_box = first_box ? temp_box : AABB::bounding(output_box, temp_box);
+        output_box = first_box ? temp_box : surrounding(output_box, temp_box);
     }
     
     return true;

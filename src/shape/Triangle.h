@@ -1,13 +1,13 @@
-#ifndef Triangle_h
-#define Triangle_h
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
 
-#include "Hittable.h"
-#include "vec3.h"
+#include "../core/Shape.h"
+#include "../core/vec3.h"
 
-class Triangle : public Hittable {
+class Triangle : public Shape {
     public:
         Triangle() {}
-        Triangle(vec3 p0, vec3 p1, vec3 p2, shared_ptr<Material> m)
+        Triangle(vec3 p0, vec3 p1, vec3 p2, std::shared_ptr<Material> m)
             : v{p0, p1, p2}, mat_ptr(m) {
             // Calculate corner vertex of AABB
             for(auto p : {p0, p1, p2}) {
@@ -22,8 +22,8 @@ class Triangle : public Hittable {
             }
         }
         
-        virtual bool hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const;
-        virtual bool bounding_box(double t0, double t1, AABB& output_box) const;
+        virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
+        virtual bool bounding(double t0, double t1, AABB& output_box) const;
 
         vec3 get_normal() const { 
             return unit_vector(cross(v[2]-v[0], v[1]-v[0]));
@@ -35,13 +35,13 @@ class Triangle : public Hittable {
 
     private:
         vec3 v[3];
-        shared_ptr<Material> mat_ptr;
+        std::shared_ptr<Material> mat_ptr;
         vec3 min, max; // For AABB
 
 };
 
 // ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
-bool Triangle::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const {
+bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     float kEps = 1e-6f;
 
     vec3 e1 = v[1] - v[0];
@@ -79,7 +79,7 @@ bool Triangle::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) co
     return true;
 }
 
-bool Triangle::bounding_box(double t0, double t1, AABB& output_box) const {
+bool Triangle::bounding(double t0, double t1, AABB& output_box) const {
     output_box = AABB(min, max);
     return true;
 }

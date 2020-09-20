@@ -1,24 +1,24 @@
-#ifndef Sphere_h
-#define Sphere_h
+#ifndef SPHERE_H
+#define SPHERE_H
 
-#include "Hittable.h"
-#include "vec3.h"
+#include "../core/Shape.h"
+#include "../core/vec3.h"
 
-class Sphere: public Hittable {
+class Sphere: public Shape {
     public:
         Sphere() {}
-        Sphere(vec3 cen, double r, shared_ptr<Material> m)
+        Sphere(vec3 cen, double r, std::shared_ptr<Material> m)
             : center(cen), radius(r), mat_ptr(m) {};
 
-        virtual bool hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const;
-        virtual bool bounding_box(double t0, double t1, AABB& output_box) const;
+        virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
+        virtual bool bounding(double t0, double t1, AABB& output_box) const;
     public:
         vec3 center;
         double radius;
-        shared_ptr<Material> mat_ptr;
+        std::shared_ptr<Material> mat_ptr;
 };
 
-bool Sphere::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) const {
+bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // vector from origin to center
     vec3 oc = r.origin() - center;
     auto a = r.direction().length_squared();
@@ -52,7 +52,7 @@ bool Sphere::hit(const Ray& r, double t_min, double t_max, Hit_record& rec) cons
     return false;
 }
 
-bool Sphere::bounding_box(double t0, double t1, AABB& output_box) const {
+bool Sphere::bounding(double t0, double t1, AABB& output_box) const {
     output_box = AABB(
         center - vec3(radius, radius, radius),
         center + vec3(radius, radius, radius));

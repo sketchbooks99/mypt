@@ -2,7 +2,7 @@
 #define BVH_H
 
 #include <algorithm>
-#include "ShapeList.h"
+// #include "ShapeList.h"
 
 inline bool box_compare(const std::shared_ptr<Shape> a, const std::shared_ptr<Shape>b, int axis) {
     AABB box_a;
