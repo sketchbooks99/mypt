@@ -2,6 +2,7 @@
 #define TRIANGLE_H
 
 #include <fstream>
+#include <vector>
 #include "../core/Shape.h"
 #include "../core/vec3.h"
 

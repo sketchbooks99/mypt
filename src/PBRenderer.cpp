@@ -11,13 +11,13 @@
 
 #include <iostream>
 
-vec3 ray_color(const Ray& r, const BVH& bvh, int depth) {
+vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0) 
         return vec3(0, 0, 0);
 
-    if(bvh.intersect(r, 0, infinity, rec)) {
+    if(bvh->intersect(r, 0, infinity, rec)) {
         Ray scattered;
         vec3 attenuation;
         if(rec.mat_ptr->scatter(r, rec, attenuation, scattered))

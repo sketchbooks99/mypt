@@ -10,7 +10,7 @@
 #include "vec3.h"
 // Shape include 
 #include "Shape.h"
-#include "ShapeList.h"
+// #include "ShapeList.h"
 #include "../shape/Triangle.h"
 // #include "../shape/TriangleMesh.h"
 #include "../shape/Sphere.h"
@@ -29,7 +29,5 @@
 
 #include "Primitive.h"
 #include "BVH.h"
-
-
 
 #endif

@@ -2,7 +2,6 @@
 #define BVH_H
 
 #include <algorithm>
-#include "ShapeList.h"
 #include "Primitive.h"
 
 inline bool box_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Primitive> b, int axis) {
@@ -42,7 +41,7 @@ struct BVHNode {
 
 class BVH {
 public:
-    BVH(std::vector<std::shared_ptr<Primitive>> p);
+    BVH(std::vector<std::shared_ptr<Primitive>>& p);
     bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
     AABB bounding() const;
 private:
@@ -110,9 +109,8 @@ bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) co
     return hit;
 }
 
-bool BVH::bounding(double t0, double t1, AABB& output_box) const {
-    output_box = nodes ? nodes[0].box : AABB();
-    return true;
+AABB BVH::bounding() const {
+    return nodes ? nodes->box : AABB();
 }
 
 #endif
