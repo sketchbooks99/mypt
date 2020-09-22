@@ -1,11 +1,7 @@
 #ifndef triangle_test_h
 #define triangle_test_h
 
-#include "../src/Util.h"
-#include "../src/Hittable_list.h"
-#include "../src/Triangle.h"
-#include "../src/Sphere.h"
-#include "../src/Material.h"
+#include "../src/core/PBRenderer.h"
 
 Hittable_list scene() {
     Hittable_list world;
