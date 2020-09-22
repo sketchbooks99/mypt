@@ -8,16 +8,22 @@
 
 class Primitive {
 public:
-    Primitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material)
+    virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
+    virtual AABB bounding() const = 0;
+};
+
+class ShapePrimitive : public Primitive{
+public:
+    ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material)
     : shape(shape), material(material){}
-    bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
-    AABB bounding() const;
+    virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
+    virtual AABB bounding() const;
 private:
     std::shared_ptr<Material> material;
     std::shared_ptr<Shape> shape;
 };
 
-bool Primitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     if(!shape->intersect(r, t_min, t_max, rec)) 
         return false;
 
@@ -26,7 +32,7 @@ bool Primitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& r
     return true;
 }
 
-AABB Primitive::bounding() const {
+AABB ShapePrimitive::bounding() const {
     return shape->bounding();
 }
 

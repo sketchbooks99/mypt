@@ -10,6 +10,7 @@
 #include "../scene/object_test.h"
 
 #include <iostream>
+#include <omp.h>
 
 vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     HitRecord rec;
@@ -32,7 +33,7 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
 int main(int argc, const char * argv[]) {
     const int image_width = 250;
     const int image_height = 250;
-    const int samples_per_pixel = 10;
+    const int samples_per_pixel = 100;
     const int max_depth = 50;
     const auto aspect_ratio = double(image_width) / image_height;
     
@@ -40,16 +41,18 @@ int main(int argc, const char * argv[]) {
 
     auto primitives = scene();
 
-    auto bvh = new BVH(primitives);
-
-    vec3 lookfrom(7,2,3);
+    auto bvh = new BVH(primitives, 0, primitives.size() - 1);
+    // bvh->outBVH();
+    
+    vec3 lookfrom(20,2,5);
     vec3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
-    auto dist_to_focus = 10.0;
+    auto dist_to_focus = 15.0;
     auto aperture = 0.0;
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
+    #pragma omp parallel for
     for(int j = image_height-1; j >= 0; j--) {
         // if(j % 20 == 0) std::cerr << "Scanlines remaining: " << j << std::endl;
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
@@ -65,4 +68,5 @@ int main(int argc, const char * argv[]) {
         }
     }
     std::cerr << "\nDone\n";
+
 }

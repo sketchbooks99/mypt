@@ -88,6 +88,8 @@ class Triangle : public Shape {
             vec3 p0 = mesh->vertices[v[0]];
             vec3 p1 = mesh->vertices[v[1]];
             vec3 p2 = mesh->vertices[v[2]];
+            min = vec3(); 
+            max = vec3();
             for(auto p : {p0, p1, p2}) {
                 if (p.x < min.x) min.x = p.x;
                 if (p.x > max.x) max.x = p.x;

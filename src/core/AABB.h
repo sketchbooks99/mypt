@@ -3,30 +3,31 @@
 
 #include "Util.h"
 
-class AABB {
-    public:
-        AABB() {}
-        AABB(const vec3& a, const vec3& b) { _min = a; _max = b; }
+struct AABB {
+    AABB() {}
+    AABB(const vec3& a, const vec3& b) { _min = a; _max = b; }
 
-        vec3 min() const { return _min; }
-        vec3 max() const { return _max; }
+    vec3 min() const { return _min; }
+    vec3 max() const { return _max; }
 
-        bool intersect(const Ray& r, double tmin, double tmax) const {
-            for(int a = 0; a < 3; a++) {
-                auto t0 = ffmin((_min[a] - r.origin()[a]) / r.direction()[a],
-                                (_max[a] - r.origin()[a]) / r.direction()[a]);
-                auto t1 = ffmax((_min[a] - r.origin()[a]) / r.direction()[a],
-                                (_max[a] - r.origin()[a]) / r.direction()[a]);
-                tmin = ffmax(t0, tmin);
-                tmax = ffmin(t1, tmax);
-                if(tmax <= tmin) 
-                    return false;
-            }
-            return true;
+    bool intersect(const Ray& r, double tmin, double tmax) const {
+        for(int a = 0; a < 3; a++) {
+            // std::cout << "min: " << _min << std::flush;
+            // std::cout << ", max: " << _max << std::flush;
+            auto t0 = ffmin((_min[a] - r.origin()[a]) / r.direction()[a],
+                            (_max[a] - r.origin()[a]) / r.direction()[a]);
+            auto t1 = ffmax((_min[a] - r.origin()[a]) / r.direction()[a],
+                            (_max[a] - r.origin()[a]) / r.direction()[a]);
+            tmin = ffmax(t0, tmin);
+            tmax = ffmin(t1, tmax);
+            if(tmax <= tmin) 
+                return false;
         }
+        return true;
+    }
 
-        vec3 _min;
-        vec3 _max;
+    vec3 _min;
+    vec3 _max;
 };
 
 // Andrew Kensler at Pixar tried some experiments and has proposed 
