@@ -55,4 +55,8 @@ AABB Sphere::bounding() const {
         center + vec3(radius, radius, radius));
 }
 
+std::shared_ptr<Shape> createSphereShape(vec3 cen, double r) {
+    return std::make_shared<Sphere>(cen, r);
+}
+
 #endif

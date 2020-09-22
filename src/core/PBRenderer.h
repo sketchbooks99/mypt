@@ -12,7 +12,7 @@
 #include "Shape.h"
 #include "ShapeList.h"
 #include "../shape/Triangle.h"
-#include "../shape/TriangleMesh.h"
+// #include "../shape/TriangleMesh.h"
 #include "../shape/Sphere.h"
 // Material include
 #include "Material.h"
@@ -26,5 +26,10 @@
 #include "../texture/Checker.h"
 #include "../texture/Constant.h"
 #include "../texture/Noise.h"
+
+#include "Primitive.h"
+#include "BVH.h"
+
+
 
 #endif

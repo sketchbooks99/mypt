@@ -11,17 +11,17 @@
 
 #include <iostream>
 
-vec3 ray_color(const Ray& r, const Shape& world, int depth) {
+vec3 ray_color(const Ray& r, const BVH& bvh, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0) 
         return vec3(0, 0, 0);
 
-    if(world.intersect(r, 0, infinity, rec)) {
+    if(bvh.intersect(r, 0, infinity, rec)) {
         Ray scattered;
         vec3 attenuation;
         if(rec.mat_ptr->scatter(r, rec, attenuation, scattered))
-            return attenuation * ray_color(scattered, world, depth-1);
+            return attenuation * ray_color(scattered, bvh, depth-1);
         return vec3(0, 0, 0);
     }
     vec3 unit_direction = unit_vector(r.direction());
@@ -38,7 +38,9 @@ int main(int argc, const char * argv[]) {
     
     std::cout << "P3\n" << image_width << '_' << image_height << "\n255\n";
 
-    auto world = scene();
+    auto primitives = scene();
+
+    auto bvh = new BVH(primitives);
 
     vec3 lookfrom(7,2,3);
     vec3 lookat(0, 0, 0);
@@ -57,7 +59,7 @@ int main(int argc, const char * argv[]) {
                 auto u = (i + random_double()) / image_width;
                 auto v = (j + random_double()) / image_height;
                 Ray r = cam.get_ray(u, v);
-                color += ray_color(r, world, max_depth);
+                color += ray_color(r, bvh, max_depth);
             }
             color.write_color(std::cout, samples_per_pixel);
         }

@@ -70,4 +70,8 @@ AABB MovingSphere::bounding() const {
     return surrounding(box0, box1);
 }
 
+std::shared_ptr<Shape> createMovingSphere(vec3 cen0, vec3 cen1, double t0, double t1, double r) {
+    return std::make_shared<MovingSphere>(cen0, cen1, t0, t1, r);
+}
+
 #endif

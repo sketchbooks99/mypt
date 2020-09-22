@@ -14,6 +14,15 @@ private:
     std::shared_ptr<Shape> shape;
 };
 
+bool Primitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+    if(!shape->intersect(r, t_min, t_max, rec)) 
+        return false;
+
+    rec.mat_ptr = material;
+
+    return true;
+}
+
 AABB Primitive::bounding() const {
     return shape->bounding();
 }

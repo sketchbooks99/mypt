@@ -81,11 +81,14 @@ std::shared_ptr<BVHNode> BVH::build(int start, int end) {
 
 bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     bool hit = false;
-    std::shared_ptr<BVHNode> node = nodes;
     std::vector<std::shared_ptr<BVHNode>> nodeToVisit; // Node stack to visit
-    nodeToVisit.emplace_back(node);
+    nodeToVisit.emplace_back(nodes); // Push root node for node stack
+
+    // Depth-first-search of BVH Node using stack
     while(true) {
-        if(nodeToVisit[0]->box.intersect(r, t_min, t_max)) {
+        auto node = nodeToVisit.back();
+        nodeToVisit.pop_back();
+        if(node->box.intersect(r, t_min, t_max)) {
             // Intersection test for primitive (leaf node)
             if(node->primitiveIndex >= 0) {
                 if(primitives[node->primitiveIndex]->intersect(r, t_min, t_max, rec)) {
@@ -94,18 +97,17 @@ bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) co
                 }
                 if(nodeToVisit.empty()) break;
             } else {
-                if(node->left->box.intersect(r, t_min, t_max)) 
-                    nodeToVisit.emplace_back(node->left);
                 if(node->right->box.intersect(r, t_min, t_max))
                     nodeToVisit.emplace_back(node->right);
+                if(node->left->box.intersect(r, t_min, t_max)) 
+                    nodeToVisit.emplace_back(node->left);
             }
+        } else {
+            if(nodeToVisit.empty()) break;
+            nodeToVisit.pop_back();
         }
     }
-    
-    bool intersect_left = left->intersect(r, t_min, t_max, rec);
-    bool intersect_right = right->intersect(r, t_min, intersect_left ? rec.t : t_max, rec);
-
-    return intersect_left || intersect_right;
+    return hit;
 }
 
 bool BVH::bounding(double t0, double t1, AABB& output_box) const {
