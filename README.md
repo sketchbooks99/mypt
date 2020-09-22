@@ -4,18 +4,19 @@
 - If finished basic learning of path tracing, I would like to implement GPU path tracing techniques using OptiX or CUDA.
 
 ## TODO:
-- Divide material and shape for effectively render the scene.
+- [x] Divide material and shape for effectively render the scene.
   - I have to be referring to PBRT implementation of primitive. It is worthless to store the material for each triangle, so I want to reuse these materials for same triangle meshes. 
   - Maybe, the abstract implementation is as follows.
 ```c++
 class Material { ... };
 class Shape { ... };
-class Texture { ... };
 class Primitive {
-    Material m; // or do material store the texture ?
+    Material m; 
     Shape s;
-    Texture t;
 };
 ```
 
-- Create **Disney Principled BSDF` Class for material.
+- [ ] Add Russian roulette 
+- [ ] Add Emitter 
+- [ ] Implement several sampling strategy
+- [ ] Create **Disney Principled BSDF** Class for material.
