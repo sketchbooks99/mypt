@@ -10,7 +10,6 @@
 #include "../scene/object_test.h"
 
 #include <iostream>
-#include <omp.h>
 
 vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     HitRecord rec;
@@ -52,7 +51,6 @@ int main(int argc, const char * argv[]) {
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
-    #pragma omp parallel for
     for(int j = image_height-1; j >= 0; j--) {
         // if(j % 20 == 0) std::cerr << "Scanlines remaining: " << j << std::endl;
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;

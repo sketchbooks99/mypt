@@ -82,12 +82,12 @@ struct TriangleMesh {
 class Triangle : public Shape {
     public:
         Triangle() {}
-        Triangle(std::shared_ptr<TriangleMesh> &mesh, std::vector<int> v)
-            : mesh(mesh), v(v) {
+        Triangle(std::shared_ptr<TriangleMesh> &mesh, std::vector<int> face)
+            : mesh(mesh), face(face) {
             // Calculate corner vertex of AABB
-            vec3 p0 = mesh->vertices[v[0]];
-            vec3 p1 = mesh->vertices[v[1]];
-            vec3 p2 = mesh->vertices[v[2]];
+            vec3 p0 = mesh->vertices[face[0]];
+            vec3 p1 = mesh->vertices[face[1]];
+            vec3 p2 = mesh->vertices[face[2]];
             min = vec3(); 
             max = vec3();
             for(auto p : {p0, p1, p2}) {
@@ -106,18 +106,18 @@ class Triangle : public Shape {
         virtual AABB bounding() const;
 
         vec3 get_normal() const { 
-            auto p0 = mesh->vertices[v[0]];
-            auto p1 = mesh->vertices[v[1]];
-            auto p2 = mesh->vertices[v[2]];
+            auto p0 = mesh->vertices[face[0]];
+            auto p1 = mesh->vertices[face[1]];
+            auto p2 = mesh->vertices[face[2]];
             return unit_vector(cross(p2-p0, p1-p0));
         }
 
         vec3 get_vertices() const {
-            return v[3];
+            return face[3];
         }
 
     private:
-        std::vector<int> v;
+        std::vector<int> face;
         std::shared_ptr<TriangleMesh> mesh;
         vec3 min, max; // For AABB
 };
@@ -126,9 +126,9 @@ class Triangle : public Shape {
 bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     float kEps = 1e-6f;
 
-    auto p0 = mesh->vertices[v[0]];
-    auto p1 = mesh->vertices[v[1]];
-    auto p2 = mesh->vertices[v[2]];
+    auto p0 = mesh->vertices[face[0]];
+    auto p1 = mesh->vertices[face[1]];
+    auto p2 = mesh->vertices[face[2]];
 
     vec3 e1 = p1 - p0;
     vec3 e2 = p2 - p0;
@@ -158,8 +158,8 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
 
     rec.t = t;
     rec.p = r.at(rec.t);
-    auto normal = unit_vector(cross(e2, e1));
-    rec.set_face_normal(r, normal);
+    // auto normal = unit_vector(cross(e2, e1));
+    rec.set_face_normal(r, mesh->normals[face[0]]);
 
     return true;
 }
