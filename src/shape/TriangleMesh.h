@@ -10,8 +10,7 @@
 class TriangleMesh : public Shape {
 public:
     TriangleMesh() {}
-    TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, std::shared_ptr<Material> m)
-        : mat_ptr(m) 
+    TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis)
     {
         if(filename.substr(filename.length() - 4) == ".obj") {
             std::ifstream ifs(filename, std::ios::in);
@@ -61,7 +60,7 @@ public:
             // std::cerr << "center: " << center << std::endl;
         }
         for(auto &face : faces) {
-            triangles.emplace_back(new Triangle(vertices[face[0]], vertices[face[1]], vertices[face[2]], mat_ptr));
+            triangles.emplace_back(new Triangle(vertices[face[0]], vertices[face[1]], vertices[face[2]]));
         }
         
         min = (min - center) * scale + position;
@@ -85,13 +84,12 @@ public:
     }
     
     virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
-    virtual bool bounding(double t0, double t1, AABB& output_box) const;
+    virtual AABB bounding() const;
 
 private: 
     std::vector<vec3> vertices, normals;
     std::vector<std::vector<int>> faces;
     std::vector<std::shared_ptr<Triangle>> triangles;
-    std::shared_ptr<Material> mat_ptr;
     vec3 min, max;
 };
 
@@ -103,9 +101,8 @@ bool TriangleMesh::intersect(const Ray& r, double t_min, double t_max, HitRecord
     return false;
 }
 
-bool TriangleMesh::bounding(double t0, double t1, AABB& output_box) const {
-    output_box = AABB(min, max);
-    return true;
+AABB TriangleMesh::bounding() const {
+    return AABB(min, max);
 }
 
 #endif

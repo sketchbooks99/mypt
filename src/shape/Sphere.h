@@ -7,15 +7,14 @@
 class Sphere: public Shape {
     public:
         Sphere() {}
-        Sphere(vec3 cen, double r, std::shared_ptr<Material> m)
-            : center(cen), radius(r), mat_ptr(m) {};
+        Sphere(vec3 cen, double r)
+            : center(cen), radius(r) {};
 
         virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
-        virtual bool bounding(double t0, double t1, AABB& output_box) const;
+        virtual AABB bounding() const;
     public:
         vec3 center;
         double radius;
-        std::shared_ptr<Material> mat_ptr;
 };
 
 bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
@@ -34,7 +33,6 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
             rec.p = r.at(rec.t);
             vec3 outward_normal = (rec.p - center) / radius;
             rec.set_face_normal(r, outward_normal);
-            rec.mat_ptr = mat_ptr;
             // std::cerr << "Sphere intersected.\n" << std::flush;
             return true;
         }
@@ -44,7 +42,6 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
             rec.p = r.at(rec.t);
             vec3 outward_normal = (rec.p - center) / radius;
             rec.set_face_normal(r, outward_normal);
-            rec.mat_ptr = mat_ptr;
             // std::cerr << "Sphere intersected.\n" << std::flush;
             return true;
         }
@@ -52,11 +49,10 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
     return false;
 }
 
-bool Sphere::bounding(double t0, double t1, AABB& output_box) const {
-    output_box = AABB(
+AABB Sphere::bounding() const {
+    return AABB(
         center - vec3(radius, radius, radius),
         center + vec3(radius, radius, radius));
-    return true;
 }
 
 #endif

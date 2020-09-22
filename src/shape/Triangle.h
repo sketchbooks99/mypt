@@ -7,8 +7,8 @@
 class Triangle : public Shape {
     public:
         Triangle() {}
-        Triangle(vec3 p0, vec3 p1, vec3 p2, std::shared_ptr<Material> m)
-            : v{p0, p1, p2}, mat_ptr(m) {
+        Triangle(vec3 p0, vec3 p1, vec3 p2)
+            : v{p0, p1, p2} {
             // Calculate corner vertex of AABB
             for(auto p : {p0, p1, p2}) {
                 if (p.x < min.x) min.x = p.x;
@@ -23,7 +23,7 @@ class Triangle : public Shape {
         }
         
         virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
-        virtual bool bounding(double t0, double t1, AABB& output_box) const;
+        virtual AABB bounding() const;
 
         vec3 get_normal() const { 
             return unit_vector(cross(v[2]-v[0], v[1]-v[0]));
@@ -79,9 +79,8 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
     return true;
 }
 
-bool Triangle::bounding(double t0, double t1, AABB& output_box) const {
-    output_box = AABB(min, max);
-    return true;
+AABB Triangle::bounding() const {
+    return AABB(min, max);
 }
 
 #endif

@@ -8,12 +8,12 @@ class MovingSphere : public Shape {
     public:
         MovingSphere() {}
         MovingSphere(
-            vec3 cen0, vec3 cen1, double t0, double t1, double r, std::shared_ptr<Material> m)
-            : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r), mat_ptr(m)
+            vec3 cen0, vec3 cen1, double t0, double t1, double r)
+            : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r)
         {};
 
         virtual bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
-        virtual bool bounding(double t0, double t1, AABB& output_box) const;
+        virtual AABB bounding() const;
 
         vec3 center(double time) const;
 
@@ -21,14 +21,13 @@ class MovingSphere : public Shape {
         vec3 center0, center1;
         double time0, time1;
         double radius;
-        std::shared_ptr<Material> mat_ptr;
 };
 
-vec3 Moving_sphere::center(double time) const {
+vec3 MovingSphere::center(double time) const {
     return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
 }
 
-bool Moving_sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool MovingSphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     vec3 oc = r.origin() - center(r.time());
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
@@ -45,7 +44,6 @@ bool Moving_sphere::intersect(const Ray& r, double t_min, double t_max, HitRecor
             rec.p = r.at(rec.t);
             vec3 outward_normal = (rec.p - center(r.time())) / radius;
             rec.set_face_normal(r, outward_normal);
-            rec.mat_ptr = mat_ptr;
             return true;
         }
 
@@ -55,7 +53,6 @@ bool Moving_sphere::intersect(const Ray& r, double t_min, double t_max, HitRecor
             rec.p = r.at(rec.t);
             vec3 outward_normal = (rec.p - center(r.time())) / radius;
             rec.set_face_normal(r, outward_normal);
-            rec.mat_ptr = mat_ptr;
             return true;
         }
     }
@@ -63,15 +60,14 @@ bool Moving_sphere::intersect(const Ray& r, double t_min, double t_max, HitRecor
     return false;
 }
 
-bool Moving_sphere::bounding(double t0, double t1, AABB& output_box) const {
+AABB MovingSphere::bounding() const {
     AABB box0(
-        center(t0) - vec3(radius, radius, radius),
-        center(t0) + vec3(radius, radius, radius));
+        center(time0) - vec3(radius, radius, radius),
+        center(time0) + vec3(radius, radius, radius));
     AABB box1(
-        center(t1) - vec3(radius, radius, radius),
-        center(t1) + vec3(radius, radius, radius));
-    output_box = surrounding_box(box0, box1);
-    return true;
+        center(time1) - vec3(radius, radius, radius),
+        center(time1) + vec3(radius, radius, radius));
+    return surrounding(box0, box1);
 }
 
 #endif

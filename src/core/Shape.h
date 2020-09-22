@@ -26,7 +26,7 @@ struct HitRecord {
 class Shape {
     public:
         virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
-        virtual bool bounding(double t0, double t1, AABB& output_box) const = 0;
+        virtual AABB bounding() const = 0;
 };
 
 #endif

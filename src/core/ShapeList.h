@@ -14,7 +14,7 @@ class ShapeList : public Shape {
         void add(std::shared_ptr<Shape> object) { objects.push_back(object); }
 
         virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
-        virtual bool bounding(double t0, double t1, AABB& output_box) const;
+        virtual AABB bounding() const;
 
     public:
         std::vector<std::shared_ptr<Shape>> objects;
@@ -36,7 +36,7 @@ bool ShapeList::intersect(const Ray& r, double t_min, double t_max, HitRecord& r
     return intersect_anything;
 }
 
-bool ShapeList::bounding(double t0, double t1, AABB& output_box) const {
+AABB ShapeList::bounding() const {
     if(objects.empty()) return false;
 
     AABB temp_box;

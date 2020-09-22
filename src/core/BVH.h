@@ -2,94 +2,105 @@
 #define BVH_H
 
 #include <algorithm>
-// #include "ShapeList.h"
+#include "ShapeList.h"
+#include "Primitive.h"
 
-inline bool box_compare(const std::shared_ptr<Shape> a, const std::shared_ptr<Shape>b, int axis) {
-    AABB box_a;
-    AABB box_b;
-
-    if(!a->bounding(0, 0, box_a) || !b->bounding(0, 0, box_b))
-        std::cerr << "No bounding box in BVHNode constructor.\n";
+inline bool box_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Primitive> b, int axis) {
     
-    return box_a.min()[axis] < box_b.min()[axis];
+    return a->bounding().min()[axis] < b->bounding().min()[axis];
 }
 
-bool box_x_compare(const std::shared_ptr<Shape> a, const std::shared_ptr<Shape> b) {
+bool box_x_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Primitive> b) {
     return box_compare(a, b, 0);
 }
 
-bool box_y_compare(const std::shared_ptr<Shape> a, const std::shared_ptr<Shape> b) {
+bool box_y_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Primitive> b) {
     return box_compare(a, b, 1);
 }
 
-bool box_z_compare(const std::shared_ptr<Shape> a, const std::shared_ptr<Shape> b) {
+bool box_z_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Primitive> b) {
     return box_compare(a, b, 2);
 }
 
-class BVHNode {
-    public:
-        BVHNode();
-
-        BVHNode(ShapeList& list, double time0, double time1)
-            : BVHNode(list.objects, 0, list.objects.size(), time0, time1) 
-        {}
-
-        BVHNode(
-            std::vector<std::shared_ptr<Shape>>& objects,
-            size_t start, size_t end, double time0, double time1);
-
-        virtual bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
-        virtual bool bounding(double t0, double t1, AABB& output_box) const;
-
-    public:
-        std::shared_ptr<BVHNode> left;
-        std::shared_ptr<BVHNode> right;
-        AABB box;
+struct BVHNode {
+    void createLeaf(int index, AABB b) {
+        box = b;
+        primitiveIndex = index;
+        left = right = nullptr;
+    }
+    void createInterior(std::shared_ptr<BVHNode> node0, std::shared_ptr<BVHNode> node1) {
+        left = node0;
+        right = node1;
+        box = surrounding(node0->box, node1->box);
+        primitiveIndex = -1;
+    }
+    std::shared_ptr<BVHNode> left;
+    std::shared_ptr<BVHNode> right;
+    AABB box;
+    int primitiveIndex;  // The index of primitives array. If index is -1, this is interior node.
 };
 
-BVHNode::BVHNode(
-    std::vector<std::shared_ptr<Shape>>& objects,
-    size_t start, size_t end, double time0, double time1
-) {
-    int axis = random_int(0, 2);
-    auto comparator = (axis == 0) ? box_x_compare
-                    : (axis == 1) ? box_y_compare
-                                  : box_z_compare;
+class BVH {
+public:
+    BVH(std::vector<std::shared_ptr<Primitive>> p);
+    bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
+    AABB bounding() const;
+private:
+    std::shared_ptr<BVHNode> build(int start, int end);
+    std::vector<std::shared_ptr<Primitive>> primitives;
+    std::shared_ptr<BVHNode> nodes;
+};
 
-    size_t object_span = end - start;
-
-    if(object_span == 1) {
-        left = right = objects[start];
-    } else if(object_span == 2) {
-        if(comparator(objects[start], objects[start+1])) {
-            left = objects[start];
-            right = objects[start+1];
-        } else {
-            left = objects[start+1];
-            right = objects[start];
-        }
-    } else {
-        std::sort(objects.begin() + start, objects.begin() + end, comparator);
-
-        auto mid = start + object_span/2;
-        left = make_shared<BVHNode>(objects, start, mid, time0, time1);
-        right = make_shared<BVHNode>(objects, mid, end, time0, time1);
-    }
-
-    AABB box_left, box_right;
-
-    if( !left->bounding(time0, time1, box_left)
-     || !right->bounding(time0, time1, box_right)
-    )
-        std::cerr << "No bounding box in BVHNode constroctor\n.";
-
-    box = bounding(box_left, box_right);
-
+BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p) : primitives(std::move(p)){
+    nodes = build(0, primitives.size());
 }
 
-bool BVHNode::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
-    if(!box.intersect(r, t_min, t_max))
-        return false;
+// Recursive build of BVH
+std::shared_ptr<BVHNode> BVH::build(int start, int end) {
+    int axis = random_int(0, 2);
+    auto compare_axis = (axis == 0) ? box_x_compare
+                      : (axis == 1) ? box_y_compare
+                                    : box_z_compare;
+
+    int primitive_span = end - start;
+
+    // Create memory for node
+    std::shared_ptr<BVHNode> node = std::make_shared<BVHNode>();
+
+    if(primitive_span == 1) {
+        node->createLeaf(start, primitives[start]->bounding());
+    } else {
+        std::sort(primitives.begin() + start, primitives.begin() + end, compare_axis);
+
+        auto mid = start + primitive_span/2;
+        node->createInterior(build(start, mid), build(mid, end));
+    }
+
+    return node;
+}
+
+bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+    bool hit = false;
+    std::shared_ptr<BVHNode> node = nodes;
+    std::vector<std::shared_ptr<BVHNode>> nodeToVisit; // Node stack to visit
+    nodeToVisit.emplace_back(node);
+    while(true) {
+        if(nodeToVisit[0]->box.intersect(r, t_min, t_max)) {
+            // Intersection test for primitive (leaf node)
+            if(node->primitiveIndex >= 0) {
+                if(primitives[node->primitiveIndex]->intersect(r, t_min, t_max, rec)) {
+                    hit = true;
+                    break;
+                }
+                if(nodeToVisit.empty()) break;
+            } else {
+                if(node->left->box.intersect(r, t_min, t_max)) 
+                    nodeToVisit.emplace_back(node->left);
+                if(node->right->box.intersect(r, t_min, t_max))
+                    nodeToVisit.emplace_back(node->right);
+            }
+        }
+    }
     
     bool intersect_left = left->intersect(r, t_min, t_max, rec);
     bool intersect_right = right->intersect(r, t_min, intersect_left ? rec.t : t_max, rec);
@@ -97,8 +108,8 @@ bool BVHNode::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec
     return intersect_left || intersect_right;
 }
 
-bool BVHNode::bounding(double t0, double t1, AABB& output_box) const {
-    output_box = box;
+bool BVH::bounding(double t0, double t1, AABB& output_box) const {
+    output_box = nodes ? nodes[0].box : AABB();
     return true;
 }
 
