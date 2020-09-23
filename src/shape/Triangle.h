@@ -182,7 +182,7 @@ std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filena
     std::vector<std::shared_ptr<Shape>> triangles;
     std::shared_ptr<TriangleMesh> mesh = std::make_shared<TriangleMesh>(filename, position, size, axis);
     for(auto &face : mesh->faces) {
-        triangles.push_back(std::make_shared<Triangle>(mesh, face));
+        triangles.emplace_back(std::make_shared<Triangle>(mesh, face));
     }
 
     return triangles;
