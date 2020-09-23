@@ -30,9 +30,9 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
 }
 
 int main(int argc, const char * argv[]) {
-    const int image_width = 500;
-    const int image_height = 500;
-    const int samples_per_pixel = 50;
+    const int image_width = 250;
+    const int image_height = 250;
+    const int samples_per_pixel = 10;
     const int max_depth = 5;
     const auto aspect_ratio = double(image_width) / image_height;
     

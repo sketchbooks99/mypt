@@ -158,14 +158,17 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
 
     rec.t = t;
     rec.p = r.at(rec.t);
-    // auto normal = unit_vector(cross(e2, e1));
 
-    // Is it smooth shading ?
+    // ===== Flat shading =====
+    // auto normal = unit_vector(cross(e2 - e0, e1 - e0));
+    // rec.set_face_normal(r, normal);
+
+    // ===== Smooth shading =====
     auto n0 = mesh->normals[face[0]];
     auto n1 = mesh->normals[face[1]];
     auto n2 = mesh->normals[face[2]];
-    rec.set_face_normal(r, unit_vector(n0 + n1 + n2 / 3.0));
-    // rec.set_face_normal(r, mesh->normals[face[0]]);
+    auto normal = unit_vector((1 - u - v)*n0 + u*n1 + v*n2);
+    rec.set_face_normal(r, normal);
 
     return true;
 }
