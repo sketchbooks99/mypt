@@ -13,6 +13,13 @@ class Sphere: public Shape {
         virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
         virtual AABB bounding() const;
     public:
+        vec2 getUV(const vec3& p) const {
+            auto phi = atan2(p.z, p.x);
+            auto theta = asin(p.y);
+            auto u = 1.0 - (phi + pi) / (2.0*pi);
+            auto v = (theta + pi/2) / pi;
+            return vec2(u, v);
+        }
         vec3 center;
         double radius;
 };
@@ -29,20 +36,24 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
         auto root = sqrt(discriminant);
         auto temp = (-half_b - root) / a;
         if(temp < t_max && temp > t_min) {
+            auto pHit = r.at(rec.t);
             rec.t = temp;
-            rec.p = r.at(rec.t);
+            rec.p = pHit;
             vec3 outward_normal = (rec.p - center) / radius;
             rec.set_face_normal(r, outward_normal);
-            // std::cerr << "Sphere intersected.\n" << std::flush;
+            auto uv = getUV(pHit);
+            rec.u = uv.x; rec.v = uv.y;
             return true;
         }
         temp = (-half_b + root) / a;
         if(temp < t_max && temp > t_min) {
+            auto pHit = r.at(rec.t);
             rec.t = temp;
-            rec.p = r.at(rec.t);
+            rec.p = pHit;
             vec3 outward_normal = (rec.p - center) / radius;
             rec.set_face_normal(r, outward_normal);
-            // std::cerr << "Sphere intersected.\n" << std::flush;
+            auto uv = getUV(pHit);
+            rec.u = uv.x; rec.v = uv.y;
             return true;
         }
     }
