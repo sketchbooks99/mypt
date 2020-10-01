@@ -6,16 +6,9 @@
 
 // Should RGB value be implemented by std::vector? 
 // Each pixel have channel size vector? I have no good idea to implement. 
+template <typename T>
 struct Pixel {
-    int operator[](int i) const {
-        try {
-            return values[i];
-        } 
-        catch (std::out_of_range &oor) {
-            std::cout << "Index out of range." << std::endl;
-        }
-    }
-    std::vector<int> values;
+    T* data;
 };
 
 class Image {
