@@ -125,6 +125,7 @@ inline vec3 cross(const vec3 &u, const vec3 &v) {
                 u.x * v.y - u.y * v.x);
 }
 
+// TODO: Implement of zero-division check. If v = vec3(0.0), zero-division will occur.
 inline vec3 unit_vector(vec3 v) {
     return v / v.length();
 }
