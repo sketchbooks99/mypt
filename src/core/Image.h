@@ -8,7 +8,14 @@
 // Each pixel have channel size vector? I have no good idea to implement. 
 template <typename T>
 struct Pixel {
-    T* data;
+    T get() { return data; }
+    void set(T val) { 
+        if(sizeof(val) != this->val)
+            throw std::runtime_error("The number of channel is different!\n");
+        this->val = val; 
+    }
+private:
+    T val; // pixel value 
 };
 
 class Image {
