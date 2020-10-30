@@ -13,7 +13,7 @@ public:
         assert(data.size() < x && data[x].size() < y);
         data[x][y] = val;
     }
-    Pixeltype get(int x, int y)
+    PixelType get(int x, int y)
     {
         assert(data.size() < x && data[x].size() < y);
         return data[x][y];
