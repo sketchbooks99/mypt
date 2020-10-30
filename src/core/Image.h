@@ -4,6 +4,7 @@
 #include <vector>
 #include "../core/Util.h"
 
+// PixelType must be float(int) or vec(int)3 or vec(int)4
 template <typename PixelType>
 class Image {
 public:

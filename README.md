@@ -22,3 +22,6 @@ class Primitive {
 - [ ] Add Emitter 
 - [ ] Implement several sampling strategy
 - [ ] Create **Disney Principled BSDF** Class for material.
+- [ ] Implement Image I/O
+  - [x] Base Image class (only constructor)
+  - [ ] Write image to file
