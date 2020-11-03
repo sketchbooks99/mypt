@@ -14,59 +14,60 @@
 
 #include "Util.h"
 
-class vec3 {
+template <typename T>
+class type3 {
 public:
-    vec3() : x(0), y(0), z(0) {}
-    vec3(double e0, double e1, double e2) : x(e0), y(e1), z(e2) {}
-    vec3(double c) : x(c), y(c), z(c) {}
+    type3() : x(0), y(0), z(0) {}
+    type3(T e0, T e1, T e2) : x(e0), y(e1), z(e2) {}
+    type3(T c) : x(c), y(c), z(c) {}
     
-    vec3 operator-() const { return vec3(-x, -y, -z); }
-    double operator[](int i) const { 
+    type3 operator-() const { return type3(-x, -y, -z); }
+    T operator[](int i) const { 
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
     }
-    double& operator[](int i) {
+    T& operator[](int i) {
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
     }
     
-    vec3& operator+=(const vec3 &v) {
+    type3& operator+=(const type3 &v) {
         x += v.x;
         y += v.y;
         z += v.z;
         return *this;
     }
     
-    vec3& operator*=(const double t) {
+    type3& operator*=(const T t) {
         x *= t;
         y *= t;
         z *= t;
         return *this;
     }
     
-    vec3 &operator/=(const double t) {
+    type3 &operator/=(const T t) {
         return *this *= 1/t;
     }
     
-    double length() const {
+    T length() const {
         return sqrt(length_squared());
     }
     
-    double length_squared() const {
+    T length_squared() const {
         return x*x + y*y + z*z;
     }
 
-    inline static vec3 random() {
-        return vec3(random_double(), random_double(), random_double());
+    inline static type3 random() {
+        return type3(random_double(), random_double(), random_double());
     }
 
-    inline static vec3 random(double min, double max) {
-        return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+    inline static type3 random(T min, T max) {
+        return type3(random_double(min, max), random_double(min, max), random_double(min, max));
     }
     
-    void write_color(std::ostream &out, int samples_per_pixel) {
+    /*void write_color(std::ostream &out, int samples_per_pixel) {
         // Devide the color total by the number of samples.
         // for a gamma value of 2.0
         auto scale = 1.0 / samples_per_pixel;
@@ -78,52 +79,56 @@ public:
         out << static_cast<int>(256 * clamp(r, 0.0, 0.999)) << ' '
             << static_cast<int>(256 * clamp(g, 0.0, 0.999)) << ' '
             << static_cast<int>(256 * clamp(b, 0.0, 0.999)) << '\n';
-    }
+    }*/
     
 public:
-    double x, y, z;
+    T x, y, z;
 };
 
 // vec3 utility functions
-inline std::ostream& operator<<(std::ostream &out, const vec3 &v) {
+inline std::ostream& operator<<(std::ostream &out, const type3 &v) {
     return out << v.x << ' ' << v.y << ' ' << v.z;
 }
 
-inline vec3 operator+(const vec3 &u, const vec3 &v) {
+inline type3 operator+(const type3 &u, const type3 &v) {
     return vec3(u.x + v.x, u.y + v.y, u.z + v.z);
 }
 
-inline vec3 operator-(const vec3 &u, const vec3 &v) {
-    return vec3(u.x - v.x, u.y - v.y, u.z - v.z);
+inline type3 operator-(const type3 &u, const type3 &v) {
+    return type3(u.x - v.x, u.y - v.y, u.z - v.z);
 }
 
-inline vec3 operator*(const vec3 &u, const vec3 &v) {
-    return vec3(u.x * v.x, u.y * v.y, u.z * v.z);
+inline type3 operator*(const type3 &u, const type3 &v) {
+    return type3(u.x * v.x, u.y * v.y, u.z * v.z);
 }
 
-inline vec3 operator*(double t, const vec3 &v) {
-    return vec3(t*v.x, t*v.y, t*v.z);
+inline type3 operator*(double t, const type3 &v) {
+    return type3(t*v.x, t*v.y, t*v.z);
 }
 
-inline vec3 operator*(const vec3 &v, double t) {
+inline type3 operator*(const type3 &v, double t) {
     return t * v;
 }
 
-inline vec3 operator/(vec3 v, double t) {
+inline type3 operator/(type3 v, double t) {
     return (1/t) * v;
 }
 
-inline double dot(const vec3 &u, const vec3 &v) {
+inline double dot(const type3 &u, const type3 &v) {
     return u.x * v.x
     + u.y * v.y
     + u.z * v.z;
 }
 
-inline vec3 cross(const vec3 &u, const vec3 &v) {
-    return vec3(u.y * v.z - u.z * v.y,
+inline type3 cross(const type3 &u, const type3 &v) {
+    return type3(u.y * v.z - u.z * v.y,
                 u.z * v.x - u.x * v.z,
                 u.x * v.y - u.y * v.x);
 }
+
+typedef type3<double> vec3;
+typedef type3<unsigned int> uint3;
+typedef type3<int> int3;
 
 // TODO: Implement of zero-division check. If v = vec3(0.0), zero-division will occur.
 inline vec3 unit_vector(vec3 v) {
