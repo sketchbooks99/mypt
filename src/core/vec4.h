@@ -40,22 +40,22 @@ public:
         return *this;
     }
     
-    type4& operator*=(const T t) {
+    type4& operator*=(const double t) {
         x *= t;
         y *= t;
         z *= t;
         return *this;
     }
     
-    type4 &operator/=(const T t) {
+    type4 &operator/=(const double t) {
         return *this *= 1/t;
     }
     
-    T length() const {
+    double length() const {
         return sqrt(length_squared());
     }
     
-    T length_squared() const {
+    double length_squared() const {
         return x*x + y*y + z*z;
     }
 
@@ -88,36 +88,36 @@ public:
 // vec4 utility functions
 template <typename T>
 inline std::ostream& operator<<(std::ostream &out, const type4<T> &v) {
-    return out << v.x << ' ' << v.y << ' ' << v.z;
+    return out << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w;
 }
 
 template <typename T>
 inline type4<T> operator+(const type4<T> &u, const type4<T> &v) {
-    return vec4(u.x + v.x, u.y + v.y, u.z + v.z);
+    return vec4(u.x + v.x, u.y + v.y, u.z + v.z, u.w + v.w);
 }
 
 template <typename T>
 inline type4<T> operator-(const type4<T> &u, const type4<T> &v) {
-    return type4<T>(u.x - v.x, u.y - v.y, u.z - v.z);
+    return type4<T>(u.x - v.x, u.y - v.y, u.z - v.z, u.w - v.w);
 }
 
 template <typename T>
 inline type4<T> operator*(const type4<T> &u, const type4<T> &v) {
-    return type4<T>(u.x * v.x, u.y * v.y, u.z * v.z);
+    return type4<T>(u.x * v.x, u.y * v.y, u.z * v.z, u.w * v.w);
 }
 
 template <typename T>
-inline type4<T> operator*(T t, const type4<T> &v) {
-    return type4<T>(t*v.x, t*v.y, t*v.z);
+inline type4<T> operator*(double t, const type4<T> &v) {
+    return type4<T>(t*v.x, t*v.y, t*v.z, t*v.w);
 }
 
 template <typename T>
-inline type4<T> operator*(const type4<T> &v, T t) {
+inline type4<T> operator*(const type4<T> &v, double t) {
     return t * v;
 }
 
 template <typename T>
-inline type4<T> operator/(type4<T> v, T t) {
+inline type4<T> operator/(type4<T> v, double t) {
     return (1/t) * v;
 }
 
@@ -132,7 +132,8 @@ template <typename T>
 inline type4<T> cross(const type4<T> &u, const type4<T> &v) {
     return type4<T>(u.y * v.z - u.z * v.y,
                 u.z * v.x - u.x * v.z,
-                u.x * v.y - u.y * v.x);
+                u.x * v.y - u.y * v.x, 
+                1.0f);
 }
 
 typedef type4<double> vec4;

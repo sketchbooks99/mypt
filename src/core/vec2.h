@@ -61,7 +61,7 @@ public:
 
 typedef type2<double> vec2;
 typedef type2<unsigned int> uint2;
-typedef type2<int> int3;
+typedef type2<int> int2;
 
 // Utility functions of type2
 template <typename T>
@@ -79,10 +79,10 @@ template <typename T>
 inline type2<T> operator*(const type2<T> &u, const type2<T> &v) { return type2<T>(u.x*v.x, u.y*v.y); }
 
 template <typename T>
-inline type2<T> operator*(T t, const type2<T> &v) { return type2<T>(t*v.x, t*v.y); }
+inline type2<T> operator*(double t, const type2<T> &v) { return type2<T>(t*v.x, t*v.y); }
 
 template <typename T>
-inline type2<T> operator/(const type2<T> &u, T t) { return (1/t) * u; }
+inline type2<T> operator/(const type2<T> &u, double t) { return (1/t) * u; }
 
 template <typename T>
 inline T dot(const type2<T> &u, const type2<T> &v) { return u.x*v.x + u.y*v.y; }

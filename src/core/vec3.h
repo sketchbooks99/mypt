@@ -93,7 +93,7 @@ inline std::ostream& operator<<(std::ostream &out, const type3<T> &v) {
 
 template <typename T>
 inline type3<T> operator+(const type3<T> &u, const type3<T> &v) {
-    return vec3(u.x + v.x, u.y + v.y, u.z + v.z);
+    return type3<T>(u.x + v.x, u.y + v.y, u.z + v.z);
 }
 
 template <typename T>
@@ -107,17 +107,17 @@ inline type3<T> operator*(const type3<T> &u, const type3<T> &v) {
 }
 
 template <typename T>
-inline type3<T> operator*(T t, const type3<T> &v) {
+inline type3<T> operator*(double t, const type3<T> &v) {
     return type3<T>(t*v.x, t*v.y, t*v.z);
 }
 
 template <typename T>
-inline type3<T> operator*(const type3<T> &v, T t) {
+inline type3<T> operator*(const type3<T> &v, double t) {
     return t * v;
 }
 
 template <typename T>
-inline type3<T> operator/(type3<T> v, T t) {
+inline type3<T> operator/(type3<T> v, double t) {
     return (1/t) * v;
 }
 
