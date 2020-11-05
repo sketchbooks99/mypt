@@ -1,5 +1,4 @@
-#ifndef UTIL_H
-#define UTIL_H
+#pragma once
 
 #include <cmath>
 #include <cstdlib>
@@ -41,7 +40,4 @@ inline double clamp(double x, double min, double max) {
 // Common Headers
 
 #include "Ray.h"
-#include "vec3.h"
-#include "vec2.h"
-
-#endif
+#include "MathUtil.h"

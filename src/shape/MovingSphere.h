@@ -1,7 +1,6 @@
-#ifndef MOVINGSPHERE_H
-#define MOVINGSPHERE_H
+#pragma once
 
-#include "../core/vec3.h"
+#include "../core/MathUtil.h"
 #include "../core/Shape.h"
 
 class MovingSphere : public Shape {
@@ -73,5 +72,3 @@ AABB MovingSphere::bounding() const {
 std::shared_ptr<Shape> createMovingSphere(vec3 cen0, vec3 cen1, double t0, double t1, double r) {
     return std::make_shared<MovingSphere>(cen0, cen1, t0, t1, r);
 }
-
-#endif

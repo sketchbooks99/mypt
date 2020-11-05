@@ -1,5 +1,4 @@
-#ifndef PERLIN_H
-#define PERLIN_H
+#pragma once
 
 #include "Util.h"
 
@@ -126,5 +125,3 @@ class Perlin {
             }
         }
 };
-
-#endif

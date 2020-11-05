@@ -1,5 +1,4 @@
-#ifndef AABB_H
-#define AABB_H
+#pragma once
 
 #include "Util.h"
 
@@ -59,5 +58,3 @@ AABB surrounding(AABB box0, AABB box1) {
                ffmax(box0.max().z, box1.max().z));
     return AABB(small, big);
 }
-
-#endif 

@@ -86,42 +86,51 @@ public:
 };
 
 // vec3 utility functions
-inline std::ostream& operator<<(std::ostream &out, const type3 &v) {
+template <typename T>
+inline std::ostream& operator<<(std::ostream &out, const type3<T> &v) {
     return out << v.x << ' ' << v.y << ' ' << v.z;
 }
 
-inline type3 operator+(const type3 &u, const type3 &v) {
+template <typename T>
+inline type3<T> operator+(const type3<T> &u, const type3<T> &v) {
     return vec3(u.x + v.x, u.y + v.y, u.z + v.z);
 }
 
-inline type3 operator-(const type3 &u, const type3 &v) {
-    return type3(u.x - v.x, u.y - v.y, u.z - v.z);
+template <typename T>
+inline type3<T> operator-(const type3<T> &u, const type3<T> &v) {
+    return type3<T>(u.x - v.x, u.y - v.y, u.z - v.z);
 }
 
-inline type3 operator*(const type3 &u, const type3 &v) {
-    return type3(u.x * v.x, u.y * v.y, u.z * v.z);
+template <typename T>
+inline type3<T> operator*(const type3<T> &u, const type3<T> &v) {
+    return type3<T>(u.x * v.x, u.y * v.y, u.z * v.z);
 }
 
-inline type3 operator*(double t, const type3 &v) {
-    return type3(t*v.x, t*v.y, t*v.z);
+template <typename T>
+inline type3<T> operator*(T t, const type3<T> &v) {
+    return type3<T>(t*v.x, t*v.y, t*v.z);
 }
 
-inline type3 operator*(const type3 &v, double t) {
+template <typename T>
+inline type3<T> operator*(const type3<T> &v, T t) {
     return t * v;
 }
 
-inline type3 operator/(type3 v, double t) {
+template <typename T>
+inline type3<T> operator/(type3<T> v, T t) {
     return (1/t) * v;
 }
 
-inline double dot(const type3 &u, const type3 &v) {
+template <typename T>
+inline double dot(const type3<T> &u, const type3<T> &v) {
     return u.x * v.x
     + u.y * v.y
     + u.z * v.z;
 }
 
-inline type3 cross(const type3 &u, const type3 &v) {
-    return type3(u.y * v.z - u.z * v.y,
+template <typename T>
+inline type3<T> cross(const type3<T> &u, const type3<T> &v) {
+    return type3<T>(u.y * v.z - u.z * v.y,
                 u.z * v.x - u.x * v.z,
                 u.x * v.y - u.y * v.x);
 }
@@ -129,7 +138,7 @@ inline type3 cross(const type3 &u, const type3 &v) {
 typedef type3<double> vec3;
 typedef type3<unsigned int> uint3;
 typedef type3<int> int3;
-typedef type3<unsigned char> rgb;
+typedef type3<unsigned char> RGB;
 
 // TODO: Implement of zero-division check. If v = vec3(0.0), zero-division will occur.
 inline vec3 unit_vector(vec3 v) {

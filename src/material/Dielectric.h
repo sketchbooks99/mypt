@@ -1,5 +1,4 @@
-#ifndef DIELECTRIC_H
-#define DIELECTRIC_H
+#pragma once
 
 #include "../core/Material.h"
 
@@ -41,5 +40,3 @@ class Dielectric : public Material {
     public:
         double ref_idx;
 };
-
-#endif

@@ -1,15 +1,6 @@
-//
-//  Ray.h
-//  RayTracing
-//
-//  Created by 木内舜司 on 2020/04/11.
-//  Copyright © 2020 木内舜司. All rights reserved.
-//
+#pragma once
 
-#ifndef RAY_H
-#define RAY_H
-
-#include "vec3.h"
+#include "MathUtil.h"
 
 class Ray {
 public:
@@ -32,5 +23,3 @@ public:
     double tm;
 };
 
-
-#endif /* Ray_h */

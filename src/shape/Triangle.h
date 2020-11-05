@@ -1,10 +1,9 @@
-#ifndef TRIANGLE_H
-#define TRIANGLE_H
+#pragma once
 
 #include <fstream>
 #include <vector>
 #include "../core/Shape.h"
-#include "../core/vec3.h"
+#include "../core/MathUtil.h"
 
 struct TriangleMesh {
     TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis) {
@@ -187,5 +186,3 @@ std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filena
 
     return triangles;
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef LAMBERTIAN_H
-#define LAMBERTIAN_H
+#pragma once
 
 #include "../core/Material.h"
 #include "../core/Texture.h"
@@ -20,5 +19,3 @@ class Lambertian : public Material {
     public:
         std::shared_ptr<Texture> albedo;
 };
-
-#endif

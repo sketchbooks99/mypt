@@ -1,5 +1,4 @@
-#ifndef PRIMITIVE_H
-#define PRIMITIVE_H
+#pragma once 
 
 #include <vector>
 #include "Util.h"
@@ -36,4 +35,3 @@ AABB ShapePrimitive::bounding() const {
     return shape->bounding();
 }
 
-#endif

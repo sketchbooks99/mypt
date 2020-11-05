@@ -1,5 +1,4 @@
-#ifndef NOISE_H
-#define NOISE_H
+#pragma once
 
 #include "../core/Texture.h"
 #include "../core/Perlin.h"
@@ -16,5 +15,3 @@ class NoiseTexture : public Texture {
         Perlin noise;
         double scale;
 };
-
-#endif

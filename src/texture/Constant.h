@@ -1,5 +1,4 @@
-#ifndef CONSTANT_H
-#define CONSTANT_H
+#pragma once
 
 #include "../core/Texture.h"
 
@@ -15,5 +14,3 @@ class ConstantTexture : public Texture {
     public:
         vec3 color;
 };
-
-#endif

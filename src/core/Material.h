@@ -1,5 +1,4 @@
-#ifndef MATERIAL_H
-#define MATERIAL_H
+#pragma once
 
 #include "Util.h"
 
@@ -13,4 +12,3 @@ class Material {
         ) const = 0;
 };
 
-#endif 

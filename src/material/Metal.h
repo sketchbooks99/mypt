@@ -1,5 +1,4 @@
-#ifndef METAL_H
-#define METAL_H
+#pragma once
 
 #include "../core/Material.h"
 
@@ -20,5 +19,3 @@ class Metal : public Material {
         vec3 albedo;
         double fuzz;
 };
-
-#endif

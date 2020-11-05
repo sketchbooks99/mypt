@@ -1,5 +1,4 @@
-#ifndef PBRENDERER_H
-#define PBRENDERER_H
+#pragma once
 
 // Core include 
 #include "Util.h"
@@ -29,5 +28,3 @@
 
 #include "Primitive.h"
 #include "BVH.h"
-
-#endif

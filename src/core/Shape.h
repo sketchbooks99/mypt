@@ -1,10 +1,9 @@
-#ifndef SHAPE_H
-#define SHAPE_H
+#pragma once
 
 #include "Util.h"
 #include "AABB.h"
 #include "Ray.h"
-#include "vec2.h"
+#include "MathUtil.h"
 
 class Material;
 
@@ -29,4 +28,3 @@ class Shape {
         virtual AABB bounding() const = 0;
 };
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef CHECKER_H
-#define CHECKER_H
+#pragma once
 
 #include "../core/Texture.h"
 
@@ -21,4 +20,3 @@ class CheckerTexture : public Texture {
         std::shared_ptr<Texture> even;
 };
 
-#endif

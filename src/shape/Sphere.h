@@ -1,5 +1,4 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#pragma once
 
 #include "../core/Shape.h"
 #include "../core/vec3.h"
@@ -69,5 +68,3 @@ AABB Sphere::bounding() const {
 std::shared_ptr<Shape> createSphereShape(vec3 cen, double r) {
     return std::make_shared<Sphere>(cen, r);
 }
-
-#endif

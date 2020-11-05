@@ -1,5 +1,4 @@
-#ifndef BVH_H
-#define BVH_H
+#pragma once
 
 #include <algorithm>
 #include "Primitive.h"
@@ -127,5 +126,3 @@ AABB BVH::bounding() const {
 //         }
 //     }
 // }
-
-#endif
