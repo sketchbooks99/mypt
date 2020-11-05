@@ -2,7 +2,7 @@
 
 #include "../core/Material.h"
 #include "../core/Texture.h"
-#include "../texture/Constant.h"
+#include "../texture/ConstantTexture.h"
 
 class Lambertian : public Material {
     public: 

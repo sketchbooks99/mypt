@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Util.h"
+#include "Ray.h"
 
 struct AABB {
     AABB() {}

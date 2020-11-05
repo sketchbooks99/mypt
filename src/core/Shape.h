@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Util.h"
 #include "AABB.h"
 #include "Ray.h"
-#include "MathUtil.h"
 
 class Material;
 

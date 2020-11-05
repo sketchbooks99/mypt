@@ -1,13 +1,4 @@
-//
-//  vec4.h
-//  RayTracing
-//
-//  Created by 木内舜司 on 2020/04/11.
-//  Copyright © 2020 木内舜司. All rights reserved.
-//
-
-#ifndef VEC4_H
-#define VEC4_H
+#pragma once
 
 #include <iostream>
 #include <cmath>
@@ -145,5 +136,3 @@ typedef type4<unsigned char> RGBA;
 inline vec4 unit_vector(vec4 v) {
     return v / v.length();
 }
-
-#endif /* vec3_h */

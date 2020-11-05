@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../core/MathUtil.h"
 #include "../core/Shape.h"
 
 class MovingSphere : public Shape {

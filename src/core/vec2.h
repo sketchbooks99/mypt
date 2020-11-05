@@ -1,5 +1,4 @@
-#ifndef type2_H
-#define type2_H
+#pragma once
 
 #include <iostream>
 #include <cmath>
@@ -92,5 +91,3 @@ inline type2<T> cross(const type2<T> &u, const type2<T> &v) { return u.x*v.y - u
 
 template <typename T>
 inline type2<T> unit_vector(type2<T> v) { return v / v.length(); }
-
-#endif

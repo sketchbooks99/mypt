@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../core/Shape.h"
-#include "../core/vec3.h"
 
 class Sphere: public Shape {
     public:

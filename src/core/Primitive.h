@@ -1,9 +1,9 @@
 #pragma once 
 
 #include <vector>
-#include "Util.h"
 #include "Shape.h"
 #include "Material.h"
+#include "Ray.h"
 
 class Primitive {
 public:

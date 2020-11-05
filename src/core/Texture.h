@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Util.h"
+#include "MathUtil.h"
 
 class Texture {
     public:

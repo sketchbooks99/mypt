@@ -37,7 +37,10 @@ inline double clamp(double x, double min, double max) {
     return x;
 }
 
-// Common Headers
-
-#include "Ray.h"
-#include "MathUtil.h"
+void ASSERT(const bool cond, const std::string& text)
+{
+    if (!cond)
+    {
+        throw std::runtime_error(text);
+    }
+}

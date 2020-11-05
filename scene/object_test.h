@@ -1,5 +1,4 @@
-#ifndef object_test_h
-#define object_test_h
+#pragma once
 
 #include "../src/core/PBRenderer.h"
 
@@ -33,15 +32,13 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         }
     }
     
-    auto bunny = createTriangleMesh("../model/bunny.obj", vec3(0.0, 1.0, 0.0), 4.0, vec3(1, -1, 1));
-    for (auto &triangle : bunny){
-        primitives.emplace_back(
-            std::make_shared<ShapePrimitive>(
-                triangle, dielectric
-            ));
-    }
+    // auto bunny = createTriangleMesh("../model/bunny.obj", vec3(0.0, 1.0, 0.0), 4.0, vec3(1, -1, 1));
+    // for (auto &triangle : bunny){
+    //     primitives.emplace_back(
+    //         std::make_shared<ShapePrimitive>(
+    //             triangle, dielectric
+    //         ));
+    // }
     
     return primitives;
 }
-
-#endif

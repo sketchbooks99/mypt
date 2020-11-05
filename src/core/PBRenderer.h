@@ -2,11 +2,11 @@
 
 // Core include 
 #include "Util.h"
+#include "MathUtil.h"
 #include "Camera.h"
 #include "Perlin.h"
 #include "Ray.h"
-#include "vec2.h"
-#include "vec3.h"
+#include "Image.h"
 // Shape include 
 #include "Shape.h"
 // #include "ShapeList.h"
@@ -22,9 +22,9 @@
 // Texture include 
 #include "Texture.h"
 // #include "../texture/Image.h"
-#include "../texture/Checker.h"
-#include "../texture/Constant.h"
-#include "../texture/Noise.h"
+#include "../texture/CheckerTexture.h"
+#include "../texture/ConstantTexture.h"
+#include "../texture/NoiseTexture.h"
 
 #include "Primitive.h"
 #include "BVH.h"

@@ -3,7 +3,6 @@
 #include <fstream>
 #include <vector>
 #include "../core/Shape.h"
-#include "../core/MathUtil.h"
 
 struct TriangleMesh {
     TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis) {

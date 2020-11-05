@@ -1,13 +1,4 @@
-//
-//  vec3.h
-//  RayTracing
-//
-//  Created by 木内舜司 on 2020/04/11.
-//  Copyright © 2020 木内舜司. All rights reserved.
-//
-
-#ifndef VEC3_H
-#define VEC3_H
+#pragma once
 
 #include <iostream>
 #include <cmath>
@@ -22,12 +13,12 @@ public:
     type3(T c) : x(c), y(c), z(c) {}
     
     type3 operator-() const { return type3(-x, -y, -z); }
-    T operator[](int i) const { 
+    double operator[](int i) const { 
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
     }
-    T& operator[](int i) {
+    double& operator[](int i) {
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
@@ -51,11 +42,11 @@ public:
         return *this *= 1/t;
     }
     
-    T length() const {
+    double length() const {
         return sqrt(length_squared());
     }
     
-    T length_squared() const {
+    double length_squared() const {
         return x*x + y*y + z*z;
     }
 
@@ -186,5 +177,3 @@ vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
     vec3 r_out_perp = -sqrt(1.0 - r_out_parallel.length_squared()) * n;
     return r_out_parallel + r_out_perp;
 }
-
-#endif /* vec3_h */

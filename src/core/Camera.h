@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Util.h"
+#include "Ray.h"
 
 class Camera {
     public: 
