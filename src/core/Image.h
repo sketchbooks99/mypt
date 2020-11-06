@@ -5,7 +5,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../ext/stb_image_write.h"
 
-// PixelType must be float, vec3, vec4
+// PixelType must be GRAY, RGB, RGBA
 template <typename PixelType>
 class Image {
 public:
@@ -34,11 +34,9 @@ private:
 template <typename PixelType>
 Image<PixelType>::Image(int width, int height)
 : width(width), height(height){
-    if(width <= 0 || height <= 0)
-        throw std::runtime_error("Image class must have at least 1 pixel!\n");
+    ASSERT(width > 0 && height > 0, "Image class must have at least 1 pixel\n");
 
-    size_t pixel_size = sizeof(PixelType) / sizeof(unsigned char);
-    nChannels = static_cast<unsigned int>(pixel_size);
+    nChannels = static_cast<unsigned int>(sizeof(PixelType));
     data = (PixelType*)malloc(sizeof(PixelType)*width*height);
 }
 
