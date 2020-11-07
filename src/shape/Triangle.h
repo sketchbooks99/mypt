@@ -1,72 +1,167 @@
 #pragma once
 
 #include <fstream>
+#include <sstream>
 #include <vector>
 #include "../core/Shape.h"
 
 struct TriangleMesh {
-    TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis) {
-        if(filename.substr(filename.length() - 4) == ".obj") {
+    TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, bool isSmooth) {
+        if(filename.substr(filename.length() - 4) == ".obj")
+        {
             std::ifstream ifs(filename, std::ios::in);
-            for(std::string buffer; ifs >> buffer; ) {
-                if(buffer == "v") {
+            ASSERT(ifs.is_open(), "The file '"+filename+"' is not existed!\n");
+            while (!ifs.eof())
+            {
+                std::string line;
+                if (!std::getline(ifs, line))
+                    break;
+
+                // creae string stream
+                std::istringstream iss(line);
+                std::string header;
+                iss >> header;
+
+                // vertex --------------------------------------
+                if (header == "v")
+                {
                     float x, y, z;
-                    ifs >> x >> y >> z;
+                    iss >> x >> y >> z;
                     x *= axis.x;
                     y *= axis.y;
                     z *= axis.z;
                     vertices.emplace_back(x, y, z);
-                } else if(buffer == "f") {
-                    faces.emplace_back(std::vector<int>(3, 0));
-                    for(auto i=0; i<3; i++) {
-                        ifs >> faces.back()[i];
-                        faces.back()[i]--;
+                }
+                else if (header == "f")
+                {
+                    // temporalily vector to store face information
+                    std::vector<int> temp_vert_faces;
+
+                    // Future work -----------------------------------
+                    /*std::vector<int> temp_tex_faces;
+                    std::vector<int> temp_norm_faces;*/
+                    // ------------------------------------------------ 
+                    for (std::string buffer; iss >> buffer;)
+                    {
+                        int vert_idx, tex_idx, norm_idx;
+                        if (sscanf(buffer.c_str(), "%d/%d/%d", &vert_idx, &tex_idx, &norm_idx) == 3)
+                        {
+                            // Input - index(vertex)/index(texture)/index(normal)
+                            temp_vert_faces.emplace_back(vert_idx - 1);
+                            /*temp_tex_faces.emplace_back(tex_idx - 1);
+                            temp_norm_faces.emplace_back(norm_idx - 1);*/
+                        }
+                        else if (sscanf(buffer.c_str(), "%d//%d", &vert_idx, &norm_idx) == 2)
+                        {
+                            // Input - index(vertex)//index(normal)
+                            temp_vert_faces.emplace_back(vert_idx - 1);
+                            //temp_norm_faces.emplace_back(norm_idx - 1);
+                        }
+                        else if (sscanf(buffer.c_str(), "%d/%d", &vert_idx, &tex_idx) == 2)
+                        {
+                            // Input - index(vertex)/index(texture)
+                            temp_vert_faces.emplace_back(vert_idx - 1);
+                            //temp_tex_faces.emplace_back(tex_idx - 1);
+                        }
+                        else if (sscanf(buffer.c_str(), "%d", &vert_idx) == 1)
+                        {
+                            // Input - index(vertex)
+                            temp_vert_faces.emplace_back(vert_idx - 1);
+                        }
+                        else
+                            throw std::runtime_error("Invalid format in face information input.\n");
+                    }
+                    if (temp_vert_faces.size() < 3)
+                        throw std::runtime_error("The number of faces is less than 3.\n");
+
+                    if (temp_vert_faces.size() == 3) {
+                        std::vector<int> face(3);
+                        face[0] = temp_vert_faces[0];
+                        face[1] = temp_vert_faces[1];
+                        face[2] = temp_vert_faces[2];
+                        faces.emplace_back(face);
+                    }
+                    // Get more then 4 inputs.
+                    // NOTE: 
+                    //      This case is implemented under the assumption that if face input are more than 4, 
+                    //      mesh are configured by quad and inputs are partitioned with 4 stride.
+                    else
+                    {
+                        for (int i = 0; i<int(temp_vert_faces.size() / 4); i++)
+                        {
+                            // The index value of 0th vertex in quad
+                            auto base_idx = i * 4;
+                            std::vector<int> face1(3);
+                            face1[0] = temp_vert_faces[base_idx + 0];
+                            face1[1] = temp_vert_faces[base_idx + 1];
+                            face1[2] = temp_vert_faces[base_idx + 2];
+                            faces.emplace_back(face1);
+                            std::vector<int> face2(3);
+                            face2[0] = temp_vert_faces[base_idx + 2];
+                            face2[1] = temp_vert_faces[base_idx + 3];
+                            face2[2] = temp_vert_faces[base_idx + 0];
+                            faces.emplace_back(face2);
+                        }
                     }
                 }
             }
-            ifs.close();    
+            ifs.close();
         }
 
         // Transformation
         vec3 center;
-        vec3 min = vertices.front(), max = vertices.front();
-        for (auto &vertex : vertices) {
+        auto min = vertices.front(), max = vertices.front();
+        for (auto& vertex : vertices)
+        {
             center += vertex / vertices.size();
-            for(auto i = 0; i < 3; i++) {
-                if(vertex[i] < min[i]) min[i] = vertex[i];
-                if(vertex[i] > max[i]) max[i] = vertex[i];
+            for (int i = 0; i < 3; i++)
+            {
+                if (vertex[i] < min[i]) min[i] = vertex[i];
+                if (vertex[i] > max[i]) max[i] = vertex[i];
             }
         }
 
-        auto scale = std::numeric_limits<float>::max();
-        for (auto i = 0; i < 3; i++) {
-            float d = 1e-6f; // Prevent zero division error;
-            auto ratio = size / (min[i] - max[i] + d);
-            if(ratio < scale) {
-                scale = ratio;
-            }
-        }
-
-        for(auto &vertex : vertices) {
-            vertex = (vertex - center) * scale + position;
+        for (auto& vertex : vertices) {
+            vertex = (vertex - center) * size + position;
         }
 
         // Mesh smoothing
-        if(faces.size() > 32) {
-            normals = std::vector<vec3>(vertices.size(), vec3());
-            auto counts = std::vector<int>(vertices.size(), 0);
-            for(auto i = 0; i < faces.size(); i++) {
-                for(auto j = 0; j < 3; j++) {
-                    auto x = faces[i][j];
-                    auto p0 = vertices[faces[i][0]];
-                    auto p1 = vertices[faces[i][1]];
-                    auto p2 = vertices[faces[i][2]];
-                    normals[x] += unit_vector(cross(p2 - p0, p1 - p0));
-                    counts[x]++;
-                }
+        normals.resize(vertices.size());
+        auto counts = std::vector<int>(vertices.size(), 0);
+        for(int i=0; i<faces.size(); i++)
+        {
+            auto p0 = vertices[faces[i][0]];
+            auto p1 = vertices[faces[i][1]];
+            auto p2 = vertices[faces[i][2]];
+            vec3 p0_f3(p0.x, p0.y, p0.z);
+            vec3 p1_f3(p1.x, p1.y, p1.z);
+            vec3 p2_f3(p2.x, p2.y, p2.z);
+            auto N = normalize(cross(p2_f3 - p0_f3, p1_f3 - p0_f3));
+
+            if (isSmooth) {
+                auto idx = faces[i][0];
+                normals[idx] += N;
+                counts[idx]++;
+                idx = faces[i][1];
+                normals[idx] += N;
+                counts[idx]++;
+
+                idx = faces[i][2];
+                normals[idx] += N;
+                counts[idx]++;
             }
-            for(auto i=0; i<vertices.size(); i++) {
+            else
+            {
+                normals[faces[i][0]] = N;
+                normals[faces[i][1]] = N;
+                normals[faces[i][2]] = N;
+            }
+        }
+        if (isSmooth) {
+            for (int i = 0; i < vertices.size(); i++)
+            {
                 normals[i] /= counts[i];
+                normals[i] = normalize(normals[i]);
             }
         }
     }
@@ -107,7 +202,7 @@ class Triangle : public Shape {
             auto p0 = mesh->vertices[face[0]];
             auto p1 = mesh->vertices[face[1]];
             auto p2 = mesh->vertices[face[2]];
-            return unit_vector(cross(p2-p0, p1-p0));
+            return normalize(cross(p2-p0, p1-p0));
         }
 
         vec3 get_vertices() const {
@@ -158,14 +253,14 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
     rec.p = r.at(rec.t);
 
     // ===== Flat shading =====
-    // auto normal = unit_vector(cross(e2 - e0, e1 - e0));
+    // auto normal = normalize(cross(e2 - e0, e1 - e0));
     // rec.set_face_normal(r, normal);
 
     // ===== Smooth shading =====
     auto n0 = mesh->normals[face[0]];
     auto n1 = mesh->normals[face[1]];
     auto n2 = mesh->normals[face[2]];
-    auto normal = unit_vector((1 - u - v)*n0 + u*n1 + v*n2);
+    auto normal = normalize((1 - u - v)*n0 + u*n1 + v*n2);
     rec.set_face_normal(r, normal);
 
     return true;
@@ -176,9 +271,9 @@ AABB Triangle::bounding() const {
 }
 
 std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filename, vec3 position, 
-                                                          float size, vec3 axis) {
+                                                          float size, vec3 axis, bool isSmooth=true) {
     std::vector<std::shared_ptr<Shape>> triangles;
-    std::shared_ptr<TriangleMesh> mesh = std::make_shared<TriangleMesh>(filename, position, size, axis);
+    std::shared_ptr<TriangleMesh> mesh = std::make_shared<TriangleMesh>(filename, position, size, axis, isSmooth);
     for(auto &face : mesh->faces) {
         triangles.emplace_back(std::make_shared<Triangle>(mesh, face));
     }

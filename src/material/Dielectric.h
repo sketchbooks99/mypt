@@ -18,7 +18,7 @@ class Dielectric : public Material {
             attenuation = vec3(1.0, 1.0, 1.0);
             double etai_over_etat = (rec.front_face) ? (1.0 / ref_idx) : (ref_idx);
 
-            vec3 unit_direction = unit_vector(r_in.direction());
+            vec3 unit_direction = normalize(r_in.direction());
             double cos_theta = ffmin(dot(-unit_direction, rec.normal), 1.0);
             double sin_theta = sqrt(1.0 - cos_theta*cos_theta);
             if(etai_over_etat * sin_theta > 1.0) {

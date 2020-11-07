@@ -132,7 +132,7 @@ typedef type3<int> int3;
 typedef type3<unsigned char> RGB;
 
 // TODO: Implement of zero-division check. If v = vec3(0.0), zero-division will occur.
-inline vec3 unit_vector(vec3 v) {
+inline vec3 normalize(vec3 v) {
     return v / v.length();
 }
 

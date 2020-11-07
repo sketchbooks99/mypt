@@ -46,6 +46,7 @@ void Image<PixelType>::write(const std::string& filename, const std::string& for
 {
     if(format == "png" || format == "PNG")
     {
+        stbi_flip_vertically_on_write(true);
         stbi_write_png(filename.c_str(), width, height, nChannels, data, 0);
     }
     if(format == "jpg" || format == "JPG")
@@ -53,17 +54,3 @@ void Image<PixelType>::write(const std::string& filename, const std::string& for
         ASSERT(nChannels <= 3, "JPG doesn't support alpha channel!\n");
     }
 }
-
-// template <typename PixelType>
-// void Image<PixelType>::writePPM() {
-//     // PPM file don't support alpha channel, maybe...
-//     assert(sizeof(PixelType) <= 3);
-
-//     for(int y=0; y<height; y++) 
-//     {
-//         for(int x=0; x<width; x++)
-//         {
-
-//         }
-//     }
-// }

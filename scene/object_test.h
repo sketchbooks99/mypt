@@ -17,9 +17,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
             checker_lambert
         ));
 
-    auto albedo = vec3(0.2, 0.8, 0.8);
-    auto dielectric = std::make_shared<Dielectric>(1.52);
-
     for(int a = -11; a <= 11; a++) {
         for(int b = -11; b <= 11; b++) {
             vec3 albedo = vec3::random() * vec3::random();
@@ -27,18 +24,19 @@ std::vector<std::shared_ptr<Primitive>> scene() {
             primitives.emplace_back(
                 std::make_shared<ShapePrimitive>(
                     createSphereShape(center, random_double() * 0.5),
-                    std::make_shared<Lambertian>(std::make_shared<ConstantTexture>(albedo))
+                    std::make_shared<Lambertian>(albedo)
                 ));
         }
     }
     
-    // auto bunny = createTriangleMesh("../model/bunny.obj", vec3(0.0, 1.0, 0.0), 4.0, vec3(1, -1, 1));
-    // for (auto &triangle : bunny){
-    //     primitives.emplace_back(
-    //         std::make_shared<ShapePrimitive>(
-    //             triangle, dielectric
-    //         ));
-    // }
+    auto bunny = createTriangleMesh("model/bunny.obj", vec3(0.0, 1.0, 0.0), 20.0, vec3(1, 1, 1), true);
+    auto bunny_diffuse = std::make_shared<Lambertian>(vec3(0.8, 0.05, 0.05));
+    for (auto &triangle : bunny){
+        primitives.emplace_back(
+            std::make_shared<ShapePrimitive>(
+                triangle, bunny_diffuse
+            ));
+    }
     
     return primitives;
 }

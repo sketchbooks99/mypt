@@ -18,8 +18,8 @@ class Camera {
             auto half_height = tan(theta/2);
             auto half_width = aspect * half_height;
 
-            w = unit_vector(lookfrom - lookat);
-            u = unit_vector(cross(vup, w));
+            w = normalize(lookfrom - lookat);
+            u = normalize(cross(vup, w));
             v = cross(w, u);
 
             lower_left_corner = origin
