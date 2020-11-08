@@ -66,36 +66,6 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end) {
     box = surrounding(box_left, box_right);
 }
 
-// bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
-//     bool hit = false;
-//     std::vector<std::shared_ptr<BVHNode>> nodeToVisit; // Node stack to visit
-//     nodeToVisit.emplace_back(nodes); // Push root node for node stack
-
-//     // Depth-first-search of BVH Node using stack
-//     while(true) {
-//         auto node = nodeToVisit.back();
-//         if(node->box.intersect(r, t_min, t_max)) {
-//             // Intersection test for primitive (leaf node)
-//             if(node->primitiveIndex >= 0) {
-//                 if(primitives[node->primitiveIndex]->intersect(r, t_min, t_max, rec)) {
-//                     hit = true;
-//                     break;
-//                 }
-//                 if(nodeToVisit.empty()) break;
-//             } else {
-//                 if(node->right != nullptr && node->right->box.intersect(r, t_min, t_max))
-//                     nodeToVisit.emplace_back(node->right);
-//                 if(node->left != nullptr && node->left->box.intersect(r, t_min, t_max)) 
-//                     nodeToVisit.emplace_back(node->left);
-//             }
-//         } else {
-//             if(nodeToVisit.empty()) break;
-//             nodeToVisit.pop_back();
-//         }
-//     }
-//     return hit;
-// }
-
 bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     if(!box.intersect(r, t_min, t_max))
         return false;
@@ -109,20 +79,3 @@ bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) co
 AABB BVH::bounding() const {
     return box;
 }
-
-// void BVH::outBVH(){
-//     std::vector<std::shared_ptr<BVHNode>> nodeToVisit;
-//     nodeToVisit.emplace_back(nodes);
-
-//     while(true) {
-//         if(nodeToVisit.empty()) break;
-//         auto node = nodeToVisit.back();
-//         nodeToVisit.pop_back();
-//         std::cout << "index: " << node->primitiveIndex << ", " << std::flush;
-//         std::cout << "BOX min: " << node->box._min << ", max: " << node->box._max << "\n" << std::flush;
-//         if(node->primitiveIndex < 0) {
-//             nodeToVisit.emplace_back(node->left);
-//             nodeToVisit.emplace_back(node->right);
-//         }
-//     }
-// }

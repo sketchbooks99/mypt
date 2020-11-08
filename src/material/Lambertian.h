@@ -4,6 +4,8 @@
 #include "../core/Texture.h"
 #include "../texture/ConstantTexture.h"
 
+struct HitRecord;
+
 class Lambertian : public Material {
     public: 
         Lambertian(vec3 albedo) : albedo(std::make_shared<ConstantTexture>(albedo)) {}

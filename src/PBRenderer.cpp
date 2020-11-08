@@ -18,6 +18,7 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     }
     vec3 unit_direction = normalize(r.direction());
     auto t = 0.5 * (unit_direction.y + 1.0);
+    vec3 bg_color(0.05, 0.80, 0.80);
     return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
 }
 
