@@ -25,9 +25,7 @@ public:
     BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end);
     virtual bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
     virtual AABB bounding() const;
-    void outBVH() {}
 private:
-    void build(std::vector<std::shared_ptr<Primitive>>& p, int start, int end);
     std::shared_ptr<Primitive> left;
     std::shared_ptr<Primitive> right;
     AABB box;

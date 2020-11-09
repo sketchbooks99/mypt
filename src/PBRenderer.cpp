@@ -18,14 +18,13 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     }
     vec3 unit_direction = normalize(r.direction());
     auto t = 0.5 * (unit_direction.y + 1.0);
-    vec3 bg_color(0.05, 0.80, 0.80);
-    return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+    return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.8, 0.6, 0.05);
 }
 
 int main(int argc, const char * argv[]) {
     const int image_width = 500;
     const int image_height = 250;
-    const int samples_per_pixel = 50;
+    const int samples_per_pixel = 5;
     const int max_depth = 5;
     const auto aspect_ratio = double(image_width) / image_height;
 
@@ -45,8 +44,9 @@ int main(int argc, const char * argv[]) {
     const std::string filename = "hoge.png";
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
+
     for(int y = 0; y < image_height; y++) {
-        // std::cerr << "\rScanlines remaining: " << y << ' ' << std::flush;
+        // Display progress bar of rendering
         if(progress != static_cast<int>(((float)y / image_height) * len_progress))
         {
             progress = static_cast<int>(((float)y / image_height) * len_progress);
