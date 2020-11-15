@@ -16,14 +16,13 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createSphereShape(vec3(0, -1000, 0), 1000),
-            // checker_lambert
-            ground_lambert
+            checker_lambert
         ));
 
     for(int a = -11; a <= 11; a++) {
         for(int b = -11; b <= 11; b++) {
-            // vec3 albedo = vec3::random() * vec3::random();
-            vec3 albedo = vec3(1.0f);
+            vec3 albedo = vec3::random() * vec3::random() * 1.5f;
+            // vec3 albedo = vec3(1.0f);
             vec3 center(a * random_double() * 2, 0.5, b * random_double() * 2);
             primitives.emplace_back(
                 std::make_shared<ShapePrimitive>(

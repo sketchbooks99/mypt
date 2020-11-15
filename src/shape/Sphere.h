@@ -30,7 +30,7 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
     auto c = oc.length_squared() - radius * radius;
     auto discriminant = half_b * half_b - a * c;
 
-    if (discriminant > 0) {
+    if (discriminant >= 0) {
         auto root = sqrt(discriminant);
         auto temp = (-half_b - root) / a;
         if(temp < t_max && temp > t_min) {

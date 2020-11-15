@@ -17,17 +17,20 @@ public:
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
+        else if(i == 3) return w;
     }
     T& operator[](int i) {
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
+        else if(i == 3) return w;
     }
     
     type4& operator+=(const type4 &v) {
         x += v.x;
         y += v.y;
         z += v.z;
+        w += v.w;
         return *this;
     }
     
@@ -35,6 +38,7 @@ public:
         x *= t;
         y *= t;
         z *= t;
+        w *= t;
         return *this;
     }
     
@@ -47,30 +51,19 @@ public:
     }
     
     double length_squared() const {
-        return x*x + y*y + z*z;
+        return x*x + y*y + z*z + w*w;
     }
 
     inline static type4 random() {
-        return type4(random_double(), random_double(), random_double());
+        return type4(random_double(), random_double(), random_double(), random_double());
     }
 
     inline static type4 random(T min, T max) {
-        return type4(random_double(min, max), random_double(min, max), random_double(min, max));
+        return type4(random_double(min, max), 
+                     random_double(min, max), 
+                     random_double(min, max),
+                     random_double(min, max));
     }
-    
-    /*void write_color(std::ostream &out, int samples_per_pixel) {
-        // Devide the color total by the number of samples.
-        // for a gamma value of 2.0
-        auto scale = 1.0 / samples_per_pixel;
-        auto r = sqrt(scale * x);
-        auto g = sqrt(scale * y);
-        auto b = sqrt(scale * z);
-
-        // Write the translated [0, 255] value of each color component.
-        out << static_cast<int>(256 * clamp(r, 0.0, 0.999)) << ' '
-            << static_cast<int>(256 * clamp(g, 0.0, 0.999)) << ' '
-            << static_cast<int>(256 * clamp(b, 0.0, 0.999)) << '\n';
-    }*/
     
 public:
     T x, y, z, w;
@@ -133,6 +126,6 @@ typedef type4<int> int4;
 typedef type4<unsigned char> RGBA;
 
 // TODO: Implement of zero-division check. If v = vec4(0.0), zero-division will occur.
-inline vec4 unit_vector(vec4 v) {
+inline vec4 normalize(vec4 v) {
     return v / v.length();
 }

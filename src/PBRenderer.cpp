@@ -6,7 +6,7 @@
 vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
-    if(depth <= 0) 
+    if(depth <= 0)
         return vec3(0, 0, 0);
 
     if(bvh->intersect(r, 0, infinity, rec)) {
@@ -14,18 +14,19 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
         vec3 attenuation;
         if(rec.mat_ptr->scatter(r, rec, attenuation, scattered))
             return attenuation * ray_color(scattered, bvh, depth-1);
-        return vec3(0, 0, 0);
+        // return vec3(0, 0, 0);
     }
     vec3 unit_direction = normalize(r.direction());
     auto t = 0.5 * (unit_direction.y + 1.0);
-    return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.8, 0.6, 0.05);
+    return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+    // return vec3(1.0, 1.0, 1.0);
 }
 
 int main(int argc, const char * argv[]) {
     const int image_width = 500;
     const int image_height = 250;
     const int samples_per_pixel = 5;
-    const int max_depth = 5;
+    const int max_depth = 15;
     const auto aspect_ratio = double(image_width) / image_height;
 
     auto primitives = scene();
@@ -45,6 +46,8 @@ int main(int argc, const char * argv[]) {
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
 
+    clock_t start_time = clock();
+
     for(int y = 0; y < image_height; y++) {
         // Display progress bar of rendering
         if(progress != static_cast<int>(((float)y / image_height) * len_progress))
@@ -55,7 +58,9 @@ int main(int argc, const char * argv[]) {
                 std::string progress_char = i < progress ? "+" : " ";
                 std::cerr << progress_char;
             }
-            std::cerr << "]" << std::flush;
+            std::cerr << "]";
+            double time = static_cast<double>(clock() - start_time);
+            std::cerr << " [" << std::scientific << std::setprecision(2) << time / CLOCKS_PER_SEC << "s]" << std::flush;
         }
 
         for(int x = 0; x < image_width; x++) {
@@ -77,6 +82,7 @@ int main(int argc, const char * argv[]) {
             result.set(x, y, rgb_color);
         }
     }
+
     result.write(filename, "PNG");
     std::cerr << "\nDone\n";
     return 0;
