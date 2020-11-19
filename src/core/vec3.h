@@ -13,17 +13,11 @@ public:
     type3(T c) : x(c), y(c), z(c) {}
     
     type3 operator-() const { return type3(-x, -y, -z); }
-    double operator[](int i) const { 
-        ASSERT(i < 3, "Index number should be less than 3!\n");
-        if(i == 0) return x;
-        else if(i == 1) return y;
-        else if(i == 2) return z;
+    T operator[](int i) const { 
+        return *((T*)this + i);
     }
-    double& operator[](int i) {
-        ASSERT(i < 3, "Index number should be less than 3!\n");
-        if(i == 0) return x;
-        else if(i == 1) return y;
-        else if(i == 2) return z;
+    T& operator[](int i) {
+        return *((T*)this + i);
     }
     
     type3& operator+=(const type3 &v) {
@@ -48,7 +42,7 @@ public:
         return sqrt(length_squared());
     }
     
-    double length_squared() const {
+    T length_squared() const {
         return x*x + y*y + z*z;
     }
 

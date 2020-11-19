@@ -6,6 +6,7 @@
 #include <memory>
 #include <time.h>
 #include <iomanip>
+#include <assert.h>
 
 // Constants
 const double infinity = std::numeric_limits<double>::infinity();
