@@ -1,8 +1,6 @@
 #include "core/PBRenderer.h"
 #include "../scene/object_test.h"
 
-#include <iostream>
-
 vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
@@ -19,7 +17,6 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
     vec3 unit_direction = normalize(r.direction());
     auto t = 0.5 * (unit_direction.y + 1.0);
     return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
-    // return vec3(1.0, 1.0, 1.0);
 }
 
 int main(int argc, const char * argv[]) {
@@ -32,7 +29,6 @@ int main(int argc, const char * argv[]) {
     auto primitives = scene();
 
     auto bvh = new BVH(primitives, 0, primitives.size() - 1);
-    // bvh->outBVH();
     
     vec3 lookfrom(20, 5, 5);
     vec3 lookat(0, 0, 0);
@@ -47,24 +43,37 @@ int main(int argc, const char * argv[]) {
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
 
+    // Change seed of randaom value
+    srand((unsigned)time(NULL));
+
+    // Unable to display dicimal with index expression
+    std::cout.unsetf(std::ios::scientific);
+
     clock_t start_time = clock();
 
     // Render the image
     for(int y = 0; y < image_height; y++) {
 
-        // Display progress bar of rendering
-        if(progress != static_cast<int>(((float)y / image_height) * len_progress))
+        // calculate ratio of progress bar
+        if(progress != static_cast<int>(((float)(y) / image_height) * len_progress))
         {
-            progress = static_cast<int>(((float)y / image_height) * len_progress);
-            std::cerr << "\rRendering: [";
-            for(int i=0; i<len_progress; i++) {
-                std::string progress_char = i < progress ? "+" : " ";
-                std::cerr << progress_char;
-            }
-            std::cerr << "]";
-            double time = static_cast<double>(clock() - start_time);
-            std::cerr << " [" << std::scientific << std::setprecision(2) << time / CLOCKS_PER_SEC << "s]" << std::flush;
+            progress = static_cast<int>(((float)(y) / image_height) * len_progress);
         }
+        
+        // Display progress bar
+        std::cerr << "\rRendering: [";
+        for(int i=0; i<len_progress; i++) {
+            std::string progress_char = i < progress ? "+" : " ";
+            std::cerr << progress_char;
+        }
+        std::cerr << "]";
+        double time = static_cast<double>(clock() - start_time);
+        std::cerr << " [" << std::fixed << std::setprecision(2) << time / CLOCKS_PER_SEC << "s]";
+
+        // Display percentage of process
+        float percent = (float)y / image_height;
+        std::cerr << " (" << std::fixed << std::setprecision(2) << (float)(percent * 100.0f) << "%, ";
+        std::cerr << "" << y << " / " << image_height << ")" <<std::flush;
 
         for(int x = 0; x < image_width; x++) {
             vec3 color(0, 0, 0);

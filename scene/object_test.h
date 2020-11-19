@@ -7,7 +7,8 @@ std::vector<std::shared_ptr<Primitive>> scene() {
 
     auto checker = std::make_shared<CheckerTexture>(
         std::make_shared<ConstantTexture>(vec3(0.2, 0.3, 0.1)),
-        std::make_shared<ConstantTexture>(vec3(0.9, 0.9, 0.9))
+        std::make_shared<ConstantTexture>(vec3(0.9, 0.9, 0.9)),
+        100
     );
     auto checker_lambert = std::make_shared<Lambertian>(checker);
 

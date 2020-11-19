@@ -34,7 +34,7 @@ struct TriangleMesh {
                 }
                 else if (header == "f")
                 {
-                    // temporalily vector to store face information
+                    // temporal vector to store face information
                     std::vector<int> temp_vert_faces;
 
                     // Future work -----------------------------------
@@ -83,8 +83,9 @@ struct TriangleMesh {
                     }
                     // Get more then 4 inputs.
                     // NOTE: 
-                    //      This case is implemented under the assumption that if face input are more than 4, 
-                    //      mesh are configured by quad and inputs are partitioned with 4 stride.
+                    //      This case is implemented under the assumption that mesh are configurd 
+                    //      by quad and inputs are partitioned with 4 stride when face input are 
+                    //      more than 4.
                     else
                     {
                         for (int i = 0; i<int(temp_vert_faces.size() / 4); i++)
@@ -138,6 +139,7 @@ struct TriangleMesh {
             vec3 p2_f3(p2.x, p2.y, p2.z);
             auto N = normalize(cross(p2_f3 - p0_f3, p1_f3 - p0_f3));
 
+            // Normal smoothing
             if (isSmooth) {
                 auto idx = faces[i][0];
                 normals[idx] += N;
