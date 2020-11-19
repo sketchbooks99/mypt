@@ -25,7 +25,7 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
 int main(int argc, const char * argv[]) {
     const int image_width = 500;
     const int image_height = 250;
-    const int samples_per_pixel = 5;
+    const int samples_per_pixel = 50;
     const int max_depth = 15;
     const auto aspect_ratio = double(image_width) / image_height;
 
@@ -42,13 +42,16 @@ int main(int argc, const char * argv[]) {
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
-    const std::string filename = "hoge.png";
+    std::string filename = argv[1] ? argv[1] : "image.png";
+
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
 
     clock_t start_time = clock();
 
+    // Render the image
     for(int y = 0; y < image_height; y++) {
+
         // Display progress bar of rendering
         if(progress != static_cast<int>(((float)y / image_height) * len_progress))
         {

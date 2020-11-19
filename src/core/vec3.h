@@ -14,11 +14,13 @@ public:
     
     type3 operator-() const { return type3(-x, -y, -z); }
     double operator[](int i) const { 
+        ASSERT(i < 3, "Index number should be less than 3!\n");
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
     }
     double& operator[](int i) {
+        ASSERT(i < 3, "Index number should be less than 3!\n");
         if(i == 0) return x;
         else if(i == 1) return y;
         else if(i == 2) return z;
