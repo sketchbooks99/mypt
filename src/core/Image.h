@@ -17,11 +17,11 @@ public:
         int idx = y * width + x;
         data[idx] = val;
     }
-    // PixelType get(int x, int y)
-    // {
-    //     assert(x < width && y < height);
-    //     return data[x][y];
-    // }
+    PixelType get(int x, int y)
+    {
+        assert(x < width && y < height);
+        return data[y * width + x];
+    }
 
     void write(const std::string& filename, const std::string& format);
 private:
@@ -47,7 +47,7 @@ void Image<PixelType>::write(const std::string& filename, const std::string& for
     if(format == "png" || format == "PNG")
     {
         stbi_flip_vertically_on_write(true);
-        stbi_write_png(filename.c_str(), width, height, nChannels, data, 0);
+        stbi_write_png(filename.c_str(), width, height, nChannels, data, 4 - nChannels);
     }
     if(format == "jpg" || format == "JPG")
     {

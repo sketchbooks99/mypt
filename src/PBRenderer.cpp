@@ -20,6 +20,9 @@ vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
 }
 
 int main(int argc, const char * argv[]) {
+    // Change seed of randaom value
+    srand((unsigned)time(NULL));
+
     const int image_width = 500;
     const int image_height = 250;
     const int samples_per_pixel = 50;
@@ -42,9 +45,6 @@ int main(int argc, const char * argv[]) {
 
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
-
-    // Change seed of randaom value
-    srand((unsigned)time(NULL));
 
     // Unable to display dicimal with index expression
     std::cout.unsetf(std::ios::scientific);
