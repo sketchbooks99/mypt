@@ -12,12 +12,13 @@ double schlick(double cosine, double ref_idx) {
 
 class Dielectric : public Material {
     public:
-        Dielectric(double ri) : ref_idx(ri) {}
+        Dielectric(double ri) : albedo(vec3(1.0f)), ref_idx(ri) {}
+        Dielectric(vec3 a, double ri) : albedo(a), ref_idx(ri) {}
 
         virtual bool scatter(
             const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered
         ) const {
-            attenuation = vec3(1.0, 1.0, 1.0);
+            attenuation = albedo;
             double etai_over_etat = (rec.front_face) ? (1.0 / ref_idx) : (ref_idx);
 
             vec3 unit_direction = normalize(r_in.direction());
@@ -40,5 +41,6 @@ class Dielectric : public Material {
         }
 
     public:
+        vec3 albedo;
         double ref_idx;
 };

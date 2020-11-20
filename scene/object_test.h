@@ -22,23 +22,29 @@ std::vector<std::shared_ptr<Primitive>> scene() {
 
     for(int a = -11; a <= 11; a++) {
         for(int b = -11; b <= 11; b++) {
-            vec3 albedo = vec3::random() * vec3::random() * 1.5f;
+            vec3 albedo = vec3::random() * vec3::random();
             // vec3 albedo = vec3(1.0f);
-            vec3 center(a * random_double() * 2, 0.5, b * random_double() * 2);
+            vec3 center(a * random_double() * 2, 1.0, b * random_double() * 2);
+
+            double rnd = random_double();
+            std::shared_ptr<Material> mat;
+            if(rnd < 0.5f) mat = std::make_shared<Lambertian>(albedo);
+            else if(rnd < 0.75f) mat = std::make_shared<Dielectric>(albedo, 1.52f);
+            else mat = std::make_shared<Metal>(albedo, 0.03f);
             primitives.emplace_back(
                 std::make_shared<ShapePrimitive>(
-                    createSphereShape(center, random_double() * 0.5),
-                    std::make_shared<Lambertian>(albedo)
+                    createSphereShape(center, random_double()*0.75f),
+                    mat
                 ));
         }
     }
     
-    auto bunny = createTriangleMesh("model/bunny.obj", vec3(0.0, 1.0, 0.0), 20.0, vec3(1, 1, 1), true);
-    auto bunny_diffuse = std::make_shared<Lambertian>(vec3(0.8, 0.05, 0.05));
+    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0, 1.0, 0.0), 40.0, vec3(1, 1, 1), true);
+    auto bunny_emit = std::make_shared<Emitter>(std::make_shared<ConstantTexture>(vec3(1.0f, 1.0f, 1.0f)), 10.0f);
     for (auto &triangle : bunny){
         primitives.emplace_back(
             std::make_shared<ShapePrimitive>(
-                triangle, bunny_diffuse
+                triangle, bunny_emit
             ));
     }
     

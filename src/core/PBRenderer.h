@@ -18,6 +18,7 @@
 #include "../material/Lambertian.h"
 #include "../material/Metal.h"
 #include "../material/Dielectric.h"
+#include "../material/Emitter.h"
 // #include "../material/Disney.h"
 // Texture include 
 #include "Texture.h"

@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <random>
 
+// ----- Mathmatical utility values and functions -----
 // Constants
 const double infinity = std::numeric_limits<double>::infinity();
 const double pi = 3.1415926535897932385;
@@ -41,10 +42,33 @@ inline double clamp(double x, double min, double max) {
     return x;
 }
 
+// ----- Utility functions -----
 void ASSERT(const bool cond, const std::string& text)
 {
     if (!cond)
     {
         throw std::runtime_error(text);
     }
+}
+
+// ref: https://qiita.com/iseki-masaya/items/70b4ee6e0877d12dafa8
+std::vector<std::string> split(const std::string &s, char delimiter)
+{
+    std::vector<std::string> elements;
+    std::string item;
+
+    for(char ch: s)
+    {
+        if(ch == delimiter) {
+            if(!item.empty())
+                elements.push_back(item);
+            item.clear();
+        }
+        else {
+            item += ch;
+        }
+    }
+    if(!item.empty())
+        elements.push_back(item);
+    return elements;
 }

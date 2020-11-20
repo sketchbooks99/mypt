@@ -1,22 +1,22 @@
 #include "core/PBRenderer.h"
 #include "../scene/object_test.h"
 
-vec3 ray_color(const Ray& r, const BVH* bvh, int depth) {
+vec3 ray_color(const Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0)
         return vec3(0, 0, 0);
 
-    if(bvh->intersect(r, 0, infinity, rec)) {
-        Ray scattered;
-        vec3 attenuation;
-        if(rec.mat_ptr->scatter(r, rec, attenuation, scattered))
-            return attenuation * ray_color(scattered, bvh, depth-1);
-        // return vec3(0, 0, 0);
-    }
-    vec3 unit_direction = normalize(r.direction());
-    auto t = 0.5 * (unit_direction.y + 1.0);
-    return (1.0 - t) * vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
+    if(!bvh->intersect(r, 0, infinity, rec))
+        return background;
+
+    Ray scattered;
+    vec3 attenuation;
+    vec3 emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
+
+    if(!rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        return emitted;
+    return emitted + attenuation * ray_color(scattered, bvh, background, depth-1);
 }
 
 int main(int argc, const char * argv[]) {
@@ -25,8 +25,8 @@ int main(int argc, const char * argv[]) {
 
     const int image_width = 500;
     const int image_height = 250;
-    const int samples_per_pixel = 50;
-    const int max_depth = 15;
+    const int samples_per_pixel = 1;
+    const int max_depth = 2;
     const auto aspect_ratio = double(image_width) / image_height;
 
     auto primitives = scene();
@@ -38,6 +38,7 @@ int main(int argc, const char * argv[]) {
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 15.0;
     auto aperture = 0.0;
+    vec3 background(0.7, 0.9, 0.9);
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
@@ -81,7 +82,7 @@ int main(int argc, const char * argv[]) {
                 auto u = (x + random_double()) / image_width;
                 auto v = (y + random_double()) / image_height;
                 Ray r = cam.get_ray(u, v);
-                color += ray_color(r, bvh, max_depth);
+                color += ray_color(r, bvh, background, max_depth);
             }
             auto scale = 1.0 / samples_per_pixel;
             auto r = sqrt(scale * color.x);
@@ -91,7 +92,7 @@ int main(int argc, const char * argv[]) {
                            static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
                            static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)),
                            255);
-            result.set(x, y, rgb_color);
+            result.set(x, image_height-(y+1), rgb_color);
         }
     }
 
