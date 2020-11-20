@@ -42,7 +42,7 @@ int main(int argc, const char * argv[]) {
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
-    std::string filename = argv[1] ? argv[1] : "image.png";
+    std::string filename = argv[1] ? argv[1] : "result/image.png";
 
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
