@@ -25,8 +25,8 @@ int main(int argc, const char * argv[]) {
 
     const int image_width = 500;
     const int image_height = 250;
-    const int samples_per_pixel = 1;
-    const int max_depth = 2;
+    const int samples_per_pixel = 50;
+    const int max_depth = 12;
     const auto aspect_ratio = double(image_width) / image_height;
 
     auto primitives = scene();

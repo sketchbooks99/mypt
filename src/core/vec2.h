@@ -13,12 +13,10 @@ public:
     type2(T c) : x(c), y(c) {}
 
     T operator[](int i) const { 
-        if(i == 0) return x;
-        else if(i == 1) return y;
+        return *((T*)this+i);
     }
     T& operator[](int i) {
-        if(i == 0) return x;
-        else if(i == 1) return y;
+        return *((T*)this+i);
     }
 
     type2 operator-() const { return type2(-x, -y); }

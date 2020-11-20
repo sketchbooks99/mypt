@@ -14,16 +14,10 @@ public:
     
     type4 operator-() const { return type4(-x, -y, -z); }
     T operator[](int i) const { 
-        if(i == 0) return x;
-        else if(i == 1) return y;
-        else if(i == 2) return z;
-        else if(i == 3) return w;
+        return *((T*)this+i);
     }
     T& operator[](int i) {
-        if(i == 0) return x;
-        else if(i == 1) return y;
-        else if(i == 2) return z;
-        else if(i == 3) return w;
+        return *((T*)this+i);
     }
     
     type4& operator+=(const type4 &v) {
