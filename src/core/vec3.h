@@ -5,19 +5,23 @@
 
 #include "Util.h"
 
-template <typename T>
+template <typename Type>
 class type3 {
 public:
     type3() : x(0), y(0), z(0) {}
-    type3(T e0, T e1, T e2) : x(e0), y(e1), z(e2) {}
-    type3(T c) : x(c), y(c), z(c) {}
+    type3(Type e0, Type e1, Type e2) : x(e0), y(e1), z(e2) {}
+    type3(Type c) : x(c), y(c), z(c) {}
+
+    // Define cast to other type3
+    template <typename OtherType>
+    operator type3<OtherType>() { return type3<OtherType>(x, y, z); }
     
     type3 operator-() const { return type3(-x, -y, -z); }
-    T operator[](int i) const { 
-        return *((T*)this + i);
+    Type operator[](int i) const { 
+        return *((Type*)this + i);
     }
-    T& operator[](int i) {
-        return *((T*)this + i);
+    Type& operator[](int i) {
+        return *((Type*)this + i);
     }
     
     type3& operator+=(const type3 &v) {
@@ -27,14 +31,14 @@ public:
         return *this;
     }
     
-    type3& operator*=(const T t) {
+    type3& operator*=(const Type t) {
         x *= t;
         y *= t;
         z *= t;
         return *this;
     }
     
-    type3 &operator/=(const T t) {
+    type3 &operator/=(const Type t) {
         return *this *= 1/t;
     }
     
@@ -42,7 +46,7 @@ public:
         return sqrt(length_squared());
     }
     
-    T length_squared() const {
+    Type length_squared() const {
         return x*x + y*y + z*z;
     }
 
@@ -50,60 +54,60 @@ public:
         return type3(random_double(), random_double(), random_double());
     }
 
-    inline static type3 random(T min, T max) {
+    inline static type3 random(Type min, Type max) {
         return type3(random_double(min, max), random_double(min, max), random_double(min, max));
     }
     
 public:
-    T x, y, z;
+    Type x, y, z;
 };
 
 // vec3 utility functions
-template <typename T>
-inline std::ostream& operator<<(std::ostream &out, const type3<T> &v) {
+template <typename Type>
+inline std::ostream& operator<<(std::ostream &out, const type3<Type> &v) {
     return out << v.x << ' ' << v.y << ' ' << v.z;
 }
 
-template <typename T>
-inline type3<T> operator+(const type3<T> &u, const type3<T> &v) {
-    return type3<T>(u.x + v.x, u.y + v.y, u.z + v.z);
+template <typename Type>
+inline type3<Type> operator+(const type3<Type> &u, const type3<Type> &v) {
+    return type3<Type>(u.x + v.x, u.y + v.y, u.z + v.z);
 }
 
-template <typename T>
-inline type3<T> operator-(const type3<T> &u, const type3<T> &v) {
-    return type3<T>(u.x - v.x, u.y - v.y, u.z - v.z);
+template <typename Type>
+inline type3<Type> operator-(const type3<Type> &u, const type3<Type> &v) {
+    return type3<Type>(u.x - v.x, u.y - v.y, u.z - v.z);
 }
 
-template <typename T>
-inline type3<T> operator*(const type3<T> &u, const type3<T> &v) {
-    return type3<T>(u.x * v.x, u.y * v.y, u.z * v.z);
+template <typename Type>
+inline type3<Type> operator*(const type3<Type> &u, const type3<Type> &v) {
+    return type3<Type>(u.x * v.x, u.y * v.y, u.z * v.z);
 }
 
-template <typename T>
-inline type3<T> operator*(double t, const type3<T> &v) {
-    return type3<T>(t*v.x, t*v.y, t*v.z);
+template <typename Type>
+inline type3<Type> operator*(double t, const type3<Type> &v) {
+    return type3<Type>(t*v.x, t*v.y, t*v.z);
 }
 
-template <typename T>
-inline type3<T> operator*(const type3<T> &v, double t) {
+template <typename Type>
+inline type3<Type> operator*(const type3<Type> &v, double t) {
     return t * v;
 }
 
-template <typename T>
-inline type3<T> operator/(type3<T> v, double t) {
+template <typename Type>
+inline type3<Type> operator/(type3<Type> v, double t) {
     return (1/t) * v;
 }
 
-template <typename T>
-inline double dot(const type3<T> &u, const type3<T> &v) {
+template <typename Type>
+inline double dot(const type3<Type> &u, const type3<Type> &v) {
     return u.x * v.x
     + u.y * v.y
     + u.z * v.z;
 }
 
-template <typename T>
-inline type3<T> cross(const type3<T> &u, const type3<T> &v) {
-    return type3<T>(u.y * v.z - u.z * v.y,
+template <typename Type>
+inline type3<Type> cross(const type3<Type> &u, const type3<Type> &v) {
+    return type3<Type>(u.y * v.z - u.z * v.y,
                 u.z * v.x - u.x * v.z,
                 u.x * v.y - u.y * v.x);
 }

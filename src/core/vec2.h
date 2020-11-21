@@ -5,18 +5,21 @@
 
 #include "Util.h"
 
-template <typename T>
+template <typename Type>
 class type2 {
 public:
     type2() : x(0), y(0) {}
-    type2(T e0, T e1) : x(e0), y(e1) {}
-    type2(T c) : x(c), y(c) {}
+    type2(Type e0, Type e1) : x(e0), y(e1) {}
+    type2(Type c) : x(c), y(c) {}
 
-    T operator[](int i) const { 
-        return *((T*)this+i);
+    template <typename OtherType>
+    operator type2<OtherType>() { return type2<OtherType>(x, y); }
+
+    Type operator[](int i) const { 
+        return *((Type*)this+i);
     }
-    T& operator[](int i) {
-        return *((T*)this+i);
+    Type& operator[](int i) {
+        return *((Type*)this+i);
     }
 
     type2 operator-() const { return type2(-x, -y); }
@@ -27,21 +30,21 @@ public:
         return *this;
     }
 
-    type2& operator*=(const T t) {
+    type2& operator*=(const Type t) {
         x *= t;
         y *= t;
         return *this;
     }
 
-    type2& operator/=(const T t) {
+    type2& operator/=(const Type t) {
         return *this *= 1/t;
     }
 
-    T length() const {
+    Type length() const {
         return sqrt(length_squared());
     }
 
-    T length_squared() const {
+    Type length_squared() const {
         return x*x + y*y;
     }
 
@@ -49,11 +52,11 @@ public:
         return type2(random_double(), random_double());
     }
 
-    inline static type2 random(T min, T max) {
+    inline static type2 random(Type min, Type max) {
         return type2(random_double(min, max), random_double(min, max));
     }
 public:
-    T x, y;
+    Type x, y;
 };
 
 typedef type2<double> vec2;
@@ -61,31 +64,31 @@ typedef type2<unsigned int> uint2;
 typedef type2<int> int2;
 
 // Utility functions of type2
-template <typename T>
-inline std::ostream& operator<<(std::ostream &out, const type2<T> &v) {
+template <typename Type>
+inline std::ostream& operator<<(std::ostream &out, const type2<Type> &v) {
     return out << v.x << ' ' << v.y;
 }
 
-template <typename T>
-inline type2<T> operator+(const type2<T> &u, const type2<T> &v) { return type2<T>(u.x+v.x, u.y+v.y); }
+template <typename Type>
+inline type2<Type> operator+(const type2<Type> &u, const type2<Type> &v) { return type2<Type>(u.x+v.x, u.y+v.y); }
 
-template <typename T>
-inline type2<T> operator-(const type2<T> &u, const type2<T> &v) { return type2<T>(u.x-v.x, u.y-v.y); }
+template <typename Type>
+inline type2<Type> operator-(const type2<Type> &u, const type2<Type> &v) { return type2<Type>(u.x-v.x, u.y-v.y); }
 
-template <typename T>
-inline type2<T> operator*(const type2<T> &u, const type2<T> &v) { return type2<T>(u.x*v.x, u.y*v.y); }
+template <typename Type>
+inline type2<Type> operator*(const type2<Type> &u, const type2<Type> &v) { return type2<Type>(u.x*v.x, u.y*v.y); }
 
-template <typename T>
-inline type2<T> operator*(double t, const type2<T> &v) { return type2<T>(t*v.x, t*v.y); }
+template <typename Type>
+inline type2<Type> operator*(double t, const type2<Type> &v) { return type2<Type>(t*v.x, t*v.y); }
 
-template <typename T>
-inline type2<T> operator/(const type2<T> &u, double t) { return (1/t) * u; }
+template <typename Type>
+inline type2<Type> operator/(const type2<Type> &u, double t) { return (1/t) * u; }
 
-template <typename T>
-inline T dot(const type2<T> &u, const type2<T> &v) { return u.x*v.x + u.y*v.y; }
+template <typename Type>
+inline Type dot(const type2<Type> &u, const type2<Type> &v) { return u.x*v.x + u.y*v.y; }
 
-template <typename T>
-inline type2<T> cross(const type2<T> &u, const type2<T> &v) { return u.x*v.y - u.y*v.x; }
+template <typename Type>
+inline type2<Type> cross(const type2<Type> &u, const type2<Type> &v) { return u.x*v.y - u.y*v.x; }
 
-template <typename T>
-inline type2<T> unit_vector(type2<T> v) { return v / v.length(); }
+template <typename Type>
+inline type2<Type> unit_vector(type2<Type> v) { return v / v.length(); }

@@ -5,19 +5,22 @@
 
 #include "Util.h"
 
-template <typename T>
+template <typename Type>
 class type4 {
 public:
     type4() : x(0), y(0), z(0), w(0) {}
-    type4(T e0, T e1, T e2, T e3) : x(e0), y(e1), z(e2), w(e3) {}
-    type4(T c) : x(c), y(c), z(c), w(c) {}
+    type4(Type e0, Type e1, Type e2, Type e3) : x(e0), y(e1), z(e2), w(e3) {}
+    type4(Type c) : x(c), y(c), z(c), w(c) {}
+
+    template <typename OtherType>
+    operator type4<OtherType>() { return type4<OtherType>(x, y, z, w); }
     
     type4 operator-() const { return type4(-x, -y, -z); }
-    T operator[](int i) const { 
-        return *((T*)this+i);
+    Type operator[](int i) const { 
+        return *((Type*)this+i);
     }
-    T& operator[](int i) {
-        return *((T*)this+i);
+    Type& operator[](int i) {
+        return *((Type*)this+i);
     }
     
     type4& operator+=(const type4 &v) {
@@ -52,7 +55,7 @@ public:
         return type4(random_double(), random_double(), random_double(), random_double());
     }
 
-    inline static type4 random(T min, T max) {
+    inline static type4 random(Type min, Type max) {
         return type4(random_double(min, max), 
                      random_double(min, max), 
                      random_double(min, max),
@@ -60,55 +63,55 @@ public:
     }
     
 public:
-    T x, y, z, w;
+    Type x, y, z, w;
 };
 
 // vec4 utility functions
-template <typename T>
-inline std::ostream& operator<<(std::ostream &out, const type4<T> &v) {
+template <typename Type>
+inline std::ostream& operator<<(std::ostream &out, const type4<Type> &v) {
     return out << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w;
 }
 
-template <typename T>
-inline type4<T> operator+(const type4<T> &u, const type4<T> &v) {
+template <typename Type>
+inline type4<Type> operator+(const type4<Type> &u, const type4<Type> &v) {
     return vec4(u.x + v.x, u.y + v.y, u.z + v.z, u.w + v.w);
 }
 
-template <typename T>
-inline type4<T> operator-(const type4<T> &u, const type4<T> &v) {
-    return type4<T>(u.x - v.x, u.y - v.y, u.z - v.z, u.w - v.w);
+template <typename Type>
+inline type4<Type> operator-(const type4<Type> &u, const type4<Type> &v) {
+    return type4<Type>(u.x - v.x, u.y - v.y, u.z - v.z, u.w - v.w);
 }
 
-template <typename T>
-inline type4<T> operator*(const type4<T> &u, const type4<T> &v) {
-    return type4<T>(u.x * v.x, u.y * v.y, u.z * v.z, u.w * v.w);
+template <typename Type>
+inline type4<Type> operator*(const type4<Type> &u, const type4<Type> &v) {
+    return type4<Type>(u.x * v.x, u.y * v.y, u.z * v.z, u.w * v.w);
 }
 
-template <typename T>
-inline type4<T> operator*(double t, const type4<T> &v) {
-    return type4<T>(t*v.x, t*v.y, t*v.z, t*v.w);
+template <typename Type>
+inline type4<Type> operator*(double t, const type4<Type> &v) {
+    return type4<Type>(t*v.x, t*v.y, t*v.z, t*v.w);
 }
 
-template <typename T>
-inline type4<T> operator*(const type4<T> &v, double t) {
+template <typename Type>
+inline type4<Type> operator*(const type4<Type> &v, double t) {
     return t * v;
 }
 
-template <typename T>
-inline type4<T> operator/(type4<T> v, double t) {
+template <typename Type>
+inline type4<Type> operator/(type4<Type> v, double t) {
     return (1/t) * v;
 }
 
-template <typename T>
-inline double dot(const type4<T> &u, const type4<T> &v) {
+template <typename Type>
+inline double dot(const type4<Type> &u, const type4<Type> &v) {
     return u.x * v.x
     + u.y * v.y
     + u.z * v.z;
 }
 
-template <typename T>
-inline type4<T> cross(const type4<T> &u, const type4<T> &v) {
-    return type4<T>(u.y * v.z - u.z * v.y,
+template <typename Type>
+inline type4<Type> cross(const type4<Type> &u, const type4<Type> &v) {
+    return type4<Type>(u.y * v.z - u.z * v.y,
                 u.z * v.x - u.x * v.z,
                 u.x * v.y - u.y * v.x, 
                 1.0f);
