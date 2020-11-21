@@ -3,8 +3,8 @@
 #include "Ray.h"
 
 struct AABB {
-    AABB() {}
-    AABB(const vec3& a, const vec3& b) { _min = a; _max = b; }
+    AABB() : _min(vec3()), _max(vec3()) {}
+    AABB(const vec3& a, const vec3& b) : _min(a), _max(b) {}
 
     vec3 min() const { return _min; }
     vec3 max() const { return _max; }
@@ -19,12 +19,16 @@ struct AABB {
                             (_max[a] - r.origin()[a]) / r.direction()[a]);
             tmin = ffmax(t0, tmin);
             tmax = ffmin(t1, tmax);
-            if(tmax <= tmin) 
+            if(tmax <= tmin)
                 return false;
         }
         return true;
     }
 
+    inline double surface_area() {
+        return 2*(_max - _min).length_squared();
+    }
+private:
     vec3 _min;
     vec3 _max;
 };

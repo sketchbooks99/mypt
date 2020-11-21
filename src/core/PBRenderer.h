@@ -22,7 +22,7 @@
 // #include "../material/Disney.h"
 // Texture include 
 #include "Texture.h"
-// #include "../texture/Image.h"
+#include "../texture/ImageTexture.h"
 #include "../texture/CheckerTexture.h"
 #include "../texture/ConstantTexture.h"
 #include "../texture/NoiseTexture.h"

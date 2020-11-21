@@ -6,7 +6,7 @@
 /// TODO: 
 ///  - Treatment of UV (clamp, Loop, etc...) should be configured
 
-class ImageTexture final : public Texture, Image<RGB> {
+class ImageTexture final : public Texture, public Image<RGB> {
 public:
     ImageTexture() : Image<RGB>(0, 0){}
     ImageTexture(const std::string& filename) : Image<RGB>(filename) {}
@@ -29,7 +29,7 @@ vec3 ImageTexture::value(double u, double v, const vec3& p) const {
     if(i >= width) i = width-1;
     if(j >= height) j = height-1;
 
-    auto pixel = static_cast<vec3>(this->get(i, j));
-    return vec3(pixel / 255.0f);
+    auto pixel = static_cast<vec3>(get(i, j));
+    return pixel / 255.0f;
 }
 

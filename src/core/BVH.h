@@ -22,22 +22,26 @@ bool box_z_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Pri
 
 class BVH : public Primitive {
 public:
-    BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end);
+    enum class SplitMethod { MIDDLE, SAH };
+    BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
     virtual bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
     virtual AABB bounding() const;
 private:
     std::shared_ptr<Primitive> left;
     std::shared_ptr<Primitive> right;
     AABB box;
+    SplitMethod splitMethod;
 };
 
-BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end) {
-    int axis = random_int(0, 2);
+BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, 
+         int axis, SplitMethod splitMethod) {
     auto compare_axis = (axis == 0) ? box_x_compare
                       : (axis == 1) ? box_y_compare
                                     : box_z_compare;
 
     int primitive_span = end - start;
+
+    std::sort(p.begin() + start, p.begin() + end, compare_axis);
 
     if (primitive_span == 1) {
         left = right = p[start];
@@ -49,12 +53,40 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end) {
             left = p[start+1];
             right = p[start];
         }
-    } else {
-        std::sort(p.begin() + start, p.begin() + end, compare_axis);
-
-        auto mid = start + primitive_span/2;
-        left = std::make_shared<BVH>(p, start, mid);
-        right = std::make_shared<BVH>(p, mid, end);
+    } else if (primitive_span > 0) {
+        switch(splitMethod) {
+        case SplitMethod::MIDDLE: {
+            auto mid = start + primitive_span/2;
+            left = std::make_shared<BVH>(p, start, mid, axis, splitMethod);
+            right = std::make_shared<BVH>(p, mid, end, axis, splitMethod);
+        }
+        case SplitMethod::SAH: {
+            int splitIndex = 1;
+            double bestCost = std::numeric_limits<double>::infinity();
+            // AABB for calculating temporal surface area.
+            AABB s1box, s2box;
+            // vector to store surface area
+            std::vector<double> s1SA(primitive_span), s2SA(primitive_span);
+            // Store surface area of left side at every case
+            for(int i=1; i<primitive_span; i++) {
+                s1box = surrounding(s1box, p[i+start]->bounding());
+                s1SA[i] = s1box.surface_area();
+            }
+            // Store surface area of right side at every case
+            for(int i=primitive_span-1; i>0; i--) {
+                s2box = surrounding(s2box, p[i+start]->bounding());
+                s2SA[i] = s2box.surface_area();
+                double cost = s1SA[i]*(i+1) + s2SA[i]*(primitive_span-i);
+                if(cost < bestCost) {
+                    bestCost = cost;
+                    splitIndex = i+start;
+                }
+            }
+            
+            left = std::make_shared<BVH>(p, start, splitIndex, axis, splitMethod);
+            right = std::make_shared<BVH>(p, splitIndex, end, axis, splitMethod);
+        }
+        }
     }
 
     AABB box_left, box_right;

@@ -20,14 +20,14 @@ public:
         int idx = y * width + x;
         data[idx] = val;
     }
-    PixelType get(int x, int y)
+    PixelType get(int x, int y) const 
     {
         assert(x < width && y < height);
         return data[y * width + x];
     }
-    static unsigned char* load(const std::string& filename);
+    void load(const std::string& filename);
     void write(const std::string& filename, const std::string& format);
-private:
+protected:
     int nChannels;
     PixelType* data;
     int width, height;
@@ -50,17 +50,17 @@ Image<PixelType>::Image(const std::string& filename)
     nChannels = static_cast<int>(sizeof(PixelType));
     data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
     if(!data)
-        throw std::runtime_error("Image file can't be loaded! Please check file path or format!\n");
+        throw std::runtime_error("Image file '"+filename+"'can't be loaded! Please check file path or format!\n");
 }
 
+// --------------------------------------------------------------------------------
 template <typename PixelType>
-static unsigned char* load(const std::string& filename, int& width, int& height, int& nChannels)
-{
-    unsigned char* tmp;
-    tmp = stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels);
-    if(!tmp)
+void Image<PixelType>::load(const std::string& filename)
+{   
+    nChannels = static_cast<int>(sizeof(PixelType));
+    data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
+    if(!data)
         throw std::runtime_error("Image file can't be loaded! Please check file path or format!\n");
-    return tmp;
 }
 
 // --------------------------------------------------------------------------------

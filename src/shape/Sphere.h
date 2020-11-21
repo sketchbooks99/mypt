@@ -5,16 +5,15 @@
 class Sphere: public Shape {
     public:
         Sphere() {}
-        Sphere(vec3 cen, double r)
-            : center(cen), radius(r) {};
+        Sphere(vec3 cen, double r) : center(cen), radius(r) {};
 
         virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const;
         virtual AABB bounding() const;
     public:
         vec2 getUV(const vec3& p) const {
-            // vec3 tmp = p / radius;
-            auto phi = atan2(p.z, p.x);
-            auto theta = asin(p.y);
+            vec3 tmp = (p - center) / radius;
+            auto phi = atan2(tmp.z, tmp.x);
+            auto theta = asin(tmp.y);
             auto u = 1.0 - (phi + pi) / (2.0*pi);
             auto v = (theta + pi/2.0) / pi;
             return vec2(u, v);

@@ -23,17 +23,17 @@ int main(int argc, const char * argv[]) {
     // Change seed of randaom value
     srand((unsigned)time(NULL));
 
-    const int image_width = 500;
-    const int image_height = 250;
-    const int samples_per_pixel = 50;
+    const int image_width = 256;
+    const int image_height = 256;
+    const int samples_per_pixel = 1;
     const int max_depth = 12;
     const auto aspect_ratio = double(image_width) / image_height;
 
     auto primitives = scene();
 
-    auto bvh = new BVH(primitives, 0, primitives.size() - 1);
+    auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
     
-    vec3 lookfrom(20, 5, 5);
+    vec3 lookfrom(20, 10, 10);
     vec3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 15.0;

@@ -12,12 +12,15 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     );
     auto checker_lambert = std::make_shared<Lambertian>(checker);
 
-    auto ground_lambert = std::make_shared<Lambertian>(1.0f);
+    auto image_texture = std::make_shared<ImageTexture>(
+        "data/image/earthmap.jpg"
+    );
+    auto image_lambert = std::make_shared<Lambertian>(image_texture);
 
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
-            createSphereShape(vec3(0, -1000, 0), 1000),
-            checker_lambert
+            createSphereShape(vec3(0, -500, 0), 500),
+            image_lambert
         ));
 
     for(int a = -11; a <= 11; a++) {
@@ -29,8 +32,9 @@ std::vector<std::shared_ptr<Primitive>> scene() {
             double rnd = random_double();
             std::shared_ptr<Material> mat;
             if(rnd < 0.5f) mat = std::make_shared<Lambertian>(albedo);
-            else if(rnd < 0.75f) mat = std::make_shared<Dielectric>(albedo, 1.52f);
-            else mat = std::make_shared<Metal>(albedo, 0.03f);
+            else if(rnd < 0.7f) mat = std::make_shared<Dielectric>(albedo, 1.52f);
+            else if(rnd < 0.9f) mat = std::make_shared<Metal>(albedo, 0.03f);
+            else mat = std::make_shared<Emitter>(std::make_shared<ConstantTexture>(albedo), 10.0f);
             primitives.emplace_back(
                 std::make_shared<ShapePrimitive>(
                     createSphereShape(center, random_double()*0.75f),

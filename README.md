@@ -25,8 +25,8 @@ class Primitive {
 - [ ] Implement Image I/O 
   - [x] Base Image class (only constructor)
   - [x] Write image to file
-  - [ ] Support JPG format
+  - [x] Support JPG format
   - [ ] Support GRAY scale I/O
 - [ ] Transformation system (translate, rotate, scale)
 - [ ] Update BVH for better efficiency
-- [ ] Enable ImageTexture class
+- [x] Enable ImageTexture class
