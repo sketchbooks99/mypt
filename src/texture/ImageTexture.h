@@ -29,7 +29,7 @@ vec3 ImageTexture::value(double u, double v, const vec3& p) const {
     if(i >= width) i = width-1;
     if(j >= height) j = height-1;
 
-    auto pixel = static_cast<vec3>(get(i, j));
+    auto pixel = static_cast<vec3>(this->get(i, j));
     return pixel / 255.0f;
 }
 

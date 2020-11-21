@@ -29,4 +29,5 @@ class Primitive {
   - [ ] Support GRAY scale I/O
 - [ ] Transformation system (translate, rotate, scale)
 - [ ] Update BVH for better efficiency
+  - [x] Add SAH based BVH (I have not verified efficiency yet.)
 - [x] Enable ImageTexture class
