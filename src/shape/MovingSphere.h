@@ -2,7 +2,7 @@
 
 #include "../core/Shape.h"
 
-class MovingSphere : public Shape {
+class MovingSphere final : public Shape {
     public:
         MovingSphere() {}
         MovingSphere(

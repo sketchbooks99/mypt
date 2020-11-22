@@ -59,6 +59,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
             auto mid = start + primitive_span/2;
             left = std::make_shared<BVH>(p, start, mid, axis, splitMethod);
             right = std::make_shared<BVH>(p, mid, end, axis, splitMethod);
+            break;
         }
         case SplitMethod::SAH: {
             int splitIndex = 1;
@@ -85,6 +86,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
             
             left = std::make_shared<BVH>(p, start, splitIndex, axis, splitMethod);
             right = std::make_shared<BVH>(p, splitIndex, end, axis, splitMethod);
+            break;
         }
         }
     }

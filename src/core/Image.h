@@ -13,7 +13,7 @@ class Image {
 public:
     Image(int width, int height);
     Image(const std::string& filename);
-    ~Image() { delete data; }
+    ~Image() { delete[] data; }
     void set(int x, int y, PixelType val)
     {
         assert(x < width && y < height);

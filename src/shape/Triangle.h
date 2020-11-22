@@ -186,14 +186,10 @@ class Triangle : public Shape {
             min = vec3(); 
             max = vec3();
             for(auto p : {p0, p1, p2}) {
-                if (p.x < min.x) min.x = p.x;
-                if (p.x > max.x) max.x = p.x;
-
-                if (p.y < min.y) min.y = p.y;
-                if (p.y > max.y) max.y = p.y;
-
-                if (p.z < min.z) min.z = p.z;
-                if (p.z > max.z) max.z = p.z;
+                for(int i=0; i<3; i++) {
+                    if(min[i] > p[i]) min[i] = p[i];
+                    if(max[i] < p[i]) max[i] = p[i];
+                }
             }
         }
         

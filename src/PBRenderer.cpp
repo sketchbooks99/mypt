@@ -1,6 +1,8 @@
 #include "core/PBRenderer.h"
 #include "../scene/object_test.h"
 
+#include <omp.h>
+
 vec3 ray_color(const Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
@@ -23,17 +25,17 @@ int main(int argc, const char * argv[]) {
     // Change seed of randaom value
     srand((unsigned)time(NULL));
 
-    const int image_width = 256;
-    const int image_height = 256;
-    const int samples_per_pixel = 1;
-    const int max_depth = 12;
+    const int image_width = 1024;
+    const int image_height = 768;
+    const int samples_per_pixel = 100;
+    const int max_depth = 5;
     const auto aspect_ratio = double(image_width) / image_height;
 
     auto primitives = scene();
 
     auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
     
-    vec3 lookfrom(20, 10, 10);
+    vec3 lookfrom(20, 10, 20);
     vec3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 15.0;
@@ -53,6 +55,7 @@ int main(int argc, const char * argv[]) {
     clock_t start_time = clock();
 
     // Render the image
+    #pragma omp parallel for
     for(int y = 0; y < image_height; y++) {
 
         // calculate ratio of progress bar
@@ -76,8 +79,12 @@ int main(int argc, const char * argv[]) {
         std::cerr << " (" << std::fixed << std::setprecision(2) << (float)(percent * 100.0f) << "%, ";
         std::cerr << "" << y << " / " << image_height << ")" <<std::flush;
 
+        #pragma omp parallel for
         for(int x = 0; x < image_width; x++) {
             vec3 color(0, 0, 0);
+            
+            /// REF: http://www.hpcs.cs.tsukuba.ac.jp/~taisuke/EXPERIMENT/openmp-txt.pdf 
+            #pragma omp for reduction(+:color)
             for(int s = 0; s < samples_per_pixel; s++) {
                 auto u = (x + random_double()) / image_width;
                 auto v = (y + random_double()) / image_height;
