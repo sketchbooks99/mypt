@@ -50,7 +50,7 @@ Image<PixelType>::Image(const std::string& filename)
     nChannels = static_cast<int>(sizeof(PixelType));
     data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
     if(!data)
-        throw std::runtime_error("Image file '"+filename+"'can't be loaded! Please check file path or format!\n");
+        throw std::runtime_error("Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
 }
 
 // --------------------------------------------------------------------------------

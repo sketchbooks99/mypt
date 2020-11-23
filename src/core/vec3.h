@@ -24,14 +24,22 @@ public:
     //     return *((Type*)this + i);
     // }
     Type operator[](int i) const {
-        if(i == 0)      return x;
-        else if(i == 1) return y;
-        else if(i == 2) return z;
+        switch(i) {
+        case 0: return x; break;
+        case 1: return y; break;
+        case 2: return z; break;
+        default:
+            throw std::runtime_error("Invalid index number to access vec3 parameter!\n");
+        }
     }
     Type& operator[](int i) {
-        if(i == 0)      return x;
-        else if(i == 1) return y;
-        else if(i == 2) return z;
+        switch(i) {
+        case 0: return x; break;
+        case 1: return y; break;
+        case 2: return z; break;
+        default:
+            throw std::runtime_error("Invalid index number to access vec3 parameter!\n");
+        }
     }
 
     type3& operator+=(const type3 &v) {

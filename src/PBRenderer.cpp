@@ -1,5 +1,5 @@
 #include "core/PBRenderer.h"
-#include "../scene/object_test.h"
+#include "../scene/planeandbunny.h"
 
 vec3 ray_color(const Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
 
     const int image_width = 1024;
     const int image_height = 768;
-    const int samples_per_pixel = 100;
+    const int samples_per_pixel = 1;
     const int max_depth = 5;
     const auto aspect_ratio = double(image_width) / image_height;
 
@@ -33,12 +33,13 @@ int main(int argc, const char * argv[]) {
 
     auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
     
-    vec3 lookfrom(20, 10, 20);
+    vec3 lookfrom(-20, 20, 50);
     vec3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 15.0;
     auto aperture = 0.0;
-    vec3 background(0.7, 0.9, 0.9);
+    // vec3 background(0.7, 0.9, 0.9);
+    vec3 background(0.0f);
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
@@ -74,7 +75,7 @@ int main(int argc, const char * argv[]) {
         // Display percentage of process
         float percent = (float)(y+1) / image_height;
         std::cerr << " (" << std::fixed << std::setprecision(2) << (float)(percent * 100.0f) << "%, ";
-        std::cerr << "" << y << " / " << image_height << ")" <<std::flush;
+        std::cerr << "" << y + 1 << " / " << image_height << ")" <<std::flush;
 
         for(int x = 0; x < image_width; x++) {
             vec3 color(0, 0, 0);

@@ -7,12 +7,15 @@
 #include "Perlin.h"
 #include "Ray.h"
 #include "Image.h"
+#include "Primitive.h"
+#include "BVH.h"
+
 // Shape include 
 #include "Shape.h"
-// #include "ShapeList.h"
 #include "../shape/Triangle.h"
-// #include "../shape/TriangleMesh.h"
 #include "../shape/Sphere.h"
+#include "../shape/Plane.h"
+
 // Material include
 #include "Material.h"
 #include "../material/Lambertian.h"
@@ -20,12 +23,10 @@
 #include "../material/Dielectric.h"
 #include "../material/Emitter.h"
 // #include "../material/Disney.h"
+
 // Texture include 
 #include "Texture.h"
 #include "../texture/ImageTexture.h"
 #include "../texture/CheckerTexture.h"
 #include "../texture/ConstantTexture.h"
 #include "../texture/NoiseTexture.h"
-
-#include "Primitive.h"
-#include "BVH.h"
