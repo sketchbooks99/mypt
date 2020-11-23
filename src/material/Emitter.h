@@ -5,7 +5,7 @@
 
 struct HitRecord;
 
-class Emitter : public Material {
+class Emitter final : public Material {
 public:
     Emitter(std::shared_ptr<Texture> a, float intensity=1.0f) 
     : albedo(a), intensity(intensity) {}

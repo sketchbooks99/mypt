@@ -174,7 +174,7 @@ struct TriangleMesh {
     // std::vector<vec2> uv;
 };
 
-class Triangle : public Shape {
+class Triangle final : public Shape {
     public:
         Triangle() {}
         Triangle(std::shared_ptr<TriangleMesh> &mesh, std::vector<int> face)

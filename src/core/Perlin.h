@@ -16,7 +16,7 @@ inline double trilinear_interp(double c[2][2][2], double u, double v, double w) 
     return accum;
 }
 
-inline double Perlin_interp(vec3 c[2][2][2], double u, double v, double w) {
+inline double perlin_interp(vec3 c[2][2][2], double u, double v, double w) {
     auto uu = u*u*(3-2*u);
     auto vv = v*v*(3-2*v);
     auto ww = w*w*(3-2*w);
@@ -44,9 +44,9 @@ class Perlin {
                 ranvec[i] = normalize(vec3::random(-1, 1));
             }
 
-            perm_x = Perlin_generate_perm();
-            perm_y = Perlin_generate_perm();
-            perm_z = Perlin_generate_perm();
+            perm_x = perlin_generate_perm();
+            perm_y = perlin_generate_perm();
+            perm_z = perlin_generate_perm();
         }
 
         ~Perlin() {
@@ -94,7 +94,7 @@ class Perlin {
                     }
                 }
             }
-            return Perlin_interp(c, u, v, w);
+            return perlin_interp(c, u, v, w);
         }
 
     private:
@@ -104,7 +104,7 @@ class Perlin {
         int* perm_y;
         int* perm_z;
 
-        static int* Perlin_generate_perm() {
+        static int* perlin_generate_perm() {
             auto p = new int[point_count];
 
             for(int i = 0; i < Perlin::point_count; i++) {

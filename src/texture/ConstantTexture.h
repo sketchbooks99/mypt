@@ -2,7 +2,7 @@
 
 #include "../core/Texture.h"
 
-class ConstantTexture : public Texture {
+class ConstantTexture final : public Texture {
     public:
         ConstantTexture(){}
         ConstantTexture(vec3 c) : color(c) {}

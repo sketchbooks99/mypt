@@ -3,7 +3,7 @@
 #include "../core/Texture.h"
 #include "../core/Perlin.h"
 
-class NoiseTexture : public Texture {
+class NoiseTexture final : public Texture {
     public:
         NoiseTexture() {}
         NoiseTexture(double sc) : scale(sc) {}

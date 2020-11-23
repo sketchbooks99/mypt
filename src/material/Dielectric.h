@@ -10,7 +10,7 @@ double schlick(double cosine, double ref_idx) {
     return r0 + (1-r0)*pow((1-cosine),5);
 }
 
-class Dielectric : public Material {
+class Dielectric final : public Material {
     public:
         Dielectric(double ri) : albedo(vec3(1.0f)), ref_idx(ri) {}
         Dielectric(vec3 a, double ri) : albedo(a), ref_idx(ri) {}

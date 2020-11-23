@@ -4,7 +4,7 @@
 
 struct HitRecord;
 
-class Metal : public Material {
+class Metal final : public Material {
     public:
         Metal(const vec3& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
 

@@ -6,7 +6,7 @@
 
 struct HitRecord;
 
-class Lambertian : public Material {
+class Lambertian final : public Material {
     public: 
         Lambertian(vec3 albedo) : albedo(std::make_shared<ConstantTexture>(albedo)) {}
         Lambertian(std::shared_ptr<Texture> a) : albedo(a) {}

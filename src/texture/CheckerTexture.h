@@ -2,7 +2,7 @@
 
 #include "../core/Texture.h"
 
-class CheckerTexture : public Texture {
+class CheckerTexture final : public Texture {
     public:
         CheckerTexture() {}
         CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5) : even(t0), odd(t1), step(step) {}
