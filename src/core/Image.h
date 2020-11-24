@@ -74,6 +74,6 @@ void Image<PixelType>::write(const std::string& filename, const std::string& for
     }
     if(format == "jpg" || format == "JPG")
     {
-        ASSERT(nChannels <= 3, "JPG doesn't support alpha channel!\n");
+        stbi_write_jpg(filename.c_str(), width, height, 3, data, 100);
     }
 }

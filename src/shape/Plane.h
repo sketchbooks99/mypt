@@ -50,12 +50,11 @@ AABB Plane::bounding() const {
     int b_axis = axis == PlaneAxis::XZ ? (const_axis + 1) % 3 : (const_axis + 2) % 3;
 
     vec3 _min, _max;
-    double eps = 0.0001;
-    _min[const_axis] = k - eps;
+    _min[const_axis] = k - 0.0001;
     _min[a_axis] = min[0];
     _min[b_axis] = min[1];
 
-    _max[const_axis] = k + eps;
+    _max[const_axis] = k + 0.0001;
     _max[a_axis] = max[0];
     _max[b_axis] = max[1];
 

@@ -5,14 +5,14 @@
 std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;
 
-    auto earth_texture = std::make_shared<ImageTexture>("data/image/earth.jpg");
-    auto earth_lambert = std::make_shared<Lambertian>(vec3(1.0f));
+    auto earth_texture = std::make_shared<NoiseTexture>(
+        1.0f, NoiseTexture::Mode::TURB);
+    auto earth_lambert = std::make_shared<Lambertian>(earth_texture);
 
     // ground
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
-            createPlaneShape(vec2(-100, -100), vec2(100, 100), -5.0f,
-                Plane::PlaneAxis::XZ),
+            createSphereShape(vec3(0, -1000, 0), 1000),
             earth_lambert
         ));
 
@@ -21,7 +21,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     auto emissive = std::make_shared<Emitter>(white_texture, 5.0f);
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
-            createPlaneShape(vec2(1, 1), vec2(11, 11), 5.0,
+            createPlaneShape(vec2(1, -5), vec2(11, 5), 7.5,
                 Plane::PlaneAxis::YZ),
             emissive
         ));
@@ -29,7 +29,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     // bunny 
     auto albedo = vec3(0.8, 0.05, 0.05);
     auto bunny_lambert = std::make_shared<Lambertian>(albedo);
-    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0, 1.0f, 0.0), 40.0, vec3(1,1,1), true);
+    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0, 3.0f, 0.0), 40.0, vec3(1,1,1), true);
     for(auto &triangle : bunny) {
         primitives.emplace_back(
             std::make_shared<ShapePrimitive>(
