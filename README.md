@@ -8,8 +8,21 @@
 ## Compile (Linux)
 After cloning this repository to your local, run this command to run `pbrenderer` 
 ```
-
+cd PBRenderer
+mkdir build && cd build
+cmake ..
+make
 ```
+
+After compiling
+```
+cd path/to/PBRenderer
+build/pbrenderer image.png
+```
+> - NOTE: 
+    - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
+      So, when you create your custom scene, please modify or create `custom_scene.h` in `scene/` directory, 
+      and change header file include in `PBRenderer.cpp` 
 
 ## TODO:
 - [x] Divide material and shape for effectively render the scene.
