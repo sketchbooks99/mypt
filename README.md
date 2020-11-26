@@ -20,7 +20,7 @@ cd path/to/PBRenderer
 build/pbrenderer image.png
 ```
 > NOTE: 
-  - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
+> - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
     So, when you create your custom scene, please modify or create `custom_scene.h` in `scene/` directory, 
     and change header file include in `PBRenderer.cpp` 
 
