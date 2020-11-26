@@ -19,10 +19,10 @@ After compiling
 cd path/to/PBRenderer
 build/pbrenderer image.png
 ```
-> - NOTE: 
-    - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
-      So, when you create your custom scene, please modify or create `custom_scene.h` in `scene/` directory, 
-      and change header file include in `PBRenderer.cpp` 
+> NOTE: 
+  - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
+    So, when you create your custom scene, please modify or create `custom_scene.h` in `scene/` directory, 
+    and change header file include in `PBRenderer.cpp` 
 
 ## TODO:
 - [x] Divide material and shape for effectively render the scene.
