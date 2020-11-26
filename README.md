@@ -6,7 +6,7 @@
 - If finished basic learning of path tracing, I would like to implement GPU path tracing techniques using OptiX or CUDA.
 
 ## Compile (Linux)
-After cloning this repository to your local, run this command to run `pbrenderer` 
+After cloning this repository to your local, run this command to run `pbrenderer`. 
 ```
 cd PBRenderer
 mkdir build && cd build
@@ -14,7 +14,7 @@ cmake ..
 make
 ```
 
-After compiling
+After compiling it, you can render your scene with this command.
 ```
 cd path/to/PBRenderer
 build/pbrenderer image.png
@@ -22,7 +22,7 @@ build/pbrenderer image.png
 > NOTE: 
 > - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
     So, when you create your custom scene, please modify or create `custom_scene.h` in `scene/` directory, 
-    and change header file include in `PBRenderer.cpp` 
+    and change header file include in `PBRenderer.cpp` .
 
 ## TODO:
 - [x] Divide material and shape for effectively render the scene.
