@@ -50,6 +50,7 @@ class Primitive {
 - [ ] Update BVH for better efficiency
   - [x] Add SAH based BVH (I have not verified efficiency yet.)
 - [x] Enable ImageTexture class
+- [ ] Make a parser or system to independently modify scene configuration as like pbrt or oF. 
 
 ## NOTE:
 I'm not expert C++ and compiler, so I must check whole code to robustly run and compile with taking care of following terms.
