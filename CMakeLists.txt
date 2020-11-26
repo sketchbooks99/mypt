@@ -24,7 +24,8 @@ set(pbrenderer_src
     src/shape/MovingSphere.cpp 
     src/shape/Plane.cpp
     src/shape/Sphere.cpp 
-    src/shape/Triangle.cpp 
+    src/shape/Triangle.cpp
+    src/texture/ImageTexture.cpp
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast")
