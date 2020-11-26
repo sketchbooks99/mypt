@@ -8,9 +8,7 @@ class Metal final : public Material {
 public:
     Metal(const vec3& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {};
 
-    bool scatter(
-        const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered
-    ) const;
+    bool scatter(const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered) const override;
 
 private: 
     vec3 albedo;
