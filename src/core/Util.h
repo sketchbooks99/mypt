@@ -43,7 +43,7 @@ inline double clamp(double x, double min, double max) {
 }
 
 // ----- Utility functions -----
-void ASSERT(const bool cond, const std::string& text)
+inline void ASSERT(const bool cond, const std::string& text)
 {
     if (!cond)
     {
@@ -52,7 +52,7 @@ void ASSERT(const bool cond, const std::string& text)
 }
 
 // ref: https://qiita.com/iseki-masaya/items/70b4ee6e0877d12dafa8
-std::vector<std::string> split(const std::string &s, char delimiter)
+inline std::vector<std::string> split(const std::string &s, char delimiter)
 {
     std::vector<std::string> elements;
     std::string item;

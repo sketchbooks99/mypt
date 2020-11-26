@@ -5,19 +5,14 @@
 struct HitRecord;
 
 class Metal final : public Material {
-    public:
-        Metal(const vec3& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
+public:
+    Metal(const vec3& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {};
 
-        virtual bool scatter(
-            const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered
-        ) const  {
-            vec3 reflected = reflect(normalize(r_in.direction()), rec.normal);
-            scattered = Ray(rec.p, reflected + fuzz*random_in_unit_sphere());
-            attenuation = albedo;
-            return (dot(scattered.direction(), rec.normal) > 0);
-        }
+    bool scatter(
+        const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered
+    ) const;
 
-    public: 
-        vec3 albedo;
-        double fuzz;
+private: 
+    vec3 albedo;
+    double fuzz;
 };

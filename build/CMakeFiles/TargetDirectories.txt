@@ -1,0 +1,3 @@
+/mnt/c/Users/lunae/Desktop/PBRenderer/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/lunae/Desktop/PBRenderer/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/lunae/Desktop/PBRenderer/build/CMakeFiles/pbrenderer.dir

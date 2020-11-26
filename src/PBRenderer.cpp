@@ -25,7 +25,7 @@ int main(int argc, const char * argv[]) {
 
     const int image_width = 1024;
     const int image_height = 768;
-    const int samples_per_pixel = 128;
+    const int samples_per_pixel = 3;
     const int max_depth = 5;
     const auto aspect_ratio = double(image_width) / image_height;
 
