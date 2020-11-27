@@ -17,14 +17,18 @@ set(pbrenderer_src
     src/core/Camera.cpp 
     src/core/Image.cpp
     src/core/Perlin.cpp
+    src/core/mat4.cpp
+
     src/material/Dielectric.cpp 
     src/material/Emitter.cpp
     src/material/Lambertian.cpp 
     src/material/Metal.cpp
+
     src/shape/MovingSphere.cpp 
     src/shape/Plane.cpp
     src/shape/Sphere.cpp 
     src/shape/Triangle.cpp
+
     src/texture/ImageTexture.cpp
 )
 
