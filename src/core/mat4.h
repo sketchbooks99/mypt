@@ -18,8 +18,6 @@ public:
         return *this * m;
     }
 
-    void inverse();
-
     // `theta` should be represented by radian.
     void rotate_x(double theta);
     void rotate_y(double theta);
@@ -56,6 +54,16 @@ inline vec4 operator*(const mat4 m, const vec4 v) {
     return vec4(x, y, z, w);
 }
 
-inline mat4 inverse(const mat4 m) {
+// Very complicated calculation ... :<
+inline mat4 inverse(const mat4& m) {
     return mat4();
+}
+
+inline mat4 transpose(const mat4& m) {
+    return mat4(
+        m.mat[0][0], m.mat[1][0], m.mat[2][0], m.mat[3][0],
+        m.mat[0][1], m.mat[1][1], m.mat[2][1], m.mat[3][1],
+        m.mat[0][2], m.mat[1][2], m.mat[2][2], m.mat[3][2],
+        m.mat[0][3], m.mat[1][3], m.mat[2][3], m.mat[3][3]
+    );
 }

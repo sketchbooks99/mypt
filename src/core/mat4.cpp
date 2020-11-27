@@ -38,41 +38,46 @@ mat4::mat4(
 }
 
 // ----------------------------------------------------------------------
-void mat4::inverse() {
-
-}
-
-// ----------------------------------------------------------------------
 void mat4::rotate_x(double theta) {
     double c = cos(theta);
     double s = sin(theta);
     *this *= mat4(1, 0, 0, 0,
-                        0, c, -s, 0,
-                        0, s, c, 0, 
-                        0, 0, 0, 1);
+                  0, c, -s, 0,
+                  0, s, c, 0, 
+                  0, 0, 0, 1);
 }
 
 void mat4::rotate_y(double theta) {
     double c = cos(theta);
     double s = sin(theta);
     *this *= mat4(c, 0, s, 0,
-                        0, 1, 0, 0,
-                        -s, 0, c, 0, 
-                        0, 0, 0, 1);
+                  0, 1, 0, 0,
+                  -s, 0, c, 0, 
+                  0, 0, 0, 1);
 }
 
 void  mat4::rotate_z(double theta) {
     double c = cos(theta);
     double s = sin(theta);
     *this *= mat4(c, -s, 0, 0,
-                        s, c, 0, 0,
-                        0, 0, 1, 0, 
-                        0, 0, 0, 1);
+                  s, c, 0, 0,
+                  0, 0, 1, 0, 
+                  0, 0, 0, 1);
 }
 
 void mat4::rotate(double theta, const vec3& axis) {
-    double s = sin(theta);
-    double c = cos(theta);
+    double sx = sin(theta) * axis.x;
+    double cx = cos(theta) * axis.x;
+    double sy = sin(theta) * axis.y;
+    double cy = cos(theta) * axis.y;
+    double sz = sin(theta) * axis.z;
+    double cz = cos(theta) * axis.z;
+    *this *= mat4(
+        cy*cz, sx*sy*cz-sz*cx, sx*sz+cx*sy*cz, 0,
+        cy*sz, cx*cz+sz*sy*sz, cx*sy*sz-sx*cz, 0,
+        -sy,   sx*cy,          cx*cy,          0,
+        0,     0,              0,              1
+    );
 }
 
 // ----------------------------------------------------------------------
