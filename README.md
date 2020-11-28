@@ -53,7 +53,7 @@ class Primitive {
 - [ ] Make a parser or system to independently modify scene configuration as like pbrt or oF. 
 
 ## NOTE:
-I'm not expert C++ and compiler, so I must check whole code to robustly run and compile with taking care of following terms.
+I'm not expert in C++ and compiler, so I have to check entire code to robustly run and compile with taking care of following terms.
 - Spliting code to .h and .cpp
   - use of template class: 
     - reference: https://qiita.com/i153/items/38f9688a9c80b2cb7da7
