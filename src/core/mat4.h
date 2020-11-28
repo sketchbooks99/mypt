@@ -3,8 +3,6 @@
 #include "vec3.h"
 #include "vec4.h"
 
-inline mat4 operator*(const mat4& m1, const mat4& m2);
-
 struct mat4 {
 public:
     mat4();
@@ -13,24 +11,22 @@ public:
          double e10, double e11, double e12, double e13,
          double e20, double e21, double e22, double e23,
          double e30, double e31, double e32, double e33);
-    
-    mat4 operator*=(const mat4& m) {
-        return *this * m;
-    }
-
-    // `theta` should be represented by radian.
-    void rotate_x(double theta);
-    void rotate_y(double theta);
-    void rotate_z(double theta);
-    void rotate(double theta, const vec3& axis);
-
-    void translate(const vec3& t);
-
-    void scale(const vec3& s);
-    void scale(double s);
 
     double mat[4][4];
 };
+
+inline mat4 operator*(const mat4& m1, const mat4& m2) {
+    mat4 m;
+    for(int i=0; i<4; i++) {
+        for(int j=0; j<4; j++) {
+            m.mat[i][j] = m1.mat[i][0]*m2.mat[0][j];
+            m.mat[i][j] += m1.mat[i][1]*m2.mat[1][j];
+            m.mat[i][j] += m1.mat[i][2]*m2.mat[2][j];
+            m.mat[i][j] += m1.mat[i][3]*m2.mat[3][j];
+        }
+    }
+    return m;
+}
 
 inline vec3 operator*(const mat4 m, const vec3 v) {
     double x = m.mat[0][0]*v.x + m.mat[0][1]*v.y + m.mat[0][2]*v.z + m.mat[0][3];
