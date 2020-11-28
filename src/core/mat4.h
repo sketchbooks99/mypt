@@ -15,6 +15,7 @@ public:
     double mat[4][4];
 };
 
+// ----------------------------------------------------------------------
 inline mat4 operator*(const mat4& m1, const mat4& m2) {
     mat4 m;
     for(int i=0; i<4; i++) {
@@ -33,7 +34,7 @@ inline vec3 operator*(const mat4 m, const vec3 v) {
     double y = m.mat[1][0]*v.x + m.mat[1][1]*v.y + m.mat[1][2]*v.z + m.mat[1][3];
     double z = m.mat[2][0]*v.x + m.mat[2][1]*v.y + m.mat[2][2]*v.z + m.mat[2][3];
     double w = m.mat[3][0]*v.x + m.mat[3][1]*v.y + m.mat[3][2]*v.z + m.mat[3][3];
-    ASSERT(w == 0, "This mat4 doesn't have proper value!\n");
+    ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
     if(w == 1) {
         return vec3(x, y, z);
     } else {
@@ -46,10 +47,11 @@ inline vec4 operator*(const mat4 m, const vec4 v) {
     double y = m.mat[1][0]*v.x + m.mat[1][1]*v.y + m.mat[1][2]*v.z + m.mat[1][3];
     double z = m.mat[2][0]*v.x + m.mat[2][1]*v.y + m.mat[2][2]*v.z + m.mat[2][3];
     double w = m.mat[3][0]*v.x + m.mat[3][1]*v.y + m.mat[3][2]*v.z + m.mat[3][3];
-    ASSERT(w == 0, "This mat4 doesn't have proper value!\n");
+    ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
     return vec4(x, y, z, w);
 }
 
+// ----------------------------------------------------------------------
 // Very complicated calculation ... :<
 inline mat4 inverse(const mat4& m) {
     return mat4();
@@ -61,5 +63,77 @@ inline mat4 transpose(const mat4& m) {
         m.mat[0][1], m.mat[1][1], m.mat[2][1], m.mat[3][1],
         m.mat[0][2], m.mat[1][2], m.mat[2][2], m.mat[3][2],
         m.mat[0][3], m.mat[1][3], m.mat[2][3], m.mat[3][3]
+    );
+}
+
+// ----------------------------------------------------------------------
+inline mat4 rotate_mat_x(double theta) {
+    double c = cos(theta);
+    double s = sin(theta);
+    return mat4(1, 0, 0,  0,
+                0, c, -s, 0,
+                0, s, c,  0,
+                0, 0, 0,  1);
+}
+
+inline mat4 rotate_mat_y(double theta) {
+    double c = cos(theta);
+    double s = sin(theta);
+    return mat4(c,  0, s, 0, 
+                0,  1, 0, 0,
+                -s, 0, c, 0,
+                0,  0, 0, 1);
+}
+
+inline mat4 rotate_mat_z(double theta) {
+    double c = cos(theta);
+    double s = sin(theta);
+    return mat4(c, -s, 0, 0, 
+                s, c,  0, 0,
+                0, 0,  1, 0,
+                0, 0,  0, 1);
+}
+
+inline mat4 rotate_mat(double theta, const vec3& axis) {
+    double sx = sin(theta) * axis.x;
+    double cx = cos(theta) * axis.x;
+    double sy = sin(theta) * axis.y;
+    double cy = cos(theta) * axis.y;
+    double sz = sin(theta) * axis.z;
+    double cz = cos(theta) * axis.z;
+    return mat4(
+        cy*cz, sx*sy*cz-sz*cx, sx*sz+cx*sy*cz, 0,
+        cy*sz, cx*cz+sz*sy*sz, cx*sy*sz-sx*cz, 0,
+        -sy,   sx*cy,          cx*cy,          0,
+        0,     0,              0,              1
+    );
+}
+
+// ----------------------------------------------------------------------
+inline mat4 translate_mat(const vec3& t) {
+    return mat4(
+        1, 0, 0, t.x,
+        0, 1, 0, t.y,
+        0, 0, 1, t.z,
+        0, 0, 0, 1
+    );
+}
+
+// ----------------------------------------------------------------------
+inline mat4 scale_mat(const vec3& s) {
+    return mat4(
+        s.x, 0,   0,   0,
+        0,   s.y, 0,   0, 
+        0,   0,   s.z, 0, 
+        0,   0,   0,   1
+    );
+}
+
+inline mat4 scale_mat(double s) {
+    return mat4(
+        s, 0, 0, 0,
+        0, s, 0, 0,
+        0, 0, s, 0,
+        0, 0, 0, 1
     );
 }

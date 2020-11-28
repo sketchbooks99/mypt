@@ -23,16 +23,14 @@ int main(int argc, const char * argv[]) {
     // Change seed of randaom value
     srand((unsigned)time(NULL));
 
-    const int image_width = 1024;
-    const int image_height = 768;
-    const int samples_per_pixel = 1024;
-    const int max_depth = 5;
-    const auto aspect_ratio = double(image_width) / image_height;
+    std::string outname = "result/image.png";
 
-    auto primitives = scene();
+    int image_width = 1024;
+    int image_height = 768;
+    int samples_per_pixel = 1024;
+    int max_depth = 5;
+    auto aspect_ratio = double(image_width) / image_height;
 
-    auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
-    
     vec3 lookfrom(-20, 20, 50);
     vec3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
@@ -43,7 +41,61 @@ int main(int argc, const char * argv[]) {
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
 
-    std::string filename = argv[1] ? argv[1] : "result/image.png";
+    // Parsing scene configuration
+    std::string filename = argv[1];
+    if(filename != "") {
+        std::ifstream ifs(filename, std::ios::in);
+        ASSERT(ifs.is_open(), "The scene file '"+filename+"' is not existed\n");
+        while (!ifs.eof()) {
+            std::string line;
+            // When line has no characters.
+            if(!std::getline(ifs, line)) break;
+            
+            // Create string stream
+            std::istringstream iss(line);
+            std::string header;
+            iss >> header;
+            
+            if(header == "filename") 
+                iss >> outname;
+            else if(header == "width")
+                iss >> image_width;
+            else if(header == "height")
+                iss >> image_height;
+            else if(header == "spp" || header == "samples_per_pixels")
+                iss >> samples_per_pixel;
+            else if(header == "depth")
+                iss >> max_depth;
+            else if(header == "origin") {
+                float x, y, z;
+                iss >> x >> y >> z;
+                lookfrom = vec3(x, y, z);
+            }
+            else if(header == "lookat") {
+                float x, y, z;
+                iss >> x >> y >> z;
+                lookat = vec3(x, y, z);
+            }
+            else if(header == "up") {
+                float x, y, z;
+                iss >> x >> y >> z;
+                vup = vec3(x, y, z);
+            }
+            else if(header == "focus_length" || header == "focus")
+                iss >> dist_to_focus;
+            else if(header == "aperture")
+                iss >> aperture;
+        }
+    }
+
+    // Verify config is successfully loaded
+    std::cout << "filename: " << outname << std::endl;
+    std::cout << "width: " << image_width << ", height: " << image_height << std::endl; 
+    std::cout << "spp: " << samples_per_pixel << ", depth: " << max_depth << std::endl; 
+
+    auto primitives = scene();
+
+    auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
 
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 40;
@@ -98,7 +150,7 @@ int main(int argc, const char * argv[]) {
         }
     }
 
-    result.write(filename, "PNG");
+    result.write(outname, "PNG");
     std::cerr << "\nDone\n";
     return 0;
 }

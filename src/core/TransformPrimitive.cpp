@@ -12,14 +12,28 @@ bool TransformPrimitive::intersect(const Ray& r, double t_min, double t_max, Hit
 
 // ----------------------------------------------------------------------
 AABB TransformPrimitive::bounding() const {
-    auto min = p->bounding().min();
-    auto max = p->bounding().max();
+    vec3 min(infinity, infinity, infinity);
+    vec3 max(-infinity, -infinity, -infinity);
 
-    // transformed min/max
-    auto tr_min = this->mat * min;
-    auto tr_max = this->mat * max;
+    for(int i=0; i<2; i++) {            // 0: min.x, 1: max.x
+        for(int j=0; j<2; j++) {        // 0: min.y, 1: max.y
+            for(int k=0; k<2; k++) {    // 0: min.z, 1: max.z
 
-    return AABB(tr_min, tr_max);
+                auto x = (i-1)*p->bounding().min().x + i*p->bounding().max().x;
+                auto y = (j-1)*p->bounding().min().y + j*p->bounding().max().y;
+                auto z = (k-1)*p->bounding().min().z + k*p->bounding().max().z;
+
+                // Update min, and bounding box by transformed vector
+                auto tr_corner = this->mat * vec3(x, y, z);
+                for(int l=0; l<3; l++) {
+                    if(min[l] > tr_corner[l]) min[l] = tr_corner[l];
+                    if(max[l] < tr_corner[l]) max[l] = tr_corner[l];
+                }
+            } 
+        }
+    }
+
+    return AABB(min, max);
 }
 
 // ----------------------------------------------------------------------

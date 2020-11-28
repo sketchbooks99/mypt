@@ -18,6 +18,7 @@ set(pbrenderer_src
     src/core/Image.cpp
     src/core/Perlin.cpp
     src/core/mat4.cpp
+    src/core/TransformPrimitive.cpp
 
     src/material/Dielectric.cpp 
     src/material/Emitter.cpp

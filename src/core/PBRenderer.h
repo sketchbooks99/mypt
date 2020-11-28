@@ -9,6 +9,7 @@
 #include "Image.h"
 #include "Primitive.h"
 #include "BVH.h"
+#include "TransformPrimitive.h"
 
 // Shape include 
 #include "Shape.h"

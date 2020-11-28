@@ -4,7 +4,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
     if(filename.substr(filename.length() - 4) == ".obj")
     {
         std::ifstream ifs(filename, std::ios::in);
-        ASSERT(ifs.is_open(), "The file '"+filename+"' is not existed!\n");
+        ASSERT(ifs.is_open(), "The obj file '"+filename+"' is not existed!\n");
         while (!ifs.eof())
         {
             std::string line;

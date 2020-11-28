@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Primitive.h"
-#include "mat4.h"
+#include "MathUtil.h"
 
 class TransformPrimitive final : public Primitive {
 public:
@@ -25,5 +25,5 @@ private:
     mat4 mat;
 };
 
-Ray transform(const Ray& r, const mat4& mat);
+Ray transform_ray(const Ray& r, const mat4& mat);
 
