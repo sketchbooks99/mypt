@@ -2,11 +2,11 @@
 filename result/transform_debug.png
 width 512
 height 512
-spp 16
+spp 128
 depth 12
 
 # Camera 
-origin -20 20 50
+origin -20 100 50
 lookat 0 0 0
 up 0 1 0
 focus_length 15.0

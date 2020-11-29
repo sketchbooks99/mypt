@@ -29,6 +29,15 @@ inline mat4 operator*(const mat4& m1, const mat4& m2) {
     return m;
 }
 
+// ----------------------------------------------------------------------
+inline std::ostream& operator<<(std::ostream &out, const mat4 &m) {
+    return out << "[ " << m.mat[0][0] << ' ' << m.mat[0][1] << ' ' << m.mat[0][2] << ' ' << m.mat[0][3] << '\n' \
+                       << m.mat[1][0] << ' ' << m.mat[1][1] << ' ' << m.mat[1][2] << ' ' << m.mat[1][3] << '\n' \
+                       << m.mat[2][0] << ' ' << m.mat[2][1] << ' ' << m.mat[2][2] << ' ' << m.mat[2][3] << '\n' \
+                       << m.mat[3][0] << ' ' << m.mat[3][1] << ' ' << m.mat[3][2] << ' ' << m.mat[3][3];
+}
+
+// ----------------------------------------------------------------------
 inline vec3 operator*(const mat4 m, const vec3 v) {
     double x = m.mat[0][0]*v.x + m.mat[0][1]*v.y + m.mat[0][2]*v.z + m.mat[0][3];
     double y = m.mat[1][0]*v.x + m.mat[1][1]*v.y + m.mat[1][2]*v.z + m.mat[1][3];
@@ -53,8 +62,26 @@ inline vec4 operator*(const mat4 m, const vec4 v) {
 
 // ----------------------------------------------------------------------
 // Very complicated calculation ... :<
-inline mat4 inverse(const mat4& m) {
-    return mat4();
+inline mat4 inverse(mat4 m) {
+    mat4 inv;
+    double tmp;
+    for(int i=0; i<4; i++) {
+        tmp = 1.0 / m.mat[i][i];
+        for(int j=0; j<4; j++) {
+            m.mat[i][j] *= tmp;
+            inv.mat[i][j] *= tmp;
+        }
+        for(int j=0; j<4; j++) {
+            if(i != j) {
+                tmp = m.mat[j][i];
+                for(int k=0; k<4; k++) {
+                    m.mat[j][k] -= m.mat[i][k]*tmp;
+                    inv.mat[j][k] -= inv.mat[i][k]*tmp;
+                }
+            }
+        }
+    }
+    return inv;
 }
 
 inline mat4 transpose(const mat4& m) {

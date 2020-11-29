@@ -17,12 +17,18 @@ int main(void) {
     mat4 tr_mat = translate_mat(vec3(3,4,5));
     std::cout << "----- translate test -----" << std::endl;
     std::cout << tr_mat * vec << std::endl;
+    std::cout << inverse(tr_mat) << std::endl;
 
     std::cout << "----- scale test -----" << std::endl;
     mat4 s_mat1 = scale_mat(vec3(1,2,3));
     mat4 s_mat2 = scale_mat(3.0);
     std::cout << s_mat1 * vec << std::endl;
     std::cout << s_mat2 * vec << std::endl;
+    std::cout << inverse(s_mat1) << std::endl;
+
+    std::cout << "----- multi test -----" << std::endl;
+    std::cout << inverse(r_mat) * vec << std::endl;
+    std::cout << inverse(r_mat * tr_mat) * vec + vec3(tr_mat.mat[0][3], tr_mat.mat[1][3], tr_mat.mat[2][3]) << std::endl;
 
     return 0;
 }
