@@ -6,10 +6,10 @@ bool TransformPrimitive::intersect(const Ray& r, double t_min, double t_max, Hit
     Ray tr = transform_ray(r, this->matInv);
     if(!p->intersect(tr, t_min, t_max, rec))
         return false;
-
-    auto normal = mat4::normal_mul(this->mat, rec.normal);
     
-    rec.p = mat4::point_mul(this->mat, rec.p);
+    auto pHit = rec.p;
+    rec.p = mat4::point_mul(this->mat, pHit);
+    auto normal = normalize(mat4::vector_mul(this->mat, rec.normal));
     rec.set_face_normal(tr, normal);
 
     return true;
@@ -85,6 +85,6 @@ void TransformPrimitive::scale(double s) {
 // ----------------------------------------------------------------------
 Ray transform_ray(const Ray& r, const mat4& mat) {
     vec3 ro = mat4::point_mul(mat, r.origin());
-    vec3 rd = mat4::vec_mul(mat, r.direction());
+    vec3 rd = mat4::vector_mul(mat, r.direction());
     return Ray(ro, rd);
 }

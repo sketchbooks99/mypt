@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
     auto dist_to_focus = 15.0;
     auto aperture = 0.0;
     // vec3 background(0.7, 0.9, 0.9);
-    vec3 background(0.0f);
+    vec3 background(1.0f);
 
     // Parsing scene configuration
     std::string filename = argv[1];
@@ -94,7 +94,7 @@ int main(int argc, const char * argv[]) {
     std::cout << "focus_length: " << dist_to_focus << ", aperture: " << aperture << std::endl;
 
     Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
-    
+
     auto primitives = scene();
 
     auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);

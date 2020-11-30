@@ -7,6 +7,7 @@ class TransformPrimitive final : public Primitive {
 public:
     TransformPrimitive(std::shared_ptr<Primitive> p) : p(p), mat(mat4()) {}
     TransformPrimitive(std::shared_ptr<Primitive> p, mat4 mat) : p(p), mat(mat.mat), matInv(mat.mat) {}
+    
     bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
     AABB bounding() const override;
 

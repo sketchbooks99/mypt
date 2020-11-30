@@ -13,7 +13,7 @@ public:
          double e30, double e31, double e32, double e33);
 
     // Multiply matrix(4x4) with vector
-    static vec3 vec_mul(const mat4& m, const vec3& v) {
+    static vec3 vector_mul(const mat4& m, const vec3& v) {
         double x = v.x, y = v.y, z = v.z;
         return vec3(m.mat[0][0]*x + m.mat[0][1]*y + m.mat[0][2]*z,
                     m.mat[1][0]*x + m.mat[1][1]*y + m.mat[1][2]*z,
@@ -62,9 +62,9 @@ inline mat4 operator*(const mat4& m1, const mat4& m2) {
 // ----------------------------------------------------------------------
 inline std::ostream& operator<<(std::ostream &out, const mat4 &m) {
     return out << "[ " << m.mat[0][0] << ' ' << m.mat[0][1] << ' ' << m.mat[0][2] << ' ' << m.mat[0][3] << '\n' \
-                       << m.mat[1][0] << ' ' << m.mat[1][1] << ' ' << m.mat[1][2] << ' ' << m.mat[1][3] << '\n' \
-                       << m.mat[2][0] << ' ' << m.mat[2][1] << ' ' << m.mat[2][2] << ' ' << m.mat[2][3] << '\n' \
-                       << m.mat[3][0] << ' ' << m.mat[3][1] << ' ' << m.mat[3][2] << ' ' << m.mat[3][3];
+               << "  " << m.mat[1][0] << ' ' << m.mat[1][1] << ' ' << m.mat[1][2] << ' ' << m.mat[1][3] << '\n' \
+               << "  " << m.mat[2][0] << ' ' << m.mat[2][1] << ' ' << m.mat[2][2] << ' ' << m.mat[2][3] << '\n' \
+               << "  " << m.mat[3][0] << ' ' << m.mat[3][1] << ' ' << m.mat[3][2] << ' ' << m.mat[3][3] << " ]";
 }
 
 // ----------------------------------------------------------------------
@@ -129,18 +129,26 @@ inline mat4 rotate_mat_z(double theta) {
 }
 
 inline mat4 rotate_mat(double theta, const vec3& axis) {
-    double sx = sin(theta) * axis.x;
-    double cx = cos(theta) * axis.x;
-    double sy = sin(theta) * axis.y;
-    double cy = cos(theta) * axis.y;
-    double sz = sin(theta) * axis.z;
-    double cz = cos(theta) * axis.z;
-    return mat4(
-        cy*cz, sx*sy*cz-sz*cx, sx*sz+cx*sy*cz, 0,
-        cy*sz, cx*cz+sz*sy*sz, cx*sy*sz-sx*cz, 0,
-        -sy,   sx*cy,          cx*cy,          0,
-        0,     0,              0,              1
-    );
+    vec3 a = normalize(axis);
+    double s = sin(theta);
+    double c = cos(theta);
+    mat4 m;
+    m.mat[0][0] = a.x * a.x + (1 - a.x * a.x) * c;
+    m.mat[0][1] = a.x * a.y * (1 - c) - a.z * s;
+    m.mat[0][2] = a.x * a.z * (1 - c) + a.y * s;
+    m.mat[0][3] = 0.0;
+
+    m.mat[1][0] = a.x * a.y * (1 - c) + a.z * s;
+    m.mat[1][1] = a.y * a.y + (1 - a.y * a.y) * c;
+    m.mat[1][2] = a.y * a.z * (1 - c) - a.x * s;
+    m.mat[1][3] = 0.0;
+
+    m.mat[2][0] = a.x * a.z * (1 - c) - a.y * s;
+    m.mat[2][1] = a.y * a.z * (1 - c) + a.x * s;
+    m.mat[2][2] = a.z * a.z + (1 - a.z * a.z) * c;
+    m.mat[2][3] = 0.0;
+
+    return m;
 }
 
 // ----------------------------------------------------------------------
