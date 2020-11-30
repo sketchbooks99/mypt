@@ -6,7 +6,12 @@ bool TransformPrimitive::intersect(const Ray& r, double t_min, double t_max, Hit
     Ray tr = transform_ray(r, this->matInv);
     if(!p->intersect(tr, t_min, t_max, rec))
         return false;
+
+    auto normal = mat4::normal_mul(this->mat, rec.normal);
     
+    rec.p = mat4::point_mul(this->mat, rec.p);
+    rec.set_face_normal(tr, normal);
+
     return true;
 }
 
@@ -24,7 +29,7 @@ AABB TransformPrimitive::bounding() const {
                 auto z = (1-k)*p->bounding().min().z + k*p->bounding().max().z;
 
                 // Update min, and bounding box by transformed vector
-                auto tr_corner = this->mat * vec3(x, y, z);
+                auto tr_corner = mat4::point_mul(this->mat, vec3(x, y, z));
                 for(int l=0; l<3; l++) {
                     min[l] = fmin(min[l], tr_corner[l]);
                     max[l] = fmax(max[l], tr_corner[l]);
@@ -40,22 +45,22 @@ AABB TransformPrimitive::bounding() const {
 void TransformPrimitive::rotate_x(double theta) {
     mat4 rotmat_x = rotate_mat_x(theta);
     this->mat = this->mat * rotmat_x;
-    this->matInv = inverse(rotmat_x) * this->matInv;
+    this->matInv = transpose(this->mat) * this->matInv;
 }
 void TransformPrimitive::rotate_y(double theta) {
     mat4 rotmat_y = rotate_mat_y(theta);
     this->mat = this->mat * rotmat_y;
-    this->matInv = inverse(rotmat_y) * this->matInv;
+    this->matInv = transpose(this->mat) * this->matInv;
 }
 void TransformPrimitive::rotate_z(double theta) {
     mat4 rotmat_z = rotate_mat_z(theta);
     this->mat = this->mat * rotmat_z;
-    this->matInv = inverse(rotmat_z) * this->matInv;
+    this->matInv = transpose(this->mat) * this->matInv;
 }
 void TransformPrimitive::rotate(double theta, const vec3& axis) {
     mat4 rotmat = rotate_mat(theta, axis);
     this->mat = this->mat * rotmat;
-    this->matInv = inverse(rotmat) * this->matInv;
+    this->matInv = transpose(this->mat) * this->matInv;
 }
 
 // ----------------------------------------------------------------------
@@ -79,7 +84,7 @@ void TransformPrimitive::scale(double s) {
 
 // ----------------------------------------------------------------------
 Ray transform_ray(const Ray& r, const mat4& mat) {
-    vec3 ro = mat * r.origin();
-    vec3 rd = mat * r.direction() - vec3(mat.mat[0][3], mat.mat[1][3], mat.mat[2][3]);
+    vec3 ro = mat4::point_mul(mat, r.origin());
+    vec3 rd = mat4::vec_mul(mat, r.direction());
     return Ray(ro, rd);
 }

@@ -29,14 +29,14 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     // bunny 
     auto albedo = vec3(0.8, 0.05, 0.05);
     auto bunny_lambert = std::make_shared<Lambertian>(albedo);
-    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(), 1.0f, vec3(1,1,1), true);
+    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(), 40.0f, vec3(1,1,1), true);
     for(auto &triangle : bunny) {
         auto transformed_triangle = std::make_shared<TransformPrimitive>(
             std::make_shared<ShapePrimitive>(
                 triangle, bunny_lambert));
-        transformed_triangle->translate(vec3(1,3,1));
-        transformed_triangle->rotate(pi / 3.0f, vec3(1,2,3));
-        transformed_triangle->scale(80.0f);
+        transformed_triangle->translate(vec3(2,2,2));
+        // transformed_triangle->rotate_x(pi/3.0f);
+        // transformed_triangle->scale(40.0f);
         primitives.emplace_back(transformed_triangle);
     }   
 

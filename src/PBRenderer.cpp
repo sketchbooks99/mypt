@@ -39,8 +39,6 @@ int main(int argc, const char * argv[]) {
     // vec3 background(0.7, 0.9, 0.9);
     vec3 background(0.0f);
 
-    Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
-
     // Parsing scene configuration
     std::string filename = argv[1];
     if(filename != "") {
@@ -92,7 +90,11 @@ int main(int argc, const char * argv[]) {
     std::cout << "filename: " << outname << std::endl;
     std::cout << "width: " << image_width << ", height: " << image_height << std::endl; 
     std::cout << "spp: " << samples_per_pixel << ", depth: " << max_depth << std::endl; 
+    std::cout << "origin: " << lookfrom << ", lookat: " << lookat << ", up: " << vup << std::endl;
+    std::cout << "focus_length: " << dist_to_focus << ", aperture: " << aperture << std::endl;
 
+    Camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus, 0.0, 1.0);
+    
     auto primitives = scene();
 
     auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);

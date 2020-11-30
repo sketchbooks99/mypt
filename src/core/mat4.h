@@ -12,6 +12,36 @@ public:
          double e20, double e21, double e22, double e23,
          double e30, double e31, double e32, double e33);
 
+    // Multiply matrix(4x4) with vector
+    static vec3 vec_mul(const mat4& m, const vec3& v) {
+        double x = v.x, y = v.y, z = v.z;
+        return vec3(m.mat[0][0]*x + m.mat[0][1]*y + m.mat[0][2]*z,
+                    m.mat[1][0]*x + m.mat[1][1]*y + m.mat[1][2]*z,
+                    m.mat[2][0]*x + m.mat[2][1]*y + m.mat[2][2]*z);
+    }
+
+    // Multiply matrix(4x4) with positional vector
+    static vec3 point_mul(const mat4& m, const vec3& p) {
+        double x = m.mat[0][0]*p.x + m.mat[0][1]*p.y + m.mat[0][2]*p.z + m.mat[0][3];
+        double y = m.mat[1][0]*p.x + m.mat[1][1]*p.y + m.mat[1][2]*p.z + m.mat[1][3];
+        double z = m.mat[2][0]*p.x + m.mat[2][1]*p.y + m.mat[2][2]*p.z + m.mat[2][3];
+        double w = m.mat[3][0]*p.x + m.mat[3][1]*p.y + m.mat[3][2]*p.z + m.mat[3][3];
+        ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
+        if(w == 1) {
+            return vec3(x, y, z);
+        } else {
+            return vec3(x, y, z) / w;
+        }
+    }
+
+    // Multiply matrix(4x4) with normal vector
+    static vec3 normal_mul(const mat4& m, const vec3& n) {
+        double x = n.x, y = n.y, z = n.z;
+        return vec3(m.mat[0][0]*x + m.mat[1][0]*y + m.mat[2][0]*z,
+                    m.mat[0][1]*x + m.mat[1][1]*y + m.mat[2][1]*z,
+                    m.mat[0][2]*x + m.mat[1][2]*y + m.mat[2][2]*z);
+    }
+
     double mat[4][4];
 };
 
@@ -35,29 +65,6 @@ inline std::ostream& operator<<(std::ostream &out, const mat4 &m) {
                        << m.mat[1][0] << ' ' << m.mat[1][1] << ' ' << m.mat[1][2] << ' ' << m.mat[1][3] << '\n' \
                        << m.mat[2][0] << ' ' << m.mat[2][1] << ' ' << m.mat[2][2] << ' ' << m.mat[2][3] << '\n' \
                        << m.mat[3][0] << ' ' << m.mat[3][1] << ' ' << m.mat[3][2] << ' ' << m.mat[3][3];
-}
-
-// ----------------------------------------------------------------------
-inline vec3 operator*(const mat4 m, const vec3 v) {
-    double x = m.mat[0][0]*v.x + m.mat[0][1]*v.y + m.mat[0][2]*v.z + m.mat[0][3];
-    double y = m.mat[1][0]*v.x + m.mat[1][1]*v.y + m.mat[1][2]*v.z + m.mat[1][3];
-    double z = m.mat[2][0]*v.x + m.mat[2][1]*v.y + m.mat[2][2]*v.z + m.mat[2][3];
-    double w = m.mat[3][0]*v.x + m.mat[3][1]*v.y + m.mat[3][2]*v.z + m.mat[3][3];
-    ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
-    if(w == 1) {
-        return vec3(x, y, z);
-    } else {
-        return vec3(x, y, z) / w;
-    }
-}
-
-inline vec4 operator*(const mat4 m, const vec4 v) {
-    double x = m.mat[0][0]*v.x + m.mat[0][1]*v.y + m.mat[0][2]*v.z + m.mat[0][3];
-    double y = m.mat[1][0]*v.x + m.mat[1][1]*v.y + m.mat[1][2]*v.z + m.mat[1][3];
-    double z = m.mat[2][0]*v.x + m.mat[2][1]*v.y + m.mat[2][2]*v.z + m.mat[2][3];
-    double w = m.mat[3][0]*v.x + m.mat[3][1]*v.y + m.mat[3][2]*v.z + m.mat[3][3];
-    ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
-    return vec4(x, y, z, w);
 }
 
 // ----------------------------------------------------------------------
