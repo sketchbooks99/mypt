@@ -7,6 +7,7 @@ bool TransformPrimitive::intersect(const Ray& r, double t_min, double t_max, Hit
     if(!p->intersect(tr, t_min, t_max, rec))
         return false;
     
+    // Transform recorded informations at intersection
     auto pHit = rec.p;
     rec.p = mat4::point_mul(this->mat, pHit);
     auto normal = normalize(mat4::vector_mul(this->mat, rec.normal));

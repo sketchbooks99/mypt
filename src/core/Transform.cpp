@@ -40,36 +40,54 @@ std::shared_ptr<mat4> Transform::getCurrentInvMatrixPtr() {
 
 // ----------------------------------------------------------------------
 void Transform::translate(vec3 t) {
-    auto currentMat = matrices.back();
+    auto currentMat = getCurrentMatrixPtr();
     *currentMat = *currentMat * translate_mat(t);
-    auto currentMatInv = invMatrices.back();
-    *currentMatInv = translate_mat(-t) * (*currentMatInv);
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = translate_mat(-t) * *currentMatInv;
 }
 
 void Transform::rotateX(double theta) {
-    auto currentMat = matrices.back();
+    auto currentMat = getCurrentMatrixPtr();;
     auto rotMatX = rotate_mat_x(theta);
     *currentMat = *currentMat * rotMatX;
-    auto currentMatInv = invMatrices.back();
-    *currentMatInv = transpose(rotMatX) * (*currentMatInv);
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = transpose(rotMatX) * *currentMatInv;
 }
 
 void Transform::rotateY(double theta) {
-    
+    auto currentMat = getCurrentMatrixPtr();;
+    auto rotMatX = rotate_mat_y(theta);
+    *currentMat = *currentMat * rotMatX;
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = transpose(rotMatX) * *currentMatInv;
 }
 
 void Transform::rotateZ(double theta) {
-    
+    auto currentMat = getCurrentMatrixPtr();;
+    auto rotMatX = rotate_mat_z(theta);
+    *currentMat = *currentMat * rotMatX;
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = transpose(rotMatX) * *currentMatInv;
 }
 
 void Transform::rotate(double theta, vec3 axis) {
-
+    auto currentMat = getCurrentMatrixPtr();
+    auto rotMat = rotate_mat(theta, axis);
+    *currentMat = *currentMat * rotMat;
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = transpose(rotMat) * *currentMatInv;
 }
 
 void Transform::scale(double s) {
-
+    auto currentMat = getCurrentMatrixPtr();
+    *currentMat = *currentMat * scale_mat(s);
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = scale_mat(1.0f / s) * *currentMatInv;
 }
 
 void Transform::scale(vec3 s) {
-
+    auto currentMat = getCurrentMatrixPtr();
+    *currentMat = *currentMat * scale_mat(s);
+    auto currentMatInv = getCurrentInvMatrixPtr();
+    *currentMatInv = scale_mat(vec3(1.0f/s.x, 1.0f/s.y, 1.0f/s.z)) * *currentMatInv;
 }

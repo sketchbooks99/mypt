@@ -4,6 +4,7 @@
 
 std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;
+    Transform transform;
 
     auto earth_texture = std::make_shared<NoiseTexture>(
         1.0f, NoiseTexture::Mode::TURB);

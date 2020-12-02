@@ -26,8 +26,8 @@ int main(void) {
     std::cout << mat4::point_mul(s_mat2,vec) << std::endl;
     std::cout << inverse(s_mat1) << std::endl;
 
+    std::cout << r_mat * tr_mat << std::endl;
     std::cout << tr_mat * r_mat << std::endl;
-    std::cout << tr_mat * r_mat * s_mat1 << std::endl;
 
     return 0;
 }
