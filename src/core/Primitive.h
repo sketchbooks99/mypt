@@ -27,7 +27,7 @@ public:
         auto p = rec.p;
         auto normal = rec.normal;
         p = mat4::point_mul(transform->getMatrix(), p);
-        normal = mat4::vector_mul(transform->getMatrix(), normal);
+        normal = mat4::normal_mul(transform->getInvMatrix(), normal);
 
         rec.p = p;
         rec.set_face_normal(tr_ray, normal);
@@ -47,10 +47,8 @@ public:
                     auto x = (1-i)*shape->bounding().min().x + i*shape->bounding().max().x;
                     auto y = (1-j)*shape->bounding().min().y + j*shape->bounding().max().y;
                     auto z = (1-k)*shape->bounding().min().z + k*shape->bounding().max().z;
-
-                    // Update min, and bounding box by transformed vector
-                    // auto tr_corner = mat4::point_mul(transform->getMatrix(), vec3(x, y, z));
-                    vec3 tr_corner(x, y, z);
+                    
+                    vec3 tr_corner = mat4::point_mul(transform->getMatrix(), vec3(x, y, z));
                     for(int l=0; l<3; l++) {
                         min[l] = fmin(min[l], tr_corner[l]);
                         max[l] = fmax(max[l], tr_corner[l]);

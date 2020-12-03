@@ -29,17 +29,17 @@ Transform Transform::scale(vec3 s) {
 
 // TransformSystem ------------------------------------------------------
 TransformSystem::TransformSystem() {
-    transformStack.push_back(std::make_shared<Transform>());
+    transformStack.push_back(Transform());
 }
 
 TransformSystem::TransformSystem(mat4 m) {
-    transformStack.push_back(std::make_shared<Transform>(m));
+    transformStack.push_back(Transform(m));
 }
 
 // ----------------------------------------------------------------------
 void TransformSystem::pushMatrix() {
     ASSERT(transformStack.size() < 32, "The maximum number of matrices is 32\n");
-    transformStack.push_back(std::make_shared<Transform>());
+    transformStack.push_back(Transform());
 }
 
 void TransformSystem::popMatrix() {
@@ -49,47 +49,34 @@ void TransformSystem::popMatrix() {
 
 // ----------------------------------------------------------------------
 Transform TransformSystem::getCurrentTransform() {
-    return *transformStack.back();
-}
-std::shared_ptr<Transform> TransformSystem::getCurrentTransformPtr() {
     return transformStack.back();
 }
 
 // ----------------------------------------------------------------------
 void TransformSystem::translate(vec3 t) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    *currentTransformPtr = *currentTransformPtr * Transform::translate(t);
+    transformStack.back() = transformStack.back() * Transform::translate(t);
 }
 
 void TransformSystem::rotateX(double theta) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    auto rotMatX = rotate_mat_x(theta);
-    *currentTransformPtr = *currentTransformPtr * Transform::rotateX(theta);
+    transformStack.back() = transformStack.back() * Transform::rotateX(theta);
 }
 
 void TransformSystem::rotateY(double theta) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    auto rotMatY = rotate_mat_y(theta);
-    *currentTransformPtr = *currentTransformPtr * Transform::rotateY(theta);
+    transformStack.back() = transformStack.back() * Transform::rotateY(theta);
 }
 
 void TransformSystem::rotateZ(double theta) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    auto rotMatZ = rotate_mat_z(theta);
-    *currentTransformPtr = *currentTransformPtr * Transform::rotateZ(theta);
+    transformStack.back() = transformStack.back() * Transform::rotateZ(theta);
 }
 
 void TransformSystem::rotate(double theta, vec3 axis) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    *currentTransformPtr = *currentTransformPtr * Transform::rotate(theta, axis);
+    transformStack.back() = transformStack.back() * Transform::rotate(theta, axis);
 }
 
 void TransformSystem::scale(double s) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    *currentTransformPtr = *currentTransformPtr * Transform::scale(s);
+    transformStack.back() = transformStack.back() * Transform::scale(s);
 }
 
 void TransformSystem::scale(vec3 s) {
-    auto currentTransformPtr = getCurrentTransformPtr();
-    *currentTransformPtr = *currentTransformPtr * Transform::scale(s);
+    transformStack.back() = transformStack.back() * Transform::scale(s);
 }

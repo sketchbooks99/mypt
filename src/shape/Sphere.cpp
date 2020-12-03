@@ -35,7 +35,6 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
 }
 
 AABB Sphere::bounding() const {
-    std::cout << center - vec3(radius, radius, radius) << ", " << center + vec3(radius, radius, radius) << std::endl;
     return AABB(
         center - vec3(radius, radius, radius),
         center + vec3(radius, radius, radius));

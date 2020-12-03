@@ -23,6 +23,7 @@ public:
     static Transform scale(vec3 s);
 
     mat4 mat, matInv;
+
 };
 
 inline Transform operator*(Transform t1, Transform t2) {
@@ -46,10 +47,9 @@ public:
     void pushMatrix();
     void popMatrix();
 
-    std::shared_ptr<Transform> getCurrentTransformPtr();
     Transform getCurrentTransform();
 
-    std::vector<std::shared_ptr<Transform>> getTransformStack() { return transformStack; }
+    std::vector<Transform> getTransformStack() { return transformStack; }
 
     void translate(vec3 t);
 
@@ -62,5 +62,5 @@ public:
     void scale(vec3 s);
 
 private:
-    std::vector<std::shared_ptr<Transform>> transformStack;
+    std::vector<Transform> transformStack;
 };
