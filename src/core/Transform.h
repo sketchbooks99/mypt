@@ -33,7 +33,8 @@ inline Transform operator*(Transform t1, Transform t2) {
 
 inline Ray operator*(Transform t1, Ray r) {
     vec3 ro = mat4::point_mul(t1.getInvMatrix(), r.origin());
-    vec3 rd = mat4::vector_mul(t1.getInvMatrix(), r.direction());
+    auto r_length = r.direction().length();
+    vec3 rd = normalize(mat4::vector_mul(t1.getInvMatrix(), r.direction()));
     return Ray(ro, rd);
 }
 
@@ -48,6 +49,8 @@ public:
     std::shared_ptr<Transform> getCurrentTransformPtr();
     Transform getCurrentTransform();
 
+    std::vector<std::shared_ptr<Transform>> getTransformStack() { return transformStack; }
+
     void translate(vec3 t);
 
     void rotateX(double theta);
@@ -58,5 +61,6 @@ public:
     void scale(double s);
     void scale(vec3 s);
 
+private:
     std::vector<std::shared_ptr<Transform>> transformStack;
 };

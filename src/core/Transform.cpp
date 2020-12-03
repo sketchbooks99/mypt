@@ -9,13 +9,13 @@ Transform Transform::rotateX(double theta) {
     return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
 }
 Transform Transform::rotateY(double theta) {
-    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
+    return Transform(rotate_mat_y(theta), transpose(rotate_mat_y(theta)));
 }
 Transform Transform::rotateZ(double theta) {
-    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
+    return Transform(rotate_mat_z(theta), transpose(rotate_mat_z(theta)));
 }
 Transform Transform::rotate(double theta, vec3 axis) {
-    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
+    return Transform(rotate_mat(theta, axis), transpose(rotate_mat(theta, axis)));
 }
 
 Transform Transform::scale(double s) {
@@ -29,11 +29,30 @@ Transform Transform::scale(vec3 s) {
 
 // TransformSystem ------------------------------------------------------
 TransformSystem::TransformSystem() {
-    transformStack.emplace_back(std::make_shared<Transform>());
+    transformStack.push_back(std::make_shared<Transform>());
 }
 
 TransformSystem::TransformSystem(mat4 m) {
-    transformStack.emplace_back(std::make_shared<Transform>(m));
+    transformStack.push_back(std::make_shared<Transform>(m));
+}
+
+// ----------------------------------------------------------------------
+void TransformSystem::pushMatrix() {
+    ASSERT(transformStack.size() < 32, "The maximum number of matrices is 32\n");
+    transformStack.push_back(std::make_shared<Transform>());
+}
+
+void TransformSystem::popMatrix() {
+    ASSERT(transformStack.size() > 1, "Transform class must have at least 1 matrix.\n");
+    transformStack.pop_back();
+}
+
+// ----------------------------------------------------------------------
+Transform TransformSystem::getCurrentTransform() {
+    return *transformStack.back();
+}
+std::shared_ptr<Transform> TransformSystem::getCurrentTransformPtr() {
+    return transformStack.back();
 }
 
 // ----------------------------------------------------------------------
@@ -73,24 +92,4 @@ void TransformSystem::scale(double s) {
 void TransformSystem::scale(vec3 s) {
     auto currentTransformPtr = getCurrentTransformPtr();
     *currentTransformPtr = *currentTransformPtr * Transform::scale(s);
-}
-
-// Transform System -----------------------------------------------------
-// ----------------------------------------------------------------------
-void TransformSystem::pushMatrix() {
-    ASSERT(transformStack.size() < 32, "The maximum number of matrices is 32\n");
-    transformStack.emplace_back(std::make_shared<Transform>());
-}
-
-void TransformSystem::popMatrix() {
-    ASSERT(transformStack.size() > 1, "Transform class must have at least 1 matrix.\n");
-    transformStack.pop_back();
-}
-
-// ----------------------------------------------------------------------
-Transform TransformSystem::getCurrentTransform() {
-    return *transformStack.back();
-}
-std::shared_ptr<Transform> TransformSystem::getCurrentTransformPtr() {
-    return transformStack.back();
 }
