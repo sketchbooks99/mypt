@@ -4,7 +4,7 @@
 
 std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;
-    Transform transform;
+    TransformSystem ts;
 
     auto earth_texture = std::make_shared<NoiseTexture>(
         1.0f, NoiseTexture::Mode::TURB);
@@ -14,7 +14,8 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createSphereShape(vec3(0, -1000, 0), 1000),
-            earth_lambert
+            earth_lambert,
+            ts.getCurrentTransformPtr()
         ));
 
     // emissive image texture
@@ -24,23 +25,22 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(1, -5), vec2(11, 5), 7.5,
                 Plane::PlaneAxis::YZ),
-            emissive
+            emissive,
+            ts.getCurrentTransformPtr()
         ));
     
     // bunny 
     auto albedo = vec3(0.8, 0.05, 0.05);
     auto bunny_lambert = std::make_shared<Lambertian>(albedo);
     auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(), 1.0f, vec3(1,1,1), true);
+    ts.pushMatrix();
+    // ts.translate(vec3(1,3,1));
+    ts.scale(40.0f);
     for(auto &triangle : bunny) {
-        auto transformed_triangle = std::make_shared<TransformPrimitive>(
-            std::make_shared<ShapePrimitive>(
-                triangle, bunny_lambert));
-        transformed_triangle->scale(40.0f);
-        // transformed_triangle->rotate(3*pi, vec3(1,2,3));
-        // transformed_triangle->translate(vec3(0, 2, 0));
-        // transformed_triangle->rotate_x(pi/3.0f);
-        primitives.emplace_back(transformed_triangle);
+        primitives.emplace_back(
+            std::make_shared<ShapePrimitive>(triangle, bunny_lambert, ts.getCurrentTransformPtr()));
     }   
+    ts.popMatrix();
 
     return primitives;
 }

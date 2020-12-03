@@ -3,6 +3,7 @@
 #include "AABB.h"
 #include "Ray.h"
 #include "Material.h"
+#include "Transform.h"
 
 class Shape {
     public:

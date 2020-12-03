@@ -1,32 +1,32 @@
 #include "../core/Transform.h"
 
 void printTransform(Transform t) {
-    std::cout << t.getCurrentMatrix() << std::endl;
-    std::cout << t.getCurrentInvMatrix() << std::endl;
+    std::cout << "mat: \n" << t.getMatrix() << std::endl;
+    std::cout << "matInv: \n" << t.getInvMatrix() << std::endl;
 }
 
 int main() {
-    Transform t;
-    t.pushMatrix();
+    TransformSystem ts;
+    ts.pushMatrix();
 
-    t.translate(vec3(1,2,3));
-    printTransform(t);
-    t.rotate(pi / 3.0f, vec3(1.0, 1.0, 1.0));
-    printTransform(t);
-    t.scale(3.0f);
-    printTransform(t);
+    ts.translate(vec3(1,2,3));
+    printTransform(ts.getCurrentTransform());
+    ts.rotate(pi / 3.0f, vec3(1.0, 1.0, 1.0));
+    printTransform(ts.getCurrentTransform());
+    ts.scale(3.0f);
+    printTransform(ts.getCurrentTransform());
 
-    t.pushMatrix();
-    t.translate(vec3(3,2,1));
-    printTransform(t);
-    t.rotate(pi / 3.0f, vec3(0.5, 0.5, 0.5));
-    printTransform(t);
-    t.scale(5.0f);
-    printTransform(t);
-    t.popMatrix();
+    ts.pushMatrix();
+    ts.translate(vec3(3,2,1));
+    printTransform(ts.getCurrentTransform());
+    ts.rotate(pi / 3.0f, vec3(0.5, 0.5, 0.5));
+    printTransform(ts.getCurrentTransform());
+    ts.scale(5.0f);
+    printTransform(ts.getCurrentTransform());
+    ts.popMatrix();
 
-    printTransform(t);
-    t.popMatrix();
+    printTransform(ts.getCurrentTransform());
+    ts.popMatrix();
 
     return 0;
 }

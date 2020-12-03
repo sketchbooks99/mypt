@@ -1,20 +1,52 @@
 #pragma once
 
 #include "MathUtil.h"
+#include "Ray.h"
 
-class Transform {
+struct Transform {
 public:
-    Transform();
-    Transform(mat4 m);
+    Transform() : mat(mat4()), matInv(mat4()) {}
+    Transform(mat4 m) : mat(m.mat), matInv(inverse(m).mat) {}
+    Transform(mat4 m, mat4 mInv) : mat(m.mat), matInv(mInv) {}
+
+    mat4 getMatrix() { return mat; }
+    mat4 getInvMatrix() { return matInv; }
+
+    static Transform translate(vec3 t);
+
+    static Transform rotateX(double theta);
+    static Transform rotateY(double theta);
+    static Transform rotateZ(double theta);
+    static Transform rotate(double theta, vec3 axis);
+
+    static Transform scale(double s);
+    static Transform scale(vec3 s);
+
+    mat4 mat, matInv;
+};
+
+inline Transform operator*(Transform t1, Transform t2) {
+    auto mat = t1.mat * t2.mat;
+    auto matInv = t2.matInv * t1.matInv;
+    return Transform(mat, matInv);
+}
+
+inline Ray operator*(Transform t1, Ray r) {
+    vec3 ro = mat4::point_mul(t1.getInvMatrix(), r.origin());
+    vec3 rd = mat4::vector_mul(t1.getInvMatrix(), r.direction());
+    return Ray(ro, rd);
+}
+
+class TransformSystem {
+public:
+    TransformSystem();
+    TransformSystem(mat4 m);
 
     void pushMatrix();
     void popMatrix();
 
-    std::shared_ptr<mat4> getCurrentMatrixPtr();
-    std::shared_ptr<mat4> getCurrentInvMatrixPtr();
-
-    mat4 getCurrentMatrix();
-    mat4 getCurrentInvMatrix();
+    std::shared_ptr<Transform> getCurrentTransformPtr();
+    Transform getCurrentTransform();
 
     void translate(vec3 t);
 
@@ -25,8 +57,6 @@ public:
 
     void scale(double s);
     void scale(vec3 s);
-    
-private:
-    std::vector<std::shared_ptr<mat4>> matrices;
-    std::vector<std::shared_ptr<mat4>> invMatrices;
+
+    std::vector<std::shared_ptr<Transform>> transformStack;
 };

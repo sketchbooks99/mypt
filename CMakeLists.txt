@@ -18,7 +18,6 @@ set(pbrenderer_src
     src/core/Image.cpp
     src/core/Perlin.cpp
     src/core/mat4.cpp
-    src/core/TransformPrimitive.cpp
     src/core/Transform.cpp
 
     src/material/Dielectric.cpp 

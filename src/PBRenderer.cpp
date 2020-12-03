@@ -100,7 +100,7 @@ int main(int argc, const char * argv[]) {
     auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
 
     Image<RGBA> result(image_width, image_height);
-    int progress = -1, len_progress = 40;
+    int progress = -1, len_progress = 20;
 
     // Unable to display dicimal with index expression
     std::cout.unsetf(std::ios::scientific);

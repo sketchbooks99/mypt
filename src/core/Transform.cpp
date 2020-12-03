@@ -1,93 +1,96 @@
 #include "Transform.h"
 
-// ----------------------------------------------------------------------
-Transform::Transform() {
-    matrices.push_back(std::make_shared<mat4>());
-    invMatrices.push_back(std::make_shared<mat4>());
+// Transform ------------------------------------------------------------
+Transform Transform::translate(vec3 t) {
+    return Transform(translate_mat(t), translate_mat(-t));
 }
 
-Transform::Transform(mat4 m) {
-    matrices.push_back(std::make_shared<mat4>(m.mat));
-    invMatrices.push_back(std::make_shared<mat4>(inverse(m).mat));
+Transform Transform::rotateX(double theta) {
+    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
+}
+Transform Transform::rotateY(double theta) {
+    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
+}
+Transform Transform::rotateZ(double theta) {
+    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
+}
+Transform Transform::rotate(double theta, vec3 axis) {
+    return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
 }
 
-// ----------------------------------------------------------------------
-void Transform::pushMatrix() {
-    ASSERT(matrices.size() < 32, "The maximum number of matrices is 32\n");
-    matrices.push_back(std::make_shared<mat4>());
-    invMatrices.push_back(std::make_shared<mat4>());
+Transform Transform::scale(double s) {
+    ASSERT(s != 0, "Scale value must be non-zero!\n");
+    return Transform(scale_mat(s), scale_mat(1.0f / s));
+}
+Transform Transform::scale(vec3 s) {
+    ASSERT(s.x != 0 && s.y != 0 && s.z != 0, "Scale value must be non-zero!\n");
+    return Transform(scale_mat(s), scale_mat(vec3(1.0f/s.x, 1.0f/s.y, 1.0f/s.z)));
 }
 
-void Transform::popMatrix() {
-    ASSERT(matrices.size() > 1, "Transform class must have at least 1 matrix.\n");
-    matrices.pop_back();
-    invMatrices.pop_back();
+// TransformSystem ------------------------------------------------------
+TransformSystem::TransformSystem() {
+    transformStack.emplace_back(std::make_shared<Transform>());
 }
 
-// ----------------------------------------------------------------------
-mat4 Transform::getCurrentMatrix() {
-    return *matrices.back();
-}
-std::shared_ptr<mat4> Transform::getCurrentMatrixPtr() {
-    return matrices.back();
-}
-mat4 Transform::getCurrentInvMatrix() {
-    return *invMatrices.back();
-}
-std::shared_ptr<mat4> Transform::getCurrentInvMatrixPtr() {
-    return invMatrices.back();
+TransformSystem::TransformSystem(mat4 m) {
+    transformStack.emplace_back(std::make_shared<Transform>(m));
 }
 
 // ----------------------------------------------------------------------
-void Transform::translate(vec3 t) {
-    auto currentMat = getCurrentMatrixPtr();
-    *currentMat = *currentMat * translate_mat(t);
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = translate_mat(-t) * *currentMatInv;
+void TransformSystem::translate(vec3 t) {
+    auto currentTransformPtr = getCurrentTransformPtr();
+    *currentTransformPtr = *currentTransformPtr * Transform::translate(t);
 }
 
-void Transform::rotateX(double theta) {
-    auto currentMat = getCurrentMatrixPtr();;
+void TransformSystem::rotateX(double theta) {
+    auto currentTransformPtr = getCurrentTransformPtr();
     auto rotMatX = rotate_mat_x(theta);
-    *currentMat = *currentMat * rotMatX;
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = transpose(rotMatX) * *currentMatInv;
+    *currentTransformPtr = *currentTransformPtr * Transform::rotateX(theta);
 }
 
-void Transform::rotateY(double theta) {
-    auto currentMat = getCurrentMatrixPtr();;
-    auto rotMatX = rotate_mat_y(theta);
-    *currentMat = *currentMat * rotMatX;
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = transpose(rotMatX) * *currentMatInv;
+void TransformSystem::rotateY(double theta) {
+    auto currentTransformPtr = getCurrentTransformPtr();
+    auto rotMatY = rotate_mat_y(theta);
+    *currentTransformPtr = *currentTransformPtr * Transform::rotateY(theta);
 }
 
-void Transform::rotateZ(double theta) {
-    auto currentMat = getCurrentMatrixPtr();;
-    auto rotMatX = rotate_mat_z(theta);
-    *currentMat = *currentMat * rotMatX;
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = transpose(rotMatX) * *currentMatInv;
+void TransformSystem::rotateZ(double theta) {
+    auto currentTransformPtr = getCurrentTransformPtr();
+    auto rotMatZ = rotate_mat_z(theta);
+    *currentTransformPtr = *currentTransformPtr * Transform::rotateZ(theta);
 }
 
-void Transform::rotate(double theta, vec3 axis) {
-    auto currentMat = getCurrentMatrixPtr();
-    auto rotMat = rotate_mat(theta, axis);
-    *currentMat = *currentMat * rotMat;
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = transpose(rotMat) * *currentMatInv;
+void TransformSystem::rotate(double theta, vec3 axis) {
+    auto currentTransformPtr = getCurrentTransformPtr();
+    *currentTransformPtr = *currentTransformPtr * Transform::rotate(theta, axis);
 }
 
-void Transform::scale(double s) {
-    auto currentMat = getCurrentMatrixPtr();
-    *currentMat = *currentMat * scale_mat(s);
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = scale_mat(1.0f / s) * *currentMatInv;
+void TransformSystem::scale(double s) {
+    auto currentTransformPtr = getCurrentTransformPtr();
+    *currentTransformPtr = *currentTransformPtr * Transform::scale(s);
 }
 
-void Transform::scale(vec3 s) {
-    auto currentMat = getCurrentMatrixPtr();
-    *currentMat = *currentMat * scale_mat(s);
-    auto currentMatInv = getCurrentInvMatrixPtr();
-    *currentMatInv = scale_mat(vec3(1.0f/s.x, 1.0f/s.y, 1.0f/s.z)) * *currentMatInv;
+void TransformSystem::scale(vec3 s) {
+    auto currentTransformPtr = getCurrentTransformPtr();
+    *currentTransformPtr = *currentTransformPtr * Transform::scale(s);
+}
+
+// Transform System -----------------------------------------------------
+// ----------------------------------------------------------------------
+void TransformSystem::pushMatrix() {
+    ASSERT(transformStack.size() < 32, "The maximum number of matrices is 32\n");
+    transformStack.emplace_back(std::make_shared<Transform>());
+}
+
+void TransformSystem::popMatrix() {
+    ASSERT(transformStack.size() > 1, "Transform class must have at least 1 matrix.\n");
+    transformStack.pop_back();
+}
+
+// ----------------------------------------------------------------------
+Transform TransformSystem::getCurrentTransform() {
+    return *transformStack.back();
+}
+std::shared_ptr<Transform> TransformSystem::getCurrentTransformPtr() {
+    return transformStack.back();
 }
