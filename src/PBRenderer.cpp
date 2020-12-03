@@ -36,8 +36,8 @@ int main(int argc, const char * argv[]) {
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 15.0;
     auto aperture = 0.0;
-    // vec3 background(0.7, 0.9, 0.9);
-    vec3 background(1.0f, 0.0f, 1.0f);
+    vec3 background(0.7, 0.9, 0.9);
+    // vec3 background(1.0f, 0.0f, 1.0f);
 
     // Parsing scene configuration
     std::string filename = argv[1];

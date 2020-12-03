@@ -41,18 +41,16 @@ public:
         vec3 min(infinity, infinity, infinity);
         vec3 max(-infinity, -infinity, -infinity);
 
-        std::cout << "----------" << std::endl;
         for(int i=0; i<2; i++) {            // 0: min.x, 1: max.x
             for(int j=0; j<2; j++) {        // 0: min.y, 1: max.y
                 for(int k=0; k<2; k++) {    // 0: min.z, 1: max.z
-                    auto x = (i-1)*shape->bounding().min().x + i*shape->bounding().max().x;
-                    auto y = (j-1)*shape->bounding().min().y + j*shape->bounding().max().y;
-                    auto z = (k-1)*shape->bounding().min().z + k*shape->bounding().max().z;
+                    auto x = (1-i)*shape->bounding().min().x + i*shape->bounding().max().x;
+                    auto y = (1-j)*shape->bounding().min().y + j*shape->bounding().max().y;
+                    auto z = (1-k)*shape->bounding().min().z + k*shape->bounding().max().z;
 
                     // Update min, and bounding box by transformed vector
                     // auto tr_corner = mat4::point_mul(transform->getMatrix(), vec3(x, y, z));
                     vec3 tr_corner(x, y, z);
-                    std::cout << tr_corner << std::endl;
                     for(int l=0; l<3; l++) {
                         min[l] = fmin(min[l], tr_corner[l]);
                         max[l] = fmax(max[l], tr_corner[l]);
@@ -60,7 +58,6 @@ public:
                 } 
             }
         }
-        std::cout << "----------" << std::endl;
 
         return AABB(min, max);
     }

@@ -30,17 +30,17 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         ));
     
     // bunny 
-    // ts.pushMatrix();
-    // // ts.translate(vec3(1,3,1));
-    // ts.scale(40.0f);
-    // auto albedo = vec3(0.8, 0.05, 0.05);
-    // auto bunny_lambert = std::make_shared<Lambertian>(albedo);
-    // auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(), 1.0f, vec3(1,1,1), true);
-    // for(auto &triangle : bunny) {
-    //     primitives.emplace_back(
-    //         std::make_shared<ShapePrimitive>(triangle, bunny_lambert, ts.getCurrentTransformPtr()));
-    // }
-    // ts.popMatrix();
+    ts.pushMatrix();
+    ts.translate(vec3(1,3,1));
+    ts.scale(40.0f);
+    auto albedo = vec3(0.8, 0.05, 0.05);
+    auto bunny_lambert = std::make_shared<Lambertian>(albedo);
+    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(), 1.0f, vec3(1,1,1), true);
+    for(auto &triangle : bunny) {
+        primitives.emplace_back(
+            std::make_shared<ShapePrimitive>(triangle, bunny_lambert, ts.getCurrentTransformPtr()));
+    }
+    ts.popMatrix();
 
     return primitives;
 }
