@@ -128,10 +128,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
         auto p0 = vertices[faces[i][0]];
         auto p1 = vertices[faces[i][1]];
         auto p2 = vertices[faces[i][2]];
-        vec3 p0_f3(p0.x, p0.y, p0.z);
-        vec3 p1_f3(p1.x, p1.y, p1.z);
-        vec3 p2_f3(p2.x, p2.y, p2.z);
-        auto N = normalize(cross(p2_f3 - p0_f3, p1_f3 - p0_f3));
+        auto N = normalize(cross(p2 - p0, p1 - p0));
 
         // Normal smoothing
         if (isSmooth) {

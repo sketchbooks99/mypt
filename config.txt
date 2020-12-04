@@ -1,12 +1,12 @@
 # Basic configuration
-filename result/result.png
+filename result/transform_debug.png
 width 1024
 height 768
-spp 128
-depth 12
+spp 256
+depth 5
 
 # Camera 
-origin 10 20 100
+origin 0 10 100
 lookat 0 0 0
 up 0 1 0
 focus_length 15.0

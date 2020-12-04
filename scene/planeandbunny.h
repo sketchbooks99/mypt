@@ -6,22 +6,49 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;
     TransformSystem ts;
     
-    auto earth_texture = std::make_shared<NoiseTexture>(
+    auto noise_texture = std::make_shared<NoiseTexture>(
         1.0f, NoiseTexture::Mode::TURB);
-    auto earth_lambert = std::make_shared<Lambertian>(earth_texture);
+    auto ground_lambert = std::make_shared<Lambertian>(noise_texture);
 
     // ground
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createSphereShape(vec3(0, -1000, 0), 1000),
-            earth_lambert,
+            ground_lambert,
             std::make_shared<Transform>(ts.getCurrentTransform())
         ));
+
+    float sphere_field = 50.0f;
+    const int num_sphere = 300;
+    for(int i=0; i<num_sphere; i++) {
+        auto x = (random_double() * 2.0f - 1.0f) * sphere_field;
+        auto y = random_double() * 5.0f + 2.5f;
+        auto z = (random_double() * 2.0f - 1.0f) * sphere_field;
+        ts.pushMatrix();
+        ts.translate(vec3(x, y, z));
+        ts.scale(random_double() * 2.0f);
+        auto albedo = vec3::random() * vec3::random();
+        
+        double rnd = random_double();
+        std::shared_ptr<Material> mat_ptr;
+        if(rnd < 0.5f) mat_ptr = std::make_shared<Lambertian>(albedo);
+        else if(rnd < 0.7f) mat_ptr = std::make_shared<Dielectric>(albedo, 1.52);
+        else if(rnd < 0.9f) mat_ptr = std::make_shared<Metal>(albedo, 0.03);
+        else mat_ptr = std::make_shared<Emitter>(albedo, 10.0f);
+
+        primitives.emplace_back(
+            std::make_shared<ShapePrimitive>(
+                createSphereShape(vec3(0, 0, 0), 1.0f),
+                std::make_shared<Lambertian>(albedo),
+                std::make_shared<Transform>(ts.getCurrentTransform())
+            ));
+        ts.popMatrix();
+    }
     
     ts.pushMatrix();
     ts.translate(vec3(0.0f, 15.0, 0.0f));
     ts.scale(2.0f);
-    // emissive image texture
+    // emissive texture
     auto white_texture = std::make_shared<ConstantTexture>(vec3(1.0f));
     auto emissive = std::make_shared<Emitter>(white_texture, 5.0f);
     primitives.emplace_back(
@@ -33,10 +60,9 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         ));
     ts.popMatrix();
     
-    
+    // bunny 1
     ts.pushMatrix();
-    ts.translate(vec3(-5, 5, 0));
-    ts.rotate(pi/3.0f, vec3(1,2,3));
+    ts.translate(vec3(-15, 5, 0));
     ts.scale(50.0f);
 
     auto albedo = vec3(0.8, 0.05, 0.05);
@@ -50,13 +76,50 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     }
 
     ts.popMatrix();
-
+    
+    // bunny 2
     ts.pushMatrix();
-    ts.translate(vec3(5, 5, 0));
-    ts.rotate(-pi/3.0f, vec3(1,2,3));
+    ts.translate(vec3(-5, 5, 0));
+    ts.rotateY(pi/4.f);
     ts.scale(50.0f);
 
-    albedo = vec3(0.05, 0.8, 0.05);
+    albedo = vec3(0.05, 0.80, 0.05);
+    bunny_lambert = std::make_shared<Lambertian>(albedo);
+    bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 1.0f, vec3(1,1,1), true);
+    bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
+
+    for(auto &triangle : bunny) {
+        primitives.emplace_back(
+            std::make_shared<ShapePrimitive>(triangle, bunny_lambert, bunny_transform));
+    }
+
+    ts.popMatrix();
+
+    // bunny 3
+    ts.pushMatrix();
+    ts.translate(vec3(5, 5, 0));
+    ts.rotateY(pi/2.f);
+    ts.scale(50.0f);
+
+    albedo = vec3(0.05, 0.05, 0.80);
+    bunny_lambert = std::make_shared<Lambertian>(albedo);
+    bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 1.0f, vec3(1,1,1), true);
+    bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
+
+    for(auto &triangle : bunny) {
+        primitives.emplace_back(
+            std::make_shared<ShapePrimitive>(triangle, bunny_lambert, bunny_transform));
+    }
+
+    ts.popMatrix();
+
+    // bunny 4
+    ts.pushMatrix();
+    ts.translate(vec3(15, 5, 0));
+    ts.rotateY(3.f*pi/4.f);
+    ts.scale(50.0f);
+
+    albedo = vec3(1.0f);
     bunny_lambert = std::make_shared<Lambertian>(albedo);
     bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 1.0f, vec3(1,1,1), true);
     bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());

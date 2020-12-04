@@ -18,10 +18,11 @@ bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) 
     rec.u = (a-min[0]) / (max[0]-min[0]);
     rec.v = (b-min[1]) / (max[1]-min[1]);
     rec.t = t;
-    vec3 outward_normal(0.0f);
+    vec3 outward_normal;
     outward_normal[const_axis] = 1.0;
     rec.set_face_normal(r, outward_normal);
     rec.p = r.at(t);
+
 
     return true;
 }
@@ -32,7 +33,7 @@ AABB Plane::bounding() const {
     int b_axis = axis == PlaneAxis::XZ ? (const_axis + 1) % 3 : (const_axis + 2) % 3;
 
     vec3 _min, _max;
-    double eps = 1e-4f;
+    double eps = 0.0001;
     _min[const_axis] = k - eps;
     _min[a_axis] = min[0];
     _min[b_axis] = min[1];

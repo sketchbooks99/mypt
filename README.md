@@ -47,7 +47,7 @@ class Primitive {
   - [x] Support JPG format
   - [ ] Support GRAY scale I/O
 - [x] Transformation system (translate, rotate, scale)
-  - Transformation system should be managed with pointer for better memory efficiency.
+  - [x] Transformation system should be managed with pointer for better memory efficiency.
 - [x] Update BVH for better efficiency
   - [x] Add SAH based BVH (I have not verified efficiency yet.)
 - [x] Enable ImageTexture class
