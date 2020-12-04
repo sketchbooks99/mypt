@@ -9,7 +9,8 @@
 After cloning this repository to your local, run this command to run `pbrenderer`. 
 ```
 cd PBRenderer
-mkdir build && cd build
+mkdir build 
+cd build
 cmake ..
 make
 ```
@@ -17,10 +18,11 @@ make
 After compiling it, you can render your scene with this command.
 ```
 cd path/to/PBRenderer
-build/pbrenderer image.png
+build/pbrenderer config.txt
 ```
-> NOTE: 
-> - At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
+
+### NOTE: 
+- At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. 
     So, when you create your custom scene, please modify or create `custom_scene.h` in `scene/` directory, 
     and change header file include in `PBRenderer.cpp` .
 
