@@ -10,7 +10,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         1.0f, NoiseTexture::Mode::TURB);
     auto earth_lambert = std::make_shared<Lambertian>(earth_texture);
 
-    std::cout << ts.getCurrentTransform().getMatrix() << std::endl;
     // ground
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
@@ -22,7 +21,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.pushMatrix();
     ts.translate(vec3(0.0f, 15.0, 0.0f));
     ts.scale(2.0f);
-    std::cout << ts.getCurrentTransform().getMatrix() << std::endl;
     // emissive image texture
     auto white_texture = std::make_shared<ConstantTexture>(vec3(1.0f));
     auto emissive = std::make_shared<Emitter>(white_texture, 5.0f);
