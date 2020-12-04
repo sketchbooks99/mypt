@@ -27,7 +27,9 @@ public:
         auto p = rec.p;
         auto normal = rec.normal;
         p = mat4::point_mul(transform->getMatrix(), p);
-        normal = mat4::normal_mul(transform->getInvMatrix(), normal);
+        // normal = mat4::normal_mul(transform->getInvMatrix(), normal);
+        normal = mat4::vector_mul(transform->getMatrix(), normal);
+        normal = normalize(normal);
 
         rec.p = p;
         rec.set_face_normal(tr_ray, normal);

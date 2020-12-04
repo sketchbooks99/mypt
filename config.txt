@@ -1,9 +1,10 @@
 # Basic configuration
-filename result/transform_debug.png
+filename result/normal_check.png
 width 1024
 height 768
-spp 256
+spp 1
 depth 5
+background 0.7 0.9 0.9
 
 # Camera 
 origin 0 10 100

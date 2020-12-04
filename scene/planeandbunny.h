@@ -33,7 +33,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         std::shared_ptr<Material> mat_ptr;
         if(rnd < 0.5f) mat_ptr = std::make_shared<Lambertian>(albedo);
         else if(rnd < 0.7f) mat_ptr = std::make_shared<Dielectric>(albedo, 1.52);
-        else if(rnd < 0.9f) mat_ptr = std::make_shared<Metal>(albedo, 0.03);
+        else if(rnd < 0.9f) mat_ptr = std::make_shared<Metal>(albedo, 0.0f);
         else mat_ptr = std::make_shared<Emitter>(albedo, 10.0f);
 
         primitives.emplace_back(

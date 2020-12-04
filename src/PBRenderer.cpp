@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
     vec3 vup(0, 1, 0);
     auto dist_to_focus = 15.0;
     auto aperture = 0.0;
-    vec3 background(0.7, 0.9, 0.9);
+    vec3 background(1.0f);
     // vec3 background(1.0f, 0.0f, 1.0f);
 
     // Parsing scene configuration
@@ -83,6 +83,11 @@ int main(int argc, const char * argv[]) {
                 iss >> dist_to_focus;
             else if(header == "aperture")
                 iss >> aperture;
+            else if(header == "bg" || header == "background")  {
+                float x, y, z;
+                iss >> x >> y >> z;
+                background = vec3(x, y, z);
+            }
         }
     }
 
@@ -156,3 +161,4 @@ int main(int argc, const char * argv[]) {
     std::cerr << "\nDone\n";
     return 0;
 }
+
