@@ -39,7 +39,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         primitives.emplace_back(
             std::make_shared<ShapePrimitive>(
                 createSphereShape(vec3(0, 0, 0), 1.0f),
-                std::make_shared<Lambertian>(albedo),
+                mat_ptr,
                 std::make_shared<Transform>(ts.getCurrentTransform())
             ));
         ts.popMatrix();
@@ -66,7 +66,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.scale(50.0f);
 
     auto albedo = vec3(0.8, 0.05, 0.05);
-    auto bunny_lambert = std::make_shared<Lambertian>(albedo);
+    std::shared_ptr<Material> bunny_lambert = std::make_shared<Lambertian>(albedo);
     auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 1.0f, vec3(1,1,1), true);
     auto bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
 
@@ -84,7 +84,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.scale(50.0f);
 
     albedo = vec3(0.80, 0.80, 0.05);
-    bunny_lambert = std::make_shared<Lambertian>(albedo);
+    bunny_lambert = std::make_shared<Metal>(albedo, 0.0f);
     bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 1.0f, vec3(1,1,1), true);
     bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
 
@@ -102,7 +102,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.scale(50.0f);
 
     albedo = vec3(0.05, 0.05, 0.80);
-    bunny_lambert = std::make_shared<Lambertian>(albedo);
+    bunny_lambert = std::make_shared<Dielectric>(albedo, 1.52f);
     bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 1.0f, vec3(1,1,1), true);
     bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
 

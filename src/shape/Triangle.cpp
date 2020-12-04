@@ -123,31 +123,31 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
     // Mesh smoothing
     normals.resize(vertices.size());
     auto counts = std::vector<int>(vertices.size(), 0);
-    for(int i=0; i<faces.size(); i++)
+    for(auto &face : faces)
     {
-        auto p0 = vertices[faces[i][0]];
-        auto p1 = vertices[faces[i][1]];
-        auto p2 = vertices[faces[i][2]];
-        auto N = normalize(cross(p2 - p0, p1 - p0));
+        auto p0 = vertices[face[0]];
+        auto p1 = vertices[face[1]];
+        auto p2 = vertices[face[2]];
+        auto N = normalize(cross(p2-p0, p1-p0));
 
         // Normal smoothing
         if (isSmooth) {
-            auto idx = faces[i][0];
+            auto idx = face[0];
             normals[idx] += N;
             counts[idx]++;
-            idx = faces[i][1];
+            idx = face[1];
             normals[idx] += N;
             counts[idx]++;
 
-            idx = faces[i][2];
+            idx = face[2];
             normals[idx] += N;
             counts[idx]++;
         }
         else
         {
-            normals[faces[i][0]] = N;
-            normals[faces[i][1]] = N;
-            normals[faces[i][2]] = N;
+            normals[face[0]] = N;
+            normals[face[1]] = N;
+            normals[face[2]] = N;
         }
     }
     if (isSmooth) {

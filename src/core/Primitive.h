@@ -19,20 +19,16 @@ public:
     virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override
     {
         Ray tr_ray = *transform * r;
-        // std::cout << "Ray: " << r.origin() << ", " << r.direction() << std::endl;
-        // std::cout << "Ray_: " << tr_ray.origin() << ", " << tr_ray.direction() << std::endl;
-        if(!shape->intersect(tr_ray, t_min, t_max, rec)) 
+        if(!shape->intersect(tr_ray, t_min, t_max, rec))
             return false;
         
         auto p = rec.p;
         auto normal = rec.normal;
         p = mat4::point_mul(transform->getMatrix(), p);
-        // normal = mat4::normal_mul(transform->getInvMatrix(), normal);
-        normal = mat4::vector_mul(transform->getMatrix(), normal);
-        normal = normalize(normal);
+        normal = normalize(mat4::vector_mul(transform->getMatrix(), normal));
 
         rec.p = p;
-        rec.set_face_normal(tr_ray, normal);
+        rec.set_face_normal(r, normal);
         rec.mat_ptr = material;
 
         return true;
