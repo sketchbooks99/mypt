@@ -22,7 +22,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     const int num_sphere = 300;
     for(int i=0; i<num_sphere; i++) {
         auto x = (random_double() * 2.0f - 1.0f) * sphere_field;
-        auto y = random_double() * 5.0f;
+        auto y = random_double() * 5.0f + 2.5f;
         auto z = (random_double() * 2.0f - 1.0f) * sphere_field;
         ts.pushMatrix();
         ts.translate(vec3(x, y, z));
@@ -33,8 +33,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
         std::shared_ptr<Material> mat_ptr;
         if(rnd < 0.5f) mat_ptr = std::make_shared<Lambertian>(albedo);
         else if(rnd < 0.7f) mat_ptr = std::make_shared<Dielectric>(albedo, 1.52);
-        else if(rnd < 0.9f) mat_ptr = std::make_shared<Metal>(albedo, 0.0f);
-        else mat_ptr = std::make_shared<Emitter>(albedo, 10.0f);
+        else if(rnd < 1.0f) mat_ptr = std::make_shared<Metal>(albedo, 0.0f);
 
         primitives.emplace_back(
             std::make_shared<ShapePrimitive>(

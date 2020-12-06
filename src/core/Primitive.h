@@ -22,8 +22,10 @@ public:
         if(!shape->intersect(tr_ray, t_min, t_max, rec))
             return false;
         
-        auto p = mat4::point_mul(transform->getMatrix(), rec.p);
-        auto normal = normalize(mat4::vector_mul(transform->getMatrix(), rec.normal));
+        auto p = rec.p;
+        auto normal = rec.normal;
+        p = mat4::point_mul(transform->getMatrix(), rec.p);
+        normal = normalize(mat4::vector_mul(transform->getMatrix(), rec.normal));
 
         rec.p = p;
         rec.set_face_normal(tr_ray, normal);
