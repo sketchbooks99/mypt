@@ -24,6 +24,7 @@ set(pbrenderer_src
     src/material/Emitter.cpp
     src/material/Lambertian.cpp 
     src/material/Metal.cpp
+    src/material/NormalMat.cpp
 
     src/shape/MovingSphere.cpp 
     src/shape/Plane.cpp

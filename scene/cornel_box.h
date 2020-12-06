@@ -15,7 +15,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.translate(vec3(10.0f, 0.0f, 0.0f));
     ts.rotateZ(pi/2.0f);
     ts.scale(10.0f);
-    printTransform(ts.getCurrentTransform());
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(-1, -1), vec2(1, 1), 0.0,
@@ -30,7 +29,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.translate(vec3(-10.0f, 0.0f, 0.0f));
     ts.rotateZ(pi/2.0f);
     ts.scale(10.0f);
-    printTransform(ts.getCurrentTransform());
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(-1, -1), vec2(1, 1), 0.0,
@@ -44,7 +42,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.pushMatrix();
     ts.translate(vec3(0.0, 10.0f, 0.0f));
     ts.scale(10.0f);
-    printTransform(ts.getCurrentTransform());
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(-1, -1), vec2(1, 1), 0.0,
@@ -58,7 +55,6 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.pushMatrix();
     ts.translate(vec3(0.0f, -10.0f, 0.0f));
     ts.scale(10.0f);
-    printTransform(ts.getCurrentTransform());
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(-1, -1), vec2(1, 1), 0.0,
@@ -70,10 +66,9 @@ std::vector<std::shared_ptr<Primitive>> scene() {
 
     // back
     ts.pushMatrix();
-    ts.translate(vec3(0.0f, 0.0f, 10.0f));
+    ts.translate(vec3(0.0f, 0.0f, 100.0f));
     ts.rotateX(pi/2.0f);
     ts.scale(10.0f);
-    printTransform(ts.getCurrentTransform());
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(-1, -1), vec2(1, 1), 0.0,
@@ -85,14 +80,13 @@ std::vector<std::shared_ptr<Primitive>> scene() {
 
     // light
     ts.pushMatrix();
-    ts.translate(vec3(0.0, 9.8f, 0.0));
+    ts.translate(vec3(0.0, -5.0f, 0.0));
     ts.scale(5.0f);
-    printTransform(ts.getCurrentTransform());
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
             createPlaneShape(vec2(-1, -1), vec2(1, 1), 0.0,
                 Plane::PlaneAxis::XZ),
-            std::make_shared<Emitter>(std::make_shared<ConstantTexture>(vec3(0.8, 0.8, 0.4)), 10.0f),
+            std::make_shared<Emitter>(vec3(1.0f, 1.0f, 0.0f), 10.0f),
             std::make_shared<Transform>(ts.getCurrentTransform())
         ));
     ts.popMatrix();

@@ -23,6 +23,7 @@
 #include "../material/Metal.h"
 #include "../material/Dielectric.h"
 #include "../material/Emitter.h"
+#include "../material/NormalMat.h"
 // #include "../material/Disney.h"
 
 // Texture include 

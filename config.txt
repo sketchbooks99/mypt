@@ -1,8 +1,8 @@
 # Basic configuration
-filename result/normal_check.png
+filename result/planeandbunny.png
 width 1024
 height 768
-spp 128
+spp 1
 depth 5
 background 0.7 0.9 0.9
 

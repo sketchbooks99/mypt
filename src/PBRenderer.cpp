@@ -1,7 +1,7 @@
 #include "core/PBRenderer.h"
 #include "../scene/planeandbunny.h"
 
-vec3 ray_color(const Ray& r, const BVH* bvh, const vec3& background, int depth) {
+vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0)
@@ -102,7 +102,7 @@ int main(int argc, const char * argv[]) {
 
     auto primitives = scene();
 
-    auto bvh = new BVH(primitives, 0, primitives.size(), 1, BVH::SplitMethod::SAH);
+    auto bvh = new BVH(primitives, 0, primitives.size()-1, 1, BVH::SplitMethod::SAH);
 
     Image<RGBA> result(image_width, image_height);
     int progress = -1, len_progress = 20;

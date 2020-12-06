@@ -65,7 +65,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     box = surrounding(box_left, box_right);
 }
 
-bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool BVH::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
     if(!box.intersect(r, t_min, t_max))
         return false;
     

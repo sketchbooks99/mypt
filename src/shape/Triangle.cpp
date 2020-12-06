@@ -69,7 +69,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
                     throw std::runtime_error("The number of faces is less than 3.\n");
 
                 if (temp_vert_faces.size() == 3) {
-                    std::vector<int> face(3);
+                    int3 face;
                     face[0] = temp_vert_faces[0];
                     face[1] = temp_vert_faces[1];
                     face[2] = temp_vert_faces[2];
@@ -86,12 +86,12 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
                     {
                         // The index value of 0th vertex in quad
                         auto base_idx = i * 4;
-                        std::vector<int> face1(3);
+                        int3 face1;
                         face1[0] = temp_vert_faces[base_idx + 0];
                         face1[1] = temp_vert_faces[base_idx + 1];
                         face1[2] = temp_vert_faces[base_idx + 2];
                         faces.emplace_back(face1);
-                        std::vector<int> face2(3);
+                        int3 face2;
                         face2[0] = temp_vert_faces[base_idx + 2];
                         face2[1] = temp_vert_faces[base_idx + 3];
                         face2[2] = temp_vert_faces[base_idx + 0];

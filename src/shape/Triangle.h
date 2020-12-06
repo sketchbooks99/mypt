@@ -7,17 +7,20 @@
 
 struct TriangleMesh {
     TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, bool isSmooth);
+    TriangleMesh(const std::vector<vec3> vertices, 
+                 const std::vector<vec3>& normals, 
+                 const std::vector<std::vector<int>> faces) {}
 
     std::vector<vec3> vertices;
     std::vector<vec3> normals;
-    std::vector<std::vector<int>> faces;
+    std::vector<int3> faces;
     // std::vector<vec2> uv;
 };
 
 class Triangle final : public Shape {
 public:
     Triangle() {}
-    Triangle(std::shared_ptr<TriangleMesh> &mesh, std::vector<int> face)
+    Triangle(std::shared_ptr<TriangleMesh> &mesh, int3 face)
         : mesh(mesh), face(face) {
         // Calculate corner vertex of AABB
         vec3 p0 = mesh->vertices[face[0]];
@@ -48,7 +51,7 @@ public:
     }
 
 private:
-    std::vector<int> face;
+    int3 face;
     std::shared_ptr<TriangleMesh> mesh;
     vec3 min, max; // For AABB
 };

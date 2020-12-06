@@ -8,7 +8,7 @@
 
 class Primitive {
 public:
-    virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
+    virtual bool intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
     virtual AABB bounding() const = 0;
 };
 
@@ -16,25 +16,25 @@ class ShapePrimitive final : public Primitive {
 public:
     ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform)
     : shape(shape), material(material), transform(transform){}
-    virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override
+    virtual bool intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const override
     {
         Ray tr_ray = *transform * r;
         if(!shape->intersect(tr_ray, t_min, t_max, rec))
             return false;
         
-        auto p = rec.p;
-        auto normal = rec.normal;
-        p = mat4::point_mul(transform->getMatrix(), p);
-        normal = normalize(mat4::vector_mul(transform->getMatrix(), normal));
+        auto p = mat4::point_mul(transform->getMatrix(), rec.p);
+        auto normal = normalize(mat4::vector_mul(transform->getMatrix(), rec.normal));
 
         rec.p = p;
-        rec.set_face_normal(r, normal);
+        rec.set_face_normal(tr_ray, normal);
         rec.mat_ptr = material;
+
+        // Update ray by transformed ray
+        r = tr_ray;
 
         return true;
     }
     
-    // TODO: verify the pointer of ...
     virtual AABB bounding() const override {
         vec3 min(infinity, infinity, infinity);
         vec3 max(-infinity, -infinity, -infinity);
