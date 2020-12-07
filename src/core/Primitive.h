@@ -25,14 +25,11 @@ public:
         auto p = rec.p;
         auto normal = rec.normal;
         p = mat4::point_mul(transform->getMatrix(), rec.p);
-        normal = normalize(mat4::vector_mul(transform->getMatrix(), rec.normal));
+        normal = normalize(mat4::normal_mul(transform->getInvMatrix(), rec.normal));
 
         rec.p = p;
-        rec.set_face_normal(tr_ray, normal);
+        rec.set_face_normal(r, normal);
         rec.mat_ptr = material;
-
-        // Update ray by transformed ray
-        r = tr_ray;
 
         return true;
     }
@@ -56,6 +53,7 @@ public:
                 } 
             }
         }
+
 
         return AABB(min, max);
     }

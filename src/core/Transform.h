@@ -32,10 +32,9 @@ inline Transform operator*(Transform t1, Transform t2) {
     return Transform(mat, matInv);
 }
 
-inline Ray operator*(Transform t1, Ray r) {
-    vec3 ro = mat4::point_mul(t1.getInvMatrix(), r.origin());
-    auto r_length = r.direction().length();
-    vec3 rd = normalize(mat4::vector_mul(t1.getInvMatrix(), r.direction()));
+inline Ray operator*(Transform t, Ray r) {
+    vec3 ro = mat4::point_mul(t.getInvMatrix(), r.origin());
+    vec3 rd = normalize(mat4::vector_mul(t.getInvMatrix(), r.direction()));
     return Ray(ro, rd);
 }
 

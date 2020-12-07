@@ -35,7 +35,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
 
         primitives.emplace_back(
             std::make_shared<ShapePrimitive>(
-                createSphereShape(vec3(x,y,z), random_double()*2+1.0f),
+                createSphereShape(vec3(x,y,z), random_double()*2.0f),
                 mat_ptr,
                 std::make_shared<Transform>(ts.getCurrentTransform())
             ));
