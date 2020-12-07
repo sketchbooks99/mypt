@@ -1,4 +1,4 @@
-#include "ConstantMedium.h"
+#include "Primitive.h"
 
 /** NOTE: 
  * The ray origins must be inside the volume, so we have to carefully
@@ -10,7 +10,7 @@
  * implemention will work for boundaries like boxes or spheres, but will
  * not work with toruses or shapes that contain voids. **/
 
-bool ConstantMedium::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ConstantMedium::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // Print occasional samples when debugging. To enable, set enableDebug true.
     const bool enableDebug = false;
     const bool debugging = enableDebug && random_double() < 1e-4f;
