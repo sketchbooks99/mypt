@@ -130,10 +130,10 @@ inline type3<Type> cross(const type3<Type> &u, const type3<Type> &v) {
                 u.x * v.y - u.y * v.x);
 }
 
-typedef type3<double> vec3;
-typedef type3<unsigned int> uint3;
-typedef type3<int> int3;
-typedef type3<unsigned char> RGB;
+using vec3 = type3<double>;
+using uint3 = type3<unsigned int>;
+using int3 = type3<int>;
+using RGB = type3<unsigned char>;
 
 inline vec3 normalize(vec3 v) {
     return v.length() != 0 ? v / v.length() : vec3();

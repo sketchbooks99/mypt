@@ -117,10 +117,10 @@ inline type4<Type> cross(const type4<Type> &u, const type4<Type> &v) {
                 1.0f);
 }
 
-typedef type4<double> vec4;
-typedef type4<unsigned int> uint4;
-typedef type4<int> int4;
-typedef type4<unsigned char> RGBA;
+using vec4 = type4<double>;
+using uint4 = type4<unsigned int>;
+using int4 = type4<int>;
+using RGBA = type4<unsigned char>;
 
 // TODO: Implement of zero-division check. If v = vec4(0.0), zero-division will occur.
 inline vec4 normalize(vec4 v) {

@@ -59,9 +59,9 @@ public:
     Type x, y;
 };
 
-typedef type2<double> vec2;
-typedef type2<unsigned int> uint2;
-typedef type2<int> int2;
+using vec2 = type2<double>;
+using uint2 = type2<unsigned int>;
+using int2 = type2<int>;
 
 // Utility functions of type2
 template <typename Type>

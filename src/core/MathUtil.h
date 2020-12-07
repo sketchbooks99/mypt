@@ -6,4 +6,4 @@
 
 #include "mat4.h"
 
-typedef unsigned char GRAY;
+using GRAY = unsigned char;
