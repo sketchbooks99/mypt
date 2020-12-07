@@ -1,9 +1,9 @@
 # Basic configuration
-filename result/planeandbunny.png
+filename result/result.png
 width 1024
 height 768
-spp 1
-depth 5
+spp 256
+depth 8
 background 0.7 0.9 0.9
 
 # Camera 
