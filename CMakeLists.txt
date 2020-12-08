@@ -30,7 +30,6 @@ set(pbrenderer_src
     src/shape/Plane.cpp
     src/shape/Sphere.cpp 
     src/shape/Triangle.cpp
-    src/shape/AxisPlane.cpp
 
     src/texture/ImageTexture.cpp
 )
