@@ -16,6 +16,7 @@
 #include "../shape/Triangle.h"
 #include "../shape/Sphere.h"
 #include "../shape/Plane.h"
+#include "../shape/AxisPlane.h"
 
 // Material include
 #include "Material.h"

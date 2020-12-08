@@ -51,8 +51,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     auto emissive = std::make_shared<Emitter>(white_texture, 5.0f);
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
-            createPlaneShape(vec2(-5, -5), vec2(5, 5), 0.0,
-                Plane::PlaneAxis::XZ),
+            createPlaneShape(vec2(-5, -5), vec2(5, 5)),
             emissive,
             std::make_shared<Transform>(ts.getCurrentTransform())
         ));
@@ -113,7 +112,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.translate(vec3(15, 5, 0));
     ts.rotateY(3.f*pi/2.f);
 
-    albedo = vec3(1.0f);
+    albedo = vec3(0.8f);
     bunny_lambert = std::make_shared<Lambertian>(albedo);
     bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 50.0f, vec3(1,1,1), true);
     bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());

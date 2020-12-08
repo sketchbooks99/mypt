@@ -1,11 +1,11 @@
 #include "core/PBRenderer.h"
-#include "../scene/planeandbunny.h"
+#include "../scene/cornel_box.h"
 
 vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0)
-        return vec3(0, 0, 0);
+        return vec3(0.0, 0.0, 0.0);
 
     if(!bvh->intersect(r, 0, infinity, rec))
         return background;
@@ -29,7 +29,6 @@ int main(int argc, const char * argv[]) {
     int image_height = 768;
     int samples_per_pixel = 1024;
     int max_depth = 5;
-    auto aspect_ratio = double(image_width) / image_height;
 
     vec3 lookfrom(-20, 20, 50);
     vec3 lookat(0, 0, 0);
@@ -90,6 +89,8 @@ int main(int argc, const char * argv[]) {
             }
         }
     }
+
+    auto aspect_ratio = double(image_width) / image_height;
 
     // Verify config is successfully loaded
     std::cout << "filename: " << outname << std::endl;
