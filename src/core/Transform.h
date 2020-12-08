@@ -34,6 +34,8 @@ inline Transform operator*(Transform t1, Transform t2) {
 
 inline Ray operator*(Transform t, Ray r) {
     vec3 ro = mat4::point_mul(t.getInvMatrix(), r.origin());
+    /// MEMO: Normalize direction might cause scale error. 
+    ///       I have to check non-normalize version. 
     vec3 rd = normalize(mat4::vector_mul(t.getInvMatrix(), r.direction()));
     return Ray(ro, rd);
 }
