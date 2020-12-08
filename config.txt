@@ -1,5 +1,5 @@
 # Basic configuration
-filename result/result.png
+filename result/planeandbunny.png
 width 1024
 height 768
 spp 256

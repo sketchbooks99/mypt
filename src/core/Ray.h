@@ -17,7 +17,7 @@ public:
         return orig + t * dir;
     }
     
-public:
+private:
     vec3 orig;
     vec3 dir;
     double tm;
