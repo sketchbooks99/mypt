@@ -11,12 +11,15 @@ vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
         return background;
 
     Ray scattered;
-    vec3 attenuation;
+    // vec3 attenuation;
     vec3 emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
+    double pdf;
+    vec3 albedo;
 
-    if(!rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+    if(!rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
         return emitted;
-    return emitted + attenuation * ray_color(scattered, bvh, background, depth-1);
+    return emitted + albedo * rec.mat_ptr->scattering_pdf(r, rec, scattered)
+                            * ray_color(scattered, bvh, background, depth-1) / pdf;
 }
 
 int main(int argc, const char * argv[]) {
@@ -36,7 +39,6 @@ int main(int argc, const char * argv[]) {
     auto dist_to_focus = 15.0;
     auto aperture = 0.0;
     vec3 background(1.0f);
-    // vec3 background(1.0f, 0.0f, 1.0f);
 
     // Parsing scene configuration
     std::string filename = argv[1];

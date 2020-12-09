@@ -1,6 +1,6 @@
 #include "Emitter.h"
 
-bool Emitter::scatter(const Ray& r_in, const HitRecord& rec, vec3 &attenuation, Ray& scattered) const
+bool Emitter::scatter(const Ray& r_in, const HitRecord& rec, vec3 &attenuation, Ray& scattered, double& pdf) const
 {
     return false;
 }

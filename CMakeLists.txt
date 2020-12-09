@@ -14,11 +14,12 @@ set(pbrenderer_src
     src/PBRenderer.cpp
     src/core/AABB.cpp
     src/core/BVH.cpp
-    src/core/Camera.cpp 
     src/core/Image.cpp
     src/core/Perlin.cpp
     src/core/mat4.cpp
     src/core/Transform.cpp
+
+    src/render/Camera.cpp 
 
     src/material/Dielectric.cpp 
     src/material/Emitter.cpp

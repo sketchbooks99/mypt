@@ -15,7 +15,7 @@ public:
     Dielectric(double ri) : albedo(vec3(1.0f)), ref_idx(ri) {}
     Dielectric(vec3 a, double ri) : albedo(a), ref_idx(ri) {}
 
-    bool scatter(const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered) const override;
+    bool scatter(const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf) const override;
 
 private:
     vec3 albedo;

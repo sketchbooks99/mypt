@@ -93,25 +93,25 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     }
     ts.popMatrix();
 
-    ts.pushMatrix();
-    ts.translate(vec3(-5,-6,5));
-    primitives.emplace_back(
-        std::make_shared<ShapePrimitive>(
-            createSphereShape(vec3(), 3.0),
-            std::make_shared<Metal>(vec3(1.0, 1.0, 1.0), 0.03),
-            std::make_shared<Transform>(ts.getCurrentTransform())
-        ));
-    ts.popMatrix();
+    // ts.pushMatrix();
+    // ts.translate(vec3(-5,-6,5));
+    // primitives.emplace_back(
+    //     std::make_shared<ShapePrimitive>(
+    //         createSphereShape(vec3(), 3.0),
+    //         std::make_shared<Metal>(vec3(1.0, 1.0, 1.0), 0.03),
+    //         std::make_shared<Transform>(ts.getCurrentTransform())
+    //     ));
+    // ts.popMatrix();
 
-    ts.pushMatrix();
-    ts.translate(vec3(5,-5,5));
-    primitives.emplace_back(
-        std::make_shared<ShapePrimitive>(
-            createSphereShape(vec3(), 4.0),
-            std::make_shared<Dielectric>(vec3(1.0, 1.0, 1.0), 1.52),
-            std::make_shared<Transform>(ts.getCurrentTransform())
-        ));
-    ts.popMatrix();
+    // ts.pushMatrix();
+    // ts.translate(vec3(5,-5,5));
+    // primitives.emplace_back(
+    //     std::make_shared<ShapePrimitive>(
+    //         createSphereShape(vec3(), 4.0),
+    //         std::make_shared<Dielectric>(vec3(1.0, 1.0, 1.0), 1.52),
+    //         std::make_shared<Transform>(ts.getCurrentTransform())
+    //     ));
+    // ts.popMatrix();
 
     return primitives;
 }

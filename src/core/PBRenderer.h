@@ -3,7 +3,6 @@
 // Core include 
 #include "Util.h"
 #include "MathUtil.h"
-#include "Camera.h"
 #include "Perlin.h"
 #include "Ray.h"
 #include "Image.h"
@@ -11,12 +10,14 @@
 #include "BVH.h"
 #include "Transform.h"
 
+// Render include
+#include "../render/Camera.h"
+
 // Shape include 
 #include "Shape.h"
 #include "../shape/Triangle.h"
 #include "../shape/Sphere.h"
 #include "../shape/Plane.h"
-#include "../shape/AxisPlane.h"
 
 // Material include
 #include "Material.h"

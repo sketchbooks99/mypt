@@ -19,27 +19,33 @@ public:
     type3 operator-() const { return type3(-x, -y, -z); }
     // Type operator[](int i) const { 
     //     return *((Type*)this + i);
+    //  or return (&x)[i];
     // }
     // Type& operator[](int i) {
     //     return *((Type*)this + i);
+    //  or return (&x)[i];
     // }
     Type operator[](int i) const {
         switch(i) {
-        case 0: return x; break;
-        case 1: return y; break;
-        case 2: return z; break;
-        default:
-            throw std::runtime_error("Invalid index number to access vec3 parameter!\n");
+        case 0:  return x; break;
+        case 1:  return y; break;
+        case 2:  return z; break;
+        default: throw std::runtime_error("Invalid index number to access vec3 members!\n");
         }
     }
     Type& operator[](int i) {
         switch(i) {
-        case 0: return x; break;
-        case 1: return y; break;
-        case 2: return z; break;
-        default:
-            throw std::runtime_error("Invalid index number to access vec3 parameter!\n");
+        case 0:  return x; break;
+        case 1:  return y; break;
+        case 2:  return z; break;
+        default: throw std::runtime_error("Invalid index number to access vec3 members!\n");
         }
+    }
+
+    bool is_near_zero() const {
+        // Return true if the vector is close to zero in all dimensions
+        const auto eps = 1e-8;
+        return (fabs(x) < eps) && (fabs(y) < eps) && (fabs(z) < eps);
     }
 
     type3& operator+=(const type3 &v) {

@@ -25,8 +25,18 @@ public:
     virtual vec3 emitted(double u, double v, const vec3& p) const {
         return vec3(0, 0, 0);
     }
+
     virtual bool scatter (
-        const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered
-    ) const = 0;
+        const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+    ) const {
+        return false;
+    }
+
+    // Probability distribution function
+    virtual double scattering_pdf (
+        const Ray& r_in, const HitRecord& rec, const Ray& scattered
+    ) const {
+        return 0;
+    }
 };
 
