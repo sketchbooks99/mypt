@@ -1,5 +1,18 @@
 #include "../core/MathUtil.h"
 
+struct ONB {
+    ONB() {}
+    vec3 operator[](int i) { return (&u)[i]; }
+    void build_from_w(const vec3& n) {
+        w = normalize(n);
+        vec3 a = (fabs(w.x) > 0.9) ? vec3(0, 1, 0) : vec3(1, 0, 0);
+        v = normalize(cross(w, a));
+        u = cross(w, v); 
+    }
+public:
+    vec3 u, v, w;
+};
+
 void cast_test() {
     // Cast test 
 
@@ -22,7 +35,16 @@ void cast_test() {
     std::cout << "f_v4: " << f_v4 / 10 << std::endl;
 }
 
+void ONB_test(){
+    ONB onb;
+    onb.build_from_w(vec3(0,1,0));
+    for(int i=0; i<3; i++)
+        std::cout << onb[i] << std::endl;
+}
+
 int main() {
     cast_test();
+    std::cout << "ONB test" << std::endl;
+    ONB_test();
     return 0;
 }

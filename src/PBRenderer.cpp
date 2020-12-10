@@ -145,6 +145,7 @@ int main(int argc, const char * argv[]) {
             for(int s = 0; s < samples_per_pixel; s++) {
                 auto u = (x + random_double()) / image_width;
                 auto v = (y + random_double()) / image_height;
+
                 Ray r = cam.get_ray(u, v);
                 color += ray_color(r, bvh, background, max_depth);
             }

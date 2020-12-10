@@ -2,7 +2,7 @@
 filename result/cornel.png
 width 768
 height 768
-spp 4
+spp 256
 depth 8
 background 0 0 0
 
