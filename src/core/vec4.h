@@ -17,10 +17,12 @@ public:
     
     type4 operator-() const { return type4(-x, -y, -z); }
     Type operator[](int i) const { 
-        return *((Type*)this+i);
+        ASSERT(i < 4, "Invalid index number to access vec3 members!\n");
+        return (&x)[i];
     }
     Type& operator[](int i) {
-        return *((Type*)this+i);
+        ASSERT(i < 4, "Invalid index number to access vec3 members!\n");
+        return (&x)[i];
     }
     
     type4& operator+=(const type4 &v) {

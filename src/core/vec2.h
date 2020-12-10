@@ -16,10 +16,12 @@ public:
     operator type2<OtherType>() { return type2<OtherType>(x, y); }
 
     Type operator[](int i) const { 
-        return *((Type*)this+i);
+        ASSERT(i < 2, "Invalid index number to access vec3 members!\n");
+        return (&x)[i];
     }
     Type& operator[](int i) {
-        return *((Type*)this+i);
+        ASSERT(i < 2, "Invalid index number to access vec3 members!\n");
+        return (&x)[i];
     }
 
     type2 operator-() const { return type2(-x, -y); }

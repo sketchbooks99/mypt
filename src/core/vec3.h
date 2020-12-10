@@ -17,29 +17,13 @@ public:
     operator type3<OtherType>() { return type3<OtherType>(x, y, z); }
     
     type3 operator-() const { return type3(-x, -y, -z); }
-    // Type operator[](int i) const { 
-    //     return *((Type*)this + i);
-    //  or return (&x)[i];
-    // }
-    // Type& operator[](int i) {
-    //     return *((Type*)this + i);
-    //  or return (&x)[i];
-    // }
     Type operator[](int i) const {
-        switch(i) {
-        case 0:  return x; break;
-        case 1:  return y; break;
-        case 2:  return z; break;
-        default: throw std::runtime_error("Invalid index number to access vec3 members!\n");
-        }
+        ASSERT(i < 3, "Invalid index number to access vec3 members!\n");
+        return (&x)[i];
     }
     Type& operator[](int i) {
-        switch(i) {
-        case 0:  return x; break;
-        case 1:  return y; break;
-        case 2:  return z; break;
-        default: throw std::runtime_error("Invalid index number to access vec3 members!\n");
-        }
+        ASSERT(i < 3, "Invalid index number to access vec3 members!\n");
+        return (&x)[i];
     }
 
     bool is_near_zero() const {
