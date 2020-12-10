@@ -1,9 +1,9 @@
 # Basic configuration
-filename result/progress.png
+filename result/mmaps.png
 width 768
 height 768
-spp 16
-depth 8
+spp 32
+depth 5
 background 0 0 0
 
 # Camera 

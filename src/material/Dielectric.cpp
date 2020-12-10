@@ -1,7 +1,7 @@
 #include "Dielectric.h"
 
 bool Dielectric::scatter(
-    const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+    const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
 ) const {
     attenuation = albedo;
     double etai_over_etat = (rec.front_face) ? (1.0 / ref_idx) : (ref_idx);

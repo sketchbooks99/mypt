@@ -27,7 +27,7 @@ public:
     }
 
     virtual bool scatter (
-        const Ray& r_in, const HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+        const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
     ) const {
         return false;
     }

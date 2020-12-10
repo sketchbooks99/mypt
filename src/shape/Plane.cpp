@@ -16,14 +16,13 @@ bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) 
     rec.t = t;
     vec3 outward_normal(0, 1, 0);
     rec.set_face_normal(r, outward_normal);
-    double eps = 1e-6f;
-    rec.p = r.at(t) + eps * rec.normal;
+    rec.p = r.at(t);
 
     return true;
 }
 
 AABB Plane::bounding() const {
-    double eps = 1e-6f;
+    double eps = 1e-8f;
     vec3 _min(min[0], -eps, min[1]);
     vec3 _max(max[0],  eps, max[1]);
 

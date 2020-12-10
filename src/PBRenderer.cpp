@@ -1,5 +1,5 @@
 #include "core/PBRenderer.h"
-#include "../scene/cornel_box.h"
+#include "../scene/mmaps_test.h"
 
 vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
@@ -18,8 +18,9 @@ vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
 
     if(!rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
         return emitted;
-    return emitted + albedo * rec.mat_ptr->scattering_pdf(r, rec, scattered)
-                            * ray_color(scattered, bvh, background, depth-1) / pdf;
+    // return emitted + albedo * rec.mat_ptr->scattering_pdf(r, rec, scattered)
+    //                         * ray_color(scattered, bvh, background, depth-1) / pdf;
+    return emitted + albedo * ray_color(scattered, bvh, background, depth-1);
 }
 
 void stream_progress(int currentLine, int maxLine, double elapsedTime, int progressLen=20) {    
