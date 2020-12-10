@@ -22,6 +22,24 @@ vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
                             * ray_color(scattered, bvh, background, depth-1) / pdf;
 }
 
+void stream_progress(int currentLine, int maxLine, double elapsedTime, int progressLen=20) {    
+    // Display progress bar
+    std::cerr << "\rRendering: [";
+    int progress = static_cast<int>(((float)(currentLine+1) / maxLine) * progressLen);
+    for(int i=0; i<progress; i++) 
+        std::cerr << "+";
+    for(int i=0; i<progressLen-progress; i++)
+        std::cerr << " ";
+    std::cerr << "]";
+
+    std::cerr << " [" << std::fixed << std::setprecision(2) << elapsedTime / CLOCKS_PER_SEC << "s]";
+
+    // Display percentage of process
+    float percent = (float)(currentLine+1) / maxLine;
+    std::cerr << " (" << std::fixed << std::setprecision(2) << (float)(percent * 100.0f) << "%, ";
+    std::cerr << "" << currentLine + 1 << " / " << maxLine << ")" <<std::flush;
+}
+
 int main(int argc, const char * argv[]) {
     // Change seed of randaom value
     srand((unsigned)time(NULL));
@@ -108,36 +126,17 @@ int main(int argc, const char * argv[]) {
     auto bvh = new BVH(primitives, 0, primitives.size(), 1, BVH::SplitMethod::SAH);
 
     Image<RGBA> result(image_width, image_height);
-    int progress = -1, len_progress = 20;
 
     // Unable to display dicimal with index expression
     std::cout.unsetf(std::ios::scientific);
 
+    int progressLen = 20;
     clock_t start_time = clock();
 
     // Render the image
     for(int y = 0; y < image_height; y++) {
-
-        // calculate ratio of progress bar
-        if(progress != static_cast<int>(((float)(y+1) / image_height) * len_progress))
-        {
-            progress = static_cast<int>(((float)(y+1) / image_height) * len_progress);
-        }
-        
-        // Display progress bar
-        std::cerr << "\rRendering: [";
-        for(int i=0; i<len_progress; i++) {
-            std::string progress_char = i < progress ? "+" : " ";
-            std::cerr << progress_char;
-        }
-        std::cerr << "]";
-        double time = static_cast<double>(clock() - start_time);
-        std::cerr << " [" << std::fixed << std::setprecision(2) << time / CLOCKS_PER_SEC << "s]";
-
-        // Display percentage of process
-        float percent = (float)(y+1) / image_height;
-        std::cerr << " (" << std::fixed << std::setprecision(2) << (float)(percent * 100.0f) << "%, ";
-        std::cerr << "" << y + 1 << " / " << image_height << ")" <<std::flush;
+        double elapsedTime = static_cast<double>(clock() - start_time);
+        stream_progress(y, image_height, elapsedTime, progressLen);
 
         for(int x = 0; x < image_width; x++) {
             vec3 color(0, 0, 0);

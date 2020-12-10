@@ -1,8 +1,8 @@
 # Basic configuration
-filename result/cornel.png
+filename result/progress.png
 width 768
 height 768
-spp 256
+spp 16
 depth 8
 background 0 0 0
 

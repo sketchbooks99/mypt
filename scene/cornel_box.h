@@ -79,39 +79,39 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     ts.popMatrix();
 
     // bunny
+    // ts.pushMatrix();
+    // ts.rotateY(pi);
+
+    // auto albedo = vec3(0.8f);
+    // auto bunny_lambert = std::make_shared<Lambertian>(albedo);
+    // auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 50.0f, vec3(1,1,1), true);
+    // auto bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
+
+    // for(auto &triangle : bunny) {
+    //     primitives.emplace_back(
+    //         std::make_shared<ShapePrimitive>(triangle, bunny_lambert, bunny_transform));
+    // }
+    // ts.popMatrix();
+
     ts.pushMatrix();
-    ts.rotateY(pi);
-
-    auto albedo = vec3(0.8f);
-    auto bunny_lambert = std::make_shared<Lambertian>(albedo);
-    auto bunny = createTriangleMesh("data/model/bunny.obj", vec3(0.0f), 50.0f, vec3(1,1,1), true);
-    auto bunny_transform = std::make_shared<Transform>(ts.getCurrentTransform());
-
-    for(auto &triangle : bunny) {
-        primitives.emplace_back(
-            std::make_shared<ShapePrimitive>(triangle, bunny_lambert, bunny_transform));
-    }
+    ts.translate(vec3(-5,-6,5));
+    primitives.emplace_back(
+        std::make_shared<ShapePrimitive>(
+            createSphereShape(vec3(), 3.0),
+            std::make_shared<Lambertian>(vec3(1.0, 1.0, 1.0)),
+            std::make_shared<Transform>(ts.getCurrentTransform())
+        ));
     ts.popMatrix();
 
-    // ts.pushMatrix();
-    // ts.translate(vec3(-5,-6,5));
-    // primitives.emplace_back(
-    //     std::make_shared<ShapePrimitive>(
-    //         createSphereShape(vec3(), 3.0),
-    //         std::make_shared<Metal>(vec3(1.0, 1.0, 1.0), 0.03),
-    //         std::make_shared<Transform>(ts.getCurrentTransform())
-    //     ));
-    // ts.popMatrix();
-
-    // ts.pushMatrix();
-    // ts.translate(vec3(5,-5,5));
-    // primitives.emplace_back(
-    //     std::make_shared<ShapePrimitive>(
-    //         createSphereShape(vec3(), 4.0),
-    //         std::make_shared<Dielectric>(vec3(1.0, 1.0, 1.0), 1.52),
-    //         std::make_shared<Transform>(ts.getCurrentTransform())
-    //     ));
-    // ts.popMatrix();
+    ts.pushMatrix();
+    ts.translate(vec3(5,-5,5));
+    primitives.emplace_back(
+        std::make_shared<ShapePrimitive>(
+            createSphereShape(vec3(), 4.0),
+            std::make_shared<Lambertian>(vec3(1.0, 1.0, 1.0)),
+            std::make_shared<Transform>(ts.getCurrentTransform())
+        ));
+    ts.popMatrix();
 
     return primitives;
 }
