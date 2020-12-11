@@ -3,6 +3,8 @@
 #include "../core/Material.h"
 #include "../texture/ConstantTexture.h"
 
+namespace mypt {
+
 class Isotropic : public Material {
 public:
     Isotropic(vec3 c) : albedo(std::make_shared<ConstantTexture>(c)){}
@@ -17,3 +19,5 @@ public:
 private:
     std::shared_ptr<Texture> albedo;
 };
+
+}

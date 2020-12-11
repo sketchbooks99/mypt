@@ -2,6 +2,8 @@
 
 #include "../core/Shape.h"
 
+namespace mypt {
+
 class Sphere final : public Shape {
     public:
         Sphere() {}
@@ -23,3 +25,5 @@ class Sphere final : public Shape {
 };
 
 std::shared_ptr<Shape> createSphereShape(vec3 cen, double r);
+
+}

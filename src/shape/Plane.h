@@ -2,6 +2,8 @@
 
 #include "../core/Shape.h"
 
+namespace mypt {
+
 class Plane final : public Shape {
 public:
     Plane() {}
@@ -14,3 +16,5 @@ private:
 };
 
 std::shared_ptr<Shape> createPlaneShape(const vec2& min, const vec2& max);
+
+}

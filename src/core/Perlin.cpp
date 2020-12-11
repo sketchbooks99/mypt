@@ -1,5 +1,7 @@
 #include "Perlin.h"
 
+namespace mypt {
+
 Perlin::Perlin() {
     ranvec = new vec3[point_count];
     for(int i = 0; i < point_count; i++) {
@@ -57,4 +59,6 @@ double Perlin::noise(const vec3& p) const {
         }
     }
     return perlin_interp(c, u, v, w);
+}
+
 }

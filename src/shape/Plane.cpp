@@ -1,5 +1,7 @@
 #include "Plane.h"
 
+namespace mypt {
+
 bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     auto t = -r.origin().y / r.direction().y;
     if(t < t_min || t > t_max) 
@@ -32,4 +34,6 @@ AABB Plane::bounding() const {
 std::shared_ptr<Shape> createPlaneShape(const vec2& min, const vec2& max)
 {
     return std::make_shared<Plane>(min, max);
+}
+
 }

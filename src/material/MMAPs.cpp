@@ -1,5 +1,7 @@
 #include "MMAPs.h"
 
+namespace mypt {
+
 bool MMAPs::scatter(
     const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
 ) const {
@@ -9,4 +11,6 @@ bool MMAPs::scatter(
     scattered = Ray(rec.p, retro_transmitted + fuzz*random_in_unit_sphere());
     attenuation = albedo * 0.5f;
     return true;
+}
+
 }

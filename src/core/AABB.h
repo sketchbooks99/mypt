@@ -2,6 +2,8 @@
 
 #include "Ray.h"
 
+namespace mypt {
+
 struct AABB {
     AABB() : _min(vec3()), _max(vec3()) {}
     AABB(const vec3& a, const vec3& b) : _min(a), _max(b) {}
@@ -21,3 +23,4 @@ private:
 
 AABB surrounding(AABB box0, AABB box1);
 
+}

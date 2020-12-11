@@ -5,6 +5,8 @@
 #include <vector>
 #include "../core/Shape.h"
 
+namespace mypt {
+
 struct TriangleMesh {
     TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, bool isSmooth);
     TriangleMesh(const std::vector<vec3> vertices, 
@@ -59,3 +61,5 @@ private:
 std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string & filename,
                                                         vec3 position, float size, vec3 axis, 
                                                         bool isSmooth=true);
+
+}                                                    

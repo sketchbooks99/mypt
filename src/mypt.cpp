@@ -1,6 +1,8 @@
 #include "core/mypt.h"
 #include "../scene/mmaps_test.h"
 
+using namespace mypt;
+
 vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
@@ -165,4 +167,3 @@ int main(int argc, const char * argv[]) {
     std::cerr << "\nDone\n";
     return 0;
 }
-

@@ -3,6 +3,8 @@
 #include "../core/Texture.h"
 #include "../core/Perlin.h"
 
+namespace mypt {
+
 class NoiseTexture final : public Texture {
 public:
     enum class Mode { NOISE, TURB };
@@ -27,3 +29,5 @@ private:
     double scale;
     Mode mode;
 };
+
+}

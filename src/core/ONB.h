@@ -2,6 +2,8 @@
 
 #include "MathUtil.h"
 
+namespace mypt {
+
 // Orthonormal basis class
 class ONB {
 public:
@@ -27,3 +29,5 @@ public:
     // normal, tangent, bitangent(?)
     vec3 u, v, w;
 };
+
+}

@@ -1,5 +1,7 @@
 #include "ImageTexture.h"
 
+namespace mypt {
+
 // ----------------------------------------------------------------
 vec3 ImageTexture::value(double u, double v, const vec3& p) const {
     // If data is not allocated, then return solid magenta as a debugging aid
@@ -17,4 +19,6 @@ vec3 ImageTexture::value(double u, double v, const vec3& p) const {
 
     auto pixel = static_cast<vec3>(this->get(i, j));
     return pixel / 255.0f;
+}
+
 }

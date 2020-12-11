@@ -1,5 +1,7 @@
 #include "NormalMat.h"
 
+namespace mypt {
+
 bool NormalMat::scatter(
     const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
 ) const {
@@ -7,4 +9,6 @@ bool NormalMat::scatter(
     scattered = Ray(rec.p, scatter_direction, r_in.time());
     attenuation = normalize(rec.normal);
     return true;
+}
+
 }

@@ -2,6 +2,8 @@
 
 #include "MathUtil.h"
 
+namespace mypt {
+
 // PixelType must be GRAY, RGB, RGBA
 template <typename PixelType>
 class Image {
@@ -27,3 +29,5 @@ protected:
     PixelType* data;
     int width, height;
 };
+
+}

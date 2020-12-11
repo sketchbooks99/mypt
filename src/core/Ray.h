@@ -2,6 +2,8 @@
 
 #include "MathUtil.h"
 
+namespace mypt {
+
 class Ray {
 public:
     Ray() {}
@@ -22,4 +24,6 @@ private:
     vec3 dir;
     double tm;
 };
+
+}
 

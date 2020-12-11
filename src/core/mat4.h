@@ -3,6 +3,8 @@
 #include "vec3.h"
 #include "vec4.h"
 
+namespace mypt {
+
 struct mat4 {
 public:
     mat4();
@@ -178,4 +180,6 @@ inline mat4 scale_mat(double s) {
         0, 0, s, 0,
         0, 0, 0, 1
     );
+}
+
 }

@@ -3,6 +3,8 @@
 #include "MathUtil.h"
 #include "Ray.h"
 
+namespace mypt {
+
 struct Transform {
 public:
     Transform() : mat(mat4()), matInv(mat4()) {}
@@ -63,3 +65,5 @@ public:
 private:
     std::vector<Transform> transformStack;
 };
+
+}

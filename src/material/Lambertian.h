@@ -4,6 +4,8 @@
 #include "../core/Texture.h"
 #include "../texture/ConstantTexture.h"
 
+namespace mypt {
+
 struct HitRecord;
 
 class Lambertian final : public Material {
@@ -15,3 +17,5 @@ public:
 private:
     std::shared_ptr<Texture> albedo;
 };
+
+}

@@ -2,6 +2,8 @@
 
 #include "../core/Material.h"
 
+namespace mypt {
+
 struct HitRecord;
 
 class MMAPs final : public Material {
@@ -16,4 +18,6 @@ private:
 
 inline vec3 retro_transmit(const vec3& v, const vec3& n) {
     return - v + 2*dot(v, n) * n;
+}
+
 }

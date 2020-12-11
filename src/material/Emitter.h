@@ -4,6 +4,8 @@
 #include "../core/Texture.h"
 #include "../texture/ConstantTexture.h"
 
+namespace mypt {
+
 struct HitRecord;
 
 class Emitter final : public Material {
@@ -20,3 +22,5 @@ private:
     std::shared_ptr<Texture> albedo;
     float intensity;
 };
+
+}

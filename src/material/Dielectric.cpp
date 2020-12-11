@@ -1,5 +1,7 @@
 #include "Dielectric.h"
 
+namespace mypt {
+
 bool Dielectric::scatter(
     const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
 ) const {
@@ -23,4 +25,6 @@ bool Dielectric::scatter(
     vec3 refracted = refract(unit_direction, rec.normal, etai_over_etat);
     scattered = Ray(rec.p, refracted);
     return true;
+}
+
 }

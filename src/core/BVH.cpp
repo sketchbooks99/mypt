@@ -1,5 +1,7 @@
 #include "BVH.h"
 
+namespace mypt {
+
 BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, 
          int axis, SplitMethod splitMethod) {
     auto compare_axis = (axis == 0) ? box_x_compare
@@ -77,4 +79,6 @@ bool BVH::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
 
 AABB BVH::bounding() const {
     return box;
+}
+
 }

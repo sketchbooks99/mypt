@@ -1,5 +1,7 @@
 #include "MovingSphere.h"
 
+namespace mypt {
+
 vec3 MovingSphere::center(double time) const {
     return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
 }
@@ -49,4 +51,6 @@ AABB MovingSphere::bounding() const {
 
 std::shared_ptr<Shape> createMovingSphere(vec3 cen0, vec3 cen1, double t0, double t1, double r) {
     return std::make_shared<MovingSphere>(cen0, cen1, t0, t1, r);
+}
+
 }

@@ -2,6 +2,8 @@
 
 #include "MathUtil.h"
 
+namespace mypt {
+
 inline double trilinear_interp(double c[2][2][2], double u, double v, double w) {
     auto accum = 0.0;
     for(int i=0; i<2; i++) {
@@ -72,3 +74,5 @@ class Perlin {
             }
         }
 };
+
+}

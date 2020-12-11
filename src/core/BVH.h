@@ -3,6 +3,8 @@
 #include <algorithm>
 #include "Primitive.h"
 
+namespace mypt {
+
 inline bool box_compare(const std::shared_ptr<Primitive> a, const std::shared_ptr<Primitive> b, int axis) {
     return a->bounding().min()[axis] < b->bounding().min()[axis];
 }
@@ -31,3 +33,5 @@ private:
     AABB box;
     SplitMethod splitMethod;
 };
+
+}

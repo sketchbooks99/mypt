@@ -7,6 +7,8 @@
 #include "Transform.h"
 #include "../material/Isotropic.h"
 
+namespace mypt {
+
 class Primitive {
 public:
     virtual bool intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
@@ -85,3 +87,5 @@ private:
     std::shared_ptr<Material> phase_function;
     double neg_inv_density;
 };
+
+}

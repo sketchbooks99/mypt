@@ -10,6 +10,8 @@
  * implemention will work for boundaries like boxes or spheres, but will
  * not work with toruses or shapes that contain voids. **/
 
+namespace mypt {
+
 bool ConstantMedium::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // Print occasional samples when debugging. To enable, set enableDebug true.
     const bool enableDebug = false;
@@ -53,4 +55,6 @@ bool ConstantMedium::intersect(Ray& r, double t_min, double t_max, HitRecord& re
     rec.front_face = true;    // arbitrary
     
     return true;
+}
+
 }

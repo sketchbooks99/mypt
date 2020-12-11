@@ -2,6 +2,8 @@
 
 #include "Ray.h"
 
+namespace mypt {
+
 class Material;
 
 struct HitRecord {
@@ -39,4 +41,6 @@ public:
         return 0;
     }
 };
+
+}
 

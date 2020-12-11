@@ -1,5 +1,7 @@
 #include "Sphere.h"
 
+namespace mypt {
+
 bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // vector from origin to center
     vec3 oc = r.origin() - center;
@@ -42,4 +44,6 @@ AABB Sphere::bounding() const {
 
 std::shared_ptr<Shape> createSphereShape(vec3 cen, double r) {
     return std::make_shared<Sphere>(cen, r);
+}
+
 }

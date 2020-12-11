@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+namespace mypt {
+
 Camera::Camera(
     vec3 lookfrom, vec3 lookat, vec3 vup,
     double vfov, // top to botton, in degrees
@@ -36,4 +38,6 @@ Ray Camera::get_ray(double s, double t) {
         lower_left_corner + s * horizontal + t*vertical - origin - offset,
         random_double(time0, time1)
     );
+}
+
 }

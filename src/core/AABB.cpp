@@ -1,5 +1,7 @@
 #include "AABB.h"
 
+namespace mypt {
+
 bool AABB::intersect(const Ray& r, double tmin, double tmax) const {
     for(int a = 0; a < 3; a++) {
         // std::cout << "min: " << _min << std::flush;
@@ -24,4 +26,6 @@ AABB surrounding(AABB box0, AABB box1) {
                ffmax(box0.max().y, box1.max().y),
                ffmax(box0.max().z, box1.max().z));
     return AABB(small, big);
+}
+
 }

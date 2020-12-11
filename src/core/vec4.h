@@ -5,6 +5,8 @@
 
 #include "Util.h"
 
+namespace mypt {
+
 template <typename Type>
 class type4 {
 public:
@@ -127,4 +129,6 @@ using RGBA = type4<unsigned char>;
 // TODO: Implement of zero-division check. If v = vec4(0.0), zero-division will occur.
 inline vec4 normalize(vec4 v) {
     return v / v.length();
+}
+
 }

@@ -2,6 +2,8 @@
 
 #include "../core/Material.h"
 
+namespace mypt {
+
 struct HitRecord;
 
 class Metal final : public Material {
@@ -14,3 +16,5 @@ private:
     vec3 albedo;
     double fuzz;
 };
+
+}

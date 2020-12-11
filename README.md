@@ -4,7 +4,7 @@
 
 - This is offline renderer for learning rendering algorithms, which include global illuminations, effective techniques (i.e., Next Event Estimation, Bounding Volume Hierarchy, etc...), several integrators (i.e., MLT, Bidirectional path tracing), several sampling strategies.
 - If I finished basic learning of path tracing, I'd like to implement GPU path tracing techniques using OptiX or CUDA.
-- Currently, this don't support spectrum rendering, so all color management is performed by RGB representation.
+- Currently, this doesn't support spectrum rendering, so all color management is performed by RGB representation.
 
 ## Compile & Run (Linux)
 

@@ -1,5 +1,7 @@
 #include "../src/core/mypt.h"
 
+using namespace mypt;
+
 std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;
     TransformSystem ts;

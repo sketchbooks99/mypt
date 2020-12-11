@@ -2,6 +2,8 @@
 
 #include "../core/Shape.h"
 
+namespace mypt {
+
 class MovingSphere final : public Shape {
     public:
         MovingSphere() {}
@@ -22,3 +24,5 @@ class MovingSphere final : public Shape {
 };
 
 std::shared_ptr<Shape> createMovingSphere(vec3 cen0, vec3 cen1, double t0, double t1, double r);
+
+}

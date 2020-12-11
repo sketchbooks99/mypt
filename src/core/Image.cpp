@@ -4,6 +4,8 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../ext/stb_image_write.h"
 
+namespace mypt {
+
 // --------------------------------------------------------------------------------
 template <typename PixelType>
 Image<PixelType>::Image(int width, int height)
@@ -58,3 +60,5 @@ void Image<PixelType>::write(const std::string& filename, const std::string& for
 template void Image<GRAY>::write(const std::string&, const std::string&);
 template void Image<RGB>::write(const std::string&, const std::string&);
 template void Image<RGBA>::write(const std::string&, const std::string&);
+
+}

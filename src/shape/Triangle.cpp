@@ -1,5 +1,8 @@
 #include "Triangle.h"
 
+namespace mypt {
+
+// ---------------------------------------------------------------------------
 TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, bool isSmooth) {
     if(filename.substr(filename.length() - 4) == ".obj")
     {
@@ -159,6 +162,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
     }
 }
 
+// ---------------------------------------------------------------------------
 // ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
 bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     float kEps = 1e-6f;
@@ -210,6 +214,7 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
     return true;
 }
 
+// ---------------------------------------------------------------------------
 std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filename, vec3 position, 
                                                           float size, vec3 axis, bool isSmooth) {
     std::vector<std::shared_ptr<Shape>> triangles;
@@ -219,4 +224,6 @@ std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filena
     }
 
     return triangles;
+}
+
 }

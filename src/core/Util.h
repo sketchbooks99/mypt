@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <random>
 
+namespace mypt {
 // ----- Mathmatical utility values and functions -----
 // Constants
 constexpr double infinity = std::numeric_limits<double>::infinity();
@@ -68,4 +69,5 @@ inline std::vector<std::string> split(const std::string &s, char delimiter)
     if(!item.empty())
         elements.push_back(item);
     return elements;
+}
 }

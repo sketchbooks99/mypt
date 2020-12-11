@@ -2,6 +2,8 @@
 
 #include "../core/Material.h"
 
+namespace mypt {
+
 struct HitRecord;
 
 inline double schlick(double cosine, double ref_idx) {
@@ -21,3 +23,5 @@ private:
     vec3 albedo;
     double ref_idx;
 };
+
+}

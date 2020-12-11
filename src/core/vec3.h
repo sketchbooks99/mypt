@@ -5,6 +5,8 @@
 
 #include "Util.h"
 
+namespace mypt {
+
 template <typename Type>
 class type3 {
 public:
@@ -169,4 +171,6 @@ inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
     vec3 r_out_parallel = etai_over_etat * (uv + cos_theta * n);
     vec3 r_out_perp = -sqrt(1.0 - r_out_parallel.length_squared()) * n;
     return r_out_parallel + r_out_perp;
+}
+
 }

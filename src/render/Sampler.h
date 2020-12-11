@@ -9,7 +9,10 @@
  *  - Jitter
  *  - SOBOL
  * 
- * /
+ **/
+
+namespace mypt {
+
 class Sampler {
 public:
     Sampler(int spp) : samples_per_pixels(spp) {}
@@ -17,3 +20,5 @@ public:
 private:
     int samples_per_pixels;
 };
+
+}

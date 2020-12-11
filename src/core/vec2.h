@@ -5,6 +5,8 @@
 
 #include "Util.h"
 
+namespace mypt{
+
 template <typename Type>
 class type2 {
 public:
@@ -94,3 +96,5 @@ inline type2<Type> cross(const type2<Type> &u, const type2<Type> &v) { return u.
 
 template <typename Type>
 inline type2<Type> unit_vector(type2<Type> v) { return v / v.length(); }
+
+}

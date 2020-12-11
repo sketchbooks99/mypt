@@ -9,6 +9,10 @@
  * 
  **/
 
+namespace mypt {
+
 class Integrator {
 
 };
+
+}

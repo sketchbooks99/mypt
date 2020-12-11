@@ -1,5 +1,7 @@
 #include "Lambertian.h"
 
+namespace mypt {
+
 bool Lambertian::scatter(
     const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
 ) const {
@@ -21,4 +23,6 @@ double Lambertian::scattering_pdf(
 ) const {
     auto cosine = dot(rec.normal, normalize(scattered.direction()));
     return cosine < 0 ? 0 : cosine/pi;
+}
+
 }

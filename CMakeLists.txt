@@ -7,11 +7,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON) # ...is required...
 set(CMAKE_CXX_EXTENSIONS OFF) # ...without compiler extensions like gnu++11
 
 # Setting of project name
-project(pbrenderer)
+project(mypt)
 
 # Set 
 set(pbrenderer_src
-    src/PBRenderer.cpp
+    src/mypt.cpp
     src/core/AABB.cpp
     src/core/BVH.cpp
     src/core/Image.cpp

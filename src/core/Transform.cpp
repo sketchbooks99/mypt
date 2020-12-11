@@ -1,5 +1,7 @@
 #include "Transform.h"
 
+namespace mypt {
+
 // Transform ------------------------------------------------------------
 Transform Transform::translate(vec3 t) {
     return Transform(translate_mat(t), translate_mat(-t));
@@ -79,4 +81,6 @@ void TransformSystem::scale(double s) {
 
 void TransformSystem::scale(vec3 s) {
     transformStack.back() = transformStack.back() * Transform::scale(s);
+}
+
 }
