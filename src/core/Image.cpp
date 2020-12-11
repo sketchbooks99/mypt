@@ -23,8 +23,7 @@ Image<PixelType>::Image(const std::string& filename)
 {
     nChannels = static_cast<int>(sizeof(PixelType));
     data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
-    if(!data)
-        throw std::runtime_error("Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
+    ASSERT(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
 }
 template Image<GRAY>::Image(const std::string&);
 template Image<RGB>::Image(const std::string&);
@@ -36,8 +35,7 @@ void Image<PixelType>::load(const std::string& filename)
 {   
     nChannels = static_cast<int>(sizeof(PixelType));
     data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
-    if(!data)
-        throw std::runtime_error("Image file can't be loaded! Please check file path or format!\n");
+    ASSERT(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
 }
 template void Image<GRAY>::load(const std::string&);
 template void Image<RGB>::load(const std::string&);
