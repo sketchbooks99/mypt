@@ -38,4 +38,4 @@ set(pbrenderer_src
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast")
 
-add_executable(pbrenderer ${pbrenderer_src})
+add_executable(mypt ${pbrenderer_src})

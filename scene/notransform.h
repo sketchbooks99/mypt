@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../src/core/PBRenderer.h"
+#include "../src/core/mypt.h"
 
 std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;
@@ -46,8 +46,7 @@ std::vector<std::shared_ptr<Primitive>> scene() {
     auto emissive = std::make_shared<Emitter>(white_texture, 5.0f);
     primitives.emplace_back(
         std::make_shared<ShapePrimitive>(
-            createPlaneShape(vec2(-5, -5), vec2(5, 5), 15.0f,
-                Plane::PlaneAxis::XZ),
+            createPlaneShape(vec2(-5, -5), vec2(5, 5)),
             emissive,
             std::make_shared<Transform>(ts.getCurrentTransform())
         ));

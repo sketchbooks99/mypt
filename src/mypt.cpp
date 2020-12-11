@@ -1,4 +1,4 @@
-#include "core/PBRenderer.h"
+#include "core/mypt.h"
 #include "../scene/mmaps_test.h"
 
 vec3 ray_color(Ray& r, const BVH* bvh, const vec3& background, int depth) {

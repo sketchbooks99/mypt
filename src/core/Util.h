@@ -12,8 +12,8 @@
 
 // ----- Mathmatical utility values and functions -----
 // Constants
-const double infinity = std::numeric_limits<double>::infinity();
-const double pi = 3.1415926535897932385;
+constexpr double infinity = std::numeric_limits<double>::infinity();
+constexpr double pi = 3.1415926535897932385;
 
 // Utility Functions
 inline double degrees_to_radians(double degrees) {
@@ -45,10 +45,7 @@ inline double clamp(double x, double min, double max) {
 // ----- Utility functions -----
 inline void ASSERT(const bool cond, const std::string& text)
 {
-    if (!cond)
-    {
-        throw std::runtime_error(text);
-    }
+    if (!cond) throw std::runtime_error(text);
 }
 
 // ref: https://qiita.com/iseki-masaya/items/70b4ee6e0877d12dafa8

@@ -1,4 +1,4 @@
-#include "../src/core/PBRenderer.h"
+#include "../src/core/mypt.h"
 
 std::vector<std::shared_ptr<Primitive>> scene() {
     std::vector<std::shared_ptr<Primitive>> primitives;

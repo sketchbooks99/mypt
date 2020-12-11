@@ -1,4 +1,4 @@
-# PBRenderer
+# MyPT
 
 ![current_thumbnail](result/result.png)
 
@@ -10,7 +10,7 @@
 
 - Compile 
 ```
-cd PBRenderer
+cd MyPT
 mkdir build 
 cd build
 cmake ..
@@ -19,12 +19,12 @@ make
 
 - Run
 ```
-cd path/to/PBRenderer
-build/pbrenderer config.txt
+cd path/to/MyPT
+build/mypt config.txt
 ```
 
 ## NOTE: 
-- At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. So, when you create your custom scene, please modify or create custom_scene.h in scene/ directory, and change header file which include by PBRenderer.cpp .
+- At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. So, when you create your custom scene, please modify or create custom_scene.h in scene/ directory, and change header file which include by mypt.cpp .
 
 - I'm not expert in C++ and compiler, so I have to check entire code to robustly run and compile with taking care of following terms.
   - Spliting code to .h and .cpp
