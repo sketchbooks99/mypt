@@ -25,8 +25,11 @@ namespace mypt {
 Scene::Scene(const std::string& filename) {    
     std::ifstream ifs(filename, std::ios::in);
     ASSERT(ifs.is_open(), "The scene file '"+filename+"' is not existed\n");
+
     int image_width = 512, image_height = 512;
-    int depth = 5;
+    depth = 5;
+    samples_per_pixel = 16;
+
     while(!ifs.eof()) {
         std::string line;
         // When line has no characters.
@@ -279,14 +282,15 @@ void Scene::createPrimitive(std::ifstream& ifs) {
     if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
-        this->primitives.emplace_back(shape, mat, std::make_shared<Transform>(ts.getCurrentTransform()));
+        this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
+            shape, mat, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
 }
 
 // -----------------------------------------------------------------------------------------
 void Scene::createLight(std::ifstream& ifs) {
     std::vector<std::shared_ptr<Shape>> shapes;
-    std::shared_ptr<Emitter> emitter;
+    std::shared_ptr<Material> emitter;
     float intensity = 1.0f;
     std::shared_ptr<Texture> texture;
 
@@ -410,7 +414,8 @@ void Scene::createLight(std::ifstream& ifs) {
     emitter = std::make_shared<Emitter>(texture, intensity);
 
     for(auto &shape : shapes) {
-        this->primitives.emplace_back(shape, emitter, std::make_shared<Transform>(ts.getCurrentTransform()));
+        this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
+            shape, emitter, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
 }
 
@@ -442,6 +447,8 @@ void Scene::render() {
     auto width = image.getWidth();
     auto height = image.getHeight();
 
+    auto light = lights.back();
+
     for(int y=0; y<height; y++) {
         double elapsed_time = static_cast<double>(clock() - start_time);
         this->streamProgress(y, height, elapsed_time, progress_len);
@@ -453,18 +460,18 @@ void Scene::render() {
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += integrator.trace(r, bvh, lights.back(), background, depth);
+                color += integrator.trace(r, bvh, light, background, depth);
             }
+            auto scale = 1.0 / samples_per_pixel;
+            auto r = sqrt(scale * color.x);
+            auto g = sqrt(scale * color.y);
+            auto b = sqrt(scale * color.z);
+            RGBA rgb_color(static_cast<unsigned char>(256 * clamp(r, 0.0, 0.999)),
+                            static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
+                            static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)),
+                            255);
+            image.set(x, height-(y+1), rgb_color);
         }
-        auto scale = 1.0 / samples_per_pixel;
-        auto r = sqrt(scale * color.x);
-        auto g = sqrt(scale * color.y);
-        auto b = sqrt(scale * color.z);
-        RGBA rgb_color(static_cast<unsigned char>(256 * clamp(r, 0.0, 0.999)),
-                        static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
-                        static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)),
-                        255);
-        image.set(x, image_height-(y+1), rgb_color);
     }
 
     image.write(image_name, "PNG");

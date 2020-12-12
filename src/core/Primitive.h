@@ -6,7 +6,6 @@
 #include "Material.h"
 #include "Ray.h"
 #include "Transform.h"
-#include "PDF.h"
 #include "../material/Isotropic.h"
 
 namespace mypt {
@@ -36,7 +35,6 @@ private:
     std::shared_ptr<Material> material;
     std::shared_ptr<Shape> shape;
     std::shared_ptr<Transform> transform;
-    std::shared_ptr<PDF> pdf;
 };
 
 // Constant Medium

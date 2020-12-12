@@ -1,7 +1,6 @@
 #pragma once 
 
 #include "MathUtil.h"
-#include "Shape.h"
 #include "ONB.h"
 
 namespace mypt {
@@ -14,7 +13,7 @@ public:
     virtual vec3 generate() const = 0;
 };
 
-class CosinePDF : public PDF {
+class CosinePDF final : public PDF {
 public:
     CosinePDF(const vec3& w) { onb.build_from_w(w); }
 
@@ -30,11 +29,11 @@ private:
     ONB onb;
 };
 
-class PrimitivePDF : public PDF {
+class PrimitivePDF final : public PDF {
 public:
     PrimitivePDF(std::shared_ptr<Primitive> p, const vec3& origin) : p(p), origin(origin) {}
     double value(const vec3& direction) const override {
-        p->pdf_value(origin, direction);
+        return p->pdf_value(origin, direction);
     }
 
     vec3 generate() const override {

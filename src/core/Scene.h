@@ -25,11 +25,11 @@ private:
     void streamProgress(int currentLine, int maxLine, double elapsedTime, int progressLen=20);
 
     std::vector<std::shared_ptr<Primitive>> primitives;
-    std::vector<std::shared_ptr<ShapePrimitive>> lights;
+    std::vector<std::shared_ptr<Primitive>> lights;
     Camera camera;
     Integrator integrator;
     Image<RGBA> image;
-    int samples_per_pixel;
+    int samples_per_pixel, depth;
     vec3 background;
     std::string image_name;
     TransformSystem ts;

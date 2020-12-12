@@ -18,6 +18,7 @@ set(pbrenderer_src
     src/core/Perlin.cpp
     src/core/mat4.cpp
     src/core/Transform.cpp
+    src/core/Primitive.cpp
     src/core/Scene.cpp
 
     src/render/Camera.cpp 
