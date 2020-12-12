@@ -8,7 +8,7 @@
 namespace mypt {
 
 struct TriangleMesh {
-    TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, bool isSmooth);
+    TriangleMesh(const std::string &filename, float size, vec3 axis, bool isSmooth);
     TriangleMesh(const std::vector<vec3> vertices, 
                  const std::vector<vec3>& normals, 
                  const std::vector<std::vector<int>> faces) {}
@@ -58,8 +58,7 @@ private:
     vec3 min, max; // For AABB
 };
 
-std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string & filename,
-                                                        vec3 position, float size, vec3 axis, 
+std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string & filename, float size, vec3 axis, 
                                                         bool isSmooth=true);
 
 }                                                    

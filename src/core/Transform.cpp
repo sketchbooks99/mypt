@@ -41,7 +41,7 @@ TransformSystem::TransformSystem(mat4 m) {
 // ----------------------------------------------------------------------
 void TransformSystem::pushMatrix() {
     ASSERT(transformStack.size() < 32, "The maximum number of matrices is 32\n");
-    transformStack.push_back(Transform());
+    transformStack.push_back(getCurrentTransform());
 }
 
 void TransformSystem::popMatrix() {

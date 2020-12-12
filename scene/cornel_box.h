@@ -1,5 +1,7 @@
 #include "../src/core/mypt.h"
 
+using namespace mypt;
+
 void printTransform(Transform t) {
     std::cout << t.getMatrix() << std::endl;
     std::cout << t.getInvMatrix() << std::endl;

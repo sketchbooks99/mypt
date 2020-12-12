@@ -12,6 +12,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
 
     std::sort(p.begin() + start, p.begin() + end, compare_axis);
 
+    // Create leaf node with primitives
     if (primitive_span == 1) {
         left = right = p[start];
     } else if (primitive_span == 2) {
@@ -35,7 +36,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
             double bestCost = std::numeric_limits<double>::infinity();
             // AABB for calculating temporal surface area.
             AABB s1box, s2box;
-            // vector to store surface area
+            // vector to store surface areas.
             std::vector<double> s1SA(primitive_span), s2SA(primitive_span);
             // Store surface area of left side at every case
             for(int i=1; i<primitive_span; i++) {
@@ -47,6 +48,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
                 s2box = surrounding(s2box, p[i+start]->bounding());
                 s2SA[i] = s2box.surface_area();
                 double cost = s1SA[i]*(i+1) + s2SA[i]*(primitive_span-i);
+                // Update best cost of Surface Area Heuristic.
                 if(cost < bestCost) {
                     bestCost = cost;
                     splitIndex = i+start;

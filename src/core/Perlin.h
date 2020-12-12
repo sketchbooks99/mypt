@@ -39,40 +39,40 @@ inline double perlin_interp(vec3 c[2][2][2], double u, double v, double w) {
 }
 
 class Perlin {
-    public:
-        Perlin();
-        ~Perlin();
+public:
+    Perlin();
+    ~Perlin();
 
-        double turb(const vec3& p, int depth=7) const;
-        double noise(const vec3& p) const;
+    double turb(const vec3& p, int depth=7) const;
+    double noise(const vec3& p) const;
 
-    private:
-        static const int point_count = 256;
-        vec3* ranvec;
-        int* perm_x;
-        int* perm_y;
-        int* perm_z;
+private:
+    static const int point_count = 256;
+    vec3* ranvec;
+    int* perm_x;
+    int* perm_y;
+    int* perm_z;
 
-        static int* perlin_generate_perm() {
-            auto p = new int[point_count];
+    static int* perlin_generate_perm() {
+        auto p = new int[point_count];
 
-            for(int i = 0; i < Perlin::point_count; i++) {
-                p[i] = i;
-            }
-
-            permute(p, point_count);
-
-            return p;
+        for(int i = 0; i < Perlin::point_count; i++) {
+            p[i] = i;
         }
 
-        static void permute(int *p, int n) {
-            for(int i = n-1; i>0; i--) {
-                int target = random_int(0,i);
-                int tmp = p[i];
-                p[i] = p[target];
-                p[target] = tmp;
-            }
+        permute(p, point_count);
+
+        return p;
+    }
+
+    static void permute(int *p, int n) {
+        for(int i = n-1; i>0; i--) {
+            int target = random_int(0,i);
+            int tmp = p[i];
+            p[i] = p[target];
+            p[target] = tmp;
         }
+    }
 };
 
 }

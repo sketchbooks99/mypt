@@ -6,6 +6,7 @@ namespace mypt {
 
 class Camera {
 public: 
+    Camera() {}
     Camera(
         vec3 lookfrom, vec3 lookat, vec3 vup,
         double vfov, // top to botton, in degrees

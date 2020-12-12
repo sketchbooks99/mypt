@@ -1,0 +1,32 @@
+# Basic configuration
+filename result/debug.png
+width 768
+height 768
+spp 8
+depth 5
+background 0 0 0
+
+# Camera 
+beginCamera 
+origin 0 0 -70
+lookat 0 0 0
+up 0 1 0
+focus_length 15.0
+aperture 0.0
+endCamera
+
+beginPrimitive
+shape plane min -5 -5 max 5 5
+translate 0 9.8 0
+rotate 90 0 1 0
+material lambertian color 0.8 0.05 0.05
+endPrimitive
+
+beginPrimitive
+shape mesh filename data/bunny.obj axis 1 1 1 size 50 smooth 
+material lambertian color 0.8 0.8 0.8
+endPrimitive
+
+beginLight
+
+endLight

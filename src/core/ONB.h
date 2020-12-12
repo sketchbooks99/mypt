@@ -26,7 +26,7 @@ public:
         u = cross(w, v); 
     }
 
-    // normal, tangent, bitangent(?)
+    // bitangent, tangent, normal
     vec3 u, v, w;
 };
 

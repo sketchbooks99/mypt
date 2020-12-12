@@ -3,7 +3,7 @@
 namespace mypt {
 
 // ---------------------------------------------------------------------------
-TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float size, vec3 axis, bool isSmooth) {
+TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, bool isSmooth) {
     if(filename.substr(filename.length() - 4) == ".obj")
     {
         std::ifstream ifs(filename, std::ios::in);
@@ -120,7 +120,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, vec3 position, float siz
     }
 
     for (auto& vertex : vertices) {
-        vertex = (vertex - center) * size + position;
+        vertex = (vertex - center) * size;
     }
 
     // Mesh smoothing
@@ -215,10 +215,10 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
 }
 
 // ---------------------------------------------------------------------------
-std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filename, vec3 position, 
+std::vector<std::shared_ptr<Shape>> createTriangleMesh(const std::string &filename,
                                                           float size, vec3 axis, bool isSmooth) {
     std::vector<std::shared_ptr<Shape>> triangles;
-    std::shared_ptr<TriangleMesh> mesh = std::make_shared<TriangleMesh>(filename, position, size, axis, isSmooth);
+    std::shared_ptr<TriangleMesh> mesh = std::make_shared<TriangleMesh>(filename, size, axis, isSmooth);
     for(auto &face : mesh->faces) {
         triangles.emplace_back(std::make_shared<Triangle>(mesh, face));
     }

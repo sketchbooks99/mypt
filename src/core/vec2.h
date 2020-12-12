@@ -34,13 +34,13 @@ public:
         return *this;
     }
 
-    type2& operator*=(const Type t) {
+    type2& operator*=(const Type& t) {
         x *= t;
         y *= t;
         return *this;
     }
 
-    type2& operator/=(const Type t) {
+    type2& operator/=(const Type& t) {
         return *this *= 1/t;
     }
 
@@ -56,7 +56,7 @@ public:
         return type2(random_double(), random_double());
     }
 
-    inline static type2 random(Type min, Type max) {
+    inline static type2 random(const Type& min, const Type& max) {
         return type2(random_double(min, max), random_double(min, max));
     }
 public:

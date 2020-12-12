@@ -30,7 +30,6 @@ public:
 
     bool is_near_zero() const {
         // Return true if the vector is close to zero in all dimensions
-        const auto eps = 1e-8;
         return (fabs(x) < eps) && (fabs(y) < eps) && (fabs(z) < eps);
     }
 
@@ -160,6 +159,17 @@ inline vec3 random_in_unit_disk() {
         if(p.length_squared() >= 1) continue;
         return p;
     }
+}
+
+inline vec3 random_cosine_direction() {
+    auto r1 = random_double();
+    auto r2 = random_double();
+    auto z = sqrt(1-r2);
+
+    auto phi = 2*pi*r1;
+    auto x = cos(phi)*sqrt(r2);
+    auto y = sin(phi)*sqrt(r2);
+    return vec3(x, y, z);
 }
 
 inline vec3 reflect(const vec3& v, const vec3& n) {

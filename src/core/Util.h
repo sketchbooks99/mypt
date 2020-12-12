@@ -11,10 +11,12 @@
 #include <random>
 
 namespace mypt {
+
 // ----- Mathmatical utility values and functions -----
 // Constants
 constexpr double infinity = std::numeric_limits<double>::infinity();
 constexpr double pi = 3.1415926535897932385;
+constexpr double eps = 1e-8f;
 
 // Utility Functions
 inline double degrees_to_radians(double degrees) {

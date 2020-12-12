@@ -11,6 +11,7 @@ bool Dielectric::scatter(
     vec3 unit_direction = normalize(r_in.direction());
     double cos_theta = ffmin(dot(-unit_direction, rec.normal), 1.0);
     double sin_theta = sqrt(1.0 - cos_theta*cos_theta);
+    // Decide out going direction stochastically with frenel approximation
     if(etai_over_etat * sin_theta > 1.0) {
         vec3 reflected = reflect(unit_direction, rec.normal);
         scattered = Ray(rec.p, reflected);

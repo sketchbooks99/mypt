@@ -4,8 +4,6 @@ namespace mypt {
 
 bool AABB::intersect(const Ray& r, double tmin, double tmax) const {
     for(int a = 0; a < 3; a++) {
-        // std::cout << "min: " << _min << std::flush;
-        // std::cout << ", max: " << _max << std::flush;
         auto t0 = ffmin((_min[a] - r.origin()[a]) / r.direction()[a],
                         (_max[a] - r.origin()[a]) / r.direction()[a]);
         auto t1 = ffmax((_min[a] - r.origin()[a]) / r.direction()[a],

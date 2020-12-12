@@ -9,9 +9,13 @@
 #include "Primitive.h"
 #include "BVH.h"
 #include "Transform.h"
+#include "ONB.h"
+#include "PDF.h"
+#include "Scene.h"
 
 // Render include
 #include "../render/Camera.h"
+#include "../render/Integrator.h"
 
 // Shape include 
 #include "Shape.h"

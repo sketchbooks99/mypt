@@ -8,6 +8,7 @@ namespace mypt {
 template <typename PixelType>
 class Image {
 public:
+    Image() {}
     Image(int width, int height);
     Image(const std::string& filename);
     ~Image() { delete[] data; }
@@ -22,6 +23,12 @@ public:
         assert(x < width && y < height);
         return data[y * width + x];
     }
+
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+
+    void build(int width, int height);
+
     void load(const std::string& filename);
     void write(const std::string& filename, const std::string& format);
 protected:

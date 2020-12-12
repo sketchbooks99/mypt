@@ -13,7 +13,7 @@ Image<PixelType>::Image(int width, int height)
     // ASSERT(width > 0 && height > 0, "Image class must have at least 1 pixel\n");
 
     nChannels = static_cast<int>(sizeof(PixelType));
-    data = (PixelType*)malloc(sizeof(PixelType)*width*height);
+    data = new PixelType[width*height];
 }
 template Image<GRAY>::Image(int, int);
 template Image<RGB>::Image(int, int);
@@ -30,6 +30,18 @@ Image<PixelType>::Image(const std::string& filename)
 template Image<GRAY>::Image(const std::string&);
 template Image<RGB>::Image(const std::string&);
 template Image<RGBA>::Image(const std::string&);
+
+// --------------------------------------------------------------------------------
+template <typename PixelType>
+void Image<PixelType>::build(int width, int height) {
+    this->width = width; 
+    this->height = height;
+    nChannels = static_cast<int>(sizeof(PixelType));
+    data = new PixelType[width*height];
+}
+template void Image<GRAY>::build(int, int);
+template void Image<RGB>::build(int, int);
+template void Image<RGBA>::build(int, int);
 
 // --------------------------------------------------------------------------------
 template <typename PixelType>
