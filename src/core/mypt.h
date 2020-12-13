@@ -30,7 +30,7 @@
 #include "../material/Dielectric.h"
 #include "../material/Emitter.h"
 #include "../material/NormalMat.h"
-#include "../material/MMAPs.h"
+// #include "../material/MMAPs.h"
 // #include "../material/Disney.h"
 
 // Texture include 

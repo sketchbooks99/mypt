@@ -23,7 +23,7 @@ vec3 Integrator::trace(
     if(!rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
         return emitted;
 
-    PrimitivePDF light_pdf(lights, rec.p);
+    ShapePDF light_pdf(lights, rec.p);
     scattered = Ray(rec.p, light_pdf.generate(), r.time());
     pdf = light_pdf.value(scattered.direction());
     

@@ -2,6 +2,7 @@
 
 #include "MathUtil.h"
 #include "ONB.h"
+#include "Shape.h"
 
 namespace mypt {
 
@@ -31,18 +32,18 @@ private:
 };
 
 // ---------------------------------------------------------------------
-class PrimitivePDF final : public PDF {
+class ShapePDF final : public PDF {
 public:
-    PrimitivePDF(std::shared_ptr<Primitive> p, const vec3& origin) : p(p), origin(origin) {}
+    ShapePDF(std::shared_ptr<Shape> s, const vec3& origin) : s(s), origin(origin) {}
     double value(const vec3& direction) const override {
-        return p->pdf_value(origin, direction);
+        return s->pdf_value(origin, direction);
     }
 
     vec3 generate() const override {
-        return p->random(origin);
+        return s->random(origin);
     }
 private:
-    std::shared_ptr<Primitive> p;
+    std::shared_ptr<Shape> s;
     vec3 origin;
 };
 
