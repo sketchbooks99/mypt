@@ -3,7 +3,9 @@
 
 namespace mypt {
 
-vec3 Integrator::trace(Ray& r, const BVH& bvh, std::shared_ptr<Primitive>& lights, const vec3& background, int depth) {
+vec3 Integrator::trace(
+    Ray& r, const BVH& bvh, std::shared_ptr<Primitive>& lights, const vec3& background, int depth
+) const {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0)
@@ -17,8 +19,6 @@ vec3 Integrator::trace(Ray& r, const BVH& bvh, std::shared_ptr<Primitive>& light
     vec3 emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
     double pdf;
     vec3 albedo;
-
-    std::cout << albedo << std::endl;
 
     if(!rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
         return emitted;

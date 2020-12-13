@@ -86,8 +86,6 @@ Scene::Scene(const std::string& filename) {
     }
     integrator = Integrator();
     image.build(image_width, image_height);
-    std::cout << "primitives: " << primitives.size() << std::endl;
-    std::cout << "lights: " << lights.size() << std::endl;
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -143,7 +141,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
             std::string type;
             iss >> type;
             if(type == "plane") {
-                vec2 min, max;
+                vec2 min(-1,-1), max(1,1);
                 while(!iss.eof()) {
                     iss >> header;
                     if(header == "min") 
@@ -165,8 +163,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                 vec3 axis = vec3(1,1,1);
                 double size = 50;
                 bool isSmooth = false;
+                iss >> header;
                 while(!iss.eof()) {
-                    iss >> header;
                     if(header == "filename")
                         iss >> filename;
                     else if(header == "axis") 
@@ -175,22 +173,23 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                         iss >> size;
                     else if(header == "smooth")
                         isSmooth = true;
+                    iss >> header;
                 }
                 for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
                     shapes.emplace_back(triangle);
             }
         }
         // Material ---------------------------------
-        if(header == "material") {
+        else if(header == "material") {
             std::string type;
             iss >> type;
             if(type == "lambertian" || type == "emitter") {
                 float intensity = 1.0f;
                 std::shared_ptr<Texture> texture;
+                iss >> header;
                 while(!iss.eof()) {
-                    iss >> header;
                     if(header == "color") {
-                        vec3 albedo;
+                        vec3 albedo(0.8);
                         iss >> albedo.x >> albedo.y >> albedo.z;
                         texture = std::make_shared<ConstantTexture>(albedo);
                     }
@@ -220,6 +219,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                     }
                     else if(header == "intensity")
                         iss >> intensity;
+                    iss >> header;
                 }
                 if(type == "lambertian") mat = std::make_shared<Lambertian>(texture);
                 else                     mat = std::make_shared<Emitter>(texture, intensity);
@@ -279,15 +279,17 @@ void Scene::createPrimitive(std::ifstream& ifs) {
             ts.rotateZ(degrees_to_radians(angle));
         }
     }
-    ts.popMatrix();
 
     ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
-    if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
+    // if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
+
         this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
             shape, mat, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
+
+    ts.popMatrix();
 }
 
 // -----------------------------------------------------------------------------------------
@@ -323,7 +325,7 @@ void Scene::createLight(std::ifstream& ifs) {
                 }
                 shapes.emplace_back(createPlaneShape(min, max));
             } else if(type == "sphere") {
-                double radius;
+                double radius = 1.0f;
                 while(!iss.eof()) {
                     iss >> header;
                     if(header == "radius")
@@ -408,9 +410,7 @@ void Scene::createLight(std::ifstream& ifs) {
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
         }
-
     }
-    ts.popMatrix();
 
     ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
     if(!texture) texture = std::make_shared<ConstantTexture>(vec3(1.0f));
@@ -419,7 +419,11 @@ void Scene::createLight(std::ifstream& ifs) {
     for(auto &shape : shapes) {
         this->lights.emplace_back(std::make_shared<ShapePrimitive>(
             shape, emitter, std::make_shared<Transform>(ts.getCurrentTransform())));
+        this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
+            shape, emitter, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
+
+    ts.popMatrix();
 }
 
 void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int progressLen) {    
@@ -442,7 +446,10 @@ void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int
 
 // -----------------------------------------------------------------------------------------
 void Scene::render() {
-    BVH bvh(primitives, 0, primitives.size(), 1, BVH::SplitMethod::SAH);
+    std::cout << "primitives: " << this->primitives.size() << std::endl;
+    std::cout << "lights: " << this->lights.size() << std::endl;
+
+    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
 
     int progress_len = 20;
     clock_t start_time = clock();
@@ -463,7 +470,7 @@ void Scene::render() {
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += Integrator::trace(r, bvh, light, background, depth);
+                color += integrator.trace(r, bvh, light, background, depth);
             }
             auto scale = 1.0 / samples_per_pixel;
             auto r = sqrt(scale * color.x);

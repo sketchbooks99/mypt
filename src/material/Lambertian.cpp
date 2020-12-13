@@ -4,22 +4,12 @@
 namespace mypt {
 
 bool Lambertian::scatter(
-    const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+    const Ray& r_in, HitRecord& rec, ScatterRecord& srec
 ) const {
-    // vec3 scatter_direction = rec.normal + random_unit_vector();
-
-    // // Catch degenerate scatter direction
-    // if (scatter_direction.is_near_zero())
-    //     scatter_direction = rec.normal;
-
-    ONB onb;
-    onb.build_from_w(rec.normal);
-    auto direction = onb.local(random_cosine_direction());
-
-    rec.p += rec.normal * 1e-8f;
-    scattered = Ray(rec.p, normalize(direction), r_in.time());
-    attenuation = albedo->value(rec.u, rec.v, rec.p);
-    pdf = dot(onb.w, scattered.direction()) / pi;
+    srec.is_specular = false;
+    srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
+    srec.pdf = std::make_shared<CosinePDF>(rec.normal);
+    rec.p += rec.normal * eps;
     return true;
 }
 

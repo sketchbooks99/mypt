@@ -13,6 +13,7 @@ public:
     virtual vec3 generate() const = 0;
 };
 
+// --------------------------------------------------------------------
 class CosinePDF final : public PDF {
 public:
     CosinePDF(const vec3& w) { onb.build_from_w(w); }
@@ -29,6 +30,7 @@ private:
     ONB onb;
 };
 
+// ---------------------------------------------------------------------
 class PrimitivePDF final : public PDF {
 public:
     PrimitivePDF(std::shared_ptr<Primitive> p, const vec3& origin) : p(p), origin(origin) {}
@@ -42,6 +44,23 @@ public:
 private:
     std::shared_ptr<Primitive> p;
     vec3 origin;
+};
+
+// --------------------------------------------------------------
+class MixturePDF final : public PDF {
+public:
+    MixturePDF(std::shared_ptr<PDF> p0, std::shared_ptr<PDF> p1) : p0(p0), p1(p1) {}
+
+    double value(const vec3& direction) const override {
+        return 0.5 * p0->value(direction) + 0.5 * p1->value(direction);
+    }
+
+    vec3 generate() const override {
+        if(random_double() < 0.5) return p0->generate();
+        else                      return p1->generate();
+    }
+private:
+    std::shared_ptr<PDF> p0, p1;
 };
 
 }

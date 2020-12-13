@@ -19,5 +19,6 @@ private:
 };
 
 std::shared_ptr<Shape> createPlaneShape(const vec2& min, const vec2& max);
+std::vector<std::shared_ptr<Shape>> createBoxShape(const vec3& min, const vec3& max);
 
 }

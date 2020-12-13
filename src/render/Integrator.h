@@ -21,7 +21,9 @@ public:
     enum class Type { PATH };
     Integrator() {}
     Integrator(Type type) : type(type) {}
-    static vec3 trace(Ray& r, const BVH& bvh, std::shared_ptr<Primitive>& lights, const vec3& background, int depth);
+    vec3 trace(
+        Ray& r, const BVH& bvh, std::shared_ptr<Primitive>& lights, const vec3& background, int depth
+    ) const;
 private:
     Type type;
 };

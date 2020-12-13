@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Ray.h"
+#include "PDF.h"
 
 namespace mypt {
 
@@ -21,15 +22,22 @@ struct HitRecord {
     }
 };
 
+struct ScatterRecord {
+    Ray specular_ray;
+    bool is_specular;
+    vec3 attenuation;
+    std::shared_ptr<PDF> pdf;
+};
+
 // Abstract class 
 class Material {
 public:
-    virtual vec3 emitted(double u, double v, const vec3& p) const {
+    virtual vec3 emitted(const Ray& r_in, const HitRecord& rec, double u, double v, const vec3& p) const {
         return vec3(0, 0, 0);
     }
 
     virtual bool scatter (
-        const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+        const Ray& r_in, HitRecord& rec, ScatterRecord& srec
     ) const {
         return false;
     }
