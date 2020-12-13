@@ -3,12 +3,14 @@
 namespace mypt {
 
 bool Metal::scatter(
-    const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+    const Ray& r_in, HitRecord& rec, ScatterRecord& srec
 ) const {
     vec3 reflected = reflect(normalize(r_in.direction()), rec.normal);
-    scattered = Ray(rec.p, reflected + fuzz*random_in_unit_sphere());
-    attenuation = albedo;
-    return (dot(scattered.direction(), rec.normal) > 0);
+    srec.specular_ray = Ray(normalize(r_in.direction()), rec.normal);
+    srec.attenuation = albedo;
+    srec.is_specular = true;
+    srec.pdf = 0;
+    return true;
 }
 
 }

@@ -29,7 +29,7 @@ set(pbrenderer_src
     src/material/Lambertian.cpp 
     src/material/Metal.cpp
     src/material/NormalMat.cpp
-    src/material/MMAPs.cpp
+    # src/material/MMAPs.cpp
 
     src/shape/MovingSphere.cpp 
     src/shape/Plane.cpp

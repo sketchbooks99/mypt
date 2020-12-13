@@ -3,12 +3,20 @@
 namespace mypt {
 
 bool NormalMat::scatter(
-    const Ray& r_in, HitRecord& rec, vec3& attenuation, Ray& scattered, double& pdf
+    const Ray& r_in, HitRecord& rec, ScatterRecord& srec
 ) const {
-    vec3 scatter_direction = rec.normal + random_unit_vector();
-    scattered = Ray(rec.p, scatter_direction, r_in.time());
-    attenuation = normalize(rec.normal);
+    srec.is_specular = false;
+    srec.attenuation = normalize(rec.normal);
+    srec.pdf = std::make_shared<CosinePDF>(rec.normal);
+    rec.p += rec.normal * eps;
     return true;
+}
+
+double NormalMat::scattering_pdf(
+    const Ray& r_in, const HitRecord& rec, const Ray& scattered
+) const {
+    auto cosine = dot(rec.normal, normalize(scattered.direction()));
+    return cosine < 0 ? 0 : cosine / pi;
 }
 
 }

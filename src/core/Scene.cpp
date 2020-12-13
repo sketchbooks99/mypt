@@ -237,7 +237,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                 mat = std::make_shared<Metal>(color, fuzz);
             }
             else if(type == "dielectric") {
-                vec3 color(0.9, 0.7, 0.3);
+                vec3 color(1.0);
                 double ior = 1.52;
                 while(!iss.eof()) {
                     iss >> header;
