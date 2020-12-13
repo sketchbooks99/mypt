@@ -18,6 +18,8 @@ vec3 Integrator::trace(Ray& r, const BVH& bvh, std::shared_ptr<Primitive>& light
     double pdf;
     vec3 albedo;
 
+    std::cout << albedo << std::endl;
+
     if(!rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
         return emitted;
 

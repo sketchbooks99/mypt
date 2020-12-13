@@ -39,6 +39,7 @@ Scene::Scene(const std::string& filename) {
         std::istringstream iss(line);
         std::string header;
         iss >> header;
+        if(header == "#" || header[0] == '#') continue;
         if(header == "filename")
             iss >> image_name;
         else if(header == "width")
@@ -85,6 +86,8 @@ Scene::Scene(const std::string& filename) {
     }
     integrator = Integrator();
     image.build(image_width, image_height);
+    std::cout << "primitives: " << primitives.size() << std::endl;
+    std::cout << "lights: " << lights.size() << std::endl;
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -414,7 +417,7 @@ void Scene::createLight(std::ifstream& ifs) {
     emitter = std::make_shared<Emitter>(texture, intensity);
 
     for(auto &shape : shapes) {
-        this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
+        this->lights.emplace_back(std::make_shared<ShapePrimitive>(
             shape, emitter, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
 }
@@ -460,7 +463,7 @@ void Scene::render() {
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += integrator.trace(r, bvh, light, background, depth);
+                color += Integrator::trace(r, bvh, light, background, depth);
             }
             auto scale = 1.0 / samples_per_pixel;
             auto r = sqrt(scale * color.x);

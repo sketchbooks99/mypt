@@ -15,18 +15,54 @@ focus_length 15.0
 aperture 0.0
 endCamera
 
-beginPrimitive
-shape plane min -5 -5 max 5 5
-translate 0 9.8 0
-rotate 90 0 1 0
+# Top
+beginPrimitive 
+shape plane min -10 -10 max 10 10
+translate 0 10 0
+material lambertian color 0.8 0.8 0.8
+endPrimitive
+
+# Buttom
+beginPrimitive 
+shape plane min -10 -10 max 10 10
+translate 0 -10 0
+material lambertian color 0.8 0.8 0.8
+endPrimitive
+
+# Right
+beginPrimitive 
+shape plane min -10 -10 max 10 10
+translate 10 0 0 
+rotate_z 90
 material lambertian color 0.8 0.05 0.05
 endPrimitive
 
-beginPrimitive
-shape mesh filename data/bunny.obj axis 1 1 1 size 50 smooth 
+# Left
+beginPrimitive 
+shape plane min -10 -10 max 10 10
+translate -10 0 0
+rotate_x 90
+material lambertian color 0.05 0.8 0.8
+endPrimitive
+
+# Back
+beginPrimitive 
+shape plane min -10 -10 max 10 10
+translate 0 0 -10
+rotate_x 90
 material lambertian color 0.8 0.8 0.8
 endPrimitive
 
 beginLight
-
+shape plane min -5 -5 max 5 5
+translate 0 9.9 0
+color 1 1 1
+intensity 10
 endLight
+
+# beginPrimitive
+# shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
+# material lambertian color 0.8 0.8 0.8
+# endPrimitive
+
+
