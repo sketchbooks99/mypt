@@ -14,21 +14,19 @@ vec3 Integrator::trace(
     if(!bvh.intersect(r, 0, infinity, rec))
         return background;
 
-    Ray scattered;
+    ScatterRecord srec;
     // vec3 attenuation;
-    vec3 emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
-    double pdf;
-    vec3 albedo;
+    vec3 emitted = rec.mat_ptr->emitted(r, rec, rec.u, rec.v, rec.p);
 
-    if(!rec.mat_ptr->scatter(r, rec, albedo, scattered, pdf))
+    if(!rec.mat_ptr->scatter(r, rec, srec))
         return emitted;
 
-    ShapePDF light_pdf(lights, rec.p);
-    scattered = Ray(rec.p, light_pdf.generate(), r.time());
-    pdf = light_pdf.value(scattered.direction());
+    PrimitivePDF light_pdf(lights, rec.p);
+    Ray scattered = Ray(rec.p, light_pdf.generate(), r.time());
+    auto pdf = light_pdf.value(scattered.direction());
     
     return emitted
-         + albedo * rec.mat_ptr->scattering_pdf(r, rec, scattered)
+         + srec.attenuation * rec.mat_ptr->scattering_pdf(r, rec, scattered)
                   * trace(scattered, bvh, lights, background, depth-1) / pdf;
 }
 

@@ -1,5 +1,6 @@
 #include "Lambertian.h"
 #include "../core/ONB.h"
+#include "../core/PDF.h"
 
 namespace mypt {
 

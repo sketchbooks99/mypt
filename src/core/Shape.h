@@ -2,8 +2,8 @@
 
 #include "AABB.h"
 #include "Ray.h"
-#include "Material.h"
 #include "Transform.h"
+#include "Material.h"
 
 namespace mypt {
 

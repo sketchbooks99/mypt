@@ -31,7 +31,7 @@ set(pbrenderer_src
     src/material/NormalMat.cpp
     # src/material/MMAPs.cpp
 
-    src/shape/MovingSphere.cpp 
+    # src/shape/MovingSphere.cpp 
     src/shape/Plane.cpp
     src/shape/Sphere.cpp 
     src/shape/Triangle.cpp

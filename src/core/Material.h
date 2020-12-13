@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Ray.h"
-#include "PDF.h"
 
 namespace mypt {
 
 class Material;
+class PDF;
 
 struct HitRecord {
     vec3 p;

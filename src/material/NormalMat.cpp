@@ -1,4 +1,5 @@
 #include "NormalMat.h"
+#include "../core/PDF.h"
 
 namespace mypt {
 
