@@ -457,7 +457,6 @@ void Scene::render() {
     auto width = image.getWidth();
     auto height = image.getHeight();
 
-    auto light = lights.back();
 
     for(int y=0; y<height; y++) {
         double elapsed_time = static_cast<double>(clock() - start_time);
@@ -470,7 +469,7 @@ void Scene::render() {
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += integrator.trace(r, bvh, light, background, depth);
+                color += integrator.trace(r, bvh, lights, background, depth);
             }
             auto scale = 1.0 / samples_per_pixel;
             auto r = sqrt(scale * color.x);
