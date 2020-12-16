@@ -41,9 +41,9 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
 // -----------------------------------------------------------------------
 double Sphere::pdf_value(const vec3& o, const vec3& v) const {
     HitRecord rec;
-    if(!this->intersect(Ray(o, v), eps, infinity, rec))
+    if(!this->intersect(Ray(o, v), eps, infinity, rec)) 
         return 0;
-    auto cos_theta_max = sqrt(1 - radius*radius/(o).length_squared());
+    auto cos_theta_max = sqrt(1 - radius*radius/o.length_squared());
     auto solid_angle = 2*pi*(1-cos_theta_max);
 
     return 1 / solid_angle;

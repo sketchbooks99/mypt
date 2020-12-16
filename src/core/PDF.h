@@ -51,7 +51,7 @@ private:
 class LightPDF final : public PDF {
 public:
     LightPDF(std::vector<std::shared_ptr<Primitive>> lights, const vec3& origin) : lights(lights), origin(origin) {
-        ASSERT(lights.size() > 0, "Primitives must have a primitive at least\n");
+        ASSERT(lights.size() > 0, "There is no light in constructor\n");
     }
     double value(const vec3& direction) const override {
         auto weight = 1.0 / lights.size();

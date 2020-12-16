@@ -11,13 +11,18 @@ vec3 Integrator::trace(
     if(depth <= 0)
         return vec3(0.0, 0.0, 0.0);
 
-    if(!bvh.intersect(r, 0, infinity, rec))
+    if(!bvh.intersect(r, eps, infinity, rec))
         return background;
 
     ScatterRecord srec;
     vec3 emitted = rec.mat_ptr->emitted(r, rec, rec.u, rec.v, rec.p);
     if(!rec.mat_ptr->scatter(r, rec, srec))
         return emitted;
+
+    if(srec.is_specular) {
+        return srec.attenuation
+            * trace(srec.specular_ray, bvh, lights, background, depth-1);
+    }
 
     auto light_ptr = std::make_shared<LightPDF>(lights, rec.p);
     MixturePDF p(light_ptr, srec.pdf);

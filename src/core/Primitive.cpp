@@ -57,11 +57,13 @@ double ShapePrimitive::pdf_value(const vec3& o, const vec3& v) const {
     vec3 origin = mat4::point_mul(transform->getInvMatrix(), o);
     vec3 vec = mat4::vector_mul(transform->getInvMatrix(), v);
     return shape->pdf_value(origin, vec);
+    // return shape->pdf_value(o, v);
 }
 
 vec3 ShapePrimitive::random(const vec3& o) const {
-    vec3 origin = mat4::point_mul(transform->getInvMatrix(), o);
-    return mat4::point_mul(transform->getMatrix(), shape->random(origin));
+    // vec3 origin = mat4::point_mul(transform->getInvMatrix(), o);
+    // return mat4::point_mul(transform->getMatrix(), shape->random(origin));
+    return mat4::point_mul(transform->getMatrix(), shape->random(o));
 }
 
 // ConstantMedium ----------------------------------------------------------------------

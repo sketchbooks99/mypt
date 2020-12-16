@@ -151,7 +151,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                 }
                 shapes.emplace_back(createPlaneShape(min, max));
             } else if(type == "sphere") {
-                double radius;
+                double radius = 1.0;
                 while(!iss.eof()) {
                     iss >> header;
                     if(header == "radius")
@@ -284,7 +284,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
     // if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
-
+        // std::cout << typeid(*shape).name() << std::endl;
+        // std::cout << typeid(*mat).name() << std::endl;
         this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
             shape, mat, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
