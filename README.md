@@ -20,17 +20,42 @@ make
 - Run
 ```
 cd path/to/MyPT
-build/mypt config.txt
+build/mypt scene.txt
 ```
 
-## NOTE: 
-- At now, file parser like as pbrt, to arbitrary modify your scene is not implemented. So, when you create your custom scene, please modify or create custom_scene.h in scene/ directory, and change header file which include by mypt.cpp .
+- How to render
+`Example`
+```
+filename result/simple.png
+# Image resolution
+width 1024
+height 768
+# The number of samples per pixel
+spp 8 
+# The number of maximum depth to track rays
+depth 5
+# Background color
+background 0.5 0.5 0.5
 
-- I'm not expert in C++ and compiler, so I have to check entire code to robustly run and compile with taking care of following terms.
-  - Spliting code to .h and .cpp
-    - use of template class: 
-      - reference: https://qiita.com/i153/items/38f9688a9c80b2cb7da7
-    - how to solve multiple definition
-      - https://theolizer.com/cpp-school2/cpp-school2-3/
-  - cmake compile
-    - https://qiita.com/yumetodo/items/bd8f556ab56298f19ba8
+# Camera settings
+beginCamera
+origin 0 0 -70
+lookat 0 0 0 
+up 0 1 0
+focus_length 15.0
+aperture 0
+endCamera
+
+# Ground plane
+beginPrimitive 
+shape plane min -100 -100 max 100 100
+material checker color1 0.3 0.3 0.3 color2 0.9 0.9 0.9
+endPrimitive
+
+# Sphere
+beginPrimitive
+shape sphere 1
+translate 0 1 0
+maaterial dielectric color 1 1 1 ior 1.5
+endPrimitive
+```
