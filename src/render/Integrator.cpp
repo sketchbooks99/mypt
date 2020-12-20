@@ -28,8 +28,7 @@ vec3 Integrator::trace(
     MixturePDF p(light_ptr, srec.pdf);
 
     Ray scattered = Ray(rec.p, p.generate(), r.time());
-    // auto pdf = p.value(scattered.direction());
-    auto pdf = 1.0f;
+    auto pdf = p.value(scattered.direction());
     
     return emitted
          + srec.attenuation * rec.mat_ptr->scattering_pdf(r, rec, scattered)

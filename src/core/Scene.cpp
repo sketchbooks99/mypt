@@ -281,11 +281,9 @@ void Scene::createPrimitive(std::ifstream& ifs) {
     }
 
     ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
-    // if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
+    if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
-        // std::cout << typeid(*shape).name() << std::endl;
-        // std::cout << typeid(*mat).name() << std::endl;
         this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
             shape, mat, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
