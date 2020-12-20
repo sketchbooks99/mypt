@@ -2,7 +2,7 @@
 filename result/debug.png
 width 768
 height 768
-spp 4
+spp 32
 depth 5
 background 0 0 0
 
@@ -53,11 +53,11 @@ rotate_x 90
 material lambertian color 0.8 0.8 0.8
 endPrimitive
 
-beginPrimitive
-shape sphere radius 4
+#beginPrimitive
+#shape sphere radius 3
 #translate -5 -6 5
-material lambertian color 0.8 0.8 0.8
-endPrimitive
+#material lambertian color 0.8 0.8 0.8
+#endPrimitive
 
 #beginPrimitive
 #shape sphere radius 4
@@ -72,8 +72,8 @@ color 0.9 0.7 0.3
 intensity 10
 endLight
 
-#beginPrimitive
-#shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
-#rotate_y 180
-#material lambertian color 0.8 0.8 0.8
-#endPrimitive
+beginPrimitive
+shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
+rotate_y 180
+material lambertian color 0.8 0.8 0.8
+endPrimitive

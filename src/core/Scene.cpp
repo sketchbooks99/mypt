@@ -445,6 +445,7 @@ void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int
 
 // -----------------------------------------------------------------------------------------
 void Scene::render() {
+
     std::cout << "primitives: " << this->primitives.size() << std::endl;
     std::cout << "lights: " << this->lights.size() << std::endl;
 
