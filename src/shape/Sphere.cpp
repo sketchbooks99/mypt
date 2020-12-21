@@ -22,7 +22,6 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
     auto c = oc.length_squared() - radius * radius;
     auto discriminant = half_b * half_b - a * c;
     
-    std::cout << "Sphere" << std::endl;
 
     if (discriminant > 0) {
         auto root = sqrt(discriminant);
@@ -73,7 +72,7 @@ vec3 Sphere::random(const vec3& o) const {
 // -----------------------------------------------------------------------
 AABB Sphere::bounding() const {
     return AABB(
-        vec3(radius, radius, radius),
+        vec3(-radius, -radius, -radius),
         vec3(radius, radius, radius));
 }
 
