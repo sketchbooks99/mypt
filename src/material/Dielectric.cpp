@@ -15,13 +15,10 @@ bool Dielectric::scatter(
     double sin_theta = sqrt(1.0 - cos_theta*cos_theta);
     vec3 direction;
     // Decide out going direction stochastically with frenel approximation
-    if(refraction_ratio * sin_theta > 1.0) {
-        direction = reflect(unit_direction, rec.normal);
-    }
     double reflect_prob = schlick(cos_theta, refraction_ratio);
     if(random_double() < reflect_prob) {
-        vec3 direction = reflect(unit_direction, rec.normal);
-    } 
+        direction = reflect(unit_direction, rec.normal);
+    }
     else {
         direction = refract(unit_direction, rec.normal, refraction_ratio);
     }
