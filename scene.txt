@@ -2,8 +2,8 @@
 filename result/sphere.png
 width 768
 height 768
-spp 64
-depth 5
+spp 512
+depth 10
 background 0 0 0
 
 # Camera 
@@ -54,13 +54,13 @@ material lambertian color 0.8 0.8 0.8
 endPrimitive
 
 beginPrimitive
-shape sphere radius 3
-translate -5 -6 0
+shape sphere radius 4
+translate -5 -5 0
 material metal color 1 1 1
 endPrimitive
 
 beginPrimitive
-shape sphere radius 4
+shape sphere radius 3
 translate 5 -6 0
 material dielectric color 1 1 1
 endPrimitive
@@ -72,8 +72,8 @@ color 0.9 0.7 0.3
 intensity 10
 endLight
 
-beginPrimitive
-shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
-rotate_y 180
-material lambertian color 0.8 0.8 0.8
-endPrimitive
+#beginPrimitive
+#shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
+#rotate_y 180
+#material lambertian color 0.8 0.8 0.8
+#endPrimitive
