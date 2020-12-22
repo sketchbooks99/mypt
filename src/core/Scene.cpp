@@ -246,6 +246,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                     else if(header == "ior")
                         iss >> ior;
                 }
+                std::cout << ior << std::endl;
                 mat = std::make_shared<Dielectric>(color, ior);
             }
             else if(type == "normal") {

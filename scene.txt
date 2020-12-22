@@ -1,18 +1,19 @@
 # Basic configuration
-filename result/sphere.png
+filename result/debug.png
 width 768
 height 768
-spp 512
+spp 1
 depth 10
 background 0 0 0
 
 # Camera 
 beginCamera 
-origin 0 0 -70
+origin 0 0 -39
 lookat 0 0 0
 up 0 1 0
-focus_length 15.0
+focus_length 10.0
 aperture 0.0
+vfov 40
 endCamera
 
 # Top
@@ -61,15 +62,15 @@ endPrimitive
 
 beginPrimitive
 shape sphere radius 3
-translate 5 -6 0
-material dielectric color 1 1 1
+translate 5 -7 -4
+material dielectric color 1 1 1 ior 1.5
 endPrimitive
 
 beginLight
-shape plane min -5 -5 max 5 5
+shape plane min -2.5 -2.5 max 2.5 2.5
 translate 0 9.9 0
 color 0.9 0.7 0.3
-intensity 10
+intensity 30
 endLight
 
 #beginPrimitive
