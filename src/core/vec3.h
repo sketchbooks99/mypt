@@ -204,12 +204,13 @@ inline bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refra
         return false;
 }
 
+// ref: https://knzw.tech/raytracing/?page_id=478
 inline vec3 refract(const vec3& v, const vec3& n, double ni_over_nt) {
     auto nv = normalize(v);
-    auto cosine = fmin(dot(-nv, n), 1.0);
-    vec3 r_out_perp = ni_over_nt * (nv + cosine * n);
-    vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
-    return r_out_perp + r_out_parallel;
+    auto cosine = dot(-nv, n);
+    auto nt_over_ni = 1.0 / ni_over_nt;
+    auto cos2t = nt_over_ni*nt_over_ni - (1.0-cosine*cosine);
+    return ni_over_nt*(nv - (sqrt(cos2t)-cosine)*n);
 }
 
 }

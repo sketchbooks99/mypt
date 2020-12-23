@@ -3,7 +3,7 @@ filename result/debug.png
 width 768
 height 768
 spp 1
-depth 10
+depth 5
 background 0 0 0
 
 # Camera 
@@ -61,8 +61,8 @@ material metal color 1 1 1
 endPrimitive
 
 beginPrimitive
-shape sphere radius 3
-translate 5 -7 -3
+shape sphere radius 4
+translate 5 -6 -3
 material dielectric color 1 1 1 ior 1.5
 endPrimitive
 

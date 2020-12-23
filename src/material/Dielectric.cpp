@@ -45,19 +45,20 @@ bool Dielectric::scatter(
     srec.is_specular = true;
     srec.pdf = 0;
     srec.attenuation = albedo;
-    bool into = dot(r_in.direction(), rec.normal) > 0;
-    float ni_over_nt = into ? ref_idx : 1.0 / ref_idx;
+    bool into = dot(r_in.direction(), rec.normal) < 0;
+    float ni_over_nt = into ? 1.0 / ref_idx : ref_idx;
+    auto outward_normal = into ? rec.normal : -rec.normal;
     
-    auto normalize_direction = normalize(r_in.direction());
-    float cosine = fmin(dot(-normalize_direction, rec.normal), 1.0);
+    float cosine = dot(-r_in.direction(), outward_normal);
     float sine = sqrt(1.0 - cosine*cosine);
 
     bool cannot_refract = ni_over_nt * sine > 1.0;
+
     float reflect_prob = schlick(cosine, ni_over_nt);
     if(cannot_refract || reflect_prob > random_double())
-        srec.specular_ray = Ray(rec.p, reflect(normalize_direction, rec.normal));
+        srec.specular_ray = Ray(rec.p, reflect(r_in.direction(), rec.normal));
     else
-        srec.specular_ray = Ray(rec.p, refract(normalize_direction, rec.normal, ni_over_nt));
+        srec.specular_ray = Ray(rec.p, refract(r_in.direction(), outward_normal, ni_over_nt));
     return true;
 }
 
