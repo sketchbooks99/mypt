@@ -212,9 +212,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                         iss >> header;
                         if(header == "scale") iss >> scale;
                         iss >> header;
-                        NoiseTexture::Mode noiseType;
-                        if(header == "noise")     noiseType = NoiseTexture::Mode::NOISE;
-                        else if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
+                        NoiseTexture::Mode noiseType { NoiseTexture::Mode::NOISE };
+                        if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
                         texture = std::make_shared<NoiseTexture>(scale, noiseType);
                     }
                     else if(header == "intensity")
@@ -377,9 +376,8 @@ void Scene::createLight(std::ifstream& ifs) {
             iss >> header;
             if(header == "scale") iss >> scale;
             iss >> header;
-            NoiseTexture::Mode noiseType;
-            if(header == "noise")     noiseType = NoiseTexture::Mode::NOISE;
-            else if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
+            NoiseTexture::Mode noiseType { NoiseTexture::Mode::NOISE };
+            if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
             texture = std::make_shared<NoiseTexture>(scale, noiseType);
         }
         else if(header == "intensity")

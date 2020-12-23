@@ -9,7 +9,7 @@ public:
     ConstantTexture(){}
     ConstantTexture(vec3 c) : color(c) {}
 
-    virtual vec3 value(double u, double v, const vec3& p) const {
+    virtual vec3 value(double /* u */, double /* v */, const vec3& /* p */) const {
         return color;
     }
 

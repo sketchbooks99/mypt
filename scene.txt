@@ -62,7 +62,7 @@ endPrimitive
 
 beginPrimitive
 shape sphere radius 3
-translate 5 -7 -4
+translate 5 -7 -3
 material dielectric color 1 1 1 ior 1.5
 endPrimitive
 

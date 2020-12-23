@@ -192,16 +192,24 @@ inline vec3 reflect(const vec3& v, const vec3& n) {
     return v - 2*dot(v,n) * n;
 }
 
-inline bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refracted, bool into) {
+inline bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refracted) {
     vec3 uv = normalize(v);
-    float dt = dot(v, n);
+    float dt = dot(uv, n);
     float discriminant = 1.0 - ni_over_nt*ni_over_nt*(1.0-dt*dt);
-    if(discriminant >= 0) {
-        // refracted = ni_over_nt*(uv-n*dt) - n*sqrt(discriminant);
-        refracted = normalize(v*ni_over_nt - n*(into ? 1.0 : -1.0) * (dt*ni_over_nt + sqrt(discriminant)));
+    if(discriminant > 0) {
+        refracted = ni_over_nt*(uv-n*dt) - n*sqrt(discriminant);
+        // refracted = normalize(v * ni_over_nt - n * (into ? 1.0 : -1.0) * (dt * ni_over_nt + sqrt(discriminant)));
         return true;
     }
-    return false;
+        return false;
+}
+
+inline vec3 refract(const vec3& v, const vec3& n, double ni_over_nt) {
+    auto nv = normalize(v);
+    auto cosine = fmin(dot(-nv, n), 1.0);
+    vec3 r_out_perp = ni_over_nt * (nv + cosine * n);
+    vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
+    return r_out_perp + r_out_parallel;
 }
 
 }
