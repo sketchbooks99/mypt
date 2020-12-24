@@ -20,6 +20,7 @@ set(pbrenderer_src
     src/core/Transform.cpp
     src/core/Primitive.cpp
     src/core/Scene.cpp
+    src/core/bsdf.cpp
 
     src/render/Camera.cpp 
     src/render/Integrator.cpp

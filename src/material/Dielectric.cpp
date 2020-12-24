@@ -1,4 +1,5 @@
 #include "Dielectric.h"
+#include "../core/bsdf.h"
 
 namespace mypt {
 

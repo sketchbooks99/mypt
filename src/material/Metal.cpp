@@ -1,4 +1,5 @@
 #include "Metal.h"
+#include "../core/bsdf.h"
 
 namespace mypt {
 
