@@ -17,7 +17,8 @@ bool Dielectric::scatter(
     float cosine;
     bool into = dot(r_in.direction(), rec.normal) < 0;
     if(!into) {
-        outward_normal = -rec.normal;
+        std::cout << "from in to out" << std::endl;
+        outward_normal = rec.normal;
         ni_over_nt = ref_idx;
         cosine = ref_idx * dot(r_in.direction(), rec.normal) / r_in.direction().length();
     } else {
@@ -44,7 +45,11 @@ bool Dielectric::scatter(
         direction = refracted;
     }
 
-    std::cout << into << ", " << rec.p << ", " << r_in.direction() << ", " << direction << ", is_reflect: " << is_reflect << std::endl;
+    std::cout << "into:" << into << ", " ;
+    std::cout << "p:" << rec.p << ", "; 
+    std::cout << "in:" << r_in.direction() << ", ";
+    std::cout << "dir:" << direction << ", ";
+    std::cout << "is_reflect:" << is_reflect << std::endl;
     
     return true;
 } 

@@ -29,7 +29,8 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
             rec.t = temp;
             rec.p = r.at(rec.t);
             vec3 outward_normal = rec.p / radius;
-            rec.set_face_normal(r, outward_normal);
+            // rec.set_face_normal(r, outward_normal);
+            rec.normal = -outward_normal;
             auto uv = getUV(rec.p);
             rec.u = uv.x; rec.v = uv.y;
             return true;
@@ -39,7 +40,8 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
             rec.t = temp;
             rec.p = r.at(rec.t);
             vec3 outward_normal = rec.p / radius;
-            rec.set_face_normal(r, outward_normal);
+            // rec.set_face_normal(r, outward_normal);
+            rec.normal = -outward_normal;
             auto uv = getUV(rec.p);
             rec.u = uv.x; rec.v = uv.y;
             return true;
