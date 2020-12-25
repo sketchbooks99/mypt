@@ -1,5 +1,9 @@
 # MyPT
 
+# NOTE
+This is for `InFloasion Extend Project`. The key idea of this branch is to project **reference image** to texture of the light source. This system will allow us to improve the performance optimazation pipeline and store ray direction which produce a mid-air iamge in a transparent object.
+---
+
 ![current_thumbnail](result/result.png)
 
 - This is offline renderer for learning rendering algorithms, which include global illuminations, effective techniques (i.e., Next Event Estimation, Bounding Volume Hierarchy, etc...), several integrators (i.e., MLT, Bidirectional path tracing), several sampling strategies.
