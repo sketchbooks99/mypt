@@ -21,33 +21,25 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
     auto half_b = dot(oc, r.direction());
     auto c = oc.length_squared() - radius * radius;
     auto discriminant = half_b * half_b - a * c;
+    if (discriminant < 0) return false;
 
-    if (discriminant > 0) {
-        auto root = sqrt(discriminant);
-        auto temp = (-half_b - root) / a;
-        if(temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.at(rec.t);
-            vec3 outward_normal = rec.p / radius;
-            // rec.set_face_normal(r, outward_normal);
-            rec.normal = -outward_normal;
-            auto uv = getUV(rec.p);
-            rec.u = uv.x; rec.v = uv.y;
-            return true;
-        }
-        temp = (-half_b + root) / a;
-        if(temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.at(rec.t);
-            vec3 outward_normal = rec.p / radius;
-            // rec.set_face_normal(r, outward_normal);
-            rec.normal = -outward_normal;
-            auto uv = getUV(rec.p);
-            rec.u = uv.x; rec.v = uv.y;
-            return true;
-        }
+    auto sqrtd = sqrt(discriminant);
+
+    // Find the nearest root that lies in the acceptable range
+    auto root = (-half_b - sqrtd) / a;
+    if (root < t_min || t_max < root) {
+        root = (-half_b + sqrtd) / a;
+        if (root < t_min || t_max < root)
+            return false;
     }
-    return false;
+
+    rec.t = root;
+    rec.p = r.at(rec.t);
+    vec3 outward_normal = rec.p / radius;
+    rec.set_face_normal(r, outward_normal);
+    // rec.normal = outward_normal;
+
+    return true;
 }
 
 // -----------------------------------------------------------------------

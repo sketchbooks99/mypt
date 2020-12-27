@@ -45,10 +45,11 @@ bool Dielectric::scatter(
         direction = refracted;
     }
 
-    std::cout << "into:" << into << ", " ;
-    std::cout << "p:" << rec.p << ", "; 
-    std::cout << "in:" << r_in.direction() << ", ";
-    std::cout << "dir:" << direction << ", ";
+    std::cout << "into:" << into << ",";
+    std::cout << "p:" << rec.p << ","; 
+    std::cout << "in:" << r_in.direction() << ",";
+    std::cout << "dir:" << direction << ",";
+    std::cout << "normal:" << rec.normal << ",";
     std::cout << "is_reflect:" << is_reflect << std::endl;
     
     return true;

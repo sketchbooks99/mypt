@@ -1,0 +1,14 @@
+# Basic configuration
+filename result/debug.png
+width 768
+height 768
+spp 8
+depth 5
+background 0 0 0
+
+# Camera 
+origin 0 0 -70
+lookat 0 0 0
+up 0 1 0
+focus_length 15.0
+aperture 0.0
