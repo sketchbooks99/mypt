@@ -470,14 +470,7 @@ void Scene::render() {
                 Ray r = camera.get_ray(u, v);
                 color += integrator.trace(r, bvh, lights, background, depth);
             }
-            auto scale = 1.0 / samples_per_pixel;
-            auto r = sqrt(scale * color.x);
-            auto g = sqrt(scale * color.y);
-            auto b = sqrt(scale * color.z);
-            RGBA rgb_color(static_cast<unsigned char>(256 * clamp(r, 0.0, 0.999)),
-                            static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
-                            static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)),
-                            255);
+            RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
             image.set(x, height-(y+1), rgb_color);
         }
     }

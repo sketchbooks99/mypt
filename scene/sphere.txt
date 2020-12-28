@@ -1,7 +1,7 @@
 filename result/sphere.png
 width 512 
 height 512 
-spp 1
+spp 8
 depth 5
 background 0.7 0.9 1.0
 
@@ -16,5 +16,5 @@ endCamera
 
 beginPrimitive
 shape sphere radius 1
-material dielectric color 0.8 0.8 0.8
+material dielectric color 1 1 1 ior 1.5
 endPrimitive

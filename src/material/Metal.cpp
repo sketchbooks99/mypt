@@ -11,6 +11,7 @@ bool Metal::scatter(
     srec.attenuation = albedo;
     srec.is_specular = true;
     srec.pdf = 0;
+
     return true;
 }
 
