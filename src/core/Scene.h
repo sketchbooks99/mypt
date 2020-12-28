@@ -6,6 +6,7 @@
 #include "../render/Camera.h"
 #include "../render/Integrator.h"
 #include "../core/Image.h"
+#include <omp.h>
 
 namespace mypt {
 

@@ -40,6 +40,6 @@ set(pbrenderer_src
     src/texture/ImageTexture.cpp
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -Wall -Wextra -Ofast")
 
 add_executable(mypt ${pbrenderer_src})
