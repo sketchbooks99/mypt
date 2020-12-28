@@ -13,7 +13,7 @@
 namespace mypt {
 
 // ShapePrimitive ----------------------------------------------------------------------
-bool ShapePrimitive::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     Ray tr_ray = *transform * r;
     if(!shape->intersect(tr_ray, t_min, t_max, rec))
         return false;
@@ -66,7 +66,7 @@ vec3 ShapePrimitive::random(const vec3& o) const {
 }
 
 // ConstantMedium ----------------------------------------------------------------------
-bool ConstantMedium::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ConstantMedium::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // Print occasional samples when debugging. To enable, set enableDebug true.
     const bool enableDebug = false;
     const bool debugging = enableDebug && random_double() < 1e-4f;

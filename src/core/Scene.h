@@ -14,6 +14,7 @@ public:
     Scene(const std::string& filename);
 
     void render();
+    void invert_render();
 
 private:
     void createCamera(std::ifstream&, double aspect);
@@ -29,6 +30,7 @@ private:
     Camera camera;
     Integrator integrator;
     Image<RGBA> image;
+    Image<RGB> refimage;
     int samples_per_pixel, depth;
     vec3 background;
     std::string image_name;

@@ -29,6 +29,7 @@ Scene::Scene(const std::string& filename) {
     int image_width = 512, image_height = 512;
     depth = 5;
     samples_per_pixel = 16;
+    std::string refpath = "image/ref.jpg";
 
     while(!ifs.eof()) {
         std::string line;
@@ -44,6 +45,8 @@ Scene::Scene(const std::string& filename) {
             iss >> image_name;
         else if(header == "width")
             iss >> image_width;
+        else if(header == "ref")
+            iss >> refpath;
         else if(header == "height")
             iss >> image_height;
         else if(header == "spp" || header == "samples_per_pixel")
@@ -86,6 +89,7 @@ Scene::Scene(const std::string& filename) {
     }
     integrator = Integrator();
     image.build(image_width, image_height);
+    refimage = Image<RGB>(refpath);
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -477,6 +481,28 @@ void Scene::render() {
 
     image.write(image_name, "PNG");
     std::cerr << "\nDone\n";
+}
+
+void Scene::invert_render(){
+    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
+    int progress_len = 20;
+    clock_t start_time = clock();
+
+    auto width = image.getWidth();
+    auto height = image.getHeight();
+
+    for(int y=0; y<height; y++) {
+        float elapsed_time = static_cast<float>(clock() - start_time);
+        this->streamProgress(y, height, elapsed_time, progress_len);
+
+        for(int x=0; x<width; x++) {
+            auto r_color = image.get(x, y);
+            // Project ray to center of pixels
+            auto u = (x + 0.5) / width;
+            auto v = (y + 0.5) / height;
+            Ray r = camera.get_ray()
+        }
+    }
 }
 
 }

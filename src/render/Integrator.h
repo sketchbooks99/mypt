@@ -22,8 +22,11 @@ public:
     Integrator() {}
     Integrator(Type type) : type(type) {}
     vec3 trace(
-        Ray& r, const BVH& bvh, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
+        const Ray& r, const BVH& bvh, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
     ) const;
+
+    // For propagate reference image to light source
+    void propagate(const Ray& r, const BVH& bvh, int depth);
 private:
     Type type;
 };
