@@ -1,1 +1,3 @@
 src/ext/* linguist-vendored
+src/python/*.ipynb linguist-vendored
+src/python/.ipynb_checkpoints/* linguist
