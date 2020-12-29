@@ -1,7 +1,5 @@
 # MyPT
 
----
-
 ![current_thumbnail](result/result.png)
 
 - This is offline renderer for learning rendering algorithms, which include global illuminations, effective techniques (i.e., Next Event Estimation, Bounding Volume Hierarchy, etc...), several integrators (i.e., MLT, Bidirectional path tracing), several sampling strategies.
