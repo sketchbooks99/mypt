@@ -1,0 +1,33 @@
+filename result/invert.png 
+depth 5
+
+# Camera
+beginCamera
+origin 0 0 80
+lookat 0 0 0
+up 0 1 0
+focus_length 10.0
+aperture 0.0 
+vfov 40
+endCamera
+
+# MMAPs 
+beginPrimitive 
+shape plane min -15 -15 max 15 15
+rotate_x 45
+material mmaps color 1 1 1
+endPrimitive
+
+# Transparent object
+beginPrimitive
+shape sphere radius 2.5
+translate 0 0 40
+material dielectric color 1 1 1 ior 1.49 
+endPrimitive
+
+# Psuedo light source
+beginPrimitive 
+shape imageplane min -15 -15 max 15 15 width 1024 height 1024
+translate 0 0 -40
+material lambertian color 0 0 0
+endPrimitive

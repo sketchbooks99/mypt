@@ -28,7 +28,7 @@ Scene::Scene(const std::string& filename) {
 
     int image_width = 512, image_height = 512;
     depth = 5;
-    samples_per_pixel = 16;
+    samples_per_pixel = 1;
     std::string refpath = "image/ref.jpg";
 
     while(!ifs.eof()) {
@@ -40,21 +40,18 @@ Scene::Scene(const std::string& filename) {
         std::istringstream iss(line);
         std::string header;
         iss >> header;
+
+        // `#` is comment
         if(header == "#" || header[0] == '#') continue;
+
         if(header == "filename")
             iss >> image_name;
-        else if(header == "width")
-            iss >> image_width;
         else if(header == "ref")
             iss >> refpath;
-        else if(header == "height")
-            iss >> image_height;
         else if(header == "spp" || header == "samples_per_pixel")
             iss >> samples_per_pixel;
         else if(header == "depth")
             iss >> depth;
-        else if(header == "background") 
-            iss >> background.x >> background.y >> background.z;
         else if(header == "beginCamera")
             createCamera(ifs, double(image_width)/image_height);
         else if(header == "beginPrimitive")
@@ -88,17 +85,20 @@ Scene::Scene(const std::string& filename) {
         }
     }
     integrator = Integrator();
-    image.build(image_width, image_height);
     refimage = Image<RGB>(refpath);
+    // Create out image with same dimensions of refimage.
+    image.build(refimage.getWidth(), refimage.getHeight());
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
+    // Default configuration of camera.
     vec3 origin(0, 0, 100);
     vec3 lookat(0, 0, 0);
     vec3 up(0, 1, 0);
     double focus_length = 15.0;
     double aperture = 0.0;
     double vfov = 20.0;
+
     while(true)
     {
         std::string line;
@@ -129,7 +129,10 @@ void Scene::createCamera(std::ifstream& ifs, double aspect) {
 void Scene::createPrimitive(std::ifstream& ifs) {
     std::vector<std::shared_ptr<Shape>> shapes;
     std::shared_ptr<Material> mat;
+
+    // Push back transform to independently apply transformation to primitives.
     ts.pushMatrix();
+
     while(true) {
         std::string line;
         if(!std::getline(ifs, line)) continue;
@@ -154,7 +157,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                         iss >> max[0] >> max[1];
                 }
                 shapes.emplace_back(createPlaneShape(min, max));
-            } else if(type == "sphere") {
+            } 
+            else if(type == "sphere") {
                 double radius = 1.0;
                 while(!iss.eof()) {
                     iss >> header;
@@ -162,7 +166,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                         iss >> radius;
                 }
                 shapes.emplace_back(createSphereShape(radius));   
-            } else if(type == "mesh") {
+            } 
+            else if(type == "mesh") {
                 std::string filename;
                 vec3 axis = vec3(1,1,1);
                 double size = 50;
@@ -181,6 +186,19 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                 }
                 for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
                     shapes.emplace_back(triangle);
+            }
+            /// INVERT: For store propagated color by ray. 
+            else if(type == "imageplane") {
+                vec2 min(-1,-1), max(1,1);
+                int w = 512, h = 512;
+                while(!iss.eof()) {
+                    iss >> header;
+                    if (header == "min") iss >> min[0] >> min[1];
+                    else if (header == "max") iss >> max[0] >> max[1];
+                    else if (header == "width") iss >> w;
+                    else if (header == "height") iss >> h;
+                }
+                shapes.emplace_back(createImagePlaneShape(min, max, w, h));
             }
         }
         // Material ---------------------------------
