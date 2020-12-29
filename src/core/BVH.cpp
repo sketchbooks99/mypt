@@ -38,7 +38,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
             AABB s1box, s2box;
             // vector to store surface areas.
             std::vector<double> s1SA(primitive_span), s2SA(primitive_span);
-            // Store surface area of left side at every case
+            // Store surface area of left side at every cases
             for(int i=1; i<primitive_span; i++) {
                 s1box = surrounding(s1box, p[i+start]->bounding());
                 s1SA[i] = s1box.surface_area();

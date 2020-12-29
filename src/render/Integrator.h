@@ -16,11 +16,13 @@
 
 namespace mypt {
 
+class LightPDF;
+
 class Integrator {
 public:
-    enum class Type { PATH };
+    enum class TraceType { PATH };
     Integrator() {}
-    Integrator(Type type) : type(type) {}
+    Integrator(TraceType type) {}
     vec3 trace(
         const Ray& r, const BVH& bvh, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
     ) const;
@@ -28,7 +30,7 @@ public:
     // For propagate reference image to light source
     void propagate(const Ray& r, const BVH& bvh, int depth);
 private:
-    Type type;
+    TraceType type;
 };
 
 }

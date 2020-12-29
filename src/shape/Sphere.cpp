@@ -36,7 +36,6 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
     rec.t = root;
     rec.p = r.at(rec.t);
     vec3 outward_normal = rec.p / radius;
-    // rec.set_face_normal(r, outward_normal);
     rec.normal = outward_normal;
 
     return true;
