@@ -13,11 +13,16 @@
 #include "../material/NormalMat.h"
 #include "../material/Emitter.h"
 #include "../material/Isotropic.h"
+/// INVERT:
+#include "../material/MMAPs.h"
+#include "../material/Absorber.h"
 
 #include "../texture/ConstantTexture.h"
 #include "../texture/ImageTexture.h"
 #include "../texture/CheckerTexture.h"
 #include "../texture/NoiseTexture.h"
+
+#define INVERT 1
 
 namespace mypt {
 
@@ -29,7 +34,10 @@ Scene::Scene(const std::string& filename) {
     int image_width = 512, image_height = 512;
     depth = 5;
     samples_per_pixel = 1;
-    std::string refpath = "image/ref.jpg";
+
+    #if INVERT
+    std::string refpath = "result/ref.png";
+    #endif
 
     while(!ifs.eof()) {
         std::string line;
@@ -85,9 +93,13 @@ Scene::Scene(const std::string& filename) {
         }
     }
     integrator = Integrator();
-    refimage = Image<RGB>(refpath);
+    #if INVERT
     // Create out image with same dimensions of refimage.
+    refimage = Image<RGBA>(refpath);
     image.build(refimage.getWidth(), refimage.getHeight());
+    #else
+    image.build(image_width, image_height);
+    #endif
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -126,9 +138,150 @@ void Scene::createCamera(std::ifstream& ifs, double aspect) {
 }
 
 // -----------------------------------------------------------------------------------------
+std::vector<std::shared_ptr<Shape>> Scene::createShapes(std::istringstream& iss) {
+    std::vector<std::shared_ptr<Shape>> shapes;
+    std::string type, header;
+    while(!iss.eof()) {
+        iss >> type;
+        if(type == "plane") {
+            vec2 min(-1,-1), max(1,1);
+            while(!iss.eof()) {
+                iss >> header;
+                if(header == "min") 
+                    iss >> min[0] >> min[1];
+                else if(header == "max")
+                    iss >> max[0] >> max[1];
+            }
+            shapes.emplace_back(createPlaneShape(min, max));
+        } 
+        else if(type == "sphere") {
+            double radius = 1.0;
+            while(!iss.eof()) {
+                iss >> header;
+                if(header == "radius")
+                    iss >> radius;
+            }
+            shapes.emplace_back(createSphereShape(radius));   
+        } 
+        else if(type == "mesh") {
+            std::string filename;
+            vec3 axis = vec3(1,1,1);
+            double size = 50;
+            bool isSmooth = false;
+            iss >> header;
+            while(!iss.eof()) {
+                if(header == "filename")
+                    iss >> filename;
+                else if(header == "axis") 
+                    iss >> axis.x >> axis.y >> axis.z;
+                else if(header == "size")
+                    iss >> size;
+                else if(header == "smooth")
+                    isSmooth = true;
+                iss >> header;
+            }
+            for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
+                shapes.emplace_back(triangle);
+        }
+    }
+    for(auto &shape : shapes)
+        std::cout << typeid(shape).name() << std::endl;
+    return shapes;
+}
+
+// -----------------------------------------------------------------------------------------
+std::shared_ptr<Material> Scene::createMaterial(std::istringstream& iss) {
+    std::shared_ptr<Material> material;
+    std::string type, header;
+    while(!iss.eof()) {
+        iss >> type;
+        if(type == "lambertian" || type == "emitter") {
+            float intensity = 1.0f;
+            std::shared_ptr<Texture> texture;
+            iss >> header;
+            while(!iss.eof()) {
+                if(header == "color") {
+                    vec3 albedo(0.8);
+                    iss >> albedo.x >> albedo.y >> albedo.z;
+                    texture = std::make_shared<ConstantTexture>(albedo);
+                }
+                else if(header == "checker") {
+                    vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
+                    iss >> header;
+                    if(header == "color1") 
+                        iss >> color1.x >> color1.y >> color1.z;
+                    if(header == "color2") 
+                        iss >> color2.x >> color2.y >> color2.z;
+                    texture = std::make_shared<CheckerTexture>(color1, color2);
+                }
+                else if(header == "image") {
+                    std::string filename;
+                    iss >> filename;
+                    texture = std::make_shared<ImageTexture>(filename);
+                }
+                else if(header == "noise") {
+                    double scale = 1.0f;
+                    iss >> header;
+                    if(header == "scale") iss >> scale;
+                    iss >> header;
+                    NoiseTexture::Mode noiseType { NoiseTexture::Mode::NOISE };
+                    if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
+                    texture = std::make_shared<NoiseTexture>(scale, noiseType);
+                }
+                else if(header == "intensity")
+                    iss >> intensity;
+                iss >> header;
+            }
+            if(type == "lambertian") material = std::make_shared<Lambertian>(texture);
+            else                     material = std::make_shared<Emitter>(texture, intensity);
+        }
+        else if(type == "metal" || type == "mmaps") {
+            vec3 color(1.0);
+            double fuzz = 0.0;
+            while(!iss.eof()) {
+                iss >> header;
+                if(header == "color")
+                    iss >> color.x >> color.y >> color.z;
+                else if(header == "fuzz")
+                    iss >> fuzz;
+            }
+            material = std::make_shared<Metal>(color, fuzz);
+        }
+        else if(type == "dielectric") {
+            vec3 color(1.0);
+            double ior = 1.52;
+            while(!iss.eof()) {
+                iss >> header;
+                if(header == "color")
+                    iss >> color.x >> color.y >> color.z;
+                else if(header == "ior")
+                    iss >> ior;
+            }
+            std::cout << ior << std::endl;
+            material = std::make_shared<Dielectric>(color, ior);
+        }
+        else if(type == "normal") {
+            material = std::make_shared<NormalMat>();
+        }
+        /// INVERT:
+        else if(type == "absorber") {
+            int w = 512, h = 512;
+            while(!iss.eof()) {
+                iss >> header;
+                if(header == "width") iss >> w;
+                else if(header == "height") iss >> h;
+            }
+            material = std::make_shared<Absorber>(w, h);
+        }
+    }
+    std::cout << typeid(material).name() << std::endl;
+    return material;
+}
+
+// -----------------------------------------------------------------------------------------
 void Scene::createPrimitive(std::ifstream& ifs) {
     std::vector<std::shared_ptr<Shape>> shapes;
-    std::shared_ptr<Material> mat;
+    std::shared_ptr<Material> material;
 
     // Push back transform to independently apply transformation to primitives.
     ts.pushMatrix();
@@ -144,136 +297,9 @@ void Scene::createPrimitive(std::ifstream& ifs) {
         if(header == "endPrimitive") break;
 
         // Shape ------------------------------------
-        else if(header == "shape") {
-            std::string type;
-            iss >> type;
-            if(type == "plane") {
-                vec2 min(-1,-1), max(1,1);
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "min") 
-                        iss >> min[0] >> min[1];
-                    else if(header == "max")
-                        iss >> max[0] >> max[1];
-                }
-                shapes.emplace_back(createPlaneShape(min, max));
-            } 
-            else if(type == "sphere") {
-                double radius = 1.0;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "radius")
-                        iss >> radius;
-                }
-                shapes.emplace_back(createSphereShape(radius));   
-            } 
-            else if(type == "mesh") {
-                std::string filename;
-                vec3 axis = vec3(1,1,1);
-                double size = 50;
-                bool isSmooth = false;
-                iss >> header;
-                while(!iss.eof()) {
-                    if(header == "filename")
-                        iss >> filename;
-                    else if(header == "axis") 
-                        iss >> axis.x >> axis.y >> axis.z;
-                    else if(header == "size")
-                        iss >> size;
-                    else if(header == "smooth")
-                        isSmooth = true;
-                    iss >> header;
-                }
-                for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
-                    shapes.emplace_back(triangle);
-            }
-            /// INVERT: For store propagated color by ray. 
-            else if(type == "imageplane") {
-                vec2 min(-1,-1), max(1,1);
-                int w = 512, h = 512;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if (header == "min") iss >> min[0] >> min[1];
-                    else if (header == "max") iss >> max[0] >> max[1];
-                    else if (header == "width") iss >> w;
-                    else if (header == "height") iss >> h;
-                }
-                shapes.emplace_back(createImagePlaneShape(min, max, w, h));
-            }
-        }
+        else if(header == "shape") shapes = this->createShapes(iss);
         // Material ---------------------------------
-        else if(header == "material") {
-            std::string type;
-            iss >> type;
-            if(type == "lambertian" || type == "emitter") {
-                float intensity = 1.0f;
-                std::shared_ptr<Texture> texture;
-                iss >> header;
-                while(!iss.eof()) {
-                    if(header == "color") {
-                        vec3 albedo(0.8);
-                        iss >> albedo.x >> albedo.y >> albedo.z;
-                        texture = std::make_shared<ConstantTexture>(albedo);
-                    }
-                    else if(header == "checker") {
-                        vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
-                        iss >> header;
-                        if(header == "color1") 
-                            iss >> color1.x >> color1.y >> color1.z;
-                        if(header == "color2") 
-                            iss >> color2.x >> color2.y >> color2.z;
-                        texture = std::make_shared<CheckerTexture>(color1, color2);
-                    }
-                    else if(header == "image") {
-                        std::string filename;
-                        iss >> filename;
-                        texture = std::make_shared<ImageTexture>(filename);
-                    }
-                    else if(header == "noise") {
-                        double scale = 1.0f;
-                        iss >> header;
-                        if(header == "scale") iss >> scale;
-                        iss >> header;
-                        NoiseTexture::Mode noiseType { NoiseTexture::Mode::NOISE };
-                        if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
-                        texture = std::make_shared<NoiseTexture>(scale, noiseType);
-                    }
-                    else if(header == "intensity")
-                        iss >> intensity;
-                    iss >> header;
-                }
-                if(type == "lambertian") mat = std::make_shared<Lambertian>(texture);
-                else                     mat = std::make_shared<Emitter>(texture, intensity);
-            }
-            else if(type == "metal") {
-                vec3 color(0.9, 0.7, 0.3);
-                double fuzz = 0.01;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "color")
-                        iss >> color.x >> color.y >> color.z;
-                    else if(header == "fuzz")
-                        iss >> fuzz;
-                }
-                mat = std::make_shared<Metal>(color, fuzz);
-            }
-            else if(type == "dielectric") {
-                vec3 color(1.0);
-                double ior = 1.52;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "color")
-                        iss >> color.x >> color.y >> color.z;
-                    else if(header == "ior")
-                        iss >> ior;
-                }
-                std::cout << ior << std::endl;
-                mat = std::make_shared<Dielectric>(color, ior);
-            }
-            else if(type == "normal") {
-                mat = std::make_shared<NormalMat>();
-            }
-        }
+        else if(header == "material") material = this->createMaterial(iss);
         // Transformation ---------------------------
         else if(header == "translate") {
             float x, y, z;
@@ -303,11 +329,11 @@ void Scene::createPrimitive(std::ifstream& ifs) {
     }
 
     ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
-    if(!mat) mat = std::make_shared<Lambertian>(vec3(0.8f));
+    if(!material) material = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
         this->primitives.emplace_back(std::make_shared<ShapePrimitive>(
-            shape, mat, std::make_shared<Transform>(ts.getCurrentTransform())));
+            shape, material, std::make_shared<Transform>(ts.getCurrentTransform())));
     }
 
     ts.popMatrix();
@@ -333,45 +359,7 @@ void Scene::createLight(std::ifstream& ifs) {
 
         // Shape -----------------------------------
         else if(header == "shape") {
-            std::string type;
-            iss >> type;
-            if(type == "plane") {
-                vec2 min, max;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "min") 
-                        iss >> min[0] >> min[1];
-                    else if(header == "max")
-                        iss >> max[0] >> max[1];
-                }
-                shapes.emplace_back(createPlaneShape(min, max));
-            } else if(type == "sphere") {
-                double radius = 1.0f;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "radius")
-                        iss >> radius;
-                }
-                shapes.emplace_back(createSphereShape(radius));   
-            } else if(type == "mesh") {
-                std::string filename;
-                vec3 axis = vec3(1,1,1);
-                double size = 50;
-                bool isSmooth = false;
-                while(!iss.eof()) {
-                    iss >> header;
-                    if(header == "filename")
-                        iss >> filename;
-                    else if(header == "axis") 
-                        iss >> axis.x >> axis.y >> axis.z;
-                    else if(header == "size")
-                        iss >> size;
-                    else if(header == "smooth")
-                        isSmooth = true;
-                }
-                for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
-                    shapes.emplace_back(triangle);
-            }
+            shapes = this->createShapes(iss);
         }
         // Texture ----------------------------------
         else if(header == "color") {
@@ -482,6 +470,8 @@ void Scene::render() {
 
     int n_threads = omp_get_max_threads();
 
+    // ASSERT(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");
+
     // declare reduction for vec3
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
@@ -500,6 +490,9 @@ void Scene::render() {
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
+                #if INVERT
+                r.set_color(refimage.get(x, y));
+                #endif
                 color += integrator.trace(r, bvh, lights, background, depth);
             }
             RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
@@ -507,30 +500,9 @@ void Scene::render() {
         }
     }
 
-    image.write(image_name, "PNG");
+    std::string file_format = split(image_name, '.').back();
+    image.write(image_name, file_format);
     std::cerr << "\nDone\n";
-}
-
-void Scene::invert_render(){
-    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
-    int progress_len = 20;
-    clock_t start_time = clock();
-
-    auto width = image.getWidth();
-    auto height = image.getHeight();
-
-    for(int y=0; y<height; y++) {
-        float elapsed_time = static_cast<float>(clock() - start_time);
-        this->streamProgress(y, height, elapsed_time, progress_len);
-
-        for(int x=0; x<width; x++) {
-            auto r_color = image.get(x, y);
-            // Project ray to center of pixels
-            auto u = (x + 0.5) / width;
-            auto v = (y + 0.5) / height;
-            Ray r = camera.get_ray()
-        }
-    }
 }
 
 }

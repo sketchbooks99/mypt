@@ -15,13 +15,13 @@ vec3 Integrator::trace(
         return background;
 
     ScatterRecord srec;
-    vec3 emitted = rec.mat_ptr->emitted(r, rec, rec.u, rec.v, rec.p);
+    vec3 emitted = rec.mat_ptr->emitted(r, rec);
     if(!rec.mat_ptr->scatter(r, rec, srec))
         return emitted;
 
     if(srec.is_specular) {
         return srec.attenuation
-            * trace(srec.specular_ray, bvh, lights, background, depth-1);
+            * trace(srec.scattered, bvh, lights, background, depth-1);
     }
 
     auto light_ptr = std::make_shared<LightPDF>(lights, rec.p);
@@ -45,9 +45,8 @@ void Integrator::propagate(const Ray& r, const BVH& bvh, int depth) {
     if(!rec.mat_ptr->scatter(r, rec, srec))
         return;
     
-    Ray scattered = srec.specular_ray;
-    if(!srec.is_final)
-        propagate(scattered, bvh, depth-1);
+    Ray scattered = srec.scattered;
+    propagate(scattered, bvh, depth-1);
 }
 
 }

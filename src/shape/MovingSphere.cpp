@@ -2,12 +2,12 @@
 
 namespace mypt {
 
-vec3 MovingSphere::center(double time) const {
+vec3 MovingSphere::get_center(double time) const {
     return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
 }
 
 bool MovingSphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
-    vec3 oc = r.origin() - center(r.time());
+    vec3 oc = r.origin() - get_center(r.time());
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
     auto c = oc.length_squared() - radius * radius;
@@ -21,7 +21,7 @@ bool MovingSphere::intersect(const Ray& r, double t_min, double t_max, HitRecord
         if(temp < t_max && temp > t_min) {
             rec.t = temp;
             rec.p = r.at(rec.t);
-            vec3 outward_normal = (rec.p - center(r.time())) / radius;
+            vec3 outward_normal = (rec.p - get_center(r.time())) / radius;
             rec.set_face_normal(r, outward_normal);
             return true;
         }
@@ -30,7 +30,7 @@ bool MovingSphere::intersect(const Ray& r, double t_min, double t_max, HitRecord
         if(temp < t_max && temp > t_min) {
             rec.t = temp;
             rec.p = r.at(rec.t);
-            vec3 outward_normal = (rec.p - center(r.time())) / radius;
+            vec3 outward_normal = (rec.p - get_center(r.time())) / radius;
             rec.set_face_normal(r, outward_normal);
             return true;
         }
@@ -41,11 +41,11 @@ bool MovingSphere::intersect(const Ray& r, double t_min, double t_max, HitRecord
 
 AABB MovingSphere::bounding() const {
     AABB box0(
-        center(time0) - vec3(radius, radius, radius),
-        center(time0) + vec3(radius, radius, radius));
+        get_center(time0) - vec3(radius, radius, radius),
+        get_center(time0) + vec3(radius, radius, radius));
     AABB box1(
-        center(time1) - vec3(radius, radius, radius),
-        center(time1) + vec3(radius, radius, radius));
+        get_center(time1) - vec3(radius, radius, radius),
+        get_center(time1) + vec3(radius, radius, radius));
     return surrounding(box0, box1);
 }
 

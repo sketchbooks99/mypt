@@ -1,4 +1,6 @@
 filename result/invert.png 
+ref result/ref.png
+spp 1
 depth 5
 
 # Camera
@@ -27,7 +29,7 @@ endPrimitive
 
 # Psuedo light source
 beginPrimitive 
-shape imageplane min -15 -15 max 15 15 width 1024 height 1024
+shape plane min -15 -15 max 15 15 
 translate 0 0 -40
-material lambertian color 0 0 0
+material absorber color 0 0 0 width 512 height 512
 endPrimitive

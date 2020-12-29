@@ -1,0 +1,23 @@
+filename result/ref.png
+width 512 
+height 512
+spp 32
+depth 5
+background 0 0 0
+
+beginCamera
+origin 0 0 80
+lookat 0 0 0
+up 0 1 0
+focus_length 15.0
+aperture 0.0
+vfov 40
+endCamera
+
+beginLight
+shape plane min -1.5 -1.5 max 1.5 1.5
+translate 0 0 40
+rotate_x -90
+image data/image/uv_brightness1.0.jpg 
+intensity 1
+endLight

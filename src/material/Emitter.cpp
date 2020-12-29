@@ -2,13 +2,13 @@
 
 namespace mypt {
 
-bool Emitter::scatter(const Ray& /* r_in */, HitRecord& /* rec */, ScatterRecord& /* srec */) const
+bool Emitter::scatter(const Ray& /* r_in */, HitRecord& /* rec */, ScatterRecord& /* srec */)
 {
     return false;
 }
 
-vec3 Emitter::emitted(const Ray& /* r_in */, const HitRecord& /* rec */, double u, double v, const vec3& p) const {
-    return albedo->value(u, v, p) * intensity;
+vec3 Emitter::emitted(const Ray& /* r_in */, const HitRecord& rec) {
+    return albedo->value(rec.u, rec.v, rec.p) * intensity;
 }
 
 }
