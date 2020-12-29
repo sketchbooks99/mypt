@@ -1,8 +1,8 @@
 # Basic configuration
-filename result/result.png
+filename result/debug.png
 width 768
 height 768
-spp 1024
+spp 32
 depth 5
 background 0 0 0
 

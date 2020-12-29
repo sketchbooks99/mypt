@@ -66,6 +66,7 @@ public:
         auto num_lights = static_cast<int>(lights.size());
         return lights[random_int(0, num_lights-1)]->random(origin);
     }
+    void set_origin(vec3 o) { this->origin = o; }
 private:
     std::vector<std::shared_ptr<Primitive>> lights;
     vec3 origin;
