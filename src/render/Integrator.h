@@ -22,7 +22,7 @@ class Integrator {
 public:
     enum class TraceType { PATH };
     Integrator() {}
-    Integrator(TraceType type) {}
+    // Integrator(TraceType type) {}
     vec3 trace(
         Ray& r, const BVH& bvh, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
     ) const;
