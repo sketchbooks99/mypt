@@ -12,7 +12,7 @@ This is for `InFloasion Extend Project`. The key idea of this branch is to proje
 - If I finished basic learning of path tracing, I'd like to implement GPU path tracing techniques using OptiX or CUDA.
 - Currently, this doesn't support spectrum rendering, so all color management is performed by RGB representation.
 
-## Compile & Run (Linux)
+## Compile & Run (Linux & Mac)
 
 - Compile 
 ```
@@ -38,7 +38,7 @@ width 1024
 height 768
 # The number of samples per pixel
 spp 8 
-# The number of maximum depth to track rays
+# The maximum number of depth to track rays
 depth 5
 # Background color
 background 0.5 0.5 0.5

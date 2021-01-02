@@ -7,13 +7,16 @@ namespace mypt {
 
 struct HitRecord;
 
+template <typename PixelType>
 class Absorber final : public Material {
 public:
-    Absorber(int width, int height) : image(Image<RGBA>(width, height)) {}
-    // ~Absorber();
+    Absorber(std::shared_ptr<Image<PixelType>> image) : image(image) {}
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
+
+    std::shared_ptr<Image<PixelType>> getImagePtr() { return image; } 
+    Image<PixelType> getImage() { return *image; }
 private:
-    Image<RGBA> image;
+    std::shared_ptr<Image<PixelType>> image;
 };
 
 }

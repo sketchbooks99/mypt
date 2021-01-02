@@ -17,11 +17,11 @@ public:
 
 private:
     // Parse scene configuration and create objects.
-    void                                createCamera(std::ifstream&, double aspect);
-    std::vector<std::shared_ptr<Shape>> createShapes(std::istringstream&);
-    std::shared_ptr<Material>           createMaterial(std::istringstream&);
-    void                                createPrimitive(std::ifstream&);
-    void                                createLight(std::ifstream&);
+    void createCamera(std::ifstream&, double aspect);
+    void createShapes(std::istringstream&, std::vector<std::shared_ptr<Shape>>&);
+    auto createMaterial(std::istringstream&);
+    void createPrimitive(std::ifstream&);
+    void createLight(std::ifstream&);
     // Stream rendering progress to standard out stream.
     void streamProgress(int currentLine, int maxLine, double elapsedTime, int progressLen=20);
 
@@ -31,6 +31,7 @@ private:
     Integrator integrator;
     Image<RGBA> image;
     Image<RGBA> refimage;
+    std::shared_ptr<Image<RGBA>> absorbed_image;
     int samples_per_pixel, depth;
     vec3 background;
     std::string image_name;

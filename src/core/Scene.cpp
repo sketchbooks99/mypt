@@ -138,8 +138,7 @@ void Scene::createCamera(std::ifstream& ifs, double aspect) {
 }
 
 // -----------------------------------------------------------------------------------------
-std::vector<std::shared_ptr<Shape>> Scene::createShapes(std::istringstream& iss) {
-    std::vector<std::shared_ptr<Shape>> shapes;
+void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Shape>>& shapes) {
     std::string type, header;
     while(!iss.eof()) {
         iss >> type;
@@ -186,11 +185,10 @@ std::vector<std::shared_ptr<Shape>> Scene::createShapes(std::istringstream& iss)
     }
     for(auto &shape : shapes)
         std::cout << typeid(shape).name() << std::endl;
-    return shapes;
 }
 
 // -----------------------------------------------------------------------------------------
-std::shared_ptr<Material> Scene::createMaterial(std::istringstream& iss) {
+auto Scene::createMaterial(std::istringstream& iss) {
     std::shared_ptr<Material> material;
     std::string type, header;
     while(!iss.eof()) {
@@ -271,7 +269,8 @@ std::shared_ptr<Material> Scene::createMaterial(std::istringstream& iss) {
                 if(header == "width") iss >> w;
                 else if(header == "height") iss >> h;
             }
-            material = std::make_shared<Absorber>(w, h);
+            absorbed_image = std::make_shared<Image<RGBA>>(w, h);
+            material = std::make_shared<Absorber<RGBA>>(absorbed_image);
         }
     }
     std::cout << typeid(material).name() << std::endl;
@@ -297,7 +296,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
         if(header == "endPrimitive") break;
 
         // Shape ------------------------------------
-        else if(header == "shape") shapes = this->createShapes(iss);
+        else if(header == "shape") this->createShapes(iss, shapes);
         // Material ---------------------------------
         else if(header == "material") material = this->createMaterial(iss);
         // Transformation ---------------------------
@@ -359,7 +358,7 @@ void Scene::createLight(std::ifstream& ifs) {
 
         // Shape -----------------------------------
         else if(header == "shape") {
-            shapes = this->createShapes(iss);
+            this->createShapes(iss, shapes);
         }
         // Texture ----------------------------------
         else if(header == "color") {
@@ -502,6 +501,9 @@ void Scene::render() {
 
     std::string file_format = split(image_name, '.').back();
     image.write(image_name, file_format);
+
+    std::string inv_filepath = "result/inv_result.png";
+    if(absorbed_image->getData()) absorbed_image->write(inv_filepath, split(inv_filepath, '.').back());
     std::cerr << "\nDone\n";
 }
 

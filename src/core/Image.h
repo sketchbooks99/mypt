@@ -11,7 +11,7 @@ public:
     Image() {}
     Image(int width, int height);
     Image(const std::string& filename);
-    ~Image() { delete[] data; }
+    ~Image() { if(data) delete[] data; }
     void set(int x, int y, PixelType val)
     {
         assert(x < width && y < height);
@@ -31,6 +31,8 @@ public:
 
     void load(const std::string& filename);
     void write(const std::string& filename, const std::string& format);
+
+    PixelType* getData() { return data; }
 protected:
     int nChannels;
     PixelType* data;
