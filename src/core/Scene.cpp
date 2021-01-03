@@ -93,13 +93,10 @@ Scene::Scene(const std::string& filename) {
         }
     }
     integrator = Integrator();
-    #if INVERT
     // Create out image with same dimensions of refimage.
     refimage = Image<RGBA>(refpath);
     image.build(refimage.getWidth(), refimage.getHeight());
-    #else
-    image.build(image_width, image_height);
-    #endif
+    
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -489,9 +486,7 @@ void Scene::render() {
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                #if INVERT
                 r.set_color(refimage.get(x, y));
-                #endif
                 color += integrator.trace(r, bvh, lights, background, depth);
             }
             RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);

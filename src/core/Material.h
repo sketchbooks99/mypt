@@ -34,7 +34,7 @@ struct ScatterRecord {
 /**
  * NOTE:
  *  Disable const function to modify member variables in functions.
- *  This is especially for `ImagePlane` class
+ *  This is especially for `Absorber`.
  */
 
 class Material {

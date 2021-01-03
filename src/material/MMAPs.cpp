@@ -7,7 +7,7 @@ bool MMAPs::scatter(
 ) {
     vec3 retro_transmitted = retro_transmit(normalize(r_in.direction()), rec.normal);
     rec.p += dot(retro_transmitted, rec.normal) < 0 ? -rec.normal * eps : rec.normal * eps;
-    srec.scattered = Ray(rec.p, retro_transmitted + fuzz*random_in_unit_sphere());
+    srec.scattered = Ray(rec.p, retro_transmitted + fuzz*random_in_unit_sphere(), r_in.time(), r_in.color());
     srec.attenuation = albedo * 0.5f;
     srec.pdf = nullptr;
     srec.is_specular = true;
