@@ -3,7 +3,7 @@ filename result/cornel.png
 ref result/ref.png
 width 768
 height 768
-spp 1
+spp 256
 depth 5
 background 0 0 0
 
@@ -75,4 +75,12 @@ shape plane min -15 -15 max 15 15
 translate 0 49.9 0
 color 0.9 0.7 0.3
 intensity 5
+endLight
+
+# display
+beginLight 
+shape plane min -1.5 -1.5 max 1.5 1.5
+translate 0 -40 0
+image result/inv_result.png 
+intensity 1
 endLight
