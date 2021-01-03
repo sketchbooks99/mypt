@@ -27,7 +27,7 @@ vec3 Integrator::trace(
     auto light_ptr = std::make_shared<LightPDF>(lights, rec.p);
     MixturePDF p(light_ptr, srec.pdf);
 
-    Ray scattered = Ray(rec.p, p.generate(), r.time());
+    Ray scattered = Ray(rec.p, p.generate(), r.time(), r.color());
     auto pdf = p.value(scattered.direction());
     
     return emitted

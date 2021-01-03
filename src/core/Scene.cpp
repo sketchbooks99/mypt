@@ -94,9 +94,8 @@ Scene::Scene(const std::string& filename) {
     }
     integrator = Integrator();
     // Create out image with same dimensions of refimage.
-    refimage = Image<RGBA>(refpath);
+    refimage.load(refpath);
     image.build(refimage.getWidth(), refimage.getHeight());
-    
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -180,8 +179,7 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
                 shapes.emplace_back(triangle);
         }
     }
-    for(auto &shape : shapes)
-        std::cout << typeid(shape).name() << std::endl;
+
 }
 
 // -----------------------------------------------------------------------------------------
@@ -240,7 +238,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 else if(header == "fuzz")
                     iss >> fuzz;
             }
-            material = std::make_shared<Metal>(color, fuzz);
+            material = std::make_shared<MMAPs>(color, fuzz);
         }
         else if(type == "dielectric") {
             vec3 color(1.0);
@@ -252,7 +250,6 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 else if(header == "ior")
                     iss >> ior;
             }
-            std::cout << ior << std::endl;
             material = std::make_shared<Dielectric>(color, ior);
         }
         else if(type == "normal") {
@@ -270,7 +267,6 @@ auto Scene::createMaterial(std::istringstream& iss) {
             material = std::make_shared<Absorber<RGBA>>(absorbed_image);
         }
     }
-    std::cout << typeid(material).name() << std::endl;
     return material;
 }
 
@@ -445,7 +441,7 @@ void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int
     // Display percentage of process
     float percent = (float)(currentLine+1) / maxLine;
     std::cerr << " (" << std::fixed << std::setprecision(2) << (float)(percent * 100.0f) << "%, ";
-    std::cerr << "" << currentLine + 1 << " / " << maxLine << ")" <<std::flush;
+    std::cerr << "" << currentLine + 1 << " / " << maxLine << ")" << std::flush;
 }
 
 // -----------------------------------------------------------------------------------------
@@ -498,7 +494,10 @@ void Scene::render() {
     image.write(image_name, file_format);
 
     std::string inv_filepath = "result/inv_result.png";
-    if(absorbed_image->getData()) absorbed_image->write(inv_filepath, split(inv_filepath, '.').back());
+    if(absorbed_image->getData()) {
+        std::cout << "Write absorbed result" << std::endl;
+        absorbed_image->write(inv_filepath, split(inv_filepath, '.').back());
+    }
     std::cerr << "\nDone\n";
 }
 

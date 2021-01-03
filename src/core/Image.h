@@ -21,7 +21,8 @@ public:
     PixelType get(int x, int y) const 
     {
         assert(x < width && y < height);
-        return data[y * width + x];
+        int idx = y * width + x;
+        return data[idx];
     }
 
     int getWidth() const { return width; }

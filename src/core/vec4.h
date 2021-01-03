@@ -75,7 +75,7 @@ public:
 // vec4 utility functions
 template <typename Type>
 inline std::ostream& operator<<(std::ostream &out, const type4<Type> &v) {
-    return out << static_cast<float>(v.x) << ' ' << static_cast<float>(v.y) << ' ' << (float)v.z << ' ' << (float)v.w;
+    return out << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w;
 }
 
 template <typename Type>

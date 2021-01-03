@@ -37,6 +37,13 @@ void cast_test() {
     std::cout << "f_v4: " << f_v4 / 10 << std::endl;
 }
 
+void val2color_test() {
+    int3 i_v3(511);
+    RGB rgb = static_cast<RGB>(i_v3);
+    std::cout << rgb << std::endl;
+    std::cout << static_cast<int3>(rgb);
+}
+
 void ONB_test(){
     ONB onb;
     onb.build_from_w(vec3(0,1,0));
@@ -58,6 +65,7 @@ int main() {
     // cast_test();
     std::cout << "ONB test" << std::endl;
     // ONB_test();
-    div_test(10000);
+    // div_test(10000);
+    val2color_test();
     return 0;
 }

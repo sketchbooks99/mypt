@@ -1,9 +1,9 @@
 # Basic configuration
 filename result/debug.png
-ref result/ref_small.png
+ref result/ref.png
 width 768
 height 768
-spp 2048
+spp 1
 depth 5
 background 0 0 0
 
@@ -31,9 +31,10 @@ translate 0 0 40
 material dielectric color 1 1 1 ior 1.49 
 endPrimitive
 
-# Psuedo light source
-beginPrimitive 
-shape plane min -1.5 -1.5 max 1.5 1.5 
+# light source 
+beginLight
+shape plane min -15 -15 max 15 15 
 translate 0 -40 0
-material absorber color 0 0 0 width 512 height 512
-endPrimitive
+image result/inv_result.png
+intensity 1
+endLight
