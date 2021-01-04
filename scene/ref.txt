@@ -1,7 +1,7 @@
 filename result/ref_small.png
 width 768
 height 768
-spp 32
+spp 128
 depth 5
 background 0 0 0
 
@@ -11,7 +11,7 @@ lookat 0 0 0
 up 0 1 0
 focus_length 15.0
 aperture 0.0
-vfov 40
+vfov 10
 endCamera
 
 beginLight

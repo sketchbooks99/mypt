@@ -3,7 +3,7 @@
 namespace mypt {
 
 // ----------------------------------------------------------------------------------
-bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)  {
+bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     auto t = -r.origin().y / r.direction().y;
     if(t < t_min || t > t_max) 
         return false;
@@ -25,7 +25,7 @@ bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) 
 }
 
 // ----------------------------------------------------------------------------------
-AABB Plane::bounding()  {
+AABB Plane::bounding() const {
     vec3 _min(min[0], -eps, min[1]);
     vec3 _max(max[0],  eps, max[1]);
 
@@ -33,7 +33,7 @@ AABB Plane::bounding()  {
 }
 
 // ----------------------------------------------------------------------------------
-double Plane::pdf_value(const vec3& origin, const vec3& v)  {
+double Plane::pdf_value(const vec3& origin, const vec3& v) const {
     HitRecord rec;
     if(!this->intersect(Ray(origin, v), eps, infinity, rec))
         return 0;
@@ -46,7 +46,7 @@ double Plane::pdf_value(const vec3& origin, const vec3& v)  {
 }
 
 // ----------------------------------------------------------------------------------
-vec3 Plane::random(const vec3& origin)  {
+vec3 Plane::random(const vec3& origin) const {
     auto random_point = vec3(random_double(min[0],max[0]), 0.0f, random_double(min[1], max[1]));
     return random_point - origin;
 }
