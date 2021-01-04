@@ -1,4 +1,5 @@
 #include "Metal.h"
+#include "../core/bsdf.h"
 
 namespace mypt {
 
@@ -10,6 +11,7 @@ bool Metal::scatter(
     srec.attenuation = albedo;
     srec.is_specular = true;
     srec.pdf = 0;
+
     return true;
 }
 

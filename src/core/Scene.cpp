@@ -212,9 +212,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                         iss >> header;
                         if(header == "scale") iss >> scale;
                         iss >> header;
-                        NoiseTexture::Mode noiseType;
-                        if(header == "noise")     noiseType = NoiseTexture::Mode::NOISE;
-                        else if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
+                        NoiseTexture::Mode noiseType { NoiseTexture::Mode::NOISE };
+                        if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
                         texture = std::make_shared<NoiseTexture>(scale, noiseType);
                     }
                     else if(header == "intensity")
@@ -377,9 +376,8 @@ void Scene::createLight(std::ifstream& ifs) {
             iss >> header;
             if(header == "scale") iss >> scale;
             iss >> header;
-            NoiseTexture::Mode noiseType;
-            if(header == "noise")     noiseType = NoiseTexture::Mode::NOISE;
-            else if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
+            NoiseTexture::Mode noiseType { NoiseTexture::Mode::NOISE };
+            if(header == "turb") noiseType = NoiseTexture::Mode::TURB;
             texture = std::make_shared<NoiseTexture>(scale, noiseType);
         }
         else if(header == "intensity")
@@ -436,7 +434,7 @@ void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int
         std::cerr << " ";
     std::cerr << "]";
 
-    std::cerr << " [" << std::fixed << std::setprecision(2) << elapsedTime / CLOCKS_PER_SEC << "s]";
+    std::cerr << " [" << std::fixed << std::setprecision(2) << elapsedTime << "s]";
 
     // Display percentage of process
     float percent = (float)(currentLine+1) / maxLine;
@@ -452,19 +450,29 @@ void Scene::render() {
 
     BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
 
+    struct timespec start_time, end_time;
+    clock_gettime(CLOCK_REALTIME, &start_time);
+
     int progress_len = 20;
-    clock_t start_time = clock();
 
     auto width = image.getWidth();
     auto height = image.getHeight();
 
+    int n_threads = omp_get_max_threads();
 
+    // declare reduction for vec3
     for(int y=0; y<height; y++) {
-        double elapsed_time = static_cast<double>(clock() - start_time);
+        clock_gettime(CLOCK_REALTIME, &end_time);
+        double sec = end_time.tv_sec - start_time.tv_sec;
+        double nsec = (double)(end_time.tv_nsec - start_time.tv_nsec) / 1000000000;
+        double elapsed_time = sec + nsec;
         this->streamProgress(y, height, elapsed_time, progress_len);
 
+        #ifdef _OPENMP
+        #pragma omp parallel for num_threads(n_threads)
+        #endif
         for(int x=0; x<width; x++) {
-            vec3 color(0, 0, 0);
+            vec3 color(0,0,0);
             for(int s=0; s<samples_per_pixel; s++) {
                 auto u = (x + random_double()) / width;
                 auto v = (y + random_double()) / height;
@@ -472,14 +480,7 @@ void Scene::render() {
                 Ray r = camera.get_ray(u, v);
                 color += integrator.trace(r, bvh, lights, background, depth);
             }
-            auto scale = 1.0 / samples_per_pixel;
-            auto r = sqrt(scale * color.x);
-            auto g = sqrt(scale * color.y);
-            auto b = sqrt(scale * color.z);
-            RGBA rgb_color(static_cast<unsigned char>(256 * clamp(r, 0.0, 0.999)),
-                            static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
-                            static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)),
-                            255);
+            RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
             image.set(x, height-(y+1), rgb_color);
         }
     }

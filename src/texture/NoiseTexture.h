@@ -11,8 +11,7 @@ public:
     NoiseTexture() {}
     NoiseTexture(double sc, Mode mode=Mode::NOISE) : scale(sc), mode(mode) {}
 
-    virtual vec3 value(double u, double v, const vec3& p) const {
-        // return vec3(1,1,1) * 0.5 * (1 + sin(scale * p.z + 10 * noise.turb(p)));
+    virtual vec3 value(double /* u */, double /* v */, const vec3& p) const {
         switch(mode) {
         case Mode::NOISE:
             return vec3(1,1,1) * noise.noise(scale * p);

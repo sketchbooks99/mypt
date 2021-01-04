@@ -34,7 +34,7 @@ private:
 // ---------------------------------------------------------------------
 class PrimitivePDF final : public PDF {
 public:
-    PrimitivePDF(std::shared_ptr<Primitive> s, const vec3& origin) : p(p), origin(origin) {}
+    PrimitivePDF(std::shared_ptr<Primitive> p, const vec3& origin) : p(p), origin(origin) {}
     double value(const vec3& direction) const override {
         return p->pdf_value(origin, direction);
     }
@@ -66,6 +66,7 @@ public:
         auto num_lights = static_cast<int>(lights.size());
         return lights[random_int(0, num_lights-1)]->random(origin);
     }
+    void set_origin(vec3 o) { this->origin = o; }
 private:
     std::vector<std::shared_ptr<Primitive>> lights;
     vec3 origin;

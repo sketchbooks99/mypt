@@ -188,20 +188,14 @@ inline vec3 random_cosine_direction() {
     return vec3(x, y, z);
 }
 
-inline vec3 reflect(const vec3& v, const vec3& n) {
-    return v - 2*dot(v,n) * n;
-}
-
-inline bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refracted, bool into) {
-    vec3 uv = normalize(v);
-    float dt = dot(v, n);
-    float discriminant = 1.0 - ni_over_nt*ni_over_nt*(1.0-dt*dt);
-    if(discriminant >= 0) {
-        // refracted = ni_over_nt*(uv-n*dt) - n*sqrt(discriminant);
-        refracted = normalize(v*ni_over_nt - n*(into ? 1.0 : -1.0) * (dt*ni_over_nt + sqrt(discriminant)));
-        return true;
-    }
-    return false;
+inline RGB vec2color(const vec3& c, float scale) {
+    auto r = sqrt(scale * c.x);
+    auto g = sqrt(scale * c.y);
+    auto b = sqrt(scale * c.z);
+    RGB rgb_color(static_cast<unsigned char>(256 * clamp(r, 0.0, 0.999)),
+                    static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
+                    static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)));
+    return rgb_color;
 }
 
 }

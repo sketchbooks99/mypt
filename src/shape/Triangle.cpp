@@ -159,7 +159,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
         }
     }
     if (isSmooth) {
-        for (int i = 0; i < vertices.size(); i++)
+        for (auto i = 0; i < (int)vertices.size(); i++)
         {
             normals[i] /= counts[i];
             normals[i] = normalize(normals[i]);
@@ -169,7 +169,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
 
 // ---------------------------------------------------------------------------
 // ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
-bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool Triangle::intersect(const Ray& r, double /* t_min */, double /* t_max */, HitRecord& rec) const {
     float kEps = 1e-6f;
 
     auto p0 = mesh->vertices[face[0]];

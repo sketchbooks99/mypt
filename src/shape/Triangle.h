@@ -9,9 +9,9 @@ namespace mypt {
 
 struct TriangleMesh {
     TriangleMesh(const std::string &filename, float size, vec3 axis, bool isSmooth);
-    TriangleMesh(const std::vector<vec3> vertices, 
+    /* TriangleMesh(const std::vector<vec3> vertices, 
                  const std::vector<vec3>& normals, 
-                 const std::vector<std::vector<int>> faces) {}
+                 const std::vector<std::vector<int>> faces) {} */
 
     std::vector<vec3> vertices;
     std::vector<vec3> normals;
@@ -48,13 +48,13 @@ public:
         return normalize(cross(p2-p0, p1-p0));
     }
 
-    vec3 get_vertices() const {
-        return face[3];
+    std::vector<vec3> get_vertices() const {
+        return { mesh->vertices[face[0]], mesh->vertices[face[1]], mesh->vertices[face[2]] };
     }
 
 private:
-    int3 face;
     std::shared_ptr<TriangleMesh> mesh;
+    int3 face;
     vec3 min, max; // For AABB
 };
 
