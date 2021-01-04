@@ -12,7 +12,10 @@ This branch is for `InFloasion Extend Project`. The key idea of this branch is t
 - If I finished basic learning of path tracing, I'd like to implement GPU path tracing techniques using OptiX or CUDA.
 - Currently, this doesn't support spectrum rendering, so all color management is performed by RGB representation.
 
-## Compile & Run (Linux & Mac)
+## Compile & Run (Linux only)
+
+Currently, I'm using OpenMP for parallel processing, but compiling OpenMP on macOS is cumbersome in several perspectives, such as preparing environment, PATH, etc...
+So, I strongly recommend to compile on Linux and using gcc compiler. 
 
 - Compile 
 ```
