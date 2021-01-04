@@ -3,7 +3,7 @@ filename result/debug.png
 ref result/ref_small.png
 width 768
 height 768
-spp 512
+spp 2048
 depth 5
 background 0 0 0
 
