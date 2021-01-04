@@ -39,6 +39,10 @@ public:
         z += v.z;
         return *this;
     }
+
+    type3& operator-=(const type3 &v) {
+        return *this += (-v);
+    }
     
     type3& operator*=(const Type t) {
         x *= t;
@@ -184,15 +188,14 @@ inline vec3 random_cosine_direction() {
     return vec3(x, y, z);
 }
 
-inline vec3 reflect(const vec3& v, const vec3& n) {
-    return v - 2*dot(v,n) * n;
-}
-
-inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
-    auto cos_theta = dot(-uv, n);
-    vec3 r_out_parallel = etai_over_etat * (uv + cos_theta * n);
-    vec3 r_out_perp = -sqrt(1.0 - r_out_parallel.length_squared()) * n;
-    return r_out_parallel + r_out_perp;
+inline RGB vec2color(const vec3& c, float scale) {
+    auto r = sqrt(scale * c.x);
+    auto g = sqrt(scale * c.y);
+    auto b = sqrt(scale * c.z);
+    RGB rgb_color(static_cast<unsigned char>(256 * clamp(r, 0.0, 0.999)),
+                    static_cast<unsigned char>(256 * clamp(g, 0.0, 0.999)),
+                    static_cast<unsigned char>(256 * clamp(b, 0.0, 0.999)));
+    return rgb_color;
 }
 
 }

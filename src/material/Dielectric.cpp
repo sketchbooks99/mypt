@@ -1,31 +1,29 @@
 #include "Dielectric.h"
+#include "../core/bsdf.h"
 
 namespace mypt {
 
 bool Dielectric::scatter(
     const Ray& r_in, HitRecord& rec, ScatterRecord& srec
-) const {
+) const  {
     srec.is_specular = true;
-    srec.pdf = nullptr;
+    srec.pdf = 0;
     srec.attenuation = albedo;
-    double refraction_ratio = (rec.front_face) ? (1.0 / ref_idx) : (ref_idx);
+    bool into = dot(r_in.direction(), rec.normal) < 0;
+    float ni_over_nt = into ? 1.0 / ref_idx : ref_idx;
+    auto outward_normal = into ? rec.normal : -rec.normal;
+    
+    float cosine = fmin(dot(-normalize(r_in.direction()), outward_normal), 1.0);
+    float sine = sqrt(1.0 - cosine*cosine);
 
-    vec3 unit_direction = normalize(r_in.direction());
-    double cos_theta = ffmin(dot(-unit_direction, rec.normal), 1.0);
-    double sin_theta = sqrt(1.0 - cos_theta*cos_theta);
-    vec3 direction;
-    // Decide out going direction stochastically with frenel approximation
-    if(refraction_ratio * sin_theta > 1.0) {
-        direction = reflect(unit_direction, rec.normal);
+    bool cannot_refract = ni_over_nt * sine > 1.0;
+
+    float reflect_prob = schlick(cosine, ref_idx);
+    if(cannot_refract || reflect_prob > random_double()) {
+        srec.specular_ray = Ray(rec.p, reflect(r_in.direction(), outward_normal));
     }
-    double reflect_prob = schlick(cos_theta, refraction_ratio);
-    if(random_double() < reflect_prob) {
-        vec3 direction = reflect(unit_direction, rec.normal);
-    } 
-    else {
-        direction = refract(unit_direction, rec.normal, refraction_ratio);
-    }
-    srec.specular_ray = Ray(rec.p, direction, r_in.time());
+    else
+        srec.specular_ray = Ray(rec.p, refract(r_in.direction(), outward_normal, ni_over_nt));
     return true;
 }
 

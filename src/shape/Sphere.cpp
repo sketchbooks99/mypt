@@ -3,7 +3,17 @@
 
 namespace mypt {
 
-// -----------------------------------------------------------------------
+/// \private function -------------------------------------------------
+vec2 Sphere::getUV(const vec3& p) const {
+    vec3 tmp = p / radius;
+    auto phi = atan2(tmp.z, tmp.x);
+    auto theta = asin(tmp.y);
+    auto u = 1.0 - (phi + pi) / (2.0*pi);
+    auto v = (theta + pi/2.0) / pi;
+    return vec2(u, v);
+}
+
+/// \public function --------------------------------------------------
 bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // vector from origin to center
     vec3 oc = r.origin();
@@ -11,39 +21,32 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
     auto half_b = dot(oc, r.direction());
     auto c = oc.length_squared() - radius * radius;
     auto discriminant = half_b * half_b - a * c;
+    if (discriminant < 0) return false;
 
-    if (discriminant >= 0) {
-        auto root = sqrt(discriminant);
-        auto temp = (-half_b - root) / a;
-        if(temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.at(rec.t);
-            vec3 outward_normal = rec.p / radius;
-            rec.set_face_normal(r, outward_normal);
-            auto uv = getUV(rec.p);
-            rec.u = uv.x; rec.v = uv.y;
-            return true;
-        }
-        temp = (-half_b + root) / a;
-        if(temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.at(rec.t);
-            vec3 outward_normal = rec.p / radius;
-            rec.set_face_normal(r, outward_normal);
-            auto uv = getUV(rec.p);
-            rec.u = uv.x; rec.v = uv.y;
-            return true;
-        }
+    auto sqrtd = sqrt(discriminant);
+
+    // Find the nearest root that lies in the acceptable range
+    auto root = (-half_b - sqrtd) / a;
+    if (root < t_min || t_max < root) {
+        root = (-half_b + sqrtd) / a;
+        if (root < t_min || t_max < root)
+            return false;
     }
-    return false;
+
+    rec.t = root;
+    rec.p = r.at(rec.t);
+    vec3 outward_normal = rec.p / radius;
+    rec.normal = outward_normal;
+
+    return true;
 }
 
 // -----------------------------------------------------------------------
 double Sphere::pdf_value(const vec3& o, const vec3& v) const {
     HitRecord rec;
-    if(!this->intersect(Ray(o, v), eps, infinity, rec))
+    if(!this->intersect(Ray(o, v), eps, infinity, rec)) 
         return 0;
-    auto cos_theta_max = sqrt(1 - radius*radius/(o).length_squared());
+    auto cos_theta_max = sqrt(1 - radius*radius/o.length_squared());
     auto solid_angle = 2*pi*(1-cos_theta_max);
 
     return 1 / solid_angle;
@@ -61,7 +64,7 @@ vec3 Sphere::random(const vec3& o) const {
 // -----------------------------------------------------------------------
 AABB Sphere::bounding() const {
     return AABB(
-        vec3(radius, radius, radius),
+        vec3(-radius, -radius, -radius),
         vec3(radius, radius, radius));
 }
 
