@@ -1,5 +1,7 @@
 #include "../core/MathUtil.h"
 
+using namespace mypt;
+
 struct ONB {
     ONB() {}
     vec3 operator[](int i) { return (&u)[i]; }
@@ -35,6 +37,13 @@ void cast_test() {
     std::cout << "f_v4: " << f_v4 / 10 << std::endl;
 }
 
+void val2color_test() {
+    int3 i_v3(511);
+    RGB rgb = static_cast<RGB>(i_v3);
+    std::cout << rgb << std::endl;
+    std::cout << static_cast<int3>(rgb);
+}
+
 void ONB_test(){
     ONB onb;
     onb.build_from_w(vec3(0,1,0));
@@ -42,9 +51,21 @@ void ONB_test(){
         std::cout << onb[i] << std::endl;
 }
 
+void div_test(int num_iter = 10000) {
+    for(int i=0; i<num_iter; i++) {
+        auto rnd_vec = random_in_unit_sphere();
+        // std::cout << rnd_vec << ", " << rnd_vec / 1.0 << std::endl;
+        auto normal = rnd_vec / 1.0;
+        if ((rnd_vec - normal).length() != 0) std::cout << "fxxk!" << std::endl;
+    }
+    return;
+}
+
 int main() {
-    cast_test();
+    // cast_test();
     std::cout << "ONB test" << std::endl;
-    ONB_test();
+    // ONB_test();
+    // div_test(10000);
+    val2color_test();
     return 0;
 }

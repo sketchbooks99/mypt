@@ -36,7 +36,8 @@ Ray Camera::get_ray(double s, double t) {
     return Ray(
         origin + offset, 
         lower_left_corner + s * horizontal + t*vertical - origin - offset,
-        random_double(time0, time1)
+        random_double(time0, time1), 
+        RGBA(0, 0, 0, 0)
     );
 }
 

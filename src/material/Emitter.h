@@ -15,8 +15,8 @@ public:
     Emitter(vec3 a, float intensity=1.0f)
      : albedo(std::make_shared<ConstantTexture>(a)), intensity(intensity) {};
 
-    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
-    vec3 emitted(const Ray& r_in, const HitRecord& rec, double u, double v, const vec3& p) const override;
+    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
+    vec3 emitted(const Ray& r_in, const HitRecord& rec) override;
     
 private:
     std::shared_ptr<Texture> albedo;

@@ -1,0 +1,40 @@
+# Basic configuration
+filename result/debug.png
+ref result/ref.png
+width 768
+height 768
+spp 1
+depth 5
+background 0 0 0
+
+# Camera 
+beginCamera 
+origin 0 0 100
+lookat 0 0 0
+up 0 1 0
+focus_length 10.0
+aperture 0.0
+vfov 40
+endCamera
+
+# MMAPs 
+beginPrimitive 
+shape plane min -25 -25 max 25 25
+rotate_x 45
+material mmaps color 1 1 1
+endPrimitive
+
+# Transparent object
+beginPrimitive
+shape sphere radius 2.5
+translate 0 0 40
+material dielectric color 1 1 1 ior 1.49 
+endPrimitive
+
+# light source 
+beginLight
+shape plane min -15 -15 max 15 15 
+translate 0 -40 0
+image result/inv_result.png
+intensity 1
+endLight

@@ -4,8 +4,8 @@
 namespace mypt {
 
 bool NormalMat::scatter(
-    const Ray& r_in, HitRecord& rec, ScatterRecord& srec
-) const {
+    const Ray& /* r_in */, HitRecord& rec, ScatterRecord& srec
+) {
     srec.is_specular = false;
     srec.attenuation = normalize(rec.normal);
     srec.pdf = std::make_shared<CosinePDF>(rec.normal);
@@ -14,8 +14,8 @@ bool NormalMat::scatter(
 }
 
 double NormalMat::scattering_pdf(
-    const Ray& r_in, const HitRecord& rec, const Ray& scattered
-) const {
+    const Ray& /* r_in */, const HitRecord& rec, const Ray& scattered
+) {
     auto cosine = dot(rec.normal, normalize(scattered.direction()));
     return cosine < 0 ? 0 : cosine / pi;
 }

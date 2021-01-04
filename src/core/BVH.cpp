@@ -38,7 +38,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
             AABB s1box, s2box;
             // vector to store surface areas.
             std::vector<double> s1SA(primitive_span), s2SA(primitive_span);
-            // Store surface area of left side at every case
+            // Store surface area of left side at every cases
             for(int i=1; i<primitive_span; i++) {
                 s1box = surrounding(s1box, p[i+start]->bounding());
                 s1SA[i] = s1box.surface_area();
@@ -69,7 +69,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     box = surrounding(box_left, box_right);
 }
 
-bool BVH::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     if(!box.intersect(r, t_min, t_max))
         return false;
     

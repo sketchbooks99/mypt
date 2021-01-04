@@ -20,6 +20,7 @@ set(pbrenderer_src
     src/core/Transform.cpp
     src/core/Primitive.cpp
     src/core/Scene.cpp
+    src/core/bsdf.cpp
 
     src/render/Camera.cpp 
     src/render/Integrator.cpp
@@ -29,7 +30,8 @@ set(pbrenderer_src
     src/material/Lambertian.cpp 
     src/material/Metal.cpp
     src/material/NormalMat.cpp
-    # src/material/MMAPs.cpp
+    src/material/MMAPs.cpp
+    src/material/Absorber.cpp
 
     # src/shape/MovingSphere.cpp 
     src/shape/Plane.cpp
@@ -39,6 +41,6 @@ set(pbrenderer_src
     src/texture/ImageTexture.cpp
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fopenmp -Wall -Wextra -Ofast")
 
 add_executable(mypt ${pbrenderer_src})

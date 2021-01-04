@@ -48,7 +48,7 @@ template <typename PixelType>
 void Image<PixelType>::load(const std::string& filename)
 {   
     nChannels = static_cast<int>(sizeof(PixelType));
-    data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
+    data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, 0));
     ASSERT(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
 }
 template void Image<GRAY>::load(const std::string&);

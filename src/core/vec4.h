@@ -4,6 +4,7 @@
 #include <cmath>
 
 #include "Util.h"
+#include "vec3.h"
 
 namespace mypt {
 
@@ -13,6 +14,7 @@ public:
     type4() : x(0), y(0), z(0), w(0) {}
     type4(Type e0, Type e1, Type e2, Type e3) : x(e0), y(e1), z(e2), w(e3) {}
     type4(Type c) : x(c), y(c), z(c), w(c) {}
+    type4(type3<Type> v, Type w) : x(v.x), y(v.y), z(v.z), w(w) {}
 
     template <typename OtherType>
     operator type4<OtherType>() { return type4<OtherType>(x, y, z, w); }

@@ -2,17 +2,18 @@
 filename result/debug.png
 width 768
 height 768
-spp 8
+spp 1
 depth 5
-background 0.5 0.5 0.5
+background 0 0 0
 
 # Camera 
 beginCamera 
-origin 0 0 -70
+origin 0 0 39
 lookat 0 0 0
 up 0 1 0
-focus_length 15.0
+focus_length 10.0
 aperture 0.0
+vfov 40
 endCamera
 
 # Top
@@ -34,7 +35,7 @@ beginPrimitive
 shape plane min -10 -10 max 10 10
 translate 10 0 0 
 rotate_z 90
-material lambertian color 0.8 0.05 0.05
+material lambertian color 0.05 0.8 0.05
 endPrimitive
 
 # Left
@@ -42,39 +43,38 @@ beginPrimitive
 shape plane min -10 -10 max 10 10
 translate -10 0 0
 rotate_z 90
-material lambertian color 0.05 0.8 0.05
+material lambertian color 0.8 0.05 0.05
 endPrimitive
 
 # Back
 beginPrimitive 
 shape plane min -10 -10 max 10 10
-translate 0 0 10
+translate 0 0 -10
 rotate_x 90
 material lambertian color 0.8 0.8 0.8
 endPrimitive
 
+beginPrimitive
+shape sphere radius 4
+translate -5 -5 0
+material metal color 1 1 1
+endPrimitive
+
+beginPrimitive
+shape sphere radius 4
+translate 5 -6 3
+material dielectric color 1 1 1 ior 1.5
+endPrimitive
+
 beginLight
-shape plane min -5 -5 max 5 5
+shape plane min -2.5 -2.5 max 2.5 2.5
 translate 0 9.9 0
 color 0.9 0.7 0.3
-intensity 10
+intensity 30
 endLight
 
-# beginPrimitive
-# shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
-# rotate_y 180
-# material lambertian color 0.8 0.8 0.8
-# endPrimitive
-
-beginPrimitive
-shape sphere 3
-translate -5 -6 5
-material lambertian color 0.8 0.8 0.8
-endPrimitive
-
-beginPrimitive
-shape sphere 4
-translate 5 -5 5
-material dielectric color 0.8 0.8 0.8 ior 1.5
-endPrimitive
-
+#beginPrimitive
+#shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
+#rotate_y 180
+#material lambertian color 0.8 0.8 0.8
+#endPrimitive

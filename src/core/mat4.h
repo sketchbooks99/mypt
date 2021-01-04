@@ -15,7 +15,7 @@ public:
          double e30, double e31, double e32, double e33);
 
     // Multiply matrix(4x4) with vector
-    static vec3 vector_mul(const mat4& m, const vec3& v) {
+    inline static vec3 vector_mul(const mat4& m, const vec3& v) {
         double x = v.x, y = v.y, z = v.z;
         return vec3(m.mat[0][0]*x + m.mat[0][1]*y + m.mat[0][2]*z,
                     m.mat[1][0]*x + m.mat[1][1]*y + m.mat[1][2]*z,
@@ -23,7 +23,7 @@ public:
     }
 
     // Multiply matrix(4x4) with positional vector
-    static vec3 point_mul(const mat4& m, const vec3& p) {
+    inline static vec3 point_mul(const mat4& m, const vec3& p) {
         double x = m.mat[0][0]*p.x + m.mat[0][1]*p.y + m.mat[0][2]*p.z + m.mat[0][3];
         double y = m.mat[1][0]*p.x + m.mat[1][1]*p.y + m.mat[1][2]*p.z + m.mat[1][3];
         double z = m.mat[2][0]*p.x + m.mat[2][1]*p.y + m.mat[2][2]*p.z + m.mat[2][3];
@@ -37,7 +37,7 @@ public:
     }
 
     // Multiply matrix(4x4) with normal vector
-    static vec3 normal_mul(const mat4& m, const vec3& n) {
+    inline static vec3 normal_mul(const mat4& m, const vec3& n) {
         double x = n.x, y = n.y, z = n.z;
         return vec3(m.mat[0][0]*x + m.mat[1][0]*y + m.mat[2][0]*z,
                     m.mat[0][1]*x + m.mat[1][1]*y + m.mat[2][1]*z,

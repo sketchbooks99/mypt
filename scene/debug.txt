@@ -2,7 +2,7 @@
 filename result/debug.png
 width 768
 height 768
-spp 8
+spp 1
 depth 5
 background 0.5 0.5 0.5
 

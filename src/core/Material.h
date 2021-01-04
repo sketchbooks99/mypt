@@ -23,29 +23,38 @@ struct HitRecord {
 };
 
 struct ScatterRecord {
-    Ray specular_ray;
+    Ray scattered;
     bool is_specular;
     vec3 attenuation;
     std::shared_ptr<PDF> pdf;
 };
 
 // Abstract class 
+
+/**
+ * NOTE:
+ *  Disable const function to modify member variables in functions.
+ *  This is especially for `Absorber`.
+ */
+
 class Material {
 public:
-    virtual vec3 emitted(const Ray& r_in, const HitRecord& rec, double u, double v, const vec3& p) const {
+    virtual vec3 emitted(
+        const Ray& /* r_in */, const HitRecord& /* rec */
+    ) {
         return vec3(0, 0, 0);
     }
 
     virtual bool scatter (
-        const Ray& r_in, HitRecord& rec, ScatterRecord& srec
-    ) const {
+        const Ray& /* r_in */, HitRecord& /* rec */, ScatterRecord& /* srec */
+    ) {
         return false;
     }
 
     // Probability distribution function
     virtual double scattering_pdf (
-        const Ray& r_in, const HitRecord& rec, const Ray& scattered
-    ) const {
+        const Ray& /* r_in */, const HitRecord& /* rec */, const Ray& /* scattered */
+    ) {
         return 0;
     }
 };

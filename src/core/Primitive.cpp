@@ -13,7 +13,7 @@
 namespace mypt {
 
 // ShapePrimitive ----------------------------------------------------------------------
-bool ShapePrimitive::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     Ray tr_ray = *transform * r;
     if(!shape->intersect(tr_ray, t_min, t_max, rec))
         return false;
@@ -24,7 +24,8 @@ bool ShapePrimitive::intersect(Ray& r, double t_min, double t_max, HitRecord& re
     normal = normalize(mat4::normal_mul(transform->getInvMatrix(), rec.normal));
 
     rec.p = p;
-    rec.set_face_normal(r, normal);
+    // rec.set_face_normal(r, normal);
+    rec.normal = normal;
     rec.mat_ptr = material;
 
     return true;
@@ -60,12 +61,11 @@ double ShapePrimitive::pdf_value(const vec3& o, const vec3& v) const {
 }
 
 vec3 ShapePrimitive::random(const vec3& o) const {
-    vec3 origin = mat4::point_mul(transform->getInvMatrix(), o);
-    return mat4::point_mul(transform->getMatrix(), shape->random(origin));
+    return mat4::point_mul(transform->getMatrix(), shape->random(o));
 }
 
 // ConstantMedium ----------------------------------------------------------------------
-bool ConstantMedium::intersect(Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ConstantMedium::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // Print occasional samples when debugging. To enable, set enableDebug true.
     const bool enableDebug = false;
     const bool debugging = enableDebug && random_double() < 1e-4f;
