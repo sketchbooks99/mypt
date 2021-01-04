@@ -10,10 +10,10 @@ class MovingSphere final : public Shape {
         MovingSphere(
             vec3 cen0, vec3 cen1, double t0, double t1, double r)
             : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r)
-        {};
+        {}
 
-        bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const;
-        AABB bounding() const;
+        bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) override;
+        AABB bounding() override;
 
         vec3 center(double time) const;
 
