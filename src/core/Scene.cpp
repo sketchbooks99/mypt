@@ -53,9 +53,11 @@ Scene::Scene(const std::string& filename) {
         if(header == "#" || header[0] == '#') continue;
 
         if(header == "filename")
-            iss >> image_name;
+            iss >> image.first;
         else if(header == "ref")
             iss >> refpath;
+        else if (header == "inv")
+            iss >> absorbed_image.first;
         else if(header == "spp" || header == "samples_per_pixel")
             iss >> samples_per_pixel;
         else if(header == "depth")
@@ -95,7 +97,7 @@ Scene::Scene(const std::string& filename) {
     integrator = Integrator();
     // Create out image with same dimensions of refimage.
     refimage.load(refpath);
-    image.build(refimage.getWidth(), refimage.getHeight());
+    image.second.build(refimage.getWidth(), refimage.getHeight());
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -263,8 +265,8 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 if(header == "width") iss >> w;
                 else if(header == "height") iss >> h;
             }
-            absorbed_image = std::make_shared<Image<RGBA>>(w, h);
-            material = std::make_shared<Absorber<RGBA>>(absorbed_image);
+            absorbed_image.second = std::make_shared<Image<RGBA>>(w, h);
+            material = std::make_shared<Absorber<RGBA>>(absorbed_image.second);
         }
     }
     return material;
@@ -457,8 +459,8 @@ void Scene::render() {
 
     int progress_len = 20;
 
-    auto width = image.getWidth();
-    auto height = image.getHeight();
+    auto width = image.second.getWidth();
+    auto height = image.second.getHeight();
 
     int n_threads = omp_get_max_threads();
 
@@ -477,26 +479,28 @@ void Scene::render() {
         #endif
         for(int x=0; x<width; x++) {
             vec3 color(0,0,0);
+            auto pixel_color = refimage.get(x, y);
+            // Skip tracing scene when pixel_color had no colors or was completely black.
+            if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
             for(int s=0; s<samples_per_pixel; s++) {
                 auto u = (x + random_double()) / width;
                 auto v = (y + random_double()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                r.set_color(refimage.get(x, y));
+                r.set_color(pixel_color);
                 color += integrator.trace(r, bvh, lights, background, depth);
             }
             RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
-            image.set(x, height-(y+1), rgb_color);
+            image.second.set(x, height-(y+1), rgb_color);
         }
     }
 
-    std::string file_format = split(image_name, '.').back();
-    image.write(image_name, file_format);
+    std::string file_format = split(image.first, '.').back();
+    image.second.write(image.first, file_format);
 
-    std::string inv_filepath = "result/inv_result.png";
-    if(absorbed_image->getData()) {
+    if(absorbed_image.second->getData()) {
         std::cout << "Write absorbed result" << std::endl;
-        absorbed_image->write(inv_filepath, split(inv_filepath, '.').back());
+        absorbed_image.second->write(absorbed_image.first, split(absorbed_image.first, '.').back());
     }
     std::cerr << "\nDone\n";
 }

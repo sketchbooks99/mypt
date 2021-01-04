@@ -1,6 +1,7 @@
 # Basic configuration
 filename result/debug.png
 ref result/ref_small.png
+inv result/inv_result2.png
 width 768
 height 768
 spp 2048

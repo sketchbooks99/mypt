@@ -29,12 +29,11 @@ private:
     std::vector<std::shared_ptr<Primitive>> lights;
     Camera camera;
     Integrator integrator;
-    Image<RGBA> image;
+    std::pair<std::string, Image<RGBA>> image;
     Image<RGBA> refimage;
-    std::shared_ptr<Image<RGBA>> absorbed_image;
+    std::pair<std::string, std::shared_ptr<Image<RGBA>>> absorbed_image;
     int samples_per_pixel, depth;
     vec3 background;
-    std::string image_name;
     TransformSystem ts;
 };
 
