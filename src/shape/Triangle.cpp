@@ -122,6 +122,11 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
     for (auto& vertex : vertices) {
         vertex = (vertex - center) * size;
     }
+    
+    // Print the size range of object w.r.t each axes
+    for(int i=0; i<3; i++){
+        std::cout << "axis: " << i << ", " << (max[i] - min[i]) * size << std::endl;
+    }
 
     // Mesh smoothing
     normals.resize(vertices.size());
