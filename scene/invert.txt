@@ -36,5 +36,6 @@ endPrimitive
 beginPrimitive 
 shape plane min -1.5 -1.5 max 1.5 1.5 
 translate 0 -40 0
+rotate_y 180
 material absorber color 0 0 0 width 512 height 512
 endPrimitive
