@@ -120,7 +120,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
     }
 
     for (auto& vertex : vertices) {
-        vertex = (vertex - center) * size;
+        vertex = vertex * size;
     }
 
     // Mesh smoothing

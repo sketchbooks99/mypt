@@ -35,6 +35,7 @@ private:
     int samples_per_pixel, depth;
     vec3 background;
     TransformSystem ts;
+    bool is_invert;
 };
 
 }
