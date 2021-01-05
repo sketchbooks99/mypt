@@ -22,8 +22,6 @@
 #include "../texture/CheckerTexture.h"
 #include "../texture/NoiseTexture.h"
 
-#define INVERT 1
-
 namespace mypt {
 
 // -----------------------------------------------------------------------------------------
@@ -34,10 +32,9 @@ Scene::Scene(const std::string& filename) {
     int image_width = 512, image_height = 512;
     depth = 5;
     samples_per_pixel = 1;
+    is_invert = false;
 
-    #if INVERT
     std::string refpath = "result/ref.png";
-    #endif
 
     while(!ifs.eof()) {
         std::string line;
@@ -54,8 +51,10 @@ Scene::Scene(const std::string& filename) {
 
         if(header == "filename")
             iss >> image.first;
-        else if(header == "ref")
+        else if(header == "ref") {
+            is_invert = true;
             iss >> refpath;
+        }
         else if (header == "inv")
             iss >> absorbed_image.first;
         else if(header == "spp" || header == "samples_per_pixel")
@@ -96,8 +95,12 @@ Scene::Scene(const std::string& filename) {
     }
     integrator = Integrator();
     // Create out image with same dimensions of refimage.
-    refimage.load(refpath);
-    image.second.build(refimage.getWidth(), refimage.getHeight());
+    if(is_invert) {
+        refimage.load(refpath);
+        image.second.build(refimage.getWidth(), refimage.getHeight());
+    } else {
+        image.second.build(image_width, image_height);
+    }
 }
 
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
@@ -479,9 +482,13 @@ void Scene::render() {
         #endif
         for(int x=0; x<width; x++) {
             vec3 color(0,0,0);
-            auto pixel_color = refimage.get(x, y);
-            // Skip tracing scene when pixel_color had no colors or was completely black.
-            if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
+            RGBA pixel_color;
+            if(is_invert) {
+                pixel_color = refimage.get(x, y);
+                // Skip tracing scene when pixel_color had no colors or was completely black.
+                if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
+            }
+                
             for(int s=0; s<samples_per_pixel; s++) {
                 auto u = (x + random_double()) / width;
                 auto v = (y + random_double()) / height;
@@ -498,8 +505,8 @@ void Scene::render() {
     std::string file_format = split(image.first, '.').back();
     image.second.write(image.first, file_format);
 
-    if(absorbed_image.second->getData()) {
-        std::cout << "Write absorbed result" << std::endl;
+    if(is_invert) {
+        std::cout << "\nWrite absorbed result" << std::endl;
         absorbed_image.second->write(absorbed_image.first, split(absorbed_image.first, '.').back());
     }
     std::cerr << "\nDone\n";
