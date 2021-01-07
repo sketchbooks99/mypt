@@ -5,10 +5,11 @@
 namespace mypt {
 
 bool Lambertian::scatter(
-    const Ray& /* r_in */, HitRecord& rec, ScatterRecord& srec
+    const Ray& r_in, HitRecord& rec, ScatterRecord& srec
 ) {
     srec.is_specular = false;
     srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
+    rec.set_face_normal(r_in, rec.normal);
     srec.pdf = std::make_shared<CosinePDF>(rec.normal);
     rec.p += rec.normal * eps;
     return true;

@@ -21,10 +21,12 @@ bool Dielectric::scatter(
     bool cannot_refract = ni_over_nt * sine > 1.0;
 
     float reflect_prob = schlick(cosine, ref_idx);
-    if(cannot_refract || reflect_prob > random_double()) 
+    if(cannot_refract || reflect_prob > random_double()) {
         srec.scattered = Ray(rec.p, reflect(r_in.direction(), outward_normal), r_in.time(), r_in.color());
-    else
+    }
+    else {
         srec.scattered = Ray(rec.p, refract(r_in.direction(), outward_normal, ni_over_nt), r_in.time(), r_in.color());
+    }
     return true;
 }
 

@@ -29,10 +29,20 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                 z *= axis.z;
                 vertices.emplace_back(x, y, z);
             }
+            else if (header == "vn")
+            {
+                float x, y, z;
+                iss >> x >> y >> z;
+                x *= axis.x;
+                y *= axis.y;
+                z *= axis.z;
+                normals.emplace_back(x, y, z);
+            }
             else if (header == "f")
             {
                 // temporal vector to store face information
                 std::vector<int> temp_vert_faces;
+                std::vector<int> temp_norm_faces;
 
                 // Future work -----------------------------------
                 /*std::vector<int> temp_tex_faces;
@@ -45,14 +55,14 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                     {
                         // Input - index(vertex)/index(texture)/index(normal)
                         temp_vert_faces.emplace_back(vert_idx - 1);
-                        /*temp_tex_faces.emplace_back(tex_idx - 1);
-                        temp_norm_faces.emplace_back(norm_idx - 1);*/
+                        // temp_tex_faces.emplace_back(tex_idx - 1);
+                        temp_norm_faces.emplace_back(norm_idx - 1);
                     }
                     else if (sscanf(buffer.c_str(), "%d//%d", &vert_idx, &norm_idx) == 2)
                     {
                         // Input - index(vertex)//index(normal)
                         temp_vert_faces.emplace_back(vert_idx - 1);
-                        //temp_norm_faces.emplace_back(norm_idx - 1);
+                        temp_norm_faces.emplace_back(norm_idx - 1);
                     }
                     else if (sscanf(buffer.c_str(), "%d/%d", &vert_idx, &tex_idx) == 2)
                     {
@@ -77,6 +87,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                     face[1] = temp_vert_faces[1];
                     face[2] = temp_vert_faces[2];
                     faces.emplace_back(face);
+                    std::cout << face << std::endl;
                 }
                 // Get more then 4 inputs.
                 // NOTE: 
@@ -104,19 +115,6 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
             }
         }
         ifs.close();
-    }
-
-    // Transformation
-    vec3 center;
-    auto min = vertices.front(), max = vertices.front();
-    for (auto& vertex : vertices)
-    {
-        center += vertex / vertices.size();
-        for (int i = 0; i < 3; i++)
-        {
-            if (vertex[i] < min[i]) min[i] = vertex[i];
-            if (vertex[i] > max[i]) max[i] = vertex[i];
-        }
     }
 
     for (auto& vertex : vertices) {

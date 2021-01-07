@@ -61,9 +61,7 @@ color 0.9 0.7 0.3
 intensity 30
 endLight
 
-
 beginPrimitive
-shape mesh filename data/model/bunny.obj axis 1 1 1 size 70 smooth 
-translate 0 -5 40
+shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth 
 material lambertian color 0.8 0.8 0.8
 endPrimitive

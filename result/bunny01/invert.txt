@@ -1,11 +1,8 @@
 # Basic configuration
 filename result/debug.png
-ref result/teapot01/ref.png
+ref result/bunny01/ref.png
 
-
-
-
-inv result/teapot01/invert.png
+inv result/bunny01/invert.png
 width 768
 height 768
 spp 512
@@ -30,16 +27,21 @@ material mmaps color 1 1 1
 endPrimitive
 
 # Transparent object
-beginPrimitive
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth
-translate 0 -1 20
-material dielectric color 1 1 1 ior 1.49 
+#beginPrimitive
+#shape sphere radius 2.5
+#translate 0 0 40
+#material dielectric color 1 1 1 ior 1.49 
+#endPrimitive
+
+beginPrimitive 
+shape mesh filename data/model/bunny.obj axis 1 1 1 size 70 smooth 
+translate 0 -5 40
+material dielectric color 1 1 1 ior 1.49
 endPrimitive
 
 # Psuedo light source
 beginPrimitive 
 shape plane min -1.5 -1.5 max 1.5 1.5 
-translate 0 -20 0
-rotate_x 180
+translate 0 -40 0
 material absorber color 0 0 0 width 512 height 512
 endPrimitive

@@ -1,4 +1,4 @@
-filename result/teapot01/ref.png
+filename result/sphere02/ref.png
 height 768
 spp 128
 depth 5
@@ -14,7 +14,7 @@ vfov 10
 endCamera
 
 beginLight
-shape plane min -0.5 -0.5 max 0.5 0.5
+shape plane min -1 -1 max 1 1
 translate 0 0 20
 rotate_x -90
 image data/image/uv_brightness1.0.jpg 
