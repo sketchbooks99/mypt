@@ -20,11 +20,11 @@ bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitReco
     
     auto p = rec.p;
     auto normal = rec.normal;
+
     p = mat4::point_mul(transform->getMatrix(), rec.p);
-    normal = normalize(mat4::normal_mul(transform->getInvMatrix(), rec.normal));
+    normal = normalize(mat4::vector_mul(transform->getMatrix(), rec.normal));
 
     rec.p = p;
-    // rec.set_face_normal(r, normal);
     rec.normal = normal;
     rec.mat_ptr = material;
 

@@ -2,13 +2,13 @@
 filename result/debug.png
 width 768
 height 768
-spp 1
+spp 16
 depth 5
 background 0 0 0
 
 # Camera 
 beginCamera 
-origin 0 0 100
+origin 0 0 120
 lookat 0 0 0
 up 0 1 0
 focus_length 10.0
@@ -62,6 +62,7 @@ intensity 30
 endLight
 
 beginPrimitive
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth 
+shape mesh filename data/model/cube.obj axis 1 1 1 size 12.5
+rotate_y 15.8
 material lambertian color 0.8 0.8 0.8
 endPrimitive

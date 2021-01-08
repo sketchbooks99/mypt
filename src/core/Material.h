@@ -37,8 +37,51 @@ struct ScatterRecord {
  *  This is especially for `Absorber`.
  */
 
+enum MatType {
+    LAMBERTIAN,
+    DIELECTRIC,
+    METAL,
+    EMITTER,
+    MMAPS,
+    ABSORBER,
+    ISOTROPIC,
+    NORMAL
+};
+
+inline std::ostream& operator<<(std::ostream& out, const MatType &mt) {
+    switch(mt) {
+    case MatType::LAMBERTIAN:
+        return out << "LAMBERTIAN" << std::endl;
+        break;
+    case MatType::DIELECTRIC:
+        return out << "DIELECTRIC" << std::endl;
+        break;
+    case MatType::METAL:
+        return out << "METAL" << std::endl;
+        break;
+    case MatType::EMITTER:
+        return out << "EMITTER" << std::endl;
+        break;
+    case MatType::MMAPS:
+        return out << "MMAPS" << std::endl;
+        break;
+    case MatType::ABSORBER:
+        return out << "ABSORBER" << std::endl;
+        break;
+    case MatType::ISOTROPIC:
+        return out << "ISOTROPIC" << std::endl;
+        break;
+    case MatType::NORMAL:
+        return out << "NORMAL" << std::endl;
+        break;
+    default:
+        break;
+    }
+}
+
 class Material {
 public:
+    Material(MatType mattype=MatType::LAMBERTIAN) : mattype(mattype) {}
     virtual vec3 emitted(
         const Ray& /* r_in */, const HitRecord& /* rec */
     ) {
@@ -57,6 +100,11 @@ public:
     ) {
         return 0;
     }
+
+    MatType get_type() const { return mattype; }
+
+private:
+    MatType mattype;
 };
 
 }

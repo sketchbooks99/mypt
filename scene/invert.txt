@@ -1,10 +1,6 @@
 # Basic configuration
 filename result/debug.png
 ref result/teapot01/ref.png
-
-
-
-
 inv result/teapot01/invert.png
 width 768
 height 768
@@ -31,8 +27,9 @@ endPrimitive
 
 # Transparent object
 beginPrimitive
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth
-translate 0 -1 20
+shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
+translate 0 0 15
+rotate_y 15.8
 material dielectric color 1 1 1 ior 1.49 
 endPrimitive
 

@@ -6,6 +6,7 @@
 #include "../shape/Plane.h"
 #include "../shape/Sphere.h"
 #include "../shape/Triangle.h"
+#include "../shape/ShapeGroup.h"
 
 #include "../material/Lambertian.h"
 #include "../material/Metal.h"
@@ -162,7 +163,10 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
                     iss >> radius;
             }
             shapes.emplace_back(createSphereShape(radius));   
-        } 
+        }
+        else if(type == "group") {
+            auto group = std::make_shared<ShapeGroup>();
+        }
         else if(type == "mesh") {
             std::string filename;
             vec3 axis = vec3(1,1,1);
