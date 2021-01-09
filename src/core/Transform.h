@@ -25,7 +25,6 @@ public:
     static Transform scale(vec3 s);
 
     mat4 mat, matInv;
-
 };
 
 inline Transform operator*(Transform t1, Transform t2) {
