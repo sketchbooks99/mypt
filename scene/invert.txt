@@ -1,7 +1,9 @@
 # Basic configuration
 filename result/debug.png
-ref result/teapot01/ref.png
-inv result/teapot01/invert.png
+ref result/cube02/ref.png
+
+
+inv result/cube02/invert.png
 width 768
 height 768
 spp 512
@@ -35,8 +37,8 @@ endPrimitive
 
 # Psuedo light source
 beginPrimitive 
-shape plane min -1.5 -1.5 max 1.5 1.5 
-translate 0 -20 0
+shape plane min -2.5 -2.5 max 2.5 2.5 
+translate 0 -15 0
 rotate_x 180
 material absorber color 0 0 0 width 512 height 512
 endPrimitive

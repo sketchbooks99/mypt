@@ -1,5 +1,5 @@
 # Basic configuration
-filename result/teapot01/debug.png
+filename result/cube02/debug.png
 width 768
 height 768
 spp 8
@@ -71,15 +71,15 @@ endPrimitive
 
 # Transparent object
 beginPrimitive 
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth 
-translate 0 -1 20
+shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
+translate 0 0 15
 material dielectric color 1 1 1 ior 1.49
 endPrimitive
 
 # light source 
 beginLight
-shape plane min -1.5 -1.5 max 1.5 1.5 
-translate 0 -40 0
-image result/bunny01/invert.png
+shape plane min -2.5 -2.5 max 2.5 2.5 
+translate 0 -15 0
+image result/cube02/invert.png
 intensity 1
 endLight
