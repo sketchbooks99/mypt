@@ -27,4 +27,8 @@ vec3 refract(const vec3& v, const vec3& n, double ni_over_nt) {
     return r_out_perp + r_out_parallel;
 }
 
+vec3 retro_transmit(const vec3& v, const vec3& n) {
+    return - v + 2*dot(v, n) * n;
+}
+
 }
