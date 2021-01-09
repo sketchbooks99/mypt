@@ -1,9 +1,10 @@
 # Basic configuration
 filename result/debug.png
-ref result/cube02/ref.png
+ref result/cube03/ref.png
 
 
-inv result/cube02/invert.png
+
+inv result/cube03/invert.png
 width 768
 height 768
 spp 512

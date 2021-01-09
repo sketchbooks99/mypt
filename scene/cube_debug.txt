@@ -1,19 +1,17 @@
-# Basic configuration
-filename result/cube02/debug.png
-width 768
-height 768
-spp 32
+filename result/cube_debug.png
+width 512 
+height 512
+spp 1 
 depth 5
-background 0 0 0
+background 1 1 1
 
-# Camera 
-beginCamera 
+beginCamera
 origin 0 0 100
 lookat 0 0 0
-up 0 1 0
-focus_length 10.0
+up 0 1 0 
+focus_length 10.0 
 aperture 0.0
-vfov 10
+vfov 15
 endCamera
 
 # Top
@@ -54,33 +52,15 @@ rotate_x 90
 material lambertian color 0.8 0.8 0.8
 endPrimitive
 
-# Ceiling light 
-beginLight 
+beginLight
 shape plane min -12.5 -12.5 max 12.5 12.5
 translate 0 49.9 0
 color 0.9 0.7 0.3
-intensity 10
+intensity 30
 endLight
 
-# MMAPs 
-beginPrimitive 
-shape plane min -25 -25 max 25 25
-rotate_x 45
-material mmaps color 1 1 1
-endPrimitive
-
-# Transparent object
-beginPrimitive 
-shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
-translate 0 0 15
+beginPrimitive
+shape mesh filename data/model/cube.obj size 2.5 axis 1 1 1
 rotate_y 15.8
 material dielectric color 1 1 1 ior 1.49
 endPrimitive
-
-# light source 
-beginLight
-shape plane min -1.5 -1.5 max 1.5 1.5 
-translate 0 -15 0
-image data/image/grid.jpg
-intensity 1
-endLight
