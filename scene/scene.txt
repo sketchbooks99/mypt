@@ -2,7 +2,7 @@
 filename result/debug.png
 width 768
 height 768
-spp 16
+spp 256
 depth 5
 background 0 0 0
 
@@ -62,7 +62,8 @@ intensity 30
 endLight
 
 beginPrimitive
-shape mesh filename data/model/cube.obj axis 1 1 1 size 12.5
-rotate_y 15.8
-material lambertian color 0.8 0.8 0.8
+shape mesh filename data/model/teapot_normal_merged.obj size 5 axis 1 1 1
+translate 0 -5 0
+#rotate_y 15.8
+material dielectric color 1 1 1 ior 1.52
 endPrimitive

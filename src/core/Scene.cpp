@@ -6,7 +6,6 @@
 #include "../shape/Plane.h"
 #include "../shape/Sphere.h"
 #include "../shape/Triangle.h"
-#include "../shape/ShapeGroup.h"
 
 #include "../material/Lambertian.h"
 #include "../material/Metal.h"
@@ -56,6 +55,10 @@ Scene::Scene(const std::string& filename) {
             is_invert = true;
             iss >> refpath;
         }
+        else if (header == "width")
+            iss >> image_width;
+        else if (header == "height")
+            iss >> image_height;
         else if (header == "inv")
             iss >> absorbed_image.first;
         else if(header == "spp" || header == "samples_per_pixel")
@@ -104,6 +107,7 @@ Scene::Scene(const std::string& filename) {
     }
 }
 
+// -----------------------------------------------------------------------------------------
 void Scene::createCamera(std::ifstream& ifs, double aspect) {
     // Default configuration of camera.
     vec3 origin(0, 0, 100);
@@ -163,9 +167,6 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
                     iss >> radius;
             }
             shapes.emplace_back(createSphereShape(radius));   
-        }
-        else if(type == "group") {
-            auto group = std::make_shared<ShapeGroup>();
         }
         else if(type == "mesh") {
             std::string filename;
@@ -251,7 +252,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
         }
         else if(type == "dielectric") {
             vec3 color(1.0);
-            double ior = 1.52;
+            float ior = 1.52f;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "color")
@@ -435,6 +436,7 @@ void Scene::createLight(std::ifstream& ifs) {
     ts.popMatrix();
 }
 
+// -----------------------------------------------------------------------------------------
 void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int progressLen) {    
     // Display progress bar
     std::cerr << "\rRendering: [";
@@ -469,7 +471,9 @@ void Scene::render() {
     auto width = image.second.getWidth();
     auto height = image.second.getHeight();
 
+    #ifdef _OPENMP
     int n_threads = omp_get_max_threads();
+    #endif
 
     // ASSERT(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");
 

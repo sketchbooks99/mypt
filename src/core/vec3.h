@@ -82,6 +82,18 @@ inline std::ostream& operator<<(std::ostream &out, const type3<Type> &v) {
 }
 
 template <typename Type>
+inline bool operator==(const type3<Type> &u, const type3<Type> &v) {
+    if(u.x == v.x && u.y == v.y && u.z == v.z) return true;
+    else return false;
+}
+
+template <typename Type>
+inline bool operator!=(const type3<Type> &u, const type3<Type> &v) {
+    if(u.x != v.x || u.y != v.y || u.z != v.z) return true;
+    else return false;
+}
+
+template <typename Type>
 inline type3<Type> operator+(const type3<Type> &u, const type3<Type> &v) {
     return type3<Type>(u.x + v.x, u.y + v.y, u.z + v.z);
 }

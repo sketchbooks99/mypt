@@ -11,7 +11,8 @@ struct ParamItem;
 class Params {
 public:
     Params() {}
-    
+    void addBool(const std::string &name, std::unique_ptr<bool[]> values, int n);
+    void addFloat(const std::string &name, std::unique_ptr<float[]> values, int n);
 private:
     std::vector<std::shared_ptr<ParamItem<bool>>> bools;
     std::vector<std::shared_ptr<ParamItem<int>>> ints;

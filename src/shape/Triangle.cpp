@@ -29,15 +29,6 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                 z *= axis.z;
                 vertices.emplace_back(x, y, z);
             }
-            else if (header == "vn")
-            {
-                float x, y, z;
-                iss >> x >> y >> z;
-                x *= axis.x;
-                y *= axis.y;
-                z *= axis.z;
-                normals.emplace_back(x, y, z);
-            }
             else if (header == "f")
             {
                 // temporal vector to store face information
@@ -78,8 +69,8 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                     else
                         throw std::runtime_error("Invalid format in face information input.\n");
                 }
-                if (temp_vert_faces.size() < 3)
-                    throw std::runtime_error("The number of faces is less than 3.\n");
+
+                ASSERT(temp_vert_faces.size() >= 3, "The number of faces is less than 3.\n");
 
                 if (temp_vert_faces.size() == 3) {
                     int3 face;
@@ -87,7 +78,6 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                     face[1] = temp_vert_faces[1];
                     face[2] = temp_vert_faces[2];
                     faces.emplace_back(face);
-                    std::cout << face << std::endl;
                 }
                 // Get more then 4 inputs.
                 // NOTE: 
@@ -122,36 +112,32 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
     }
 
     // Mesh smoothing
-    normals.resize(vertices.size());
-    auto counts = std::vector<int>(vertices.size(), 0);
-    for(auto &face : faces)
-    {
-        auto p0 = vertices[face[0]];
-        auto p1 = vertices[face[1]];
-        auto p2 = vertices[face[2]];
-        auto N = normalize(cross(p2-p0, p1-p0));
-
-        // Normal smoothing
-        if (isSmooth) {
-            auto idx = face[0];
-            normals[idx] += N;
-            counts[idx]++;
-            idx = face[1];
-            normals[idx] += N;
-            counts[idx]++;
-
-            idx = face[2];
-            normals[idx] += N;
-            counts[idx]++;
-        }
-        else
+    /** NOTE:
+     * When surface smoothing is enabled, all vertices have only one normal.
+     * When one is disabled, normals of each vertices are calculated in
+     * each triangle edges, and there is no need to store normals in vector.
+     */
+    if(isSmooth) {
+        normals.resize(vertices.size());
+        auto counts = std::vector<int>(vertices.size(), 0);
+        for(auto &face : faces)
         {
-            normals[face[0]] = N;
-            normals[face[1]] = N;
-            normals[face[2]] = N;
+            auto p0 = vertices[face[0]];
+            auto p1 = vertices[face[1]];
+            auto p2 = vertices[face[2]];
+            auto N = normalize(cross(p2-p0, p1-p0));
+
+            // Normal smoothing
+                auto idx = face[0];
+                normals[idx] += N;
+                counts[idx]++;
+                idx = face[1];
+                normals[idx] += N;
+                counts[idx]++;
+                idx = face[2];
+                normals[idx] += N;
+                counts[idx]++;
         }
-    }
-    if (isSmooth) {
         for (auto i = 0; i < (int)vertices.size(); i++)
         {
             normals[i] /= counts[i];
@@ -198,17 +184,19 @@ bool Triangle::intersect(const Ray& r, double /* t_min */, double /* t_max */, H
     rec.t = t;
     rec.p = r.at(rec.t);
 
+    vec3 normal;
     // ===== Flat shading =====
-    // auto normal = normalize(cross(e2 - e0, e1 - e0));
-    // rec.set_face_normal(r, normal);
-
+    if(mesh->normals.empty()) {
+        normal = normalize(cross(e2, e1));
+    }
     // ===== Smooth shading =====
-    auto n0 = mesh->normals[face[0]];
-    auto n1 = mesh->normals[face[1]];
-    auto n2 = mesh->normals[face[2]];
-    auto normal = normalize((1 - u - v)*n0 + u*n1 + v*n2);
+    else {
+        auto n0 = mesh->normals[face[0]];
+        auto n1 = mesh->normals[face[1]];
+        auto n2 = mesh->normals[face[2]];
+        normal = normalize((1.0f - u - v)*n0 + u*n1 + v*n2);
+    }
     rec.set_face_normal(r, normal);
-
     return true;
 }
 
