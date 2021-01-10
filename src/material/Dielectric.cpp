@@ -33,7 +33,7 @@ bool Dielectric::scatter(
         srec.scattered = Ray(rec.p, direction, r_in.time(), r_in.color());
     }
 
-    /// MEMO: Normal was correct.
+    /// MEMO: Normal was correct. hmmm... maybe not correct ...? in to out is not realized.
     std::cout << "into:" << into;
     std::cout << ",is_reflect:" << is_reflect;
     std::cout << ",p:" << rec.p;
