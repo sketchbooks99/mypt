@@ -1,8 +1,8 @@
 # Basic configuration
-filename result/teapot01/debug.png
+filename result/cube02/debug.png
 width 768
 height 768
-spp 8
+spp 32
 depth 5
 background 0 0 0
 
@@ -13,7 +13,7 @@ lookat 0 0 0
 up 0 1 0
 focus_length 10.0
 aperture 0.0
-vfov 20
+vfov 10
 endCamera
 
 # Top
@@ -71,15 +71,16 @@ endPrimitive
 
 # Transparent object
 beginPrimitive 
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth 
-translate 0 -1 20
+shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
+translate 0 0 15
+rotate_y 15.8
 material dielectric color 1 1 1 ior 1.49
 endPrimitive
 
 # light source 
 beginLight
 shape plane min -1.5 -1.5 max 1.5 1.5 
-translate 0 -40 0
-image result/bunny01/invert.png
+translate 0 -15 0
+image data/image/grid.jpg
 intensity 1
 endLight

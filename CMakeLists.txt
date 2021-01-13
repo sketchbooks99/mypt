@@ -42,8 +42,8 @@ set(pbrenderer_src
 )
 
 # For use of OPENMP
-find_package(OpenMP REQUIRED)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+#find_package(OpenMP REQUIRED)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wextra -O3")
 

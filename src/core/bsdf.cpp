@@ -17,7 +17,6 @@ bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refracted) {
         return false;
 }
 
-// ref: https://knzw.tech/raytracing/?page_id=478
 vec3 refract(const vec3& v, const vec3& n, double ni_over_nt) {
     auto nv = normalize(v);
     auto cosine = dot(-nv, n);

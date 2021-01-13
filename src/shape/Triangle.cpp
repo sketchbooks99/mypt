@@ -184,19 +184,19 @@ bool Triangle::intersect(const Ray& r, double /* t_min */, double /* t_max */, H
     rec.t = t;
     rec.p = r.at(rec.t);
 
-    vec3 normal;
     // ===== Flat shading =====
     if(mesh->normals.empty()) {
-        normal = normalize(cross(e2, e1));
+        rec.normal = normalize(cross(e1, e2));
+        // rec.set_face_normal(r, rec.normal);
     }
     // ===== Smooth shading =====
     else {
         auto n0 = mesh->normals[face[0]];
         auto n1 = mesh->normals[face[1]];
         auto n2 = mesh->normals[face[2]];
-        normal = normalize((1.0f - u - v)*n0 + u*n1 + v*n2);
+        rec.normal = normalize((1.0f - u - v)*n0 + u*n1 + v*n2);
     }
-    rec.set_face_normal(r, normal);
+    // rec.set_face_normal(r, normal);
     return true;
 }
 

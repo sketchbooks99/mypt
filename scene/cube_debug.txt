@@ -1,19 +1,17 @@
-# Basic configuration
-filename result/cube.png
-width 768
-height 768
-spp 4
+filename result/cube_debug.png
+width 512 
+height 512
+spp 1 
 depth 5
-background 0 0 0
+background 1 1 1
 
-# Camera 
-beginCamera 
+beginCamera
 origin 0 0 100
 lookat 0 0 0
-up 0 1 0
-focus_length 10.0
+up 0 1 0 
+focus_length 10.0 
 aperture 0.0
-vfov 10
+vfov 15
 endCamera
 
 # Top
@@ -63,7 +61,6 @@ endLight
 
 beginPrimitive
 shape mesh filename data/model/cube.obj size 2.5 axis 1 1 1
-translate 0 0 15
 rotate_y 15.8
-material lambertian color 1 1 1
+material dielectric color 1 1 1 ior 1.49
 endPrimitive
