@@ -1,0 +1,23 @@
+filename result/sphere_qr/ref.png
+width 768
+height 768
+spp 128
+depth 5
+background 0 0 0
+
+beginCamera
+origin 0 0 100
+lookat 0 0 0
+up 0 1 0
+focus_length 15.0
+aperture 0.0
+vfov 10
+endCamera
+
+beginLight
+shape plane min -1 -1 max 1 1
+translate 0 0 15
+rotate_x -90
+image data/image/QR.png
+intensity 1
+endLight
