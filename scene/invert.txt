@@ -1,9 +1,6 @@
 # Basic configuration
 filename result/debug.png
 ref result/sphere_qr/ref.png
-
-
-
 inv result/sphere_qr/invert.png
 width 768
 height 768
@@ -30,15 +27,15 @@ endPrimitive
 
 # Transparent object
 beginPrimitive
-#shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
-shape sphere radius 2.5
+shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
+#shape sphere radius 2.5
 translate 0 0 15
 material dielectric color 1 1 1 ior 1.49 
 endPrimitive
 
 # Psuedo light source
 beginPrimitive 
-shape plane min -1.5 -1.5 max 1.5 1.5 
+shape plane min -2.5 -2.5 max 2.5 2.5 
 translate 0 -15 0
 rotate_x 180
 material absorber color 0 0 0 width 512 height 512

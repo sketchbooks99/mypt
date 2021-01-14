@@ -117,27 +117,36 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
      * When one is disabled, normals of each vertices are calculated in
      * each triangle edges, and there is no need to store normals in vector.
      */
+    
     if(isSmooth) {
         normals.resize(vertices.size());
-        auto counts = std::vector<int>(vertices.size(), 0);
-        for(auto &face : faces)
-        {
-            auto p0 = vertices[face[0]];
-            auto p1 = vertices[face[1]];
-            auto p2 = vertices[face[2]];
-            auto N = normalize(cross(p2-p0, p1-p0));
+    }
+    auto counts = std::vector<int>(vertices.size(), 0);
 
+    for(auto &face : faces)
+    {
+        auto p0 = vertices[face[0]];
+        auto p1 = vertices[face[1]];
+        auto p2 = vertices[face[2]];
+        auto N = normalize(cross(p2-p0, p1-p0));
+
+        std::cout << "p0:" << p0 << ",p1:" << p1 << ",p2:" << p2;
+        std::cout << ",normal:" << N << std::endl;
+
+        if(isSmooth) {
             // Normal smoothing
-                auto idx = face[0];
-                normals[idx] += N;
-                counts[idx]++;
-                idx = face[1];
-                normals[idx] += N;
-                counts[idx]++;
-                idx = face[2];
-                normals[idx] += N;
-                counts[idx]++;
+            auto idx = face[0];
+            normals[idx] += N;
+            counts[idx]++;
+            idx = face[1];
+            normals[idx] += N;
+            counts[idx]++;
+            idx = face[2];
+            normals[idx] += N;
+            counts[idx]++;
         }
+    }
+    if(isSmooth) {
         for (auto i = 0; i < (int)vertices.size(); i++)
         {
             normals[i] /= counts[i];
@@ -155,22 +164,22 @@ bool Triangle::intersect(const Ray& r, double /* t_min */, double /* t_max */, H
     auto p1 = mesh->vertices[face[1]];
     auto p2 = mesh->vertices[face[2]];
 
-    vec3 e1 = p1 - p0;
-    vec3 e2 = p2 - p0;
+    auto e1 = p1 - p0;
+    auto e2 = p2 - p0;
 
-    vec3 alpha = cross(r.direction(), e2);
+    auto alpha = cross(r.direction(), e2);
     float det = dot(e1, alpha);
 
     if(det < fabs(kEps)) return false;
 
     float invDet = 1.0 / det;
-    vec3 ov0 = r.origin() - p0;
+    auto ov0 = r.origin() - p0;
 
     // Check if u satisfies 0 <= u <= 1
     float u = dot(alpha, ov0) * invDet;
     if(u < 0.0f || u > 1.0f) return false;
 
-    vec3 beta = cross(ov0, e1);
+    auto beta = cross(ov0, e1);
 
     // Check if v satisfies 0 <= v <= 1 & u + v <= 1
     // This can be interpreted to check if v satisfies 0 <= v <= 1-u

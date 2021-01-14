@@ -33,14 +33,16 @@ bool Dielectric::scatter(
         srec.scattered = Ray(rec.p, direction, r_in.time(), r_in.color());
     }
 
-    /** MEMO: Normal was correct. hmmm... maybe not correct ...? correctly in to out?.
+    /// MEMO: Normal was correct. hmmm... maybe not correct ...? correctly in to out?.
+    #if 0
     std::cout << "into:" << into;
     std::cout << ",is_reflect:" << is_reflect;
     std::cout << ",p:" << rec.p;
     std::cout << ",in:" << r_in.direction();
     std::cout << ",dir:" << direction;
     std::cout << ",normal:" << rec.normal << std::endl;
-    */
+    #endif 
+    
     return true;
 }
 
