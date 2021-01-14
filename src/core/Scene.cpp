@@ -512,7 +512,7 @@ void Scene::render() {
 
     std::string file_format = split(image.first, '.').back();
     image.second.write(image.first, file_format);
-
+    
     if(is_invert) {
         std::cout << "\nWrite absorbed result" << std::endl;
         absorbed_image.second->write(absorbed_image.first, split(absorbed_image.first, '.').back());
