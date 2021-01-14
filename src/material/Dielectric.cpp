@@ -33,7 +33,7 @@ bool Dielectric::scatter(
         srec.scattered = Ray(rec.p, direction, r_in.time(), r_in.color());
     }
 
-    /// MEMO: Normal was correct. hmmm... maybe not correct ...? correctly in to out?.
+    /// MEMO: Normal of Triangle was not correct ...?
     #if 0
     std::cout << "into:" << into;
     std::cout << ",is_reflect:" << is_reflect;

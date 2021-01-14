@@ -494,7 +494,7 @@ void Scene::render() {
             if(is_invert) {
                 pixel_color = refimage.get(x, y);
                 // Skip tracing scene when pixel_color had no colors or was completely black.
-                if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
+                // if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
             }
                 
             for(int s=0; s<samples_per_pixel; s++) {

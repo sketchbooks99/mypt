@@ -128,7 +128,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
         auto p0 = vertices[face[0]];
         auto p1 = vertices[face[1]];
         auto p2 = vertices[face[2]];
-        auto N = normalize(cross(p2-p0, p1-p0));
+        auto N = normalize(cross(p1-p0,p2-p0));
 
         std::cout << "p0:" << p0 << ",p1:" << p1 << ",p2:" << p2;
         std::cout << ",normal:" << N << std::endl;

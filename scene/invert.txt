@@ -35,7 +35,7 @@ endPrimitive
 
 # Psuedo light source
 beginPrimitive 
-shape plane min -2.5 -2.5 max 2.5 2.5 
+shape plane min -1.5 -1.5 max 1.5 1.5 
 translate 0 -15 0
 rotate_x 180
 material absorber color 0 0 0 width 512 height 512
