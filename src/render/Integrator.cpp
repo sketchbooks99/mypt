@@ -8,11 +8,15 @@ vec3 Integrator::trace(
 ) const {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
-    if(depth <= 0)
+    if(depth <= 0) {
+        // std::cout << "Depth exceeded the limit" << std::endl;
         return vec3(0.0, 0.0, 0.0);
+    }
 
-    if(!bvh.intersect(r, eps, infinity, rec))
+    if(!bvh.intersect(r, eps, infinity, rec)) {
+        // std::cout << "False intersect, Depth: " << depth << std::endl;
         return background;
+    }
 
     ScatterRecord srec;
     vec3 emitted = rec.mat_ptr->emitted(r, rec);
@@ -27,8 +31,16 @@ vec3 Integrator::trace(
     auto light_ptr = std::make_shared<LightPDF>(lights, rec.p);
     MixturePDF p(light_ptr, srec.pdf);
 
-    Ray scattered = Ray(rec.p, p.generate(), r.time(), r.color());
+    Ray scattered = Ray(rec.p + rec.normal * eps, p.generate(), r.time(), r.color());
     auto pdf = p.value(scattered.direction());
+
+    #if 0
+    std::cout << "depth:" << depth;
+    std::cout << ",time:" << rec.t;
+    std::cout << ",p:" << scattered.origin();
+    std::cout << ",dir:" << scattered.direction();
+    std::cout << ",normal:" << rec.normal << std::endl;
+    #endif 
     
     return emitted
          + srec.attenuation * rec.mat_ptr->scattering_pdf(r, rec, scattered)

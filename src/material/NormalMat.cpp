@@ -10,7 +10,7 @@ bool NormalMat::scatter(
     srec.attenuation = normalize(rec.normal);
     srec.pdf = std::make_shared<CosinePDF>(rec.normal);
     rec.p += rec.normal * eps;
-    return true;
+    return !is_emit;
 }
 
 double NormalMat::scattering_pdf(
@@ -18,6 +18,11 @@ double NormalMat::scattering_pdf(
 ) {
     auto cosine = dot(rec.normal, normalize(scattered.direction()));
     return cosine < 0 ? 0 : cosine / pi;
+}
+
+vec3 NormalMat::emitted( const Ray& /* r_in */, const HitRecord& rec ) {
+    if (is_emit) return abs(rec.normal);
+    else return vec3(0.0f);
 }
 
 }

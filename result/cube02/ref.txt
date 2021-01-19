@@ -1,4 +1,4 @@
-filename result/cube03/ref.png
+filename result/cube02/ref.png
 width 768
 height 768
 spp 128

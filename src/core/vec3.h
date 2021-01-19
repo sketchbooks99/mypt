@@ -146,6 +146,10 @@ inline vec3 normalize(vec3 v) {
     return v.length() != 0 ? v / v.length() : vec3();
 }
 
+inline vec3 abs(vec3 v) {
+    return vec3(fabs(v.x), fabs(v.y), fabs(v.z));
+}
+
 inline vec3 random_unit_vector() {
     auto a = random_double(0, 2*pi);
     auto z = random_double(-1,1);

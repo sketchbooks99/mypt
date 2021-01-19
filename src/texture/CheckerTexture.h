@@ -8,8 +8,8 @@ class CheckerTexture final : public Texture {
 public:
     CheckerTexture() {}
     CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5) : odd(t1), even(t0), step(step) {}
-    CheckerTexture(const vec3& color1, const vec3& color2)
-    : odd(std::make_shared<ConstantTexture>(color1)), even(std::make_shared<ConstantTexture>(color2)) {}
+    CheckerTexture(const vec3& color1, const vec3& color2, int step=5)
+    : odd(std::make_shared<ConstantTexture>(color1)), even(std::make_shared<ConstantTexture>(color2)), step(step) {}
 
     virtual vec3 value(double u, double v, const vec3& p) const {
         auto sines = sin(step*u) * sin(step*v);

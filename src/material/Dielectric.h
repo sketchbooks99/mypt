@@ -14,14 +14,17 @@ inline double schlick(double cosine, double ref_idx) {
 
 class Dielectric final : public Material {
 public:
-    Dielectric(double ri) : albedo(vec3(1.0f)), ref_idx(ri) {}
-    Dielectric(vec3 a, double ri) : albedo(a), ref_idx(ri) {}
+    Dielectric(double ri, bool is_normal=false)
+    : albedo(vec3(1.0f)), ref_idx(ri), is_normal(is_normal) {}
+    Dielectric(vec3 a, double ri, bool is_normal=false)
+    : albedo(a), ref_idx(ri), is_normal(is_normal) {}
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
 
 private:
     vec3 albedo;
     double ref_idx;
+    bool is_normal;
 };
 
 }

@@ -33,6 +33,7 @@ Scene::Scene(const std::string& filename) {
     depth = 5;
     samples_per_pixel = 1;
     is_invert = false;
+    bool is_comment = false;
 
     std::string refpath = "result/ref.png";
 
@@ -45,6 +46,11 @@ Scene::Scene(const std::string& filename) {
         std::istringstream iss(line);
         std::string header;
         iss >> header;
+
+        if(header == "beginComment") is_comment = true;
+        else if(header == "endComment") is_comment = false;
+
+        if(is_comment) continue;
 
         // `#` is comment
         if(header == "#" || header[0] == '#') continue;
@@ -253,17 +259,25 @@ auto Scene::createMaterial(std::istringstream& iss) {
         else if(type == "dielectric") {
             vec3 color(1.0);
             float ior = 1.52f;
+            bool is_normal = false;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "color")
                     iss >> color.x >> color.y >> color.z;
                 else if(header == "ior")
                     iss >> ior;
+                else if(header == "normal")
+                    is_normal = true;
             }
-            material = std::make_shared<Dielectric>(color, ior);
+            material = std::make_shared<Dielectric>(color, ior, is_normal);
         }
         else if(type == "normal") {
-            material = std::make_shared<NormalMat>();
+            bool is_emit = false;
+            while(!iss.eof()) {
+                iss >> header;
+                if(header == "emit") is_emit = true;
+            }
+            material = std::make_shared<NormalMat>(is_emit);
         }
         /// INVERT:
         else if(type == "absorber") {
@@ -461,7 +475,7 @@ void Scene::render() {
     std::cout << "primitives: " << this->primitives.size() << std::endl;
     std::cout << "lights: " << this->lights.size() << std::endl;
 
-    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
+    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::MIDDLE);
 
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_REALTIME, &start_time);
@@ -494,7 +508,7 @@ void Scene::render() {
             if(is_invert) {
                 pixel_color = refimage.get(x, y);
                 // Skip tracing scene when pixel_color had no colors or was completely black.
-                // if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
+                if(vec3(pixel_color.x, pixel_color.y, pixel_color.z).length() == 0) continue;
             }
                 
             for(int s=0; s<samples_per_pixel; s++) {

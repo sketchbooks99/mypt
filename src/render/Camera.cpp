@@ -32,10 +32,11 @@ Camera::Camera(
 Ray Camera::get_ray(double s, double t) {
     vec3 rd = lens_radius * random_in_unit_disk();
     vec3 offset = u * rd.x + v * rd.y;
+    vec3 dir = normalize(lower_left_corner + s*horizontal + t*vertical - origin - offset);
 
     return Ray(
         origin + offset, 
-        lower_left_corner + s * horizontal + t*vertical - origin - offset,
+        dir,
         random_double(time0, time1), 
         RGBA(0, 0, 0, 0)
     );

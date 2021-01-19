@@ -8,7 +8,7 @@ bool Dielectric::scatter(
 ) {
     srec.is_specular = true;
     srec.pdf = 0;
-    srec.attenuation = albedo;
+    srec.attenuation = is_normal ? abs(rec.normal) : albedo;
 
     // Re-calculate ior and normal according to whether a ray comes into the sphere, or not.
     bool into = dot(r_in.direction(), rec.normal) < 0;
@@ -23,6 +23,10 @@ bool Dielectric::scatter(
     float reflect_prob = schlick(cosine, ref_idx);
     bool is_reflect = false;
     vec3 direction;
+
+    if(into) rec.p -= rec.normal * 0.01;
+    else     rec.p += rec.normal * 0.01;
+
     if(cannot_refract || reflect_prob > random_double()) {
         direction = reflect(r_in.direction(), outward_normal);
         srec.scattered = Ray(rec.p, direction, r_in.time(), r_in.color());
@@ -37,7 +41,9 @@ bool Dielectric::scatter(
     #if 0
     std::cout << "into:" << into;
     std::cout << ",is_reflect:" << is_reflect;
+    std::cout << ",time:" << rec.t;
     std::cout << ",p:" << rec.p;
+    std::cout << ",origin:" << r_in.origin();
     std::cout << ",in:" << r_in.direction();
     std::cout << ",dir:" << direction;
     std::cout << ",normal:" << rec.normal << std::endl;

@@ -13,25 +13,8 @@
 namespace mypt {
 
 // ShapePrimitive ----------------------------------------------------------------------
-bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
-    Ray tr_ray = *transform * r;
-    if(!shape->intersect(tr_ray, t_min, t_max, rec))
-        return false;
-    
-    auto p = rec.p;
-    auto normal = rec.normal;
-
-    p = mat4::point_mul(transform->getMatrix(), rec.p);
-    normal = normalize(mat4::normal_mul(transform->getInvMatrix(), rec.normal));
-
-    rec.p = p;
-    rec.normal = normal;
-    rec.mat_ptr = material;
-
-    return true;
-}
-
-AABB ShapePrimitive::bounding() const {
+ShapePrimitive::ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform)
+: shape(shape), material(material), transform(transform) {
     vec3 min(infinity, infinity, infinity);
     vec3 max(-infinity, -infinity, -infinity);
 
@@ -51,7 +34,29 @@ AABB ShapePrimitive::bounding() const {
         }
     }
 
-    return AABB(min, max);
+    bbox = AABB(min, max);
+}
+
+bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+    Ray tr_ray = *transform * r;
+    if(!shape->intersect(tr_ray, t_min, t_max, rec))
+        return false;
+    
+    auto p = rec.p;
+    auto normal = rec.normal;
+
+    p = mat4::point_mul(transform->getMatrix(), rec.p);
+    normal = normalize(mat4::normal_mul(transform->getInvMatrix(), rec.normal));
+
+    rec.p = p;
+    rec.normal = normal;
+    rec.mat_ptr = material;
+
+    return true;
+}
+
+AABB ShapePrimitive::bounding() const {
+    return this->bbox;
 }
 
 double ShapePrimitive::pdf_value(const vec3& o, const vec3& v) const {

@@ -5,7 +5,7 @@ inv result/sphere_qr/invert.png
 width 768
 height 768
 spp 512
-depth 5
+depth 12
 background 0 0 0
 
 # Camera 
