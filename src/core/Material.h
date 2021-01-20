@@ -79,6 +79,15 @@ inline std::ostream& operator<<(std::ostream& out, const MatType &mt) {
     }
 }
 
+inline void stream_intersection(const Ray& r, const HitRecord& rec, const ScatterRecord& srec) {
+    std::cout << "time:" << rec.t;
+    std::cout << ",p:" << rec.p;
+    std::cout << ",origin:" << r.origin();
+    std::cout << ",in:" << r.direction();
+    std::cout << ",out:" << srec.scattered.direction();
+    std::cout << ",normal:" << rec.normal << std::endl;
+}
+
 class Material {
 public:
     Material(MatType mattype=MatType::LAMBERTIAN) : mattype(mattype) {}

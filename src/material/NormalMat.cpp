@@ -4,7 +4,7 @@
 namespace mypt {
 
 bool NormalMat::scatter(
-    const Ray& /* r_in */, HitRecord& rec, ScatterRecord& srec
+    const Ray& r_in , HitRecord& rec, ScatterRecord& srec
 ) {
     srec.is_specular = false;
     srec.attenuation = normalize(rec.normal);

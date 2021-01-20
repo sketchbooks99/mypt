@@ -53,6 +53,7 @@ public:
     }
 
 private:
+
     std::shared_ptr<TriangleMesh> mesh;
     int3 face;
     vec3 min, max; // For AABB

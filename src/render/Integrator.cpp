@@ -33,14 +33,6 @@ vec3 Integrator::trace(
 
     Ray scattered = Ray(rec.p + rec.normal * eps, p.generate(), r.time(), r.color());
     auto pdf = p.value(scattered.direction());
-
-    #if 0
-    std::cout << "depth:" << depth;
-    std::cout << ",time:" << rec.t;
-    std::cout << ",p:" << scattered.origin();
-    std::cout << ",dir:" << scattered.direction();
-    std::cout << ",normal:" << rec.normal << std::endl;
-    #endif 
     
     return emitted
          + srec.attenuation * rec.mat_ptr->scattering_pdf(r, rec, scattered)

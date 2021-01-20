@@ -41,12 +41,7 @@ bool Dielectric::scatter(
     #if 0
     std::cout << "into:" << into;
     std::cout << ",is_reflect:" << is_reflect;
-    std::cout << ",time:" << rec.t;
-    std::cout << ",p:" << rec.p;
-    std::cout << ",origin:" << r_in.origin();
-    std::cout << ",in:" << r_in.direction();
-    std::cout << ",dir:" << direction;
-    std::cout << ",normal:" << rec.normal << std::endl;
+    stream_intersection(r_in, rec, srec);
     #endif 
     
     return true;

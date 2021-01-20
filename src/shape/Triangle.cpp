@@ -154,7 +154,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
 
 // ---------------------------------------------------------------------------
 /// REF: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
-bool Triangle::intersect(const Ray& r, double t_min, double /* t_max */, HitRecord& rec) const {
+bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     auto p0 = mesh->vertices[face[0]];
     auto p1 = mesh->vertices[face[1]];
     auto p2 = mesh->vertices[face[2]];
@@ -165,7 +165,7 @@ bool Triangle::intersect(const Ray& r, double t_min, double /* t_max */, HitReco
     auto alpha = cross(r.direction(), e2);
     float det = dot(e1, alpha);
 
-    if (det < eps) return false;
+    if (det == 0.f) return false;
 
     float invDet = 1.0f / det;
     auto ov0 = r.origin() - p0;
@@ -183,7 +183,7 @@ bool Triangle::intersect(const Ray& r, double t_min, double /* t_max */, HitReco
 
     // Check if Ray are behind polygon
     float t = dot(e2, beta) * invDet;
-    if (t < t_min) return false;
+    if (t < t_min || t > t_max) return false;
 
     rec.t = t;
     rec.p = r.at(rec.t);

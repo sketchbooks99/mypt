@@ -177,7 +177,7 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
         else if(type == "mesh") {
             std::string filename;
             vec3 axis = vec3(1,1,1);
-            double size = 50;
+            float size = 1.0f;
             bool isSmooth = false;
             iss >> header;
             while(!iss.eof()) {
@@ -216,12 +216,17 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 }
                 else if(header == "checker") {
                     vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
-                    iss >> header;
-                    if(header == "color1") 
-                        iss >> color1.x >> color1.y >> color1.z;
-                    if(header == "color2") 
-                        iss >> color2.x >> color2.y >> color2.z;
-                    texture = std::make_shared<CheckerTexture>(color1, color2);
+                    int scale = 5;
+                    while(!iss.eof()) {
+                        iss >> header;
+                        if(header == "color1") 
+                            iss >> color1.x >> color1.y >> color1.z;
+                        else if(header == "color2") 
+                            iss >> color2.x >> color2.y >> color2.z;
+                        else if(header == "scale")  
+                            iss >> scale;
+                    }
+                    texture = std::make_shared<CheckerTexture>(color1, color2, scale);
                 }
                 else if(header == "image") {
                     std::string filename;
@@ -246,7 +251,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
         }
         else if(type == "metal" || type == "mmaps") {
             vec3 color(1.0);
-            double fuzz = 0.0;
+            float fuzz = 0.0f;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "color")
