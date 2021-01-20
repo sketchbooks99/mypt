@@ -70,7 +70,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                         throw std::runtime_error("Invalid format in face information input.\n");
                 }
 
-                ASSERT(temp_vert_faces.size() >= 3, "The number of faces is less than 3.\n");
+                ASSERT(temp_vert_faces.size() >= 3, "The number of faces were less than 3.\n");
 
                 if (temp_vert_faces.size() == 3) {
                     int3 face;
@@ -79,11 +79,11 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                     face[2] = temp_vert_faces[2];
                     faces.emplace_back(face);
                 }
-                // Get more then 4 inputs.
-                // NOTE: 
-                //      This case is implemented under the assumption that mesh are configurd 
-                //      by quad and inputs are partitioned with 4 stride when face input are 
-                //      more than 4.
+                /** Get more then 4 inputs.
+                 *  NOTE: 
+                 *  This case is implemented under the assumption that mesh are configurd 
+                 *  by quad and inputs are partitioned with 4 stride when face input are 
+                 *  more than 4. */ 
                 else
                 {
                     for (int i = 0; i<int(temp_vert_faces.size() / 4); i++)
@@ -117,11 +117,13 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
      * When one is disabled, normals of each vertices are calculated in
      * each triangle edges, and there is no need to store normals in vector.
      */
+
+    std::vector<int> counts;
     
     if(isSmooth) {
         normals.resize(vertices.size());
+        counts.resize(vertices.size(), 0);
     }
-    auto counts = std::vector<int>(vertices.size(), 0);
 
     for(auto &face : faces)
     {
@@ -144,7 +146,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
         }
     }
     if(isSmooth) {
-        for (auto i = 0; i < (int)vertices.size(); i++)
+        for (auto i = 0; i < normals.size(); i++)
         {
             normals[i] /= counts[i];
             normals[i] = normalize(normals[i]);
