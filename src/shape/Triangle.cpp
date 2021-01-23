@@ -128,15 +128,15 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
             auto N = normalize(cross(p2-p0, p1-p0));
 
             // Normal smoothing
-                auto idx = face[0];
-                normals[idx] += N;
-                counts[idx]++;
-                idx = face[1];
-                normals[idx] += N;
-                counts[idx]++;
-                idx = face[2];
-                normals[idx] += N;
-                counts[idx]++;
+            auto idx = face[0];
+            normals[idx] += N;
+            counts[idx]++;
+            idx = face[1];
+            normals[idx] += N;
+            counts[idx]++;
+            idx = face[2];
+            normals[idx] += N;
+            counts[idx]++;
         }
         for (auto i = 0; i < (int)vertices.size(); i++)
         {
