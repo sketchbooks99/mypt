@@ -1,11 +1,11 @@
 # Basic configuration
 filename result/debug.png
-ref result/teapot02/ref.png
-inv result/teapot02/invert.png
+ref result/teapot03/ref.png
+inv result/teapot03/invert.png
 width 768
 height 768
-spp 1
-depth 12
+spp 512
+depth 5
 background 0 0 0
 
 # Camera 

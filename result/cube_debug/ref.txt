@@ -1,4 +1,4 @@
-filename result/teapot03/ref.png
+filename result/cube_debug/ref.png
 width 768
 height 768
 spp 128
