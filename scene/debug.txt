@@ -1,14 +1,14 @@
 # Basic configuration
 filename result/teapot.png
-width 512
-height 512
-spp 8
+width 768
+height 768
+spp 16
 depth 12
 background 0.5 0.5 0.5
 
 # Camera 
 beginCamera 
-origin 0 0 120
+origin 0 0 50
 lookat 0 0 0
 up 0 1 0
 focus_length 15.0
@@ -27,7 +27,7 @@ endPrimitive
 beginPrimitive 
 shape plane min -50 -50 max 50 50
 translate 0 -50 0
-material lambertian checker color1 0.3 0.3 0.3 color2 1 1 1 scale 15
+material lambertian checker color1 0.3 0.3 0.3 color2 1 1 1 scale 5
 endPrimitive
 
 # Right
@@ -62,6 +62,12 @@ material lambertian color 0.8 0.05 0.05
 endPrimitive
 endComment
 
+beginPrimitive
+shape plane min -0.5 -0.5 max 0.5 0.5
+rotate_x 90
+material emitter checker 
+endPrimitive
+
 # Light 
 beginLight 
 shape plane min -12.5 -12.5 max 12.5 12.5
@@ -70,9 +76,9 @@ color 1 1 1
 intensity 10
 endLight
 
-# Cube
 beginPrimitive
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth size 10
+shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth
+translate 0 -1 0
 material dielectric color 1 1 1 ior 1.49
 #material lambertian color 1 1 1
 endPrimitive

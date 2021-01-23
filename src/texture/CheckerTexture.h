@@ -12,7 +12,7 @@ public:
     : odd(std::make_shared<ConstantTexture>(color1)), even(std::make_shared<ConstantTexture>(color2)), step(step) {}
 
     virtual vec3 value(double u, double v, const vec3& p) const {
-        auto sines = sin(step*u) * sin(step*v);
+        auto sines = sin(step*u*pi) * sin(step*v*pi);
         if(sines < 0) 
             return odd->value(u, v, p);
         else

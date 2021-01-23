@@ -3,7 +3,7 @@ filename result/cube.png
 width 768
 height 768
 spp 4
-depth 5
+depth 16
 background 0 0 0
 
 # Camera 
@@ -62,8 +62,10 @@ intensity 30
 endLight
 
 beginPrimitive
-shape mesh filename data/model/cube.obj size 2.5 axis 1 1 1
-translate 0 0 15
-rotate_y 15.8
-material lambertian color 1 1 1
+shape mesh filename data/model/mmaps_mirror.obj
+rotate_x 45
+material metal 
 endPrimitive
+
+beginPrimitive
+shape mesh filename data/model/mmaps_glass.obj size 
