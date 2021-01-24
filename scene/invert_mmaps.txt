@@ -1,7 +1,7 @@
 # Basic configuration
 inv
 filename result/debug.png
-ref result/sphere03/ref.png
+ref result/teapot03/ref.png
 width 768
 height 768
 spp 512
@@ -19,11 +19,17 @@ vfov 10
 endCamera
 
 # MMAPs 
-beginPrimitive 
-shape plane min -25 -25 max 25 25
+beginPrimitive
+shape mesh filename data/model/mmaps_mirror.obj
 rotate_x 45
-material mmaps color 1 1 1
+material metal color 0.87 0.87 0.87
 endPrimitive
+
+beginPrimitive
+shape mesh filename data/model/mmaps_glass.obj 
+rotate_x 45 
+material dielectric color 1 1 1 ior 1.52
+endPrimitive 
 
 # Transparent object
 beginPrimitive

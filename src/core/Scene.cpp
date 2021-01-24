@@ -107,8 +107,8 @@ Scene::Scene(const std::string& filename) {
                 iss >> s;
                 scale.push_back(s);
             }
-            if(scale.size() == 1) ts.scale(s);
-            else if(scale.size() == 3) ts.scale(vec3(scale.x, scale.y, scale.z));
+            if(scale.size() == 1) ts.scale(scale[0]);
+            else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
             else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
@@ -365,8 +365,8 @@ void Scene::createPrimitive(std::ifstream& ifs) {
                 iss >> s;
                 scale.push_back(s);
             }
-            if(scale.size() == 1) ts.scale(s);
-            else if(scale.size() == 3) ts.scale(vec3(scale.x, scale.y, scale.z));
+            if(scale.size() == 1) ts.scale(scale[0]);
+            else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
             else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
@@ -468,8 +468,8 @@ void Scene::createLight(std::ifstream& ifs) {
                 iss >> s;
                 scale.push_back(s);
             }
-            if(scale.size() == 1) ts.scale(s);
-            else if(scale.size() == 3) ts.scale(vec3(scale.x, scale.y, scale.z));
+            if(scale.size() == 1) ts.scale(scale[0]);
+            else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
             else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
