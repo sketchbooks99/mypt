@@ -303,7 +303,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 else if(header == "height") iss >> h;
                 else if(header == "filename") iss >> filename;
             }
-            auto absorbed_image = Image<RGBA>(w, h);
+            auto absorbed_image = std::make_shared<Image<RGBA>>(w, h);
             material = std::make_shared<Absorber<RGBA>>(absorbed_image, filename);
         }
     }
