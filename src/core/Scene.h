@@ -31,7 +31,6 @@ private:
     Integrator integrator;
     std::pair<std::string, Image<RGBA>> image;
     Image<RGBA> refimage;
-    std::pair<std::string, std::shared_ptr<Image<RGBA>>> absorbed_image;
     int samples_per_pixel, depth;
     vec3 background;
     TransformSystem ts;

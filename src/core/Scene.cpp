@@ -57,16 +57,14 @@ Scene::Scene(const std::string& filename) {
 
         if(header == "filename")
             iss >> image.first;
-        else if(header == "ref") {
-            is_invert = true;
+        else if(header == "ref") 
             iss >> refpath;
-        }
         else if (header == "width")
             iss >> image_width;
         else if (header == "height")
             iss >> image_height;
         else if (header == "inv")
-            iss >> absorbed_image.first;
+            is_invert = true;
         else if(header == "spp" || header == "samples_per_pixel")
             iss >> samples_per_pixel;
         else if(header == "depth")
@@ -101,6 +99,17 @@ Scene::Scene(const std::string& filename) {
             float angle;
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
+        }
+        else if(header == "scale") {
+            std::vector<float> scale;
+            while(!iss.eof()) {
+                float s;
+                iss >> s;
+                scale.push_back(s);
+            }
+            if(scale.size() == 1) ts.scale(s);
+            else if(scale.size() == 3) ts.scale(vec3(scale.x, scale.y, scale.z));
+            else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
     integrator = Integrator();
@@ -287,13 +296,15 @@ auto Scene::createMaterial(std::istringstream& iss) {
         /// INVERT:
         else if(type == "absorber") {
             int w = 512, h = 512;
+            std::string filename;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "width") iss >> w;
                 else if(header == "height") iss >> h;
+                else if(header == "filename") iss >> filename;
             }
-            absorbed_image.second = std::make_shared<Image<RGBA>>(w, h);
-            material = std::make_shared<Absorber<RGBA>>(absorbed_image.second);
+            auto absorbed_image = Image<RGBA>(w, h);
+            material = std::make_shared<Absorber<RGBA>>(absorbed_image, filename);
         }
     }
     return material;
@@ -346,6 +357,17 @@ void Scene::createPrimitive(std::ifstream& ifs) {
             float angle;
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
+        }
+        else if(header == "scale") {
+            std::vector<float> scale;
+            while(!iss.eof()) {
+                float s;
+                iss >> s;
+                scale.push_back(s);
+            }
+            if(scale.size() == 1) ts.scale(s);
+            else if(scale.size() == 3) ts.scale(vec3(scale.x, scale.y, scale.z));
+            else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
 
@@ -438,6 +460,17 @@ void Scene::createLight(std::ifstream& ifs) {
             float angle;
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
+        }
+        else if(header == "scale") {
+            std::vector<float> scale;
+            while(!iss.eof()) {
+                float s;
+                iss >> s;
+                scale.push_back(s);
+            }
+            if(scale.size() == 1) ts.scale(s);
+            else if(scale.size() == 3) ts.scale(vec3(scale.x, scale.y, scale.z));
+            else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
 
@@ -532,10 +565,10 @@ void Scene::render() {
     std::string file_format = split(image.first, '.').back();
     image.second.write(image.first, file_format);
     
-    if(is_invert) {
-        std::cout << "\nWrite absorbed result" << std::endl;
-        absorbed_image.second->write(absorbed_image.first, split(absorbed_image.first, '.').back());
-    }
+    // if(is_invert) {
+    //     std::cout << "\nWrite absorbed result" << std::endl;
+    //     absorbed_image.second->write(absorbed_image.first, split(absorbed_image.first, '.').back());
+    // }
     std::cerr << "\nDone\n";
 }
 

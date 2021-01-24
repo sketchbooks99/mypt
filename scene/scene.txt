@@ -64,8 +64,11 @@ endLight
 beginPrimitive
 shape mesh filename data/model/mmaps_mirror.obj
 rotate_x 45
-material metal 
+material metal color 0.87 0.87 0.87
 endPrimitive
 
 beginPrimitive
-shape mesh filename data/model/mmaps_glass.obj size 
+shape mesh filename data/model/mmaps_glass.obj size
+rotate_x 45 
+material dielectric color 1 1 1 ior 1.52
+endPrimitive 

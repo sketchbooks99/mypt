@@ -10,13 +10,15 @@ struct HitRecord;
 template <typename PixelType>
 class Absorber final : public Material {
 public:
-    Absorber(std::shared_ptr<Image<PixelType>> image) : image(image), Material(MatType::ABSORBER) {}
+    Absorber(Image<PixelType> image, std::string filename)
+    : image(std::move(image)), filename(filename), Material(MatType::ABSORBER) {};
+    ~Absorber();
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
 
-    std::shared_ptr<Image<PixelType>> getImagePtr() { return image; } 
-    Image<PixelType> getImage() { return *image; }
+    Image<PixelType> getImage() { return image; }
 private:
-    std::shared_ptr<Image<PixelType>> image;
+    Image<PixelType> image;
+    std::string filename;
 };
 
 }

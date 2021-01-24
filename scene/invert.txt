@@ -1,7 +1,7 @@
 # Basic configuration
+inv
 filename result/debug.png
 ref result/teapot03/ref.png
-inv result/teapot03/invert.png
 width 768
 height 768
 spp 512
