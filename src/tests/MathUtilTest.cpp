@@ -49,7 +49,7 @@ void div_test(int num_iter = 10000) {
         auto rnd_vec = random_in_unit_sphere();
         // std::cout << rnd_vec << ", " << rnd_vec / 1.0 << std::endl;
         auto normal = rnd_vec / 1.0;
-        if ((rnd_vec - normal).length() != 0) std::cout << "fxxk!" << std::endl;
+        if ((rnd_vec - normal).length() != 0) std::cout << " " << std::endl;
     }
     return;
 }

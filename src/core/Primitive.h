@@ -21,8 +21,7 @@ public:
 
 class ShapePrimitive final : public Primitive {
 public:
-    ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform)
-    : shape(shape), material(material), transform(transform){}
+    ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform);
     bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
     AABB bounding() const override;
 
@@ -35,6 +34,7 @@ private:
     std::shared_ptr<Shape> shape;
     std::shared_ptr<Material> material;
     std::shared_ptr<Transform> transform;
+    AABB bbox;
 };
 
 // Constant Medium
