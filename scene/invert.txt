@@ -37,5 +37,5 @@ beginPrimitive
 shape plane min -1.5 -1.5 max 1.5 1.5 
 translate 0 -15 0
 rotate_x 180
-material absorber color 0 0 0 width 512 height 512
-endPrimitive
+material absorber color 0 0 0 width 512 height 512 filename result/sphere03/invert.png
+\endPrimitive
