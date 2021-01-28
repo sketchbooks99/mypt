@@ -84,6 +84,20 @@ Scene::Scene(const std::string& filename) {
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
         }
+        else if(header == "scale") {
+            std::vector<float> scale;
+            while(true) {
+                float s;
+                iss >> s;
+                if(iss.eof()) break;
+
+                scale.push_back(s);
+            }
+
+            if(scale.size() == 1) ts.scale(scale[0]);
+            else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
+            else throw std::runtime_error("Input value for scale was incorrect!\n");
+        }
     }
     integrator = Integrator();
     image.second.build(image_width, image_height);
@@ -153,7 +167,7 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
         else if(type == "mesh") {
             std::string filename;
             vec3 axis = vec3(1,1,1);
-            double size = 50;
+            float size = 1.f;
             bool isSmooth = false;
             iss >> header;
             while(!iss.eof()) {
@@ -299,6 +313,20 @@ void Scene::createPrimitive(std::ifstream& ifs) {
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
         }
+        else if(header == "scale") {
+            std::vector<float> scale;
+            while(true) {
+                float s;
+                iss >> s;
+                if(iss.eof()) break;
+
+                scale.push_back(s);
+            }
+
+            if(scale.size() == 1) ts.scale(scale[0]);
+            else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
+            else throw std::runtime_error("Input value for scale was incorrect!\n");
+        }
     }
 
     ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
@@ -390,6 +418,20 @@ void Scene::createLight(std::ifstream& ifs) {
             float angle;
             iss >> angle;
             ts.rotateZ(degrees_to_radians(angle));
+        }
+        else if(header == "scale") {
+            std::vector<float> scale;
+            while(true) {
+                float s;
+                iss >> s;
+                if(iss.eof()) break;
+
+                scale.push_back(s);
+            }
+
+            if(scale.size() == 1) ts.scale(scale[0]);
+            else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
+            else throw std::runtime_error("Input value for scale was incorrect!\n");
         }
     }
 

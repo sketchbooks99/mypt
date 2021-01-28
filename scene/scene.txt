@@ -61,8 +61,9 @@ material metal color 1 1 1
 endPrimitive
 
 beginPrimitive
-shape sphere radius 3
+shape sphere
 translate 5 -7 3
+scale 3
 material dielectric color 1 1 1 ior 1.5
 endPrimitive
 
@@ -74,6 +75,7 @@ intensity 30
 endLight
 
 beginPrimitive
-shape mesh filename data/model/bunny.obj axis 1 1 1 size 50 smooth 
+shape mesh filename data/model/bunny.obj axis 1 1 1 smooth 
+scale 5
 material lambertian color 0.8 0.8 0.8
 endPrimitive
