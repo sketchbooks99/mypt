@@ -1,11 +1,11 @@
 # Basic configuration
 inv
 filename result/debug.png
-ref result/sphere03/ref.png
-width 512
-height 512
-spp 100
-depth 5
+ref result/sphere_fish02/ref.png
+width 1024
+height 1024
+spp 256
+depth 12
 background 0 0 0
 
 # Camera 
@@ -15,7 +15,7 @@ lookat 0 0 0
 up 0 1 0
 focus_length 10.0
 aperture 0.0
-vfov 10
+vfov 5
 endCamera
 
 # MMAPs 
@@ -37,5 +37,5 @@ beginPrimitive
 shape plane min -1.5 -1.5 max 1.5 1.5 
 translate 0 -15 0
 rotate_x 180
-material absorber color 0 0 0 width 512 height 512 filename result/sphere03/invert.png
+material absorber color 0 0 0 width 1024 height 1024 filename result/sphere_fish02/invert.png
 endPrimitive

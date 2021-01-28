@@ -1,11 +1,11 @@
 # Basic configuration
 inv
 filename result/debug.png
-ref result/teapot03/ref.png
-width 768
-height 768
-spp 512
-depth 5
+ref result/sphere04/ref.png
+width 512
+height 512
+spp 100
+depth 12
 background 0 0 0
 
 # Camera 
@@ -43,5 +43,5 @@ beginPrimitive
 shape plane min -1.5 -1.5 max 1.5 1.5 
 translate 0 -15 0
 rotate_x 180
-material absorber color 0 0 0 width 512 height 512
+material absorber color 0 0 0 width 512 height 512 filename result/sphere04/invert_mmaps.png
 endPrimitive

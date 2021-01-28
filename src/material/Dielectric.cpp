@@ -24,8 +24,8 @@ bool Dielectric::scatter(
     bool is_reflect = false;
     vec3 direction;
 
-    if(into) rec.p -= rec.normal * 0.01;
-    else     rec.p += rec.normal * 0.01;
+    // if(into) rec.p -= rec.normal * 0.01;
+    // else     rec.p += rec.normal * 0.01;
 
     if(cannot_refract || reflect_prob > random_double()) {
         direction = reflect(r_in.direction(), outward_normal);

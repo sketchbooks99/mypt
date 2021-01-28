@@ -5,7 +5,7 @@ ref result/sphere03/ref.png
 width 512
 height 512
 spp 100
-depth 5
+depth 12
 background 0 0 0
 
 # Camera 
@@ -19,11 +19,17 @@ vfov 10
 endCamera
 
 # MMAPs 
-beginPrimitive 
-shape plane min -25 -25 max 25 25
+beginPrimitive
+shape mesh filename data/model/mmaps_mirror.obj
 rotate_x 45
-material mmaps color 1 1 1
+material metal color 0.87 0.87 0.87
 endPrimitive
+
+beginPrimitive
+shape mesh filename data/model/mmaps_glass.obj 
+rotate_x 45 
+material dielectric color 1 1 1 ior 1.52
+endPrimitive 
 
 # Transparent object
 beginPrimitive
@@ -37,5 +43,5 @@ beginPrimitive
 shape plane min -1.5 -1.5 max 1.5 1.5 
 translate 0 -15 0
 rotate_x 180
-material absorber color 0 0 0 width 512 height 512 filename result/sphere03/invert.png
+material absorber color 0 0 0 width 512 height 512 filename result/sphere03/invert_mmaps.png
 endPrimitive
