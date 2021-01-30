@@ -37,6 +37,7 @@ set(pbrenderer_src
     src/shape/Triangle.cpp
 
     src/texture/ImageTexture.cpp
+    src/texture/NoiseTexture.cpp
 )
 
 # For use of OPENMP

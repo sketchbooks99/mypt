@@ -17,6 +17,8 @@ public:
 
     virtual double pdf_value(const vec3& /* o */, const vec3& /* v */) const { return 0.0; }
     virtual vec3 random(const vec3& /* o */) const { return vec3(1, 0, 0); }
+
+    virtual std::string to_string() const = 0;
 };
 
 class ShapePrimitive final : public Primitive {
@@ -28,8 +30,14 @@ public:
     double pdf_value(const vec3& o, const vec3& v) const override;
     vec3 random(const vec3& o) const override;
 
-    const std::type_info &getMatType() { return typeid(material); }
-    const std::type_info &getShapeType() { return typeid(shape); }
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "ShapePrimitive : {" << std::endl;
+        oss << "Shape : " << shape->to_string() << std::endl;
+        oss << "Material : " << material->to_string() << std::endl;
+        oss << "}";
+        return oss.str();
+    }
 private:
     std::shared_ptr<Shape> shape;
     std::shared_ptr<Material> material;
@@ -53,6 +61,16 @@ public:
     bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
     AABB bounding() const override {
         return boundary->bounding();
+    }
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "ShapePrimitive : {" << std::endl;
+        oss << "Boundary : " << boundary->to_string() << "," << std::endl;
+        oss << "Phase Function : " << phase_function->to_string() << "," << std::endl;
+        oss << "Density : " << neg_inv_density << std::endl;
+        oss << "}";
+        return oss.str();
     }
 private:
     std::shared_ptr<Shape> boundary;

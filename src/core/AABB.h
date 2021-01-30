@@ -16,6 +16,15 @@ struct AABB {
     double surface_area() {
         return 2*(_max - _min).length_squared();
     }
+
+    std::string to_string() const {
+        std::ostringstream oss;
+        oss << "AABB : {" << std::endl;
+        oss << "\tMin : " << _min << "," << std::endl;
+        oss << "\tMax : " << _max << std::endl;
+        oss << "}";
+        return oss.str();
+    }
 private:
     vec3 _min;
     vec3 _max;

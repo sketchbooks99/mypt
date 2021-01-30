@@ -7,6 +7,8 @@
 #include <time.h>
 #include <iomanip>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <assert.h>
 #include <random>
 #include <map>

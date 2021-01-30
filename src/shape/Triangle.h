@@ -52,6 +52,16 @@ public:
         return { mesh->vertices[face[0]], mesh->vertices[face[1]], mesh->vertices[face[2]] };
     }
 
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "Triangle : {" << std::endl;
+        oss << "\tp0 : " << mesh->vertices[face[0]] << ", ";
+        oss << "p1 : " << mesh->vertices[face[1]] << ", ";
+        oss << "p2 : " << mesh->vertices[face[2]] << std::endl;
+        oss << "}";
+        return oss.str();
+    }
+
 private:
     std::shared_ptr<TriangleMesh> mesh;
     int3 face;

@@ -27,6 +27,9 @@ public:
     BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
     bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const override;
     AABB bounding() const override;
+
+    std::string to_string() const override {}
+
 private:
     std::shared_ptr<Primitive> left;
     std::shared_ptr<Primitive> right;

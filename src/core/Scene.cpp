@@ -1,6 +1,4 @@
 #include "Scene.h"
-#include <fstream>
-#include <sstream>
 
 #include "../shape/MovingSphere.h"
 #include "../shape/Plane.h"

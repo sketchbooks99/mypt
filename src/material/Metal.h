@@ -12,6 +12,15 @@ public:
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
 
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "Metal : {" << std::endl;
+        oss << "\tAlbedo : " << albedo << "," << std::endl;
+        oss << "\tFuzz : " << fuzz << std::endl;
+        oss << "}";
+        return oss.str();
+    }
+
 private: 
     vec3 albedo;
     double fuzz;

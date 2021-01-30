@@ -17,6 +17,15 @@ public:
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
     vec3 emitted(const Ray& r_in, const HitRecord& rec, double u, double v, const vec3& p) const override;
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "Emitter : {" << std::endl;
+        oss << "\tTexture : " << albedo->to_string() << "," << std::endl;
+        oss << "\tIntensity : " << intensity << std::endl;
+        oss << "}";
+        return oss.str();
+    }
     
 private:
     std::shared_ptr<Texture> albedo;
