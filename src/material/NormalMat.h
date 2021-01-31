@@ -12,6 +12,12 @@ public:
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
     double scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) const override;
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "NormalMat";
+        return oss.str();
+    }
 };
 
 }

@@ -79,6 +79,7 @@ bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) co
     return hit_left | hit_right;
 }
 
+
 AABB BVH::bounding() const {
     return box;
 }

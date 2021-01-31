@@ -14,6 +14,15 @@ public:
     
     double pdf_value(const vec3&, const vec3&) const override;
     vec3 random(const vec3&) const override;
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "FilpFace : {" << std::endl;
+        oss << "\tMin : " << min << std::endl;
+        oss << "\tMax : " << max << std::endl;
+        oss << "}";
+        return oss.str();
+    }
 private:
     vec2 min, max;
 };
