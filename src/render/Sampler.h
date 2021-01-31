@@ -16,7 +16,7 @@ namespace mypt {
 class Sampler {
 public:
     Sampler(int spp) : samples_per_pixels(spp) {}
-    virtual double sample() const = 0;
+    virtual Float sample() const = 0;
 private:
     int samples_per_pixels;
 };

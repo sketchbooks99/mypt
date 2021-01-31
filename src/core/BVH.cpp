@@ -33,11 +33,11 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
         }
         case SplitMethod::SAH: {
             int splitIndex = 1;
-            double bestCost = std::numeric_limits<double>::infinity();
+            Float bestCost = std::numeric_limits<Float>::infinity();
             // AABB for calculating temporal surface area.
             AABB s1box, s2box;
             // vector to store surface areas.
-            std::vector<double> s1SA(primitive_span), s2SA(primitive_span);
+            std::vector<Float> s1SA(primitive_span), s2SA(primitive_span);
             // Store surface area of left side at every cases
             for(int i=1; i<primitive_span; i++) {
                 s1box = surrounding(s1box, p[i+start]->bounding());
@@ -47,7 +47,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
             for(int i=primitive_span-1; i>0; i--) {
                 s2box = surrounding(s2box, p[i+start]->bounding());
                 s2SA[i] = s2box.surface_area();
-                double cost = s1SA[i]*(i+1) + s2SA[i]*(primitive_span-i);
+                Float cost = s1SA[i]*(i+1) + s2SA[i]*(primitive_span-i);
                 // Update best cost of Surface Area Heuristic.
                 if(cost < bestCost) {
                     bestCost = cost;
@@ -69,7 +69,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     box = surrounding(box_left, box_right);
 }
 
-bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool BVH::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     if(!box.intersect(r, t_min, t_max))
         return false;
     

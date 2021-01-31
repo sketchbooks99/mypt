@@ -1,22 +1,21 @@
 #pragma once
 
-#include "vec3.h"
-#include "vec4.h"
+#include "MathUtil.h"
 
 namespace mypt {
 
 struct mat4 {
 public:
     mat4();
-    mat4(double m[4][4]);
-    mat4(double e00, double e01, double e02, double e03,
-         double e10, double e11, double e12, double e13,
-         double e20, double e21, double e22, double e23,
-         double e30, double e31, double e32, double e33);
+    mat4(Float m[4][4]);
+    mat4(Float e00, Float e01, Float e02, Float e03,
+         Float e10, Float e11, Float e12, Float e13,
+         Float e20, Float e21, Float e22, Float e23,
+         Float e30, Float e31, Float e32, Float e33);
 
     // Multiply matrix(4x4) with vector
     inline static vec3 vector_mul(const mat4& m, const vec3& v) {
-        double x = v.x, y = v.y, z = v.z;
+        Float x = v.x, y = v.y, z = v.z;
         return vec3(m.mat[0][0]*x + m.mat[0][1]*y + m.mat[0][2]*z,
                     m.mat[1][0]*x + m.mat[1][1]*y + m.mat[1][2]*z,
                     m.mat[2][0]*x + m.mat[2][1]*y + m.mat[2][2]*z);
@@ -24,10 +23,10 @@ public:
 
     // Multiply matrix(4x4) with positional vector
     inline static vec3 point_mul(const mat4& m, const vec3& p) {
-        double x = m.mat[0][0]*p.x + m.mat[0][1]*p.y + m.mat[0][2]*p.z + m.mat[0][3];
-        double y = m.mat[1][0]*p.x + m.mat[1][1]*p.y + m.mat[1][2]*p.z + m.mat[1][3];
-        double z = m.mat[2][0]*p.x + m.mat[2][1]*p.y + m.mat[2][2]*p.z + m.mat[2][3];
-        double w = m.mat[3][0]*p.x + m.mat[3][1]*p.y + m.mat[3][2]*p.z + m.mat[3][3];
+        Float x = m.mat[0][0]*p.x + m.mat[0][1]*p.y + m.mat[0][2]*p.z + m.mat[0][3];
+        Float y = m.mat[1][0]*p.x + m.mat[1][1]*p.y + m.mat[1][2]*p.z + m.mat[1][3];
+        Float z = m.mat[2][0]*p.x + m.mat[2][1]*p.y + m.mat[2][2]*p.z + m.mat[2][3];
+        Float w = m.mat[3][0]*p.x + m.mat[3][1]*p.y + m.mat[3][2]*p.z + m.mat[3][3];
         ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
         if(w == 1) {
             return vec3(x, y, z);
@@ -38,13 +37,13 @@ public:
 
     // Multiply matrix(4x4) with normal vector
     inline static vec3 normal_mul(const mat4& m, const vec3& n) {
-        double x = n.x, y = n.y, z = n.z;
+        Float x = n.x, y = n.y, z = n.z;
         return vec3(m.mat[0][0]*x + m.mat[1][0]*y + m.mat[2][0]*z,
                     m.mat[0][1]*x + m.mat[1][1]*y + m.mat[2][1]*z,
                     m.mat[0][2]*x + m.mat[1][2]*y + m.mat[2][2]*z);
     }
 
-    double mat[4][4];
+    Float mat[4][4];
 };
 
 // ----------------------------------------------------------------------
@@ -73,7 +72,7 @@ inline std::ostream& operator<<(std::ostream &out, const mat4 &m) {
 // Very complicated calculation ... :<
 inline mat4 inverse(mat4 m) {
     mat4 inv;
-    double tmp;
+    Float tmp;
     for(int i=0; i<4; i++) {
         tmp = 1.0 / m.mat[i][i];
         for(int j=0; j<4; j++) {
@@ -103,37 +102,37 @@ inline mat4 transpose(const mat4& m) {
 }
 
 // ----------------------------------------------------------------------
-inline mat4 rotate_mat_x(double theta) {
-    double c = cos(theta);
-    double s = sin(theta);
+inline mat4 rotate_mat_x(Float theta) {
+    Float c = cos(theta);
+    Float s = sin(theta);
     return mat4(1, 0, 0,  0,
                 0, c, -s, 0,
                 0, s, c,  0,
                 0, 0, 0,  1);
 }
 
-inline mat4 rotate_mat_y(double theta) {
-    double c = cos(theta);
-    double s = sin(theta);
+inline mat4 rotate_mat_y(Float theta) {
+    Float c = cos(theta);
+    Float s = sin(theta);
     return mat4(c,  0, s, 0, 
                 0,  1, 0, 0,
                 -s, 0, c, 0,
                 0,  0, 0, 1);
 }
 
-inline mat4 rotate_mat_z(double theta) {
-    double c = cos(theta);
-    double s = sin(theta);
+inline mat4 rotate_mat_z(Float theta) {
+    Float c = cos(theta);
+    Float s = sin(theta);
     return mat4(c, -s, 0, 0, 
                 s, c,  0, 0,
                 0, 0,  1, 0,
                 0, 0,  0, 1);
 }
 
-inline mat4 rotate_mat(double theta, const vec3& axis) {
+inline mat4 rotate_mat(Float theta, const vec3& axis) {
     vec3 a = normalize(axis);
-    double s = sin(theta);
-    double c = cos(theta);
+    Float s = sin(theta);
+    Float c = cos(theta);
     mat4 m;
     m.mat[0][0] = a.x * a.x + (1 - a.x * a.x) * c;
     m.mat[0][1] = a.x * a.y * (1 - c) - a.z * s;
@@ -173,7 +172,7 @@ inline mat4 scale_mat(const vec3& s) {
     );
 }
 
-inline mat4 scale_mat(double s) {
+inline mat4 scale_mat(Float s) {
     return mat4(
         s, 0, 0, 0,
         0, s, 0, 0,

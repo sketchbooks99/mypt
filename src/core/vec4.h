@@ -37,7 +37,7 @@ public:
         return *this;
     }
     
-    type4& operator*=(const double t) {
+    type4& operator*=(const Float t) {
         x *= t;
         y *= t;
         z *= t;
@@ -45,27 +45,27 @@ public:
         return *this;
     }
     
-    type4 &operator/=(const double t) {
+    type4 &operator/=(const Float t) {
         return *this *= 1/t;
     }
     
-    double length() const {
+    Float length() const {
         return sqrt(length_squared());
     }
     
-    double length_squared() const {
+    Float length_squared() const {
         return x*x + y*y + z*z + w*w;
     }
 
     inline static type4 random() {
-        return type4(random_double(), random_double(), random_double(), random_double());
+        return type4(random_float(), random_float(), random_float(), random_float());
     }
 
     inline static type4 random(Type min, Type max) {
-        return type4(random_double(min, max), 
-                     random_double(min, max), 
-                     random_double(min, max),
-                     random_double(min, max));
+        return type4(random_float(min, max), 
+                     random_float(min, max), 
+                     random_float(min, max),
+                     random_float(min, max));
     }
     
 public:
@@ -94,22 +94,22 @@ inline type4<Type> operator*(const type4<Type> &u, const type4<Type> &v) {
 }
 
 template <typename Type>
-inline type4<Type> operator*(double t, const type4<Type> &v) {
+inline type4<Type> operator*(Float t, const type4<Type> &v) {
     return type4<Type>(t*v.x, t*v.y, t*v.z, t*v.w);
 }
 
 template <typename Type>
-inline type4<Type> operator*(const type4<Type> &v, double t) {
+inline type4<Type> operator*(const type4<Type> &v, Float t) {
     return t * v;
 }
 
 template <typename Type>
-inline type4<Type> operator/(type4<Type> v, double t) {
+inline type4<Type> operator/(type4<Type> v, Float t) {
     return (1/t) * v;
 }
 
 template <typename Type>
-inline double dot(const type4<Type> &u, const type4<Type> &v) {
+inline Float dot(const type4<Type> &u, const type4<Type> &v) {
     return u.x * v.x
     + u.y * v.y
     + u.z * v.z;
@@ -123,7 +123,7 @@ inline type4<Type> cross(const type4<Type> &u, const type4<Type> &v) {
                 1.0f);
 }
 
-using vec4 = type4<double>;
+using vec4 = type4<Float>;
 using uint4 = type4<unsigned int>;
 using int4 = type4<int>;
 using RGBA = type4<unsigned char>;

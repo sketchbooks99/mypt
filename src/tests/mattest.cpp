@@ -3,7 +3,7 @@
 int main(void) {
     vec3 vec(5,6,7);
 
-    double theta = pi / 3.0f;
+    Float theta = pi / 3.0f;
     mat4 r_mat = rotate_mat(theta, vec3(1, 1, 1));
     mat4 rx_mat = rotate_mat_x(theta);
     mat4 ry_mat = rotate_mat_y(theta);

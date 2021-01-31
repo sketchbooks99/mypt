@@ -53,17 +53,17 @@ public:
     }
 
     inline static type2 random(){
-        return type2(random_double(), random_double());
+        return type2(random_float(), random_float());
     }
 
     inline static type2 random(const Type& min, const Type& max) {
-        return type2(random_double(min, max), random_double(min, max));
+        return type2(random_float(min, max), random_float(min, max));
     }
 public:
     Type x, y;
 };
 
-using vec2 = type2<double>;
+using vec2 = type2<Float>;
 using uint2 = type2<unsigned int>;
 using int2 = type2<int>;
 
@@ -83,10 +83,10 @@ template <typename Type>
 inline type2<Type> operator*(const type2<Type> &u, const type2<Type> &v) { return type2<Type>(u.x*v.x, u.y*v.y); }
 
 template <typename Type>
-inline type2<Type> operator*(double t, const type2<Type> &v) { return type2<Type>(t*v.x, t*v.y); }
+inline type2<Type> operator*(Float t, const type2<Type> &v) { return type2<Type>(t*v.x, t*v.y); }
 
 template <typename Type>
-inline type2<Type> operator/(const type2<Type> &u, double t) { return (1/t) * u; }
+inline type2<Type> operator/(const type2<Type> &u, Float t) { return (1/t) * u; }
 
 template <typename Type>
 inline Type dot(const type2<Type> &u, const type2<Type> &v) { return u.x*v.x + u.y*v.y; }

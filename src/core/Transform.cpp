@@ -7,20 +7,20 @@ Transform Transform::translate(vec3 t) {
     return Transform(translate_mat(t), translate_mat(-t));
 }
 
-Transform Transform::rotateX(double theta) {
+Transform Transform::rotateX(Float theta) {
     return Transform(rotate_mat_x(theta), transpose(rotate_mat_x(theta)));
 }
-Transform Transform::rotateY(double theta) {
+Transform Transform::rotateY(Float theta) {
     return Transform(rotate_mat_y(theta), transpose(rotate_mat_y(theta)));
 }
-Transform Transform::rotateZ(double theta) {
+Transform Transform::rotateZ(Float theta) {
     return Transform(rotate_mat_z(theta), transpose(rotate_mat_z(theta)));
 }
-Transform Transform::rotate(double theta, vec3 axis) {
+Transform Transform::rotate(Float theta, vec3 axis) {
     return Transform(rotate_mat(theta, axis), transpose(rotate_mat(theta, axis)));
 }
 
-Transform Transform::scale(double s) {
+Transform Transform::scale(Float s) {
     ASSERT(s != 0, "Scale value must be non-zero!\n");
     return Transform(scale_mat(s), scale_mat(1.0f / s));
 }
@@ -59,23 +59,23 @@ void TransformSystem::translate(vec3 t) {
     transformStack.back() = transformStack.back() * Transform::translate(t);
 }
 
-void TransformSystem::rotateX(double theta) {
+void TransformSystem::rotateX(Float theta) {
     transformStack.back() = transformStack.back() * Transform::rotateX(theta);
 }
 
-void TransformSystem::rotateY(double theta) {
+void TransformSystem::rotateY(Float theta) {
     transformStack.back() = transformStack.back() * Transform::rotateY(theta);
 }
 
-void TransformSystem::rotateZ(double theta) {
+void TransformSystem::rotateZ(Float theta) {
     transformStack.back() = transformStack.back() * Transform::rotateZ(theta);
 }
 
-void TransformSystem::rotate(double theta, vec3 axis) {
+void TransformSystem::rotate(Float theta, vec3 axis) {
     transformStack.back() = transformStack.back() * Transform::rotate(theta, axis);
 }
 
-void TransformSystem::scale(double s) {
+void TransformSystem::scale(Float s) {
     transformStack.back() = transformStack.back() * Transform::scale(s);
 }
 

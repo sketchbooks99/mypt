@@ -20,7 +20,7 @@ Perlin::~Perlin() {
     delete[] perm_z;
 }
 
-double Perlin::turb(const vec3& p, int depth) const {
+Float Perlin::turb(const vec3& p, int depth) const {
     auto accum = 0.0;
     vec3 temp_p = p;
     auto weight = 1.0;
@@ -34,7 +34,7 @@ double Perlin::turb(const vec3& p, int depth) const {
     return fabs(accum);
 }
 
-double Perlin::noise(const vec3& p) const {
+Float Perlin::noise(const vec3& p) const {
     auto u = p.x - floor(p.x);
     auto v = p.y - floor(p.y);
     auto w = p.z - floor(p.z);

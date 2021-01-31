@@ -11,9 +11,9 @@ struct HitRecord {
     vec3 p;
     vec3 normal;
     std::shared_ptr<Material> mat_ptr;
-    double t;
-    double u;
-    double v;
+    Float t;
+    Float u;
+    Float v;
     bool front_face;
 
     inline void set_face_normal(const Ray& r, const vec3& outward_normal) {
@@ -41,7 +41,7 @@ enum MatType {
 class Material {
 public:
     virtual vec3 emitted(
-        const Ray& /* r_in */, const HitRecord& /* rec */, double /* u */, double /* v */, const vec3& /* p */
+        const Ray& /* r_in */, const HitRecord& /* rec */, Float /* u */, Float /* v */, const vec3& /* p */
     ) const {
         return vec3(0, 0, 0);
     }
@@ -53,7 +53,7 @@ public:
     }
 
     // Probability distribution function
-    virtual double scattering_pdf (
+    virtual Float scattering_pdf (
         const Ray& /* r_in */, const HitRecord& /* rec */, const Ray& /* scattered */
     ) const {
         return 0;

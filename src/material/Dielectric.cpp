@@ -19,7 +19,7 @@ bool Dielectric::scatter(
     bool cannot_refract = ni_over_nt * sine > 1.0;
 
     float reflect_prob = schlick(cosine, ior);
-    if(cannot_refract || reflect_prob > random_double()) 
+    if(cannot_refract || reflect_prob > random_float()) 
         srec.specular_ray = Ray(rec.p, reflect(r_in.direction(), outward_normal));
     else
         srec.specular_ray = Ray(rec.p, refract(r_in.direction(), outward_normal, ni_over_nt));

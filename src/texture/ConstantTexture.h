@@ -9,7 +9,7 @@ public:
     ConstantTexture(){}
     ConstantTexture(vec3 c) : color(c) {}
 
-    vec3 value(double /* u */, double /* v */, const vec3& /* p */) const {
+    vec3 value(Float /* u */, Float /* v */, const vec3& /* p */) const {
         return color;
     }
 

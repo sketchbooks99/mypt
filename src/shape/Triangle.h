@@ -38,7 +38,7 @@ public:
         }
     }
     
-    bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
     AABB bounding() const override { return AABB(min, max); }
 
     vec3 get_normal() const {

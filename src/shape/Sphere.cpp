@@ -14,7 +14,7 @@ vec2 Sphere::getUV(const vec3& p) const {
 }
 
 /// \public function --------------------------------------------------
-bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool Sphere::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     // vector from origin to center
     vec3 oc = r.origin();
     auto a = r.direction().length_squared();
@@ -42,7 +42,7 @@ bool Sphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec)
 }
 
 // -----------------------------------------------------------------------
-double Sphere::pdf_value(const vec3& o, const vec3& v) const {
+Float Sphere::pdf_value(const vec3& o, const vec3& v) const {
     HitRecord rec;
     if(!this->intersect(Ray(o, v), eps, infinity, rec)) 
         return 0;
@@ -68,7 +68,7 @@ AABB Sphere::bounding() const {
         vec3(radius, radius, radius));
 }
 
-std::shared_ptr<Shape> createSphereShape(double r) {
+std::shared_ptr<Shape> createSphereShape(Float r) {
     return std::make_shared<Sphere>(r);
 }
 

@@ -2,7 +2,7 @@
 
 namespace mypt {
 
-vec3 NoiseTexture::value(double /* u */, double /* v */, const vec3& p) const {
+vec3 NoiseTexture::value(Float /* u */, Float /* v */, const vec3& p) const {
     switch(mode) {
     case Mode::NOISE:
         return vec3(1,1,1) * noise.noise(scale * p);

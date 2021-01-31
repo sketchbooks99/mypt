@@ -16,7 +16,7 @@ public:
      : albedo(std::make_shared<ConstantTexture>(a)), intensity(intensity) {};
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
-    vec3 emitted(const Ray& r_in, const HitRecord& rec, double u, double v, const vec3& p) const override;
+    vec3 emitted(const Ray& r_in, const HitRecord& rec, Float u, Float v, const vec3& p) const override;
 
     std::string to_string() const override {
         std::ostringstream oss;
