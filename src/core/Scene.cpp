@@ -102,14 +102,17 @@ Scene::Scene(const std::string& filename) {
         }
         else if(header == "scale") {
             std::vector<float> scale;
-            while(!iss.eof()) {
+            while(true) {
                 float s;
                 iss >> s;
+                if(iss.eof()) break;
+
                 scale.push_back(s);
             }
+            ASSERT(scale.size() != 1 && scale.size() != 3, "Input scale value was incorrect!\n");
+
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
     integrator = Integrator();
@@ -360,14 +363,17 @@ void Scene::createPrimitive(std::ifstream& ifs) {
         }
         else if(header == "scale") {
             std::vector<float> scale;
-            while(!iss.eof()) {
+            while(true) {
                 float s;
                 iss >> s;
+                if(iss.eof()) break;
+
                 scale.push_back(s);
             }
+            ASSERT(scale.size() != 1 && scale.size() != 3, "Input scale value was incorrect!\n");
+
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
 
@@ -463,14 +469,17 @@ void Scene::createLight(std::ifstream& ifs) {
         }
         else if(header == "scale") {
             std::vector<float> scale;
-            while(!iss.eof()) {
+            while(true) {
                 float s;
                 iss >> s;
+                if(iss.eof()) break;
+
                 scale.push_back(s);
             }
+            ASSERT(scale.size() != 1 && scale.size() != 3, "Input scale value was incorrect!\n");
+
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else std::runtime_error("Input scale value was incorrect!\n"); 
         }
     }
 

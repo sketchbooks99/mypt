@@ -7,7 +7,6 @@ int main(int /* argc */, const char * argv[]) {
     srand((unsigned)time(NULL));
 
     std::string filename = argv[1];
-    std::cout << filename;
     Scene scene(filename);
     scene.render();
 
