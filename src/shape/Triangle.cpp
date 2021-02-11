@@ -155,7 +155,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
 }
 
 // ---------------------------------------------------------------------------
-/// REF: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
+/// \ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
 bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     auto p0 = mesh->vertices[face[0]];
     auto p1 = mesh->vertices[face[1]];

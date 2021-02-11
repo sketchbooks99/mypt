@@ -1,8 +1,8 @@
 # Basic configuration
-filename result/cube02/debug.png
+filename result/bunny02/inv_result.png
 width 768
 height 768
-spp 4
+spp 8
 depth 12
 background 0 0 0
 
@@ -64,26 +64,23 @@ endLight
 
 # MMAPs 
 beginPrimitive 
-shape plane min -15 -15 max 15 15
+shape plane min -25 -25 max 25 25
 rotate_x 45
 material mmaps color 1 1 1
 endPrimitive
 
 # Transparent object
 beginPrimitive 
-shape mesh filename data/model/cube.obj axis 1 1 1 size 2.5
-#shape sphere radius 2.5
-translate 0 0 15
-rotate_y 15.8
+shape mesh filename data/model/bunny.obj smooth 
+translate 0 -5 40
+scale 70
 material dielectric color 1 1 1 ior 1.49
-#material lambertian color 1 1 1
 endPrimitive
 
 # light source 
 beginLight
 shape plane min -1.5 -1.5 max 1.5 1.5 
-translate 0 -15 0
-rotate_x 180
-image data/image/grid.jpg
-intensity 1
+translate 0 -40 0
+image result/bunny02/invert.png
+intensity 2
 endLight
