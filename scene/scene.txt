@@ -1,5 +1,5 @@
 # Basic configuration
-filename result/cube.png
+filename result/bunny.png
 width 768
 height 768
 spp 4
@@ -13,7 +13,7 @@ lookat 0 0 0
 up 0 1 0
 focus_length 10.0
 aperture 0.0
-vfov 10
+vfov 40
 endCamera
 
 # Top
@@ -61,14 +61,10 @@ color 0.9 0.7 0.3
 intensity 30
 endLight
 
+# Bunny 
 beginPrimitive
-shape mesh filename data/model/mmaps_mirror.obj
-rotate_x 45
-material metal color 0.87 0.87 0.87
+shape mesh filename data/model/bunny.obj smooth
+translate 0 -5 40
+scale 70
+material dielectric color 1 1 1 ior 1.49
 endPrimitive
-
-beginPrimitive
-shape mesh filename data/model/mmaps_glass.obj size
-rotate_x 45 
-material dielectric color 1 1 1 ior 1.52
-endPrimitive 

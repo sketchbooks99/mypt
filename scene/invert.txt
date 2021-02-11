@@ -4,8 +4,8 @@ ref result/bunny02/ref.png
 inv result/bunny02/invert.png
 width 768
 height 768
-spp 512
-depth 5
+spp 128
+depth 10
 background 0 0 0
 
 # Camera 
@@ -25,15 +25,9 @@ rotate_x 45
 material mmaps color 1 1 1
 endPrimitive
 
-# Transparent object
-#beginPrimitive
-#shape sphere radius 2.5
-#translate 0 0 40
-#material dielectric color 1 1 1 ior 1.49 
-#endPrimitive
-
-beginPrimitive 
-shape mesh filename data/model/bunny.obj axis 1 1 1 smooth 
+# Bunny
+beginPrimitive
+shape mesh filename data/model/bunny.obj smooth
 translate 0 -5 40
 scale 70
 material dielectric color 1 1 1 ior 1.49

@@ -105,11 +105,13 @@ Scene::Scene(const std::string& filename) {
             while(true) {
                 float s;
                 iss >> s;
-                if(iss.eof()) break;
+                /** Add validation by scale.size() to ensure that 
+                 *  scale inputs have at least one value. */
+                if(iss.eof() && scale.size() != 0) break;
 
                 scale.push_back(s);
             }
-            ASSERT(scale.size() != 1 && scale.size() != 3, "Input scale value was incorrect!\n");
+            ASSERT(scale.size() == 1 || scale.size() == 3, "Input scale value was incorrect!\n");
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
@@ -366,11 +368,14 @@ void Scene::createPrimitive(std::ifstream& ifs) {
             while(true) {
                 float s;
                 iss >> s;
-                if(iss.eof()) break;
+                /** Add validation by scale.size() to ensure that 
+                 *  scale inputs have at least one value. */
+                if(iss.eof() && scale.size() != 0) break;
 
                 scale.push_back(s);
             }
-            ASSERT(scale.size() != 1 && scale.size() != 3, "Input scale value was incorrect!\n");
+            std::cout << scale.size() << std::endl;
+            ASSERT(scale.size() == 1 || scale.size() == 3, "Input scale value was incorrect!\n");
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
@@ -472,11 +477,13 @@ void Scene::createLight(std::ifstream& ifs) {
             while(true) {
                 float s;
                 iss >> s;
-                if(iss.eof()) break;
+                /** Add validation by scale.size() to ensure that 
+                 *  scale inputs have at least one value. */
+                if(iss.eof() && scale.size() != 0) break;
 
                 scale.push_back(s);
             }
-            ASSERT(scale.size() != 1 && scale.size() != 3, "Input scale value was incorrect!\n");
+            ASSERT(scale.size() == 1 || scale.size() == 3, "Input scale value was incorrect!\n");
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
