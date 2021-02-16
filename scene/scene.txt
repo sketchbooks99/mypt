@@ -1,8 +1,8 @@
 # Basic configuration
-filename result/bunny.png
+filename result/bunny_profile.png
 width 512
 height 512
-spp 128
+spp 1
 depth 12
 background 0 0 0
 

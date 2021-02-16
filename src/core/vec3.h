@@ -120,7 +120,7 @@ inline type3<Type> operator*(const type3<Type> &v, Float t) {
 
 template <typename Type>
 inline type3<Type> operator/(type3<Type> v, Float t) {
-    return (1/t) * v;
+    return (1.f/t) * v;
 }
 
 template <typename Type>

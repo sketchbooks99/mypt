@@ -469,8 +469,8 @@ void Scene::streamProgress(int currentLine, int maxLine, Float elapsedTime, int 
 // -----------------------------------------------------------------------------------------
 void Scene::render() {
 
-    std::cout << "primitives: " << this->primitives.size() << std::endl;
-    std::cout << "lights: " << this->lights.size() << std::endl;
+    std::cout << "PRIMITIVES: " << this->primitives.size() << std::endl;
+    std::cout << "LIGHTS: " << this->lights.size() << std::endl;
 
     BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
 
@@ -484,6 +484,7 @@ void Scene::render() {
 
     #ifdef _OPENMP
     int n_threads = omp_get_max_threads();
+    std::cout << "[OpenMP] NUM_THREADS: " << n_threads << std::endl;
     #endif
 
     // ASSERT(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");

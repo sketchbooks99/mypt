@@ -14,7 +14,10 @@ struct AABB {
     bool intersect(const Ray& r, Float tmin, Float tmax) const;
 
     Float surface_area() {
-        return 2*(_max - _min).length_squared();
+        Float dx = _max.x - _min.x;
+        Float dy = _max.y - _min.y;
+        Float dz = _max.z - _min.z;
+        return 2*(dx*dy + dy*dz + dz*dx);
     }
 
     std::string to_string() const {

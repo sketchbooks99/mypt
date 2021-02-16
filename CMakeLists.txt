@@ -10,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF) # ...without compiler extensions like gnu++11
 project(mypt)
 
 # Set 
-set(pbrenderer_src
+set(mypt_src
     src/mypt.cpp
     src/core/AABB.cpp
     src/core/BVH.cpp
@@ -44,9 +44,10 @@ set(pbrenderer_src
 find_package(OpenMP REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -Wall -Wextra -Ofast")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg -Wall -Wextra -Ofast")
 
-add_executable(mypt ${pbrenderer_src})
+add_executable(mypt ${mypt_src})
 
 # Set float precision
 option(USE_FLOAT_TO_DOUBLE "Use Float to double" ON)
