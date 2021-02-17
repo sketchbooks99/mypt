@@ -1,5 +1,5 @@
 # Basic configuration
-filename result/bunny_profile.png
+filename result/bunny_profile1.png
 width 512
 height 512
 spp 1
@@ -70,8 +70,8 @@ endPrimitive
 beginLight
 shape plane min -2.5 -2.5 max 2.5 2.5
 translate 0 9.9 0
-color 0.9 0.7 0.3
-intensity 50
+color 1 1 1
+intensity 10
 endLight
 
 beginPrimitive

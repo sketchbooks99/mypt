@@ -46,7 +46,7 @@ bool ShapePrimitive::intersect(const Ray& r, Float t_min, Float t_max, HitRecord
     
     auto p = rec.p;
     auto normal = rec.normal;
-
+    
     p = mat4::point_mul(transform->getMatrix(), rec.p);
     normal = normalize(mat4::normal_mul(transform->getInvMatrix(), rec.normal));
 

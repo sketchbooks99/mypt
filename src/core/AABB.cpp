@@ -7,6 +7,7 @@ bool AABB::intersect(const Ray& r, Float tmin, Float tmax) const {
      *        is significantly improved by closely storing values 
      *        in memory space. */
     
+    /// FASTCODE:
     vec3 v[6] = {
         vec3(_min.x, r.origin().x, r.direction().x),
         vec3(_max.x, r.origin().x, r.direction().x),

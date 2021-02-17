@@ -1,0 +1,890 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 76.95     39.45    39.45 354631717     0.00     0.00  mypt::AABB::intersect(mypt::Ray const&, double, double) const
+  8.41     43.76     4.31 123779572     0.00     0.00  mypt::Triangle::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const
+  6.87     47.28     3.52 126797318     0.00     0.00  mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const
+  5.70     50.20     2.92   817091     0.00     0.06  mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const
+  0.39     50.40     0.20   242286     0.00     0.00  mypt::ShapePrimitive::random(mypt::type3<double> const&) const
+  0.29     50.55     0.15  3089679     0.00     0.00  mypt::Plane::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const
+  0.25     50.68     0.13     6124     0.02     0.02  mypt::BVHNode::bounding() const
+  0.18     50.77     0.09                             mypt::Sphere::to_string[abi:cxx11]() const
+  0.12     50.83     0.06     9186     0.01     0.02  void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>)
+  0.10     50.88     0.05  4241593     0.00     0.00  mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)
+  0.10     50.93     0.05   485487     0.00     0.00  mypt::Lambertian::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const
+  0.10     50.98     0.05        1    50.00   395.01  mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod)
+  0.08     51.02     0.04  4811370     0.00     0.00  mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)
+  0.08     51.06     0.04        1    40.00    40.00  stbi_zlib_compress
+  0.07     51.10     0.04 28028034     0.00     0.00  mypt::ShapePrimitive::bounding() const
+  0.07     51.13     0.04        2    17.50    17.50  void std::vector<mypt::Transform, std::allocator<mypt::Transform> >::_M_realloc_insert<mypt::Transform>(__gnu_cxx::__normal_iterator<mypt::Transform*, std::vector<mypt::Transform, std::allocator<mypt::Transform> > >, mypt::Transform&&)
+  0.06     51.16     0.03   262144     0.00     0.19  mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const
+  0.04     51.18     0.02  1207386     0.00     0.00  void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>)
+  0.04     51.20     0.02   485487     0.00     0.00  mypt::CosinePDF::value(mypt::type3<double> const&) const
+  0.04     51.22     0.02   243201     0.00     0.00  mypt::CosinePDF::generate() const
+  0.02     51.23     0.01  3746543     0.00     0.00  mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)
+  0.02     51.24     0.01   485487     0.00     0.00  mypt::Plane::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const
+  0.02     51.25     0.01   242286     0.00     0.00  mypt::Plane::random(mypt::type3<double> const&) const
+  0.02     51.26     0.01    44402     0.00     0.00  mypt::refract(mypt::type3<double> const&, mypt::type3<double> const&, double)
+  0.02     51.27     0.01     4977     0.00     0.00  mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>)
+  0.00     51.27     0.00  2429021     0.00     0.00  mypt::surrounding(mypt::AABB, mypt::AABB)
+  0.00     51.27     0.00   513494     0.00     0.00  stbiw__zlib_flushf(unsigned char*, unsigned int*, int*)
+  0.00     51.27     0.00   485487     0.00     0.00  mypt::Lambertian::scattering_pdf(mypt::Ray const&, mypt::HitRecord const&, mypt::Ray const&) const
+  0.00     51.27     0.00   485487     0.00     0.00  mypt::ShapePrimitive::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const
+  0.00     51.27     0.00   485487     0.00     0.00  mypt::LightPDF::value(mypt::type3<double> const&) const
+  0.00     51.27     0.00   485487     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00   485487     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00   485487     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00   485487     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00   413554     0.00     0.00  mypt::Sphere::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const
+  0.00     51.27     0.00   262144     0.00     0.00  mypt::Camera::get_ray(double, double)
+  0.00     51.27     0.00   242286     0.00     0.00  mypt::LightPDF::generate() const
+  0.00     51.27     0.00   238464     0.00     0.00  mypt::Triangle::bounding() const
+  0.00     51.27     0.00   186619     0.00     0.00  mypt::Emitter::emitted(mypt::Ray const&, mypt::HitRecord const&, double, double, mypt::type3<double> const&) const
+  0.00     51.27     0.00   186619     0.00     0.00  mypt::Emitter::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const
+  0.00     51.27     0.00    47529     0.00     0.00  mypt::Dielectric::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const
+  0.00     51.27     0.00    27687     0.00     0.00  mypt::reflect(mypt::type3<double> const&, mypt::type3<double> const&)
+  0.00     51.27     0.00    24560     0.00     0.00  mypt::Metal::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const
+  0.00     51.27     0.00    14904     0.00     0.00  void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&)
+  0.00     51.27     0.00     9186     0.00     0.00  void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>)
+  0.00     51.27     0.00     6124     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00     4977     0.00     0.00  mypt::TransformSystem::getCurrentTransform()
+  0.00     51.27     0.00     4977     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00     4977     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00     4977     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00     4977     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00     4968     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00     4968     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00     3072     0.00     0.00  stbiw__encode_png_line(unsigned char*, int, int, int, int, int, int, signed char*)
+  0.00     51.27     0.00      512     0.00     0.00  mypt::Scene::streamProgress(int, int, double, int)
+  0.00     51.27     0.00      336     0.00     0.00  mypt::Plane::bounding() const
+  0.00     51.27     0.00       96     0.00     0.00  mypt::Sphere::bounding() const
+  0.00     51.27     0.00       31     0.00     0.00  mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double)
+  0.00     51.27     0.00       30     0.00     0.00  mypt::mat4::mat4()
+  0.00     51.27     0.00       28     0.00     0.00  mypt::mat4::mat4(double (*) [4])
+  0.00     51.27     0.00       15     0.00     0.00  void std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >::_M_realloc_insert<std::shared_ptr<mypt::ShapePrimitive> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, std::shared_ptr<mypt::ShapePrimitive>&&)
+  0.00     51.27     0.00       14     0.00     0.00  void std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > >::_M_realloc_insert<mypt::type3<int>&>(__gnu_cxx::__normal_iterator<mypt::type3<int>*, std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > > >, mypt::type3<int>&)
+  0.00     51.27     0.00       14     0.00     0.00  void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Shape>&>(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Shape>&)
+  0.00     51.27     0.00       14     0.00     0.00  void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Triangle> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Triangle>&&)
+  0.00     51.27     0.00        9     0.00     1.94  mypt::TransformSystem::pushMatrix()
+  0.00     51.27     0.00        9     0.00     0.00  mypt::TransformSystem::popMatrix()
+  0.00     51.27     0.00        9     0.00     0.00  mypt::TransformSystem::translate(mypt::type3<double>)
+  0.00     51.27     0.00        9     0.00     0.00  mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&)
+  0.00     51.27     0.00        8     0.00     0.00  mypt::Scene::createMaterial(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&)
+  0.00     51.27     0.00        8     0.00     3.19  mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&)
+  0.00     51.27     0.00        8     0.00     0.00  std::shared_ptr<mypt::Shape>& std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::emplace_back<std::shared_ptr<mypt::Shape> >(std::shared_ptr<mypt::Shape>&&)
+  0.00     51.27     0.00        7     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        7     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        6     0.00     0.00  mypt::createPlaneShape(mypt::type2<double> const&, mypt::type2<double> const&)
+  0.00     51.27     0.00        6     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        6     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        6     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        6     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        2     0.00     0.00  mypt::TransformSystem::scale(double)
+  0.00     51.27     0.00        2     0.00     0.00  mypt::TransformSystem::rotateZ(double)
+  0.00     51.27     0.00        2     0.00     0.00  mypt::createSphereShape(double)
+  0.00     51.27     0.00        2     0.00     0.00  mypt::Transform::scale(double)
+  0.00     51.27     0.00        2     0.00     0.00  mypt::Transform::rotateZ(double)
+  0.00     51.27     0.00        2     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        2     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        2     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        2     0.00     0.00  void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00     51.27     0.00        2     0.00     0.00  void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&)
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt12TriangleMeshC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEfNS_5type3IdEEb
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt14ShapePrimitiveC2ESt10shared_ptrINS_5ShapeEES1_INS_8MaterialEES1_INS_9TransformEE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt4mat4C2Ev
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt5SceneC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt6CameraC2ENS_5type3IdEES2_S2_dddddd
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt6PerlinC2Ev
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt7BVHNodeC2ERSt6vectorISt10shared_ptrINS_9PrimitiveEESaIS4_EEiiiNS0_11SplitMethodE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt7reflectERKNS_5type3IdEES3_
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4mypt9Transform9translateENS_5type3IdEE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt10Dielectric7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt10Integrator5traceERNS_3RayERKNS_7BVHNodeERSt6vectorISt10shared_ptrINS_9PrimitiveEESaIS9_EERKNS_5type3IdEEi
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt10Lambertian7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt12ImageTexture5valueEddRKNS_5type3IdEE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt12NoiseTexture5valueEddRKNS_5type3IdEE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt4AABB9intersectERKNS_3RayEdd
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt5Metal7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt5Plane9intersectERKNS_3RayEddRNS_9HitRecordE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt6Sphere5getUVERKNS_5type3IdEE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt7Emitter7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZNK4mypt9NormalMat7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00     51.27     0.00        1     0.00     0.00  _GLOBAL__sub_I_stbi_failure_reason
+  0.00     51.27     0.00        1     0.00     0.00  mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool)
+  0.00     51.27     0.00        1     0.00     0.00  mypt::TransformSystem::rotateX(double)
+  0.00     51.27     0.00        1     0.00    17.50  mypt::TransformSystem::TransformSystem()
+  0.00     51.27     0.00        1     0.00     0.00  mypt::createTriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool)
+  0.00     51.27     0.00        1     0.00     0.00  mypt::Image<mypt::type4<unsigned char> >::build(int, int)
+  0.00     51.27     0.00        1     0.00    40.00  mypt::Image<mypt::type4<unsigned char> >::write(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00     51.27     0.00        1     0.00     1.95  mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&)
+  0.00     51.27     0.00        1     0.00     0.00  mypt::Scene::createCamera(std::basic_ifstream<char, std::char_traits<char> >&, double)
+  0.00     51.27     0.00        1     0.00     0.00  mypt::Camera::Camera(mypt::type3<double>, mypt::type3<double>, mypt::type3<double>, double, double, double, double, double, double)
+  0.00     51.27     0.00        1     0.00     0.00  mypt::Transform::rotateX(double)
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00     51.27     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00     51.27     0.00        1     0.00     0.00  std::vector<mypt::type3<double>, std::allocator<mypt::type3<double> > >::_M_default_append(unsigned long)
+  0.00     51.27     0.00        1     0.00    40.00  stbi_write_png_to_mem
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.02% of 51.27 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.7    0.00   51.14                 mypt::Scene::render() [1]
+                0.03   50.67  262144/262144      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+                0.05    0.35       1/1           mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+                0.00    0.04       1/1           mypt::Image<mypt::type4<unsigned char> >::write(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [21]
+                0.00    0.00  262144/262144      mypt::Camera::get_ray(double, double) [107]
+                0.00    0.00     512/512         mypt::Scene::streamProgress(int, int, double, int) [123]
+                0.00    0.00       4/6124        std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [114]
+                0.00    0.00       2/2           void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [153]
+                0.00    0.00       2/2           std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [152]
+-----------------------------------------------
+                              557576             mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+                0.03   50.67  262144/262144      mypt::Scene::render() [1]
+[2]     98.9    0.03   50.67  262144+557576  mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+                2.92   47.41  817091/817091      mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [3]
+                0.00    0.21  242286/242286      mypt::LightPDF::generate() const [9]
+                0.05    0.00  485487/485487      mypt::Lambertian::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [16]
+                0.00    0.03  485487/485487      mypt::LightPDF::value(mypt::type3<double> const&) const [26]
+                0.02    0.00  485487/485487      mypt::CosinePDF::value(mypt::type3<double> const&) const [28]
+                0.02    0.00  243201/243201      mypt::CosinePDF::generate() const [29]
+                0.00    0.01   47529/47529       mypt::Dielectric::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [34]
+                0.00    0.00  485487/485487      std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [105]
+                0.00    0.00  485487/485487      std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [104]
+                0.00    0.00  485487/485487      std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [103]
+                0.00    0.00  485487/485487      std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [102]
+                0.00    0.00  485487/485487      mypt::Lambertian::scattering_pdf(mypt::Ray const&, mypt::HitRecord const&, mypt::Ray const&) const [101]
+                0.00    0.00  186619/186619      mypt::Emitter::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [110]
+                0.00    0.00  186619/186619      mypt::Emitter::emitted(mypt::Ray const&, mypt::HitRecord const&, double, double, mypt::type3<double> const&) const [109]
+                0.00    0.00   24560/24560       mypt::Metal::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [112]
+                              557576             mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+-----------------------------------------------
+                             353814626             mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [3]
+                2.92   47.41  817091/817091      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[3]     98.2    2.92   47.41  817091+353814626 mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [3]
+               39.45    0.00 354631717/354631717     mypt::AABB::intersect(mypt::Ray const&, double, double) const [4]
+                3.52    4.44 126797318/126797318     mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [5]
+                             353814626             mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [3]
+-----------------------------------------------
+               39.45    0.00 354631717/354631717     mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [3]
+[4]     76.9   39.45    0.00 354631717         mypt::AABB::intersect(mypt::Ray const&, double, double) const [4]
+-----------------------------------------------
+                3.52    4.44 126797318/126797318     mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [3]
+[5]     15.5    3.52    4.44 126797318         mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [5]
+                4.31    0.00 123779572/123779572     mypt::Triangle::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [6]
+                0.13    0.00 2604192/3089679     mypt::Plane::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [11]
+                0.00    0.00  413554/413554      mypt::Sphere::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [106]
+-----------------------------------------------
+                4.31    0.00 123779572/123779572     mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [5]
+[6]      8.4    4.31    0.00 123779572         mypt::Triangle::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [6]
+-----------------------------------------------
+                                6124             mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+                0.05    0.35       1/1           mypt::Scene::render() [1]
+[7]      0.8    0.05    0.35       1+6124    mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+                0.06    0.11    9186/9186        void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+                0.13    0.00    6124/6124        mypt::BVHNode::bounding() const [12]
+                0.02    0.02 1146024/1207386     void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [18]
+                0.00    0.00 2429022/28028034     mypt::ShapePrimitive::bounding() const [23]
+                0.00    0.00    9186/9186        void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [37]
+                0.00    0.00    1913/4811370     mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [15]
+                0.00    0.00 2429021/2429021     mypt::surrounding(mypt::AABB, mypt::AABB) [99]
+                                6124             mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+-----------------------------------------------
+                0.20    0.01  242286/242286      mypt::LightPDF::generate() const [9]
+[8]      0.4    0.20    0.01  242286         mypt::ShapePrimitive::random(mypt::type3<double> const&) const [8]
+                0.01    0.00  242286/242286      mypt::Plane::random(mypt::type3<double> const&) const [33]
+-----------------------------------------------
+                0.00    0.21  242286/242286      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[9]      0.4    0.00    0.21  242286         mypt::LightPDF::generate() const [9]
+                0.20    0.01  242286/242286      mypt::ShapePrimitive::random(mypt::type3<double> const&) const [8]
+-----------------------------------------------
+                              116539             void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+                0.06    0.11    9186/9186        mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+[10]     0.3    0.06    0.11    9186+116539  void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+                0.04    0.01 3469220/4241593     mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [14]
+                0.03    0.01 3758811/4811370     mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [15]
+                0.01    0.01 3321103/3746543     mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [30]
+                              116539             void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+-----------------------------------------------
+                0.02    0.00  485487/3089679     mypt::Plane::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [25]
+                0.13    0.00 2604192/3089679     mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [5]
+[11]     0.3    0.15    0.00 3089679         mypt::Plane::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [11]
+-----------------------------------------------
+                0.13    0.00    6124/6124        mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+[12]     0.3    0.13    0.00    6124         mypt::BVHNode::bounding() const [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     0.2    0.09    0.00                 mypt::Sphere::to_string[abi:cxx11]() const [13]
+-----------------------------------------------
+                0.00    0.00   21808/4241593     void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [37]
+                0.01    0.00  750565/4241593     void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [18]
+                0.04    0.01 3469220/4241593     void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+[14]     0.1    0.05    0.01 4241593         mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [14]
+                0.01    0.00 8483186/28028034     mypt::ShapePrimitive::bounding() const [23]
+-----------------------------------------------
+                0.00    0.00    1913/4811370     mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+                0.00    0.00   21808/4811370     void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [37]
+                0.01    0.00 1028838/4811370     void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [18]
+                0.03    0.01 3758811/4811370     void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+[15]     0.1    0.04    0.01 4811370         mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [15]
+                0.01    0.00 9622740/28028034     mypt::ShapePrimitive::bounding() const [23]
+-----------------------------------------------
+                0.05    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[16]     0.1    0.05    0.00  485487         mypt::Lambertian::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     0.1    0.00    0.05                 mypt::Scene::Scene(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [17]
+                0.00    0.03       8/8           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+                0.00    0.02       1/1           mypt::TransformSystem::TransformSystem() [32]
+                0.00    0.00       1/1           mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00       1/1           mypt::Image<mypt::type4<unsigned char> >::build(int, int) [180]
+                0.00    0.00       1/1           mypt::Scene::createCamera(std::basic_ifstream<char, std::char_traits<char> >&, double) [181]
+-----------------------------------------------
+                0.00    0.00   61362/1207386     void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [37]
+                0.02    0.02 1146024/1207386     mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+[18]     0.1    0.02    0.02 1207386         void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [18]
+                0.01    0.00 1028838/4811370     mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [15]
+                0.01    0.00  750565/4241593     mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [14]
+                0.00    0.00  403632/3746543     mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [30]
+-----------------------------------------------
+                0.00    0.04       1/1           mypt::Image<mypt::type4<unsigned char> >::write(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [21]
+[19]     0.1    0.00    0.04       1         stbi_write_png_to_mem [19]
+                0.04    0.00       1/1           stbi_zlib_compress [20]
+                0.00    0.00    3072/3072        stbiw__encode_png_line(unsigned char*, int, int, int, int, int, int, signed char*) [122]
+-----------------------------------------------
+                0.04    0.00       1/1           stbi_write_png_to_mem [19]
+[20]     0.1    0.04    0.00       1         stbi_zlib_compress [20]
+                0.00    0.00  513494/513494      stbiw__zlib_flushf(unsigned char*, unsigned int*, int*) [100]
+-----------------------------------------------
+                0.00    0.04       1/1           mypt::Scene::render() [1]
+[21]     0.1    0.00    0.04       1         mypt::Image<mypt::type4<unsigned char> >::write(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [21]
+                0.00    0.04       1/1           stbi_write_png_to_mem [19]
+-----------------------------------------------
+                0.02    0.00       1/2           mypt::TransformSystem::pushMatrix() [31]
+                0.02    0.00       1/2           mypt::TransformSystem::TransformSystem() [32]
+[22]     0.1    0.04    0.00       2         void std::vector<mypt::Transform, std::allocator<mypt::Transform> >::_M_realloc_insert<mypt::Transform>(__gnu_cxx::__normal_iterator<mypt::Transform*, std::vector<mypt::Transform, std::allocator<mypt::Transform> > >, mypt::Transform&&) [22]
+-----------------------------------------------
+                0.00    0.00 2429022/28028034     mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+                0.01    0.00 7493086/28028034     mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [30]
+                0.01    0.00 8483186/28028034     mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [14]
+                0.01    0.00 9622740/28028034     mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [15]
+[23]     0.1    0.04    0.00 28028034         mypt::ShapePrimitive::bounding() const [23]
+-----------------------------------------------
+                0.00    0.03  485487/485487      mypt::LightPDF::value(mypt::type3<double> const&) const [26]
+[24]     0.1    0.00    0.03  485487         mypt::ShapePrimitive::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [24]
+                0.01    0.02  485487/485487      mypt::Plane::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [25]
+-----------------------------------------------
+                0.01    0.02  485487/485487      mypt::ShapePrimitive::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [24]
+[25]     0.1    0.01    0.02  485487         mypt::Plane::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [25]
+                0.02    0.00  485487/3089679     mypt::Plane::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [11]
+-----------------------------------------------
+                0.00    0.03  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[26]     0.1    0.00    0.03  485487         mypt::LightPDF::value(mypt::type3<double> const&) const [26]
+                0.00    0.03  485487/485487      mypt::ShapePrimitive::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [24]
+-----------------------------------------------
+                0.00    0.03       8/8           mypt::Scene::Scene(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [17]
+[27]     0.0    0.00    0.03       8         mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+                0.00    0.02       8/9           mypt::TransformSystem::pushMatrix() [31]
+                0.01    0.00    4975/4977        mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [36]
+                0.00    0.00    4975/4977        mypt::TransformSystem::getCurrentTransform() [115]
+                0.00    0.00      14/15          void std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >::_M_realloc_insert<std::shared_ptr<mypt::ShapePrimitive> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, std::shared_ptr<mypt::ShapePrimitive>&&) [129]
+                0.00    0.00       8/9           mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+                0.00    0.00       8/8           mypt::Scene::createMaterial(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&) [136]
+                0.00    0.00       8/9           mypt::TransformSystem::translate(mypt::type3<double>) [134]
+                0.00    0.00       8/9           mypt::TransformSystem::popMatrix() [133]
+                0.00    0.00       2/2           mypt::TransformSystem::rotateZ(double) [146]
+                0.00    0.00       2/2           void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&) [154]
+                0.00    0.00       2/2           mypt::TransformSystem::scale(double) [145]
+                0.00    0.00       1/1           mypt::TransformSystem::rotateX(double) [178]
+-----------------------------------------------
+                0.02    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[28]     0.0    0.02    0.00  485487         mypt::CosinePDF::value(mypt::type3<double> const&) const [28]
+-----------------------------------------------
+                0.02    0.00  243201/243201      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[29]     0.0    0.02    0.00  243201         mypt::CosinePDF::generate() const [29]
+-----------------------------------------------
+                0.00    0.00   21808/3746543     void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [37]
+                0.00    0.00  403632/3746543     void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [18]
+                0.01    0.01 3321103/3746543     void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [10]
+[30]     0.0    0.01    0.01 3746543         mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [30]
+                0.01    0.00 7493086/28028034     mypt::ShapePrimitive::bounding() const [23]
+-----------------------------------------------
+                0.00    0.00       1/9           mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.02       8/9           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[31]     0.0    0.00    0.02       9         mypt::TransformSystem::pushMatrix() [31]
+                0.02    0.00       1/2           void std::vector<mypt::Transform, std::allocator<mypt::Transform> >::_M_realloc_insert<mypt::Transform>(__gnu_cxx::__normal_iterator<mypt::Transform*, std::vector<mypt::Transform, std::allocator<mypt::Transform> > >, mypt::Transform&&) [22]
+-----------------------------------------------
+                0.00    0.02       1/1           mypt::Scene::Scene(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [17]
+[32]     0.0    0.00    0.02       1         mypt::TransformSystem::TransformSystem() [32]
+                0.02    0.00       1/2           void std::vector<mypt::Transform, std::allocator<mypt::Transform> >::_M_realloc_insert<mypt::Transform>(__gnu_cxx::__normal_iterator<mypt::Transform*, std::vector<mypt::Transform, std::allocator<mypt::Transform> > >, mypt::Transform&&) [22]
+                0.00    0.00       2/30          mypt::mat4::mat4() [127]
+-----------------------------------------------
+                0.01    0.00  242286/242286      mypt::ShapePrimitive::random(mypt::type3<double> const&) const [8]
+[33]     0.0    0.01    0.00  242286         mypt::Plane::random(mypt::type3<double> const&) const [33]
+-----------------------------------------------
+                0.00    0.01   47529/47529       mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[34]     0.0    0.00    0.01   47529         mypt::Dielectric::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [34]
+                0.01    0.00   44402/44402       mypt::refract(mypt::type3<double> const&, mypt::type3<double> const&, double) [35]
+                0.00    0.00    3127/27687       mypt::reflect(mypt::type3<double> const&, mypt::type3<double> const&) [111]
+-----------------------------------------------
+                0.01    0.00   44402/44402       mypt::Dielectric::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [34]
+[35]     0.0    0.01    0.00   44402         mypt::refract(mypt::type3<double> const&, mypt::type3<double> const&, double) [35]
+-----------------------------------------------
+                0.00    0.00       2/4977        mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.01    0.00    4975/4977        mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[36]     0.0    0.01    0.00    4977         mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [36]
+                0.00    0.00  238464/238464      mypt::Triangle::bounding() const [108]
+                0.00    0.00     336/336         mypt::Plane::bounding() const [124]
+                0.00    0.00      96/96          mypt::Sphere::bounding() const [125]
+-----------------------------------------------
+                0.00    0.00    9186/9186        mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+[37]     0.0    0.00    0.00    9186         void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [37]
+                0.00    0.00   61362/1207386     void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>) [18]
+                0.00    0.00   21808/4241593     mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [14]
+                0.00    0.00   21808/4811370     mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [15]
+                0.00    0.00   21808/3746543     mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [30]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::Scene::Scene(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [17]
+[38]     0.0    0.00    0.00       1         mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00       1/9           mypt::TransformSystem::pushMatrix() [31]
+                0.00    0.00       2/4977        mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [36]
+                0.00    0.00       2/4977        mypt::TransformSystem::getCurrentTransform() [115]
+                0.00    0.00       1/9           mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+                0.00    0.00       1/9           mypt::TransformSystem::translate(mypt::type3<double>) [134]
+                0.00    0.00       1/9           mypt::TransformSystem::popMatrix() [133]
+                0.00    0.00       1/15          void std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >::_M_realloc_insert<std::shared_ptr<mypt::ShapePrimitive> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, std::shared_ptr<mypt::ShapePrimitive>&&) [129]
+-----------------------------------------------
+                0.00    0.00 2429021/2429021     mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [7]
+[99]     0.0    0.00    0.00 2429021         mypt::surrounding(mypt::AABB, mypt::AABB) [99]
+-----------------------------------------------
+                0.00    0.00  513494/513494      stbi_zlib_compress [20]
+[100]    0.0    0.00    0.00  513494         stbiw__zlib_flushf(unsigned char*, unsigned int*, int*) [100]
+-----------------------------------------------
+                0.00    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[101]    0.0    0.00    0.00  485487         mypt::Lambertian::scattering_pdf(mypt::Ray const&, mypt::HitRecord const&, mypt::Ray const&) const [101]
+-----------------------------------------------
+                0.00    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[102]    0.0    0.00    0.00  485487         std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [102]
+-----------------------------------------------
+                0.00    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[103]    0.0    0.00    0.00  485487         std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [103]
+-----------------------------------------------
+                0.00    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[104]    0.0    0.00    0.00  485487         std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [104]
+-----------------------------------------------
+                0.00    0.00  485487/485487      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[105]    0.0    0.00    0.00  485487         std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [105]
+-----------------------------------------------
+                0.00    0.00  413554/413554      mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [5]
+[106]    0.0    0.00    0.00  413554         mypt::Sphere::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [106]
+-----------------------------------------------
+                0.00    0.00  262144/262144      mypt::Scene::render() [1]
+[107]    0.0    0.00    0.00  262144         mypt::Camera::get_ray(double, double) [107]
+-----------------------------------------------
+                0.00    0.00  238464/238464      mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [36]
+[108]    0.0    0.00    0.00  238464         mypt::Triangle::bounding() const [108]
+-----------------------------------------------
+                0.00    0.00  186619/186619      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[109]    0.0    0.00    0.00  186619         mypt::Emitter::emitted(mypt::Ray const&, mypt::HitRecord const&, double, double, mypt::type3<double> const&) const [109]
+-----------------------------------------------
+                0.00    0.00  186619/186619      mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[110]    0.0    0.00    0.00  186619         mypt::Emitter::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [110]
+-----------------------------------------------
+                0.00    0.00    3127/27687       mypt::Dielectric::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [34]
+                0.00    0.00   24560/27687       mypt::Metal::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [112]
+[111]    0.0    0.00    0.00   27687         mypt::reflect(mypt::type3<double> const&, mypt::type3<double> const&) [111]
+-----------------------------------------------
+                0.00    0.00   24560/24560       mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [2]
+[112]    0.0    0.00    0.00   24560         mypt::Metal::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [112]
+                0.00    0.00   24560/27687       mypt::reflect(mypt::type3<double> const&, mypt::type3<double> const&) [111]
+-----------------------------------------------
+                0.00    0.00   14904/14904       mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [177]
+[113]    0.0    0.00    0.00   14904         void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&) [113]
+-----------------------------------------------
+                0.00    0.00       4/6124        mypt::Scene::render() [1]
+                0.00    0.00    6120/6124        std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [152]
+[114]    0.0    0.00    0.00    6124         std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [114]
+-----------------------------------------------
+                0.00    0.00       2/4977        mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00    4975/4977        mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[115]    0.0    0.00    0.00    4977         mypt::TransformSystem::getCurrentTransform() [115]
+-----------------------------------------------
+                0.00    0.00    4977/4977        mypt::Scene::~Scene() [269]
+[116]    0.0    0.00    0.00    4977         std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [116]
+-----------------------------------------------
+                0.00    0.00    4977/4977        mypt::Scene::~Scene() [269]
+[117]    0.0    0.00    0.00    4977         std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+                0.00    0.00    4977/4977        std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [119]
+                0.00    0.00    4977/4977        std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [118]
+                0.00    0.00    4968/4968        std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [121]
+                0.00    0.00       7/7           std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [138]
+                0.00    0.00       6/6           std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [144]
+                0.00    0.00       6/6           std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [142]
+                0.00    0.00       6/6           std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [141]
+                0.00    0.00       2/2           std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [151]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [186]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [185]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [191]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [189]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [184]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [190]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [188]
+-----------------------------------------------
+                0.00    0.00    4977/4977        std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[118]    0.0    0.00    0.00    4977         std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [118]
+-----------------------------------------------
+                0.00    0.00    4977/4977        std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[119]    0.0    0.00    0.00    4977         std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [119]
+-----------------------------------------------
+                0.00    0.00    4968/4968        mypt::Scene::~Scene() [269]
+[120]    0.0    0.00    0.00    4968         std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [120]
+-----------------------------------------------
+                0.00    0.00    4968/4968        std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[121]    0.0    0.00    0.00    4968         std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [121]
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [187]
+-----------------------------------------------
+                0.00    0.00    3072/3072        stbi_write_png_to_mem [19]
+[122]    0.0    0.00    0.00    3072         stbiw__encode_png_line(unsigned char*, int, int, int, int, int, int, signed char*) [122]
+-----------------------------------------------
+                0.00    0.00     512/512         mypt::Scene::render() [1]
+[123]    0.0    0.00    0.00     512         mypt::Scene::streamProgress(int, int, double, int) [123]
+-----------------------------------------------
+                0.00    0.00     336/336         mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [36]
+[124]    0.0    0.00    0.00     336         mypt::Plane::bounding() const [124]
+-----------------------------------------------
+                0.00    0.00      96/96          mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [36]
+[125]    0.0    0.00    0.00      96         mypt::Sphere::bounding() const [125]
+-----------------------------------------------
+                0.00    0.00       3/31          mypt::Transform::rotateX(double) [183]
+                0.00    0.00       4/31          mypt::Transform::scale(double) [148]
+                0.00    0.00       6/31          mypt::Transform::rotateZ(double) [149]
+                0.00    0.00      18/31          mypt::TransformSystem::translate(mypt::type3<double>) [134]
+[126]    0.0    0.00    0.00      31         mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double) [126]
+-----------------------------------------------
+                0.00    0.00       2/30          mypt::TransformSystem::rotateX(double) [178]
+                0.00    0.00       2/30          mypt::TransformSystem::TransformSystem() [32]
+                0.00    0.00       4/30          mypt::TransformSystem::rotateZ(double) [146]
+                0.00    0.00       4/30          mypt::TransformSystem::scale(double) [145]
+                0.00    0.00      18/30          mypt::TransformSystem::translate(mypt::type3<double>) [134]
+[127]    0.0    0.00    0.00      30         mypt::mat4::mat4() [127]
+-----------------------------------------------
+                0.00    0.00       1/28          mypt::Transform::rotateX(double) [183]
+                0.00    0.00       1/28          mypt::TransformSystem::rotateX(double) [178]
+                0.00    0.00       2/28          mypt::Transform::rotateZ(double) [149]
+                0.00    0.00       2/28          mypt::Transform::scale(double) [148]
+                0.00    0.00       2/28          mypt::TransformSystem::rotateZ(double) [146]
+                0.00    0.00       2/28          mypt::TransformSystem::scale(double) [145]
+                0.00    0.00      18/28          mypt::TransformSystem::translate(mypt::type3<double>) [134]
+[128]    0.0    0.00    0.00      28         mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       1/15          mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00      14/15          mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[129]    0.0    0.00    0.00      15         void std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >::_M_realloc_insert<std::shared_ptr<mypt::ShapePrimitive> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, std::shared_ptr<mypt::ShapePrimitive>&&) [129]
+-----------------------------------------------
+                0.00    0.00      14/14          mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [177]
+[130]    0.0    0.00    0.00      14         void std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > >::_M_realloc_insert<mypt::type3<int>&>(__gnu_cxx::__normal_iterator<mypt::type3<int>*, std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > > >, mypt::type3<int>&) [130]
+-----------------------------------------------
+                0.00    0.00      14/14          mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+[131]    0.0    0.00    0.00      14         void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Shape>&>(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Shape>&) [131]
+-----------------------------------------------
+                0.00    0.00      14/14          mypt::createTriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [179]
+[132]    0.0    0.00    0.00      14         void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Triangle> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Triangle>&&) [132]
+-----------------------------------------------
+                0.00    0.00       1/9           mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00       8/9           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[133]    0.0    0.00    0.00       9         mypt::TransformSystem::popMatrix() [133]
+-----------------------------------------------
+                0.00    0.00       1/9           mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00       8/9           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[134]    0.0    0.00    0.00       9         mypt::TransformSystem::translate(mypt::type3<double>) [134]
+                0.00    0.00      18/31          mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double) [126]
+                0.00    0.00      18/28          mypt::mat4::mat4(double (*) [4]) [128]
+                0.00    0.00      18/30          mypt::mat4::mat4() [127]
+-----------------------------------------------
+                0.00    0.00       1/9           mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [38]
+                0.00    0.00       8/9           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[135]    0.0    0.00    0.00       9         mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+                0.00    0.00      14/14          void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Shape>&>(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Shape>&) [131]
+                0.00    0.00       8/8           std::shared_ptr<mypt::Shape>& std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::emplace_back<std::shared_ptr<mypt::Shape> >(std::shared_ptr<mypt::Shape>&&) [137]
+                0.00    0.00       6/6           mypt::createPlaneShape(mypt::type2<double> const&, mypt::type2<double> const&) [140]
+                0.00    0.00       2/2           mypt::createSphereShape(double) [147]
+                0.00    0.00       1/1           mypt::createTriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [179]
+-----------------------------------------------
+                0.00    0.00       8/8           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[136]    0.0    0.00    0.00       8         mypt::Scene::createMaterial(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&) [136]
+-----------------------------------------------
+                0.00    0.00       8/8           mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+[137]    0.0    0.00    0.00       8         std::shared_ptr<mypt::Shape>& std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::emplace_back<std::shared_ptr<mypt::Shape> >(std::shared_ptr<mypt::Shape>&&) [137]
+-----------------------------------------------
+                0.00    0.00       7/7           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[138]    0.0    0.00    0.00       7         std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [138]
+-----------------------------------------------
+                0.00    0.00       1/7           std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [191]
+                0.00    0.00       6/7           std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [142]
+[139]    0.0    0.00    0.00       7         std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [139]
+-----------------------------------------------
+                0.00    0.00       6/6           mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+[140]    0.0    0.00    0.00       6         mypt::createPlaneShape(mypt::type2<double> const&, mypt::type2<double> const&) [140]
+-----------------------------------------------
+                0.00    0.00       6/6           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[141]    0.0    0.00    0.00       6         std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [141]
+-----------------------------------------------
+                0.00    0.00       6/6           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[142]    0.0    0.00    0.00       6         std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [142]
+                0.00    0.00       6/7           std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [139]
+-----------------------------------------------
+                0.00    0.00       6/6           mypt::Scene::~Scene() [269]
+[143]    0.0    0.00    0.00       6         std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [143]
+-----------------------------------------------
+                0.00    0.00       6/6           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[144]    0.0    0.00    0.00       6         std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [144]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[145]    0.0    0.00    0.00       2         mypt::TransformSystem::scale(double) [145]
+                0.00    0.00       4/30          mypt::mat4::mat4() [127]
+                0.00    0.00       2/2           mypt::Transform::scale(double) [148]
+                0.00    0.00       2/28          mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[146]    0.0    0.00    0.00       2         mypt::TransformSystem::rotateZ(double) [146]
+                0.00    0.00       4/30          mypt::mat4::mat4() [127]
+                0.00    0.00       2/2           mypt::Transform::rotateZ(double) [149]
+                0.00    0.00       2/28          mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+[147]    0.0    0.00    0.00       2         mypt::createSphereShape(double) [147]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::TransformSystem::scale(double) [145]
+[148]    0.0    0.00    0.00       2         mypt::Transform::scale(double) [148]
+                0.00    0.00       4/31          mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double) [126]
+                0.00    0.00       2/28          mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::TransformSystem::rotateZ(double) [146]
+[149]    0.0    0.00    0.00       2         mypt::Transform::rotateZ(double) [149]
+                0.00    0.00       6/31          mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double) [126]
+                0.00    0.00       2/28          mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::Scene::~Scene() [269]
+[150]    0.0    0.00    0.00       2         std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [150]
+-----------------------------------------------
+                0.00    0.00       2/2           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[151]    0.0    0.00    0.00       2         std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [151]
+-----------------------------------------------
+                                6122             std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [152]
+                0.00    0.00       2/2           mypt::Scene::render() [1]
+[152]    0.0    0.00    0.00       2+6122    std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [152]
+                0.00    0.00    6120/6124        std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [114]
+                                6122             std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [152]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::Scene::render() [1]
+[153]    0.0    0.00    0.00       2         void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [153]
+-----------------------------------------------
+                0.00    0.00       2/2           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[154]    0.0    0.00    0.00       2         void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&) [154]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[155]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt12TriangleMeshC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEfNS_5type3IdEEb [155]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[156]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt14ShapePrimitiveC2ESt10shared_ptrINS_5ShapeEES1_INS_8MaterialEES1_INS_9TransformEE [156]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[157]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt4mat4C2Ev [157]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[158]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt5SceneC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [158]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[159]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt6CameraC2ENS_5type3IdEES2_S2_dddddd [159]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[160]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt6PerlinC2Ev [160]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[161]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt7BVHNodeC2ERSt6vectorISt10shared_ptrINS_9PrimitiveEESaIS4_EEiiiNS0_11SplitMethodE [161]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[162]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt7reflectERKNS_5type3IdEES3_ [162]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[163]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4mypt9Transform9translateENS_5type3IdEE [163]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[164]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt10Dielectric7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [164]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[165]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt10Integrator5traceERNS_3RayERKNS_7BVHNodeERSt6vectorISt10shared_ptrINS_9PrimitiveEESaIS9_EERKNS_5type3IdEEi [165]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[166]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt10Lambertian7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [166]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[167]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt12ImageTexture5valueEddRKNS_5type3IdEE [167]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[168]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt12NoiseTexture5valueEddRKNS_5type3IdEE [168]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[169]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt4AABB9intersectERKNS_3RayEdd [169]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[170]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt5Metal7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [170]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[171]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt5Plane9intersectERKNS_3RayEddRNS_9HitRecordE [171]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[172]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt6Sphere5getUVERKNS_5type3IdEE [172]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[173]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt7Emitter7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [173]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[174]    0.0    0.00    0.00       1         _GLOBAL__sub_I__ZNK4mypt9NormalMat7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [174]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[175]    0.0    0.00    0.00       1         _GLOBAL__sub_I_main [175]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [397]
+[176]    0.0    0.00    0.00       1         _GLOBAL__sub_I_stbi_failure_reason [176]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::createTriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [179]
+[177]    0.0    0.00    0.00       1         mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [177]
+                0.00    0.00   14904/14904       void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&) [113]
+                0.00    0.00      14/14          void std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > >::_M_realloc_insert<mypt::type3<int>&>(__gnu_cxx::__normal_iterator<mypt::type3<int>*, std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > > >, mypt::type3<int>&) [130]
+                0.00    0.00       1/1           std::vector<mypt::type3<double>, std::allocator<mypt::type3<double> > >::_M_default_append(unsigned long) [192]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [27]
+[178]    0.0    0.00    0.00       1         mypt::TransformSystem::rotateX(double) [178]
+                0.00    0.00       2/30          mypt::mat4::mat4() [127]
+                0.00    0.00       1/1           mypt::Transform::rotateX(double) [183]
+                0.00    0.00       1/28          mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [135]
+[179]    0.0    0.00    0.00       1         mypt::createTriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [179]
+                0.00    0.00      14/14          void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Triangle> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Triangle>&&) [132]
+                0.00    0.00       1/1           mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [177]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::Scene::Scene(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [17]
+[180]    0.0    0.00    0.00       1         mypt::Image<mypt::type4<unsigned char> >::build(int, int) [180]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::Scene::Scene(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [17]
+[181]    0.0    0.00    0.00       1         mypt::Scene::createCamera(std::basic_ifstream<char, std::char_traits<char> >&, double) [181]
+                0.00    0.00       1/1           mypt::Camera::Camera(mypt::type3<double>, mypt::type3<double>, mypt::type3<double>, double, double, double, double, double, double) [182]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::Scene::createCamera(std::basic_ifstream<char, std::char_traits<char> >&, double) [181]
+[182]    0.0    0.00    0.00       1         mypt::Camera::Camera(mypt::type3<double>, mypt::type3<double>, mypt::type3<double>, double, double, double, double, double, double) [182]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::TransformSystem::rotateX(double) [178]
+[183]    0.0    0.00    0.00       1         mypt::Transform::rotateX(double) [183]
+                0.00    0.00       3/31          mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double) [126]
+                0.00    0.00       1/28          mypt::mat4::mat4(double (*) [4]) [128]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[184]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [184]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[185]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [185]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[186]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [186]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [121]
+[187]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [187]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[188]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [188]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[189]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [189]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[190]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [190]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [117]
+[191]    0.0    0.00    0.00       1         std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [191]
+                0.00    0.00       1/7           std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [139]
+-----------------------------------------------
+                0.00    0.00       1/1           mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [177]
+[192]    0.0    0.00    0.00       1         std::vector<mypt::type3<double>, std::allocator<mypt::type3<double> > >::_M_default_append(unsigned long) [192]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+ [155] _GLOBAL__sub_I__ZN4mypt12TriangleMeshC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEfNS_5type3IdEEb [180] mypt::Image<mypt::type4<unsigned char> >::build(int, int) [185] std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [156] _GLOBAL__sub_I__ZN4mypt14ShapePrimitiveC2ESt10shared_ptrINS_5ShapeEES1_INS_8MaterialEES1_INS_9TransformEE [21] mypt::Image<mypt::type4<unsigned char> >::write(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [141] std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [157] _GLOBAL__sub_I__ZN4mypt4mat4C2Ev [38] mypt::Scene::createLight(std::basic_ifstream<char, std::char_traits<char> >&) [142] std::_Sp_counted_ptr_inplace<mypt::Lambertian, std::allocator<mypt::Lambertian>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [158] _GLOBAL__sub_I__ZN4mypt5SceneC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [181] mypt::Scene::createCamera(std::basic_ifstream<char, std::char_traits<char> >&, double) [186] std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [159] _GLOBAL__sub_I__ZN4mypt6CameraC2ENS_5type3IdEES2_S2_dddddd [135] mypt::Scene::createShapes(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >&) [187] std::_Sp_counted_ptr_inplace<mypt::TriangleMesh, std::allocator<mypt::TriangleMesh>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [160] _GLOBAL__sub_I__ZN4mypt6PerlinC2Ev [136] mypt::Scene::createMaterial(std::__cxx11::basic_istringstream<char, std::char_traits<char>, std::allocator<char> >&) [116] std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [161] _GLOBAL__sub_I__ZN4mypt7BVHNodeC2ERSt6vectorISt10shared_ptrINS_9PrimitiveEESaIS4_EEiiiNS0_11SplitMethodE [123] mypt::Scene::streamProgress(int, int, double, int) [117] std::_Sp_counted_ptr_inplace<mypt::ShapePrimitive, std::allocator<mypt::ShapePrimitive>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [162] _GLOBAL__sub_I__ZN4mypt7reflectERKNS_5type3IdEES3_ [27] mypt::Scene::createPrimitive(std::basic_ifstream<char, std::char_traits<char> >&) [138] std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [163] _GLOBAL__sub_I__ZN4mypt9Transform9translateENS_5type3IdEE [107] mypt::Camera::get_ray(double, double) [139] std::_Sp_counted_ptr_inplace<mypt::ConstantTexture, std::allocator<mypt::ConstantTexture>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [164] _GLOBAL__sub_I__ZNK4mypt10Dielectric7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [182] mypt::Camera::Camera(mypt::type3<double>, mypt::type3<double>, mypt::type3<double>, double, double, double, double, double, double) [188] std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [165] _GLOBAL__sub_I__ZNK4mypt10Integrator5traceERNS_3RayERKNS_7BVHNodeERSt6vectorISt10shared_ptrINS_9PrimitiveEESaIS9_EERKNS_5type3IdEEi [7] mypt::BVHNode::BVHNode(std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, int, int, int, mypt::BVHNode::SplitMethod) [189] std::_Sp_counted_ptr_inplace<mypt::Metal, std::allocator<mypt::Metal>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [166] _GLOBAL__sub_I__ZNK4mypt10Lambertian7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [111] mypt::reflect(mypt::type3<double> const&, mypt::type3<double> const&) [143] std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [167] _GLOBAL__sub_I__ZNK4mypt12ImageTexture5valueEddRKNS_5type3IdEE [35] mypt::refract(mypt::type3<double> const&, mypt::type3<double> const&, double) [144] std::_Sp_counted_ptr_inplace<mypt::Plane, std::allocator<mypt::Plane>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [168] _GLOBAL__sub_I__ZNK4mypt12NoiseTexture5valueEddRKNS_5type3IdEE [148] mypt::Transform::scale(double) [150] std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [169] _GLOBAL__sub_I__ZNK4mypt4AABB9intersectERKNS_3RayEdd [183] mypt::Transform::rotateX(double) [151] std::_Sp_counted_ptr_inplace<mypt::Sphere, std::allocator<mypt::Sphere>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [170] _GLOBAL__sub_I__ZNK4mypt5Metal7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [149] mypt::Transform::rotateZ(double) [114] std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [171] _GLOBAL__sub_I__ZNK4mypt5Plane9intersectERKNS_3RayEddRNS_9HitRecordE [34] mypt::Dielectric::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [152] std::_Sp_counted_ptr_inplace<mypt::BVHNode, std::allocator<mypt::BVHNode>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [172] _GLOBAL__sub_I__ZNK4mypt6Sphere5getUVERKNS_5type3IdEE [2] mypt::Integrator::trace(mypt::Ray&, mypt::BVHNode const&, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >&, mypt::type3<double> const&, int) const [190] std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [173] _GLOBAL__sub_I__ZNK4mypt7Emitter7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [101] mypt::Lambertian::scattering_pdf(mypt::Ray const&, mypt::HitRecord const&, mypt::Ray const&) const [191] std::_Sp_counted_ptr_inplace<mypt::Emitter, std::allocator<mypt::Emitter>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [174] _GLOBAL__sub_I__ZNK4mypt9NormalMat7scatterERKNS_3RayERNS_9HitRecordERNS_13ScatterRecordE [16] mypt::Lambertian::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [102] std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [175] _GLOBAL__sub_I_main     [8] mypt::ShapePrimitive::random(mypt::type3<double> const&) const [103] std::_Sp_counted_ptr_inplace<mypt::LightPDF, std::allocator<mypt::LightPDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [176] _GLOBAL__sub_I_stbi_failure_reason [23] mypt::ShapePrimitive::bounding() const [120] std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+ [100] stbiw__zlib_flushf(unsigned char*, unsigned int*, int*) [5] mypt::ShapePrimitive::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [121] std::_Sp_counted_ptr_inplace<mypt::Triangle, std::allocator<mypt::Triangle>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [122] stbiw__encode_png_line(unsigned char*, int, int, int, int, int, int, signed char*) [24] mypt::ShapePrimitive::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [104] std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  [99] mypt::surrounding(mypt::AABB, mypt::AABB) [4] mypt::AABB::intersect(mypt::Ray const&, double, double) const [105] std::_Sp_counted_ptr_inplace<mypt::CosinePDF, std::allocator<mypt::CosinePDF>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+ [177] mypt::TriangleMesh::TriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [112] mypt::Metal::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [118] std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  [15] mypt::box_x_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [33] mypt::Plane::random(mypt::type3<double> const&) const [119] std::_Sp_counted_ptr_inplace<mypt::Transform, std::allocator<mypt::Transform>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  [30] mypt::box_y_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [124] mypt::Plane::bounding() const [192] std::vector<mypt::type3<double>, std::allocator<mypt::type3<double> > >::_M_default_append(unsigned long)
+  [14] mypt::box_z_compare(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>) [11] mypt::Plane::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [130] void std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > >::_M_realloc_insert<mypt::type3<int>&>(__gnu_cxx::__normal_iterator<mypt::type3<int>*, std::vector<mypt::type3<int>, std::allocator<mypt::type3<int> > > >, mypt::type3<int>&)
+  [36] mypt::ShapePrimitive::ShapePrimitive(std::shared_ptr<mypt::Shape>, std::shared_ptr<mypt::Material>, std::shared_ptr<mypt::Transform>) [25] mypt::Plane::pdf_value(mypt::type3<double> const&, mypt::type3<double> const&) const [22] void std::vector<mypt::Transform, std::allocator<mypt::Transform> >::_M_realloc_insert<mypt::Transform>(__gnu_cxx::__normal_iterator<mypt::Transform*, std::vector<mypt::Transform, std::allocator<mypt::Transform> > >, mypt::Transform&&)
+  [31] mypt::TransformSystem::pushMatrix() [125] mypt::Sphere::bounding() const [153] void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+ [115] mypt::TransformSystem::getCurrentTransform() [106] mypt::Sphere::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [137] std::shared_ptr<mypt::Shape>& std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::emplace_back<std::shared_ptr<mypt::Shape> >(std::shared_ptr<mypt::Shape>&&)
+ [145] mypt::TransformSystem::scale(double) [13] mypt::Sphere::to_string[abi:cxx11]() const [131] void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Shape>&>(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Shape>&)
+ [178] mypt::TransformSystem::rotateX(double) [12] mypt::BVHNode::bounding() const [132] void std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > >::_M_realloc_insert<std::shared_ptr<mypt::Triangle> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Shape>*, std::vector<std::shared_ptr<mypt::Shape>, std::allocator<std::shared_ptr<mypt::Shape> > > >, std::shared_ptr<mypt::Triangle>&&)
+ [146] mypt::TransformSystem::rotateZ(double) [3] mypt::BVHNode::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [129] void std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > >::_M_realloc_insert<std::shared_ptr<mypt::ShapePrimitive> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, std::shared_ptr<mypt::ShapePrimitive>&&)
+ [133] mypt::TransformSystem::popMatrix() [109] mypt::Emitter::emitted(mypt::Ray const&, mypt::HitRecord const&, double, double, mypt::type3<double> const&) const [154] void std::vector<float, std::allocator<float> >::_M_realloc_insert<float const&>(__gnu_cxx::__normal_iterator<float*, std::vector<float, std::allocator<float> > >, float const&)
+ [134] mypt::TransformSystem::translate(mypt::type3<double>) [110] mypt::Emitter::scatter(mypt::Ray const&, mypt::HitRecord&, mypt::ScatterRecord&) const [113] void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&)
+  [32] mypt::TransformSystem::TransformSystem() [26] mypt::LightPDF::value(mypt::type3<double> const&) const [37] void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>)
+ [140] mypt::createPlaneShape(mypt::type2<double> const&, mypt::type2<double> const&) [9] mypt::LightPDF::generate() const [10] void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, long, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>)
+ [147] mypt::createSphereShape(double) [108] mypt::Triangle::bounding() const [18] void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)> >(__gnu_cxx::__normal_iterator<std::shared_ptr<mypt::Primitive>*, std::vector<std::shared_ptr<mypt::Primitive>, std::allocator<std::shared_ptr<mypt::Primitive> > > >, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(std::shared_ptr<mypt::Primitive>, std::shared_ptr<mypt::Primitive>)>)
+ [179] mypt::createTriangleMesh(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, float, mypt::type3<double>, bool) [6] mypt::Triangle::intersect(mypt::Ray const&, double, double, mypt::HitRecord&) const [19] stbi_write_png_to_mem
+ [126] mypt::mat4::mat4(double, double, double, double, double, double, double, double, double, double, double, double, double, double, double, double) [28] mypt::CosinePDF::value(mypt::type3<double> const&) const [20] stbi_zlib_compress
+ [127] mypt::mat4::mat4()     [29] mypt::CosinePDF::generate() const
+ [128] mypt::mat4::mat4(double (*) [4]) [184] std::_Sp_counted_ptr_inplace<mypt::Dielectric, std::allocator<mypt::Dielectric>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
