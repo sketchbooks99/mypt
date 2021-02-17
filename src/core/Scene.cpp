@@ -472,7 +472,7 @@ void Scene::render() {
     std::cout << "PRIMITIVES: " << this->primitives.size() << std::endl;
     std::cout << "LIGHTS: " << this->lights.size() << std::endl;
 
-    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
+    BVHNode bvh_node(this->primitives, 0, this->primitives.size(), 1, BVHNode::SplitMethod::SAH);
 
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_REALTIME, &start_time);
@@ -508,7 +508,7 @@ void Scene::render() {
                 auto v = (y + random_float()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += integrator.trace(r, bvh, lights, background, depth);
+                color += integrator.trace(r, bvh_node, lights, background, depth);
             }
             RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
             image.second.set(x, height-(y+1), rgb_color);

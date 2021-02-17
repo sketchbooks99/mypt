@@ -62,9 +62,13 @@ inline Float clamp(Float x, Float min, Float max) {
 }
 
 // ----- Utility functions -----
-inline void ASSERT(const bool cond, const std::string& text)
+inline void THROW(const std::string& msg) {
+    throw std::runtime_error(msg);
+}
+
+inline void ASSERT(const bool cond, const std::string& msg)
 {
-    if (!cond) throw std::runtime_error(text);
+    if (!cond) THROW(msg);
 }
 
 // ref: https://qiita.com/iseki-masaya/items/70b4ee6e0877d12dafa8

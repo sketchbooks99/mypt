@@ -10,6 +10,33 @@
 
 namespace mypt {
 
+enum class PrimitiveType {
+    None,           // Abstract class
+    ShapePrimitive,
+    ConstantMedium, 
+    BVHNode
+};
+
+inline std::ostream& operator<<(std::ostream& out, PrimitiveType type) {
+    switch(type) {
+    case PrimitiveType::None:
+        return out << "PrimitiveType::None";
+        break;
+    case PrimitiveType::ShapePrimitive:
+        return out << "PrimitiveType::None";
+        break;
+    case PrimitiveType::ConstantMedium:
+        return out << "PrimitiveType::None";
+        break;
+    case PrimitiveType::BVHNode:
+        return out << "PrimitiveType::None";
+        break;
+    default:
+        THROW("This PrimitiveType doesn't exist.");
+        break;
+    }
+}
+
 class Primitive {
 public:
     virtual bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const = 0;
@@ -17,6 +44,8 @@ public:
 
     virtual Float pdf_value(const vec3& /* o */, const vec3& /* v */) const { return 0.0; }
     virtual vec3 random(const vec3& /* o */) const { return vec3(1, 0, 0); }
+
+    virtual PrimitiveType type() const = 0;
 
     virtual std::string to_string() const = 0;
 };
@@ -29,6 +58,8 @@ public:
 
     Float pdf_value(const vec3& o, const vec3& v) const override;
     vec3 random(const vec3& o) const override;
+
+    PrimitiveType type() const override { return PrimitiveType::ShapePrimitive; }
 
     std::string to_string() const override {
         std::ostringstream oss;
@@ -62,6 +93,8 @@ public:
     AABB bounding() const override {
         return boundary->bounding();
     }
+
+    PrimitiveType type() const override { return PrimitiveType::ConstantMedium; }
 
     std::string to_string() const override {
         std::ostringstream oss;
