@@ -16,6 +16,14 @@ public:
         srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
         return true;
     } 
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "Isotropic : {" << std::endl;
+        oss << "\tTexture : " << albedo->to_string() << "," << std::endl;
+        oss << "}";
+        return oss.str();
+    }
 private:
     std::shared_ptr<Texture> albedo;
 };

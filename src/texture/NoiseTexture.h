@@ -9,24 +9,26 @@ class NoiseTexture final : public Texture {
 public:
     enum class Mode { NOISE, TURB };
     NoiseTexture() {}
-    NoiseTexture(double sc, Mode mode=Mode::NOISE) : scale(sc), mode(mode) {}
+    NoiseTexture(Float sc, Mode mode=Mode::NOISE) : scale(sc), mode(mode) {}
 
-    virtual vec3 value(double /* u */, double /* v */, const vec3& p) const {
-        switch(mode) {
-        case Mode::NOISE:
-            return vec3(1,1,1) * noise.noise(scale * p);
-            break;
-        case Mode::TURB:
-            return vec3(1,1,1) * noise.turb(scale * p);
-            break; 
-        default:
-            throw std::runtime_error("This noise mode is not supported!\n");
-        }
-    }
+    vec3 value(Float /* u */, Float /* v */, const vec3& p) const override;
+
+    std::string to_string() const override;
 private:
     Perlin noise;
-    double scale;
+    Float scale;
     Mode mode;
 };
+
+inline std::ostream& operator<<(std::ostream &out, NoiseTexture::Mode m) {
+    switch(m) {
+    case NoiseTexture::Mode::NOISE:
+        return out << "NoiseTexture::Mode::NOISE";
+    case NoiseTexture::Mode::TURB:
+        return out << "NoiseTexture::Mode::TURB";
+    default:
+        return out << "";
+    }
+}
 
 }

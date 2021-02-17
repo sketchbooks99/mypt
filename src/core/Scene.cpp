@@ -1,6 +1,4 @@
 #include "Scene.h"
-#include <fstream>
-#include <sstream>
 
 #include "../shape/MovingSphere.h"
 #include "../shape/Plane.h"
@@ -54,7 +52,7 @@ Scene::Scene(const std::string& filename) {
         else if(header == "depth")
             iss >> depth;
         else if(header == "beginCamera")
-            createCamera(ifs, double(image_width)/image_height);
+            createCamera(ifs, Float(image_width)/image_height);
         else if(header == "beginPrimitive")
             createPrimitive(ifs);
         else if(header == "beginLight")
@@ -104,14 +102,14 @@ Scene::Scene(const std::string& filename) {
 }
 
 // -----------------------------------------------------------------------------------------
-void Scene::createCamera(std::ifstream& ifs, double aspect) {
+void Scene::createCamera(std::ifstream& ifs, Float aspect) {
     // Default configuration of camera.
     vec3 origin(0, 0, 100);
     vec3 lookat(0, 0, 0);
     vec3 up(0, 1, 0);
-    double focus_length = 15.0;
-    double aperture = 0.0;
-    double vfov = 20.0;
+    Float focus_length = 15.0;
+    Float aperture = 0.0;
+    Float vfov = 20.0;
 
     while(true)
     {
@@ -156,7 +154,7 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
             shapes.emplace_back(createPlaneShape(min, max));
         } 
         else if(type == "sphere") {
-            double radius = 1.0;
+            Float radius = 1.0;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "radius")
@@ -219,7 +217,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
                     texture = std::make_shared<ImageTexture>(filename);
                 }
                 else if(header == "noise") {
-                    double scale = 1.0f;
+                    Float scale = 1.0f;
                     iss >> header;
                     if(header == "scale") iss >> scale;
                     iss >> header;
@@ -236,7 +234,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
         }
         else if(type == "metal") {
             vec3 color(1.0);
-            double fuzz = 0.0;
+            Float fuzz = 0.0;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "color")
@@ -383,7 +381,7 @@ void Scene::createLight(std::ifstream& ifs) {
             texture = std::make_shared<ImageTexture>(filename);
         }
         else if(header == "noise") {
-            double scale = 1.0f;
+            Float scale = 1.0f;
             iss >> header;
             if(header == "scale") iss >> scale;
             iss >> header;
@@ -450,7 +448,7 @@ void Scene::createLight(std::ifstream& ifs) {
 }
 
 // -----------------------------------------------------------------------------------------
-void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int progressLen) {    
+void Scene::streamProgress(int currentLine, int maxLine, Float elapsedTime, int progressLen) {    
     // Display progress bar
     std::cerr << "\rRendering: [";
     int progress = static_cast<int>(((float)(currentLine+1) / maxLine) * progressLen);
@@ -471,10 +469,10 @@ void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int
 // -----------------------------------------------------------------------------------------
 void Scene::render() {
 
-    std::cout << "primitives: " << this->primitives.size() << std::endl;
-    std::cout << "lights: " << this->lights.size() << std::endl;
+    std::cout << "PRIMITIVES: " << this->primitives.size() << std::endl;
+    std::cout << "LIGHTS: " << this->lights.size() << std::endl;
 
-    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::SAH);
+    BVHNode bvh_node(this->primitives, 0, this->primitives.size(), 1, BVHNode::SplitMethod::SAH);
 
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_REALTIME, &start_time);
@@ -486,6 +484,7 @@ void Scene::render() {
 
     #ifdef _OPENMP
     int n_threads = omp_get_max_threads();
+    std::cout << "[OpenMP] NUM_THREADS: " << n_threads << std::endl;
     #endif
 
     // ASSERT(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");
@@ -493,9 +492,9 @@ void Scene::render() {
     // declare reduction for vec3
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
-        double sec = end_time.tv_sec - start_time.tv_sec;
-        double nsec = (double)(end_time.tv_nsec - start_time.tv_nsec) / 1000000000;
-        double elapsed_time = sec + nsec;
+        Float sec = end_time.tv_sec - start_time.tv_sec;
+        Float nsec = (Float)(end_time.tv_nsec - start_time.tv_nsec) / 1000000000;
+        Float elapsed_time = sec + nsec;
         this->streamProgress(y, height, elapsed_time, progress_len);
 
         #ifdef _OPENMP
@@ -503,13 +502,13 @@ void Scene::render() {
         #endif
         for(int x=0; x<width; x++) {
             vec3 color(0,0,0);
-                
+            
             for(int s=0; s<samples_per_pixel; s++) {
-                auto u = (x + random_double()) / width;
-                auto v = (y + random_double()) / height;
+                auto u = (x + random_float()) / width;
+                auto v = (y + random_float()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += integrator.trace(r, bvh, lights, background, depth);
+                color += integrator.trace(r, bvh_node, lights, background, depth);
             }
             RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
             image.second.set(x, height-(y+1), rgb_color);

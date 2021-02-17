@@ -2,11 +2,11 @@
 
 namespace mypt {
 
-vec3 MovingSphere::center(double time) const {
+vec3 MovingSphere::center(Float time) const {
     return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
 }
 
-bool MovingSphere::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool MovingSphere::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     vec3 oc = r.origin() - center(r.time());
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
@@ -49,7 +49,7 @@ AABB MovingSphere::bounding() const {
     return surrounding(box0, box1);
 }
 
-std::shared_ptr<Shape> createMovingSphere(vec3 cen0, vec3 cen1, double t0, double t1, double r) {
+std::shared_ptr<Shape> createMovingSphere(vec3 cen0, vec3 cen1, Float t0, Float t1, Float r) {
     return std::make_shared<MovingSphere>(cen0, cen1, t0, t1, r);
 }
 

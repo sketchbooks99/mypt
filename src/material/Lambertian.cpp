@@ -14,7 +14,7 @@ bool Lambertian::scatter(
     return true;
 }
 
-double Lambertian::scattering_pdf(
+Float Lambertian::scattering_pdf(
     const Ray& /* r_in */, const HitRecord& rec, const Ray& scattered
 ) const {
     auto cosine = dot(rec.normal, normalize(scattered.direction()));

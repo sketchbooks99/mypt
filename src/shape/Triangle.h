@@ -38,7 +38,7 @@ public:
         }
     }
     
-    bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
     AABB bounding() const override { return AABB(min, max); }
 
     vec3 get_normal() const {
@@ -50,6 +50,16 @@ public:
 
     std::vector<vec3> get_vertices() const {
         return { mesh->vertices[face[0]], mesh->vertices[face[1]], mesh->vertices[face[2]] };
+    }
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "Triangle : {" << std::endl;
+        oss << "\tp0 : " << mesh->vertices[face[0]] << ", ";
+        oss << "p1 : " << mesh->vertices[face[1]] << ", ";
+        oss << "p2 : " << mesh->vertices[face[2]] << std::endl;
+        oss << "}";
+        return oss.str();
     }
 
 private:

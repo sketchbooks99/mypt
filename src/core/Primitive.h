@@ -10,26 +10,65 @@
 
 namespace mypt {
 
+enum class PrimitiveType {
+    None,           // Abstract class
+    ShapePrimitive,
+    ConstantMedium, 
+    BVHNode
+};
+
+inline std::ostream& operator<<(std::ostream& out, PrimitiveType type) {
+    switch(type) {
+    case PrimitiveType::None:
+        return out << "PrimitiveType::None";
+        break;
+    case PrimitiveType::ShapePrimitive:
+        return out << "PrimitiveType::None";
+        break;
+    case PrimitiveType::ConstantMedium:
+        return out << "PrimitiveType::None";
+        break;
+    case PrimitiveType::BVHNode:
+        return out << "PrimitiveType::None";
+        break;
+    default:
+        THROW("This PrimitiveType doesn't exist.");
+        break;
+    }
+}
+
 class Primitive {
 public:
-    virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
+    virtual bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const = 0;
     virtual AABB bounding() const = 0;
 
-    virtual double pdf_value(const vec3& /* o */, const vec3& /* v */) const { return 0.0; }
+    virtual Float pdf_value(const vec3& /* o */, const vec3& /* v */) const { return 0.0; }
     virtual vec3 random(const vec3& /* o */) const { return vec3(1, 0, 0); }
+
+    virtual PrimitiveType type() const = 0;
+
+    virtual std::string to_string() const = 0;
 };
 
 class ShapePrimitive final : public Primitive {
 public:
     ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform);
-    bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
     AABB bounding() const override;
 
-    double pdf_value(const vec3& o, const vec3& v) const override;
+    Float pdf_value(const vec3& o, const vec3& v) const override;
     vec3 random(const vec3& o) const override;
 
-    const std::type_info &getMatType() { return typeid(material); }
-    const std::type_info &getShapeType() { return typeid(shape); }
+    PrimitiveType type() const override { return PrimitiveType::ShapePrimitive; }
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "ShapePrimitive : {" << std::endl;
+        oss << "Shape : " << shape->to_string() << std::endl;
+        oss << "Material : " << material->to_string() << std::endl;
+        oss << "}";
+        return oss.str();
+    }
 private:
     std::shared_ptr<Shape> shape;
     std::shared_ptr<Material> material;
@@ -40,24 +79,36 @@ private:
 // Constant Medium
 class ConstantMedium final : public Primitive {
 public: 
-    ConstantMedium(std::shared_ptr<Shape> b, std::shared_ptr<Texture> a, double d)
+    ConstantMedium(std::shared_ptr<Shape> b, std::shared_ptr<Texture> a, Float d)
     : boundary(b), 
       phase_function(std::make_shared<Isotropic>(a)), 
       neg_inv_density(-1.0/d) {}
     
-    ConstantMedium(std::shared_ptr<Shape> b, vec3 c, double d)
+    ConstantMedium(std::shared_ptr<Shape> b, vec3 c, Float d)
     : boundary(b),
       phase_function(std::make_shared<Isotropic>(c)), 
       neg_inv_density(-1.0/d) {}
     
-    bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
     AABB bounding() const override {
         return boundary->bounding();
+    }
+
+    PrimitiveType type() const override { return PrimitiveType::ConstantMedium; }
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "ShapePrimitive : {" << std::endl;
+        oss << "Boundary : " << boundary->to_string() << "," << std::endl;
+        oss << "Phase Function : " << phase_function->to_string() << "," << std::endl;
+        oss << "Density : " << neg_inv_density << std::endl;
+        oss << "}";
+        return oss.str();
     }
 private:
     std::shared_ptr<Shape> boundary;
     std::shared_ptr<Material> phase_function;
-    double neg_inv_density;
+    Float neg_inv_density;
 };
 
 }

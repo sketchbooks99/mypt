@@ -8,4 +8,5 @@
 
 namespace mypt {
 using GRAY = unsigned char;
+
 }

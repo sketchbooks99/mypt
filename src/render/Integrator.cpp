@@ -4,14 +4,14 @@
 namespace mypt {
 
 vec3 Integrator::trace(
-    Ray& r, const BVH& bvh, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
+    Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
 ) const {
     HitRecord rec;
     // If we've exceeded the Ray bounce limit, no more light is gathered.
     if(depth <= 0)
         return vec3(0.0, 0.0, 0.0);
 
-    if(!bvh.intersect(r, eps, infinity, rec))
+    if(!bvh_node.intersect(r, eps, infinity, rec))
         return background;
 
     ScatterRecord srec;
@@ -21,7 +21,7 @@ vec3 Integrator::trace(
 
     if(srec.is_specular) {
         return srec.attenuation
-            * trace(srec.specular_ray, bvh, lights, background, depth-1);
+            * trace(srec.specular_ray, bvh_node, lights, background, depth-1);
     }
 
     auto light_ptr = std::make_shared<LightPDF>(lights, rec.p);
@@ -32,7 +32,7 @@ vec3 Integrator::trace(
     
     return emitted
          + srec.attenuation * rec.mat_ptr->scattering_pdf(r, rec, scattered)
-                  * trace(scattered, bvh, lights, background, depth-1) / pdf;
+                  * trace(scattered, bvh_node, lights, background, depth-1) / pdf;
 }
 
 }

@@ -13,7 +13,16 @@ public:
     ImageTexture() : Image<RGB>(0, 0){}
     ImageTexture(const std::string& filename) : Image<RGB>(filename) {}
 
-    virtual vec3 value(double u, double v, const vec3& p) const override;
+    vec3 value(Float u, Float v, const vec3& p) const override;
+
+    std::string to_string() const override {
+        std::ostringstream oss;
+        oss << "ImageTexture : {" << std::endl;
+        oss << "\tResolution : " << "[" << this->getWidth() << ", ";
+        oss << this->getHeight() << "]," << std::endl;
+        oss << "}";
+        return oss.str();
+    }
 };
 
 }

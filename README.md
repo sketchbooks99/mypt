@@ -1,4 +1,4 @@
-# MyPT
+# mypt
 
 ![current_thumbnail](result/result.png)
 
