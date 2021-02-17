@@ -10,8 +10,6 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
 
     int primitive_span = end - start;
 
-    std::sort(p.begin() + start, p.begin() + end, compare_axis);
-
     // Create leaf node with primitives
     if (primitive_span == 1) {
         left = right = p[start];
@@ -26,6 +24,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     } else if (primitive_span > 0) {
         switch(splitMethod) {
         case SplitMethod::MIDDLE: {
+            std::sort(p.begin() + start, p.begin() + end, compare_axis);
             auto mid = start + primitive_span/2;
             left = std::make_shared<BVH>(p, start, mid, axis, splitMethod);
             right = std::make_shared<BVH>(p, mid, end, axis, splitMethod);
@@ -33,30 +32,40 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
         }
         case SplitMethod::SAH: {
             int splitIndex = 1;
-            double bestCost = std::numeric_limits<double>::infinity();
-            // AABB for calculating temporal surface area.
+            Float bestCost = std::numeric_limits<Float>::infinity();
+            int bestAxis = 0;
+            // AABBs to calculate a temporal surface area.
             AABB s1box, s2box;
             // vector to store surface areas.
-            std::vector<double> s1SA(primitive_span), s2SA(primitive_span);
+            std::vector<Float> s1SA(primitive_span), s2SA(primitive_span);
             // Store surface area of left side at every cases
-            for(int i=1; i<primitive_span; i++) {
-                s1box = surrounding(s1box, p[i+start]->bounding());
-                s1SA[i] = s1box.surface_area();
-            }
-            // Store surface area of right side at every case
-            for(int i=primitive_span-1; i>0; i--) {
-                s2box = surrounding(s2box, p[i+start]->bounding());
-                s2SA[i] = s2box.surface_area();
-                double cost = s1SA[i]*(i+1) + s2SA[i]*(primitive_span-i);
-                // Update best cost of Surface Area Heuristic.
-                if(cost < bestCost) {
-                    bestCost = cost;
-                    splitIndex = i+start;
+
+            for(int a=0; a<3; a++) {
+                auto compare_axis = (a == 0) ? box_x_compare
+                                  : (a == 1) ? box_y_compare
+                                             : box_z_compare;
+                std::sort(p.begin() + start, p.begin() + end, compare_axis);
+
+                for(int i=1; i<primitive_span; i++) {
+                    s1box = surrounding(s1box, p[i+start]->bounding());
+                    s1SA[i] = s1box.surface_area();
+                }
+                // Store surface area of right side at every case
+                for(int i=primitive_span-1; i>0; i--) {
+                    s2box = surrounding(s2box, p[i+start]->bounding());
+                    s2SA[i] = s2box.surface_area();
+                    Float cost = s1SA[i]*(i+1) + s2SA[i]*(primitive_span-i);
+                    // Update best cost of Surface Area Heuristic.
+                    if(cost < bestCost) {
+                        bestCost = cost;
+                        bestAxis = a;
+                        splitIndex = i+start;
+                    }
                 }
             }
             
-            left = std::make_shared<BVH>(p, start, splitIndex, axis, splitMethod);
-            right = std::make_shared<BVH>(p, splitIndex, end, axis, splitMethod);
+            left = std::make_shared<BVH>(p, start, splitIndex, bestAxis, splitMethod);
+            right = std::make_shared<BVH>(p, splitIndex, end, bestAxis, splitMethod);
             break;
         }
         }
@@ -69,7 +78,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     box = surrounding(box_left, box_right);
 }
 
-bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool BVH::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     if(!box.intersect(r, t_min, t_max))
         return false;
     

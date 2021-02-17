@@ -13,7 +13,7 @@ public:
     Lambertian(vec3 albedo) : albedo(std::make_shared<ConstantTexture>(albedo)) {}
     Lambertian(std::shared_ptr<Texture> a) : albedo(a) {}
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
-    double scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) const override;
+    Float scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) const override;
     
     std::string to_string() const override {
         std::ostringstream oss;

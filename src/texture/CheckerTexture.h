@@ -14,7 +14,7 @@ public:
       color2(std::make_shared<ConstantTexture>(color2)), 
       step(step) {}
 
-    vec3 value(double u, double v, const vec3& p) const override {
+    vec3 value(Float u, Float v, const vec3& p) const override {
         auto sines = sin(step*u) * sin(step*v);
         if(sines < 0) 
             return color1->value(u, v, p);

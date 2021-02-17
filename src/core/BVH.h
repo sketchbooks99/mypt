@@ -25,10 +25,12 @@ class BVH : public Primitive {
 public:
     enum class SplitMethod { MIDDLE, SAH };
     BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
-    bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float tmin, Float tmax, HitRecord& rec) const override;
     AABB bounding() const override;
 
-    std::string to_string() const override {}
+    std::string to_string() const override {
+        return "BVH : {}";
+    }
 
 private:
     std::shared_ptr<Primitive> left;

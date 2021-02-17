@@ -2,7 +2,7 @@
 
 namespace mypt {
 
-bool AABB::intersect(const Ray& r, double tmin, double tmax) const {
+bool AABB::intersect(const Ray& r, Float tmin, Float tmax) const {
     for(int a = 0; a < 3; a++) {
         auto t0 = ffmin((_min[a] - r.origin()[a]) / r.direction()[a],
                         (_max[a] - r.origin()[a]) / r.direction()[a]);
