@@ -56,8 +56,8 @@ public:
         std::ostringstream oss;
         oss << "Triangle : {" << std::endl;
         oss << "\tp0 : " << mesh->vertices[face[0]] << ", ";
-        oss << "p1 : " << mesh->vertices[face[1]] << ", ";
-        oss << "p2 : " << mesh->vertices[face[2]] << std::endl;
+        oss << "\tp1 : " << mesh->vertices[face[1]] << ", ";
+        oss << "\tp2 : " << mesh->vertices[face[2]] << std::endl;
         oss << "}";
         return oss.str();
     }

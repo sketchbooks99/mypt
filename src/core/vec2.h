@@ -18,11 +18,11 @@ public:
     operator type2<OtherType>() { return type2<OtherType>(x, y); }
 
     Type operator[](int i) const { 
-        ASSERT(i < 2, "Invalid index number to access vec3 members!\n");
+        ASSERT(i < 2, "Invalid index number to access vec2 members!\n");
         return (&x)[i];
     }
     Type& operator[](int i) {
-        ASSERT(i < 2, "Invalid index number to access vec3 members!\n");
+        ASSERT(i < 2, "Invalid index number to access vec2 members!\n");
         return (&x)[i];
     }
 

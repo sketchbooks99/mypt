@@ -27,6 +27,7 @@ Scene::Scene(const std::string& filename) {
     int image_width = 512, image_height = 512;
     depth = 5;
     samples_per_pixel = 1;
+    bool is_comment = true;
 
     while(!ifs.eof()) {
         std::string line;
@@ -38,8 +39,12 @@ Scene::Scene(const std::string& filename) {
         std::string header;
         iss >> header;
 
-        // `#` is comment
-        if(header == "#" || header[0] == '#') continue;
+        // begin/endComment must be placed at out of primitive description
+        if(header == "beginComment") is_comment = true;
+        else if(header == "endComment") is_comment = false;
+
+        // Skip parsing comment
+        if(header == "#" || header[0] == '#' || is_comment == true) continue;
 
         if(header == "filename")
             iss >> image.first;
@@ -94,7 +99,7 @@ Scene::Scene(const std::string& filename) {
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else throw std::runtime_error("Input value for scale was incorrect!\n");
+            else THROW("Input value for scale was incorrect!\n");
         }
     }
     integrator = Integrator();
@@ -323,7 +328,7 @@ void Scene::createPrimitive(std::ifstream& ifs) {
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else throw std::runtime_error("Input value for scale was incorrect!\n");
+            else THROW("Input value for scale was incorrect!\n");
         }
     }
 
@@ -429,7 +434,7 @@ void Scene::createLight(std::ifstream& ifs) {
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else throw std::runtime_error("Input value for scale was incorrect!\n");
+            else THROW("Input value for scale was incorrect!\n");
         }
     }
 

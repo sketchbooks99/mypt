@@ -67,7 +67,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                         temp_vert_faces.emplace_back(vert_idx - 1);
                     }
                     else
-                        throw std::runtime_error("Invalid format in face information input.\n");
+                        THROW("Invalid format in face information input.\n");
                 }
 
                 ASSERT(temp_vert_faces.size() >= 3, "The number of faces is less than 3.\n");
@@ -79,11 +79,11 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                     face[2] = temp_vert_faces[2];
                     faces.emplace_back(face);
                 }
-                // Get more then 4 inputs.
-                // NOTE: 
-                //      This case is implemented under the assumption that mesh are configurd 
-                //      by quad and inputs are partitioned with 4 stride when face input are 
-                //      more than 4.
+
+                /** NOTE: Get more then 4 inputs.
+                /* This case is implemented under the assumption that mesh are configurd 
+                /* by quad and inputs are partitioned with 4 stride when face input are 
+                /* more than 4. */
                 else
                 {
                     for (int i = 0; i<int(temp_vert_faces.size() / 4); i++)

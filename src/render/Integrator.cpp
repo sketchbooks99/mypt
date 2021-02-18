@@ -7,7 +7,7 @@ vec3 Integrator::trace(
     Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
 ) const {
     HitRecord rec;
-    // If we've exceeded the Ray bounce limit, no more light is gathered.
+    
     if(depth <= 0)
         return vec3(0.0, 0.0, 0.0);
 

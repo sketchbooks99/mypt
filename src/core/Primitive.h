@@ -23,13 +23,13 @@ inline std::ostream& operator<<(std::ostream& out, PrimitiveType type) {
         return out << "PrimitiveType::None";
         break;
     case PrimitiveType::ShapePrimitive:
-        return out << "PrimitiveType::None";
+        return out << "PrimitiveType::ShapePrimitive";
         break;
     case PrimitiveType::ConstantMedium:
-        return out << "PrimitiveType::None";
+        return out << "PrimitiveType::ConstantMedium";
         break;
     case PrimitiveType::BVHNode:
-        return out << "PrimitiveType::None";
+        return out << "PrimitiveType::BVHNode";
         break;
     default:
         THROW("This PrimitiveType doesn't exist.");
@@ -37,6 +37,7 @@ inline std::ostream& operator<<(std::ostream& out, PrimitiveType type) {
     }
 }
 
+// -------------------------------------------------------------------------------------
 class Primitive {
 public:
     virtual bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const = 0;
@@ -50,6 +51,7 @@ public:
     virtual std::string to_string() const = 0;
 };
 
+// -------------------------------------------------------------------------------------
 class ShapePrimitive final : public Primitive {
 public:
     ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform);
@@ -64,8 +66,8 @@ public:
     std::string to_string() const override {
         std::ostringstream oss;
         oss << "ShapePrimitive : {" << std::endl;
-        oss << "Shape : " << shape->to_string() << std::endl;
-        oss << "Material : " << material->to_string() << std::endl;
+        oss << "\tShape : " << shape->to_string() << std::endl;
+        oss << "\tMaterial : " << material->to_string() << std::endl;
         oss << "}";
         return oss.str();
     }
@@ -76,7 +78,7 @@ private:
     AABB bbox;
 };
 
-// Constant Medium
+// -------------------------------------------------------------------------------------
 class ConstantMedium final : public Primitive {
 public: 
     ConstantMedium(std::shared_ptr<Shape> b, std::shared_ptr<Texture> a, Float d)
@@ -99,9 +101,9 @@ public:
     std::string to_string() const override {
         std::ostringstream oss;
         oss << "ShapePrimitive : {" << std::endl;
-        oss << "Boundary : " << boundary->to_string() << "," << std::endl;
-        oss << "Phase Function : " << phase_function->to_string() << "," << std::endl;
-        oss << "Density : " << neg_inv_density << std::endl;
+        oss << "\tBoundary : " << boundary->to_string() << "," << std::endl;
+        oss << "\tPhase Function : " << phase_function->to_string() << "," << std::endl;
+        oss << "\tDensity : " << neg_inv_density << std::endl;
         oss << "}";
         return oss.str();
     }

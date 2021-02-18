@@ -9,9 +9,10 @@ vec3 NoiseTexture::value(Float /* u */, Float /* v */, const vec3& p) const {
         break;
     case Mode::TURB:
         return vec3(1,1,1) * noise.turb(scale * p);
-        break; 
+        break;
     default:
-        throw std::runtime_error("This noise mode is not supported!\n");
+        THROW("This noise mode is not supported!\n");
+        break;
     }
 }
 

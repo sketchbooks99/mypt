@@ -10,7 +10,7 @@ bool Lambertian::scatter(
     srec.is_specular = false;
     srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
     srec.pdf = std::make_shared<CosinePDF>(rec.normal);
-    rec.p += rec.normal * eps;
+    // rec.p += rec.normal * eps;
     return true;
 }
 
