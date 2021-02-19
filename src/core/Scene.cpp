@@ -27,7 +27,7 @@ Scene::Scene(const std::string& filename) {
     int image_width = 512, image_height = 512;
     depth = 5;
     samples_per_pixel = 1;
-    bool is_comment = true;
+    bool is_comment = false;
 
     while(!ifs.eof()) {
         std::string line;
@@ -492,9 +492,6 @@ void Scene::render() {
     std::cout << "[OpenMP] NUM_THREADS: " << n_threads << std::endl;
     #endif
 
-    // ASSERT(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");
-
-    // declare reduction for vec3
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
         Float sec = end_time.tv_sec - start_time.tv_sec;

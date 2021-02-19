@@ -12,6 +12,7 @@ vec3 NoiseTexture::value(Float /* u */, Float /* v */, const vec3& p) const {
         break;
     default:
         THROW("This noise mode is not supported!\n");
+        return vec3();
         break;
     }
 }

@@ -81,9 +81,9 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                 }
 
                 /** NOTE: Get more then 4 inputs.
-                /* This case is implemented under the assumption that mesh are configurd 
-                /* by quad and inputs are partitioned with 4 stride when face input are 
-                /* more than 4. */
+                 * This case is implemented under the assumption that mesh are configurd 
+                 * by quad and inputs are partitioned with 4 stride when face input are 
+                 * more than 4. */
                 else
                 {
                     for (int i = 0; i<int(temp_vert_faces.size() / 4); i++)
@@ -114,9 +114,8 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
     // Mesh smoothing
     /** NOTE:
      * When surface smoothing is enabled, all vertices have only one normal.
-     * When one is disabled, normals of each vertices are calculated in
-     * each triangle edges, and there is no need to store normals in vector.
-     */
+     * When smoothing is disabled, normals of each vertices are calculated in
+     * each triangle edges, and there is no need to store normals in vector. */
     if(isSmooth) {
         normals.resize(vertices.size());
         auto counts = std::vector<int>(vertices.size(), 0);
