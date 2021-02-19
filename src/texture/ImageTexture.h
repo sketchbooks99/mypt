@@ -23,6 +23,8 @@ public:
         oss << "}";
         return oss.str();
     }
+
+    TextureType type() const override { return TextureType::Image; }
 };
 
 }

@@ -18,6 +18,8 @@ public:
         oss << "NormalMat";
         return oss.str();
     }
+
+    MatType type() const override { return MatType::Normal; }
 };
 
 }

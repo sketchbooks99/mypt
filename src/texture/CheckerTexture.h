@@ -31,6 +31,8 @@ public:
         oss << "}";
         return oss.str();
     }
+
+    TextureType type() const override { return TextureType::Checker; }
     
 private:
     std::shared_ptr<Texture> color1;

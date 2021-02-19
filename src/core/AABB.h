@@ -4,6 +4,7 @@
 
 namespace mypt {
 
+/** \brief Axis Aligned Bounding Box. */
 struct AABB {
     AABB() : _min(vec3()), _max(vec3()) {}
     AABB(const vec3& a, const vec3& b) : _min(a), _max(b) {}
@@ -12,7 +13,7 @@ struct AABB {
     vec3 max() const { return _max; }
 
     bool intersect(const Ray& r, Float tmin, Float tmax) const;
-
+    
     Float surface_area() {
         Float dx = _max.x - _min.x;
         Float dy = _max.y - _min.y;

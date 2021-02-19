@@ -43,7 +43,9 @@ public:
     virtual bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const = 0;
     virtual AABB bounding() const = 0;
 
+    // Compute pdf value of primitive
     virtual Float pdf_value(const vec3& /* o */, const vec3& /* v */) const { return 0.0; }
+    // Compute outward direction at origin o
     virtual vec3 random(const vec3& /* o */) const { return vec3(1, 0, 0); }
 
     virtual PrimitiveType type() const = 0;
@@ -52,6 +54,8 @@ public:
 };
 
 // -------------------------------------------------------------------------------------
+/** \brief ShapePrimitive class store a shape, material, and transform informations.
+ *  In intersection test, stored transformation is applied to incident rays. */
 class ShapePrimitive final : public Primitive {
 public:
     ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform);
@@ -79,6 +83,8 @@ private:
 };
 
 // -------------------------------------------------------------------------------------
+/** \brief Medium with boundary which is determined by shape object.
+ *  Scattering and Absorption properties are computed by density of medium */
 class ConstantMedium final : public Primitive {
 public: 
     ConstantMedium(std::shared_ptr<Shape> b, std::shared_ptr<Texture> a, Float d)

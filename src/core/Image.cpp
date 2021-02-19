@@ -10,8 +10,7 @@ namespace mypt {
 template <typename PixelType>
 Image<PixelType>::Image(int width, int height)
 : width(width), height(height){
-    // ASSERT(width > 0 && height > 0, "Image class must have at least 1 pixel\n");
-
+    ASSERT(width > 0 && height > 0, "Image class must have at least 1 pixel\n");
     nChannels = static_cast<int>(sizeof(PixelType));
     data = new PixelType[width*height];
 }

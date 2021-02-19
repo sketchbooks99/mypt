@@ -29,13 +29,14 @@ struct ScatterRecord {
     std::shared_ptr<PDF> pdf;
 };
 
-enum MatType {
-    LAMBERTIAN,
-    DIELECTRIC,
-    METAL,
-    EMITTER,
-    ISOTROPIC,
-    NORMAL
+enum class MatType {
+    Lambertian,
+    Dielectric,
+    Disney,
+    Metal,
+    Emitter,
+    Isotropic,
+    Normal
 };
 
 class Material {
@@ -60,6 +61,8 @@ public:
     }
 
     virtual std::string to_string() const = 0;
+
+    virtual MatType type() const = 0;
 };
 
 }

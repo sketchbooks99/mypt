@@ -22,6 +22,8 @@ public:
         oss << "}";
         return oss.str();
     }
+
+    MatType type() const override { return MatType::Lambertian; }
 private:
     std::shared_ptr<Texture> albedo;
 };

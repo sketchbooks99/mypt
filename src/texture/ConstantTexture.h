@@ -20,6 +20,8 @@ public:
         oss << "}";
         return oss.str();
     }
+
+    TextureType type() const override { return TextureType::Constant; }
 private:
     vec3 color;
 };

@@ -69,7 +69,6 @@ inline std::ostream& operator<<(std::ostream &out, const mat4 &m) {
 }
 
 // ----------------------------------------------------------------------
-// Very complicated calculation ... :<
 inline mat4 inverse(mat4 m) {
     mat4 inv;
     Float tmp;

@@ -13,6 +13,8 @@ public:
       roughness(r), anisotropic(a), sheen(sh), sheenTint(shT), clearCoat(cl), clearCoatGloss(clcg) {}
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
+
+    MatType type() const override { return MatType::Disney; }
 private:
     vec3 base;
     Float subsurface;

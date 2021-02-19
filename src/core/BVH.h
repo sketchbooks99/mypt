@@ -21,6 +21,9 @@ inline bool box_z_compare(const std::shared_ptr<Primitive> a, const std::shared_
     return box_compare(a, b, 2);
 }
 
+/** \brief Node objects construct Bounding Volume Hierarchy. 
+ *  All interior nodes have the left/right node and primitives.
+ *  Primitives will be ShapePrimitive in leaf node, and others will be BVH node. */
 class BVHNode : public Primitive {
 public:
     enum class SplitMethod { MIDDLE, SAH };

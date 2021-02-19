@@ -38,9 +38,6 @@ Float Perlin::noise(const vec3& p) const {
     auto u = p.x - floor(p.x);
     auto v = p.y - floor(p.y);
     auto w = p.z - floor(p.z);
-    // u = u*u*(3-2*u);
-    // v = v*v*(3-2*v);
-    // w = w*w*(3-2*w);
 
     int i = static_cast<int>(floor(p.x));
     int j = static_cast<int>(floor(p.y));

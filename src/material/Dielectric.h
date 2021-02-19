@@ -28,6 +28,8 @@ public:
         return oss.str();
     }
 
+    MatType type() const override { return MatType::Dielectric; }
+
 private:
     vec3 albedo;
     Float ior;

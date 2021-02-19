@@ -4,7 +4,10 @@
 
 namespace mypt {
 
-// PixelType must be GRAY, RGB, RGBA
+/** \brief Image object that stores the color informations
+ *  This class supports GRAY, RGB, RGBA color representation.
+ *  Load/write operations are realized through `stbi` library.
+ *  `ImageTexture` also uses this class for texture mapping */
 template <typename PixelType>
 class Image {
 public:
@@ -28,7 +31,8 @@ public:
     int getWidth() const { return width; }
     int getHeight() const { return height; }
 
-    void build(int width, int height);
+    // Allocate image with specified size.
+    void allocate(int width, int height);
 
     void load(const std::string& filename);
     void write(const std::string& filename, const std::string& format);

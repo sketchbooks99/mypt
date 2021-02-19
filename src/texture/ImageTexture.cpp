@@ -4,10 +4,10 @@ namespace mypt {
 
 // ----------------------------------------------------------------
 vec3 ImageTexture::value(Float u, Float v, const vec3& /* p */) const {
-    // If data is not allocated, then return solid magenta as a debugging aid
+    // If data aren't allocated, then return solid magenta as a debugging aid
     if(data == nullptr) return vec3(1, 0, 1);
 
-    // Clanp input texture coordinates to [0, 1] x [1, 0]
+    // Clamp input texture coordinates to [0, 1] x [1, 0]
     u = clamp(u, 0.0, 1.0);
     v = 1.0 - clamp(v, 0.0, 1.0);
 

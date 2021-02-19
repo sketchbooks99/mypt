@@ -6,6 +6,7 @@
 
 namespace mypt {
 
+/** \brief Probability density function. */
 class PDF {
 public:
     virtual ~PDF() {}

@@ -24,6 +24,9 @@ public:
         oss << "}";
         return oss.str();
     }
+    
+    MatType type() const override { return MatType::Isotropic; }
+    
 private:
     std::shared_ptr<Texture> albedo;
 };
