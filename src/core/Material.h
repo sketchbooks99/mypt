@@ -39,6 +39,32 @@ enum class MatType {
     Normal
 };
 
+inline std::ostream& operator<<(std::ostream& out, MatType type) {
+    switch(type) {
+    case MatType::Lambertian:
+        return out << "MatType::Lambertian";
+        break;
+    case MatType::Dielectric:
+        return out << "MatType::Dielectric";
+        break;
+    case MatType::Disney:
+        return out << "MatType::Disney";
+        break;
+    case MatType::Metal:
+        return out << "MatType::Metal";
+        break;
+    case MatType::Emitter:
+        return out << "MatType::Emitter";
+        break;
+    case MatType::Isotropic:
+        return out << "MatType::Isotropic";
+        break;
+    case MatType::Normal:
+        return out << "MatType::Normal";
+        break;
+    }
+}
+
 class Material {
 public:
     virtual vec3 emitted(
