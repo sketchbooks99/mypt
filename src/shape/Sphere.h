@@ -13,6 +13,8 @@ public:
     AABB bounding() const override;
     double pdf_value(const vec3& o, const vec3& v) const override;
     vec3 random(const vec3& o) const override;
+
+    ShapeType type() const override { return ShapeType::Sphere; }
 private:
     vec2 getUV(const vec3& p) const;
 

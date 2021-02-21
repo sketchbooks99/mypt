@@ -14,6 +14,8 @@ public:
 
     double pdf_value(const vec3&, const vec3&) const override;
     vec3 random(const vec3&) const override;
+
+    ShapeType type() const override { return ShapeType::Plane; }
 private:
     vec2 min, max;
 };

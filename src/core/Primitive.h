@@ -1,7 +1,6 @@
 #pragma once 
 
 #include <vector>
-#include <typeinfo>
 #include "Shape.h"
 #include "Material.h"
 #include "Ray.h"
@@ -10,6 +9,26 @@
 
 namespace mypt {
 
+enum class PrimitiveType {
+    None,
+    ShapePrimitive,
+    ConstantMedium, 
+    BVHNode
+};
+
+inline std::ostream& operator<<(std::ostream& out, const PrimitiveType& type) {
+    switch (type) {
+    case PrimitiveType::ShapePrimitive:
+        return out << "PrimitiveType::ShapePrimitive";
+    case PrimitiveType::ConstantMedium:
+        return out << "PrimitiveType::ConstantMedium";
+    case PrimitiveType::BVHNode:
+        return out << "PrimitiveType::BVHNode";
+    default:
+        return out << "";
+    }
+}
+
 class Primitive {
 public:
     virtual bool intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const = 0;
@@ -17,6 +36,8 @@ public:
 
     virtual double pdf_value(const vec3& /* o */, const vec3& /* v */) const { return 0.0; }
     virtual vec3 random(const vec3& /* o */) const { return vec3(1, 0, 0); }
+
+    virtual PrimitiveType type() const = 0;
 };
 
 class ShapePrimitive final : public Primitive {
@@ -28,8 +49,9 @@ public:
     double pdf_value(const vec3& o, const vec3& v) const override;
     vec3 random(const vec3& o) const override;
 
-    const std::type_info &getMatType() { return typeid(material); }
-    const std::type_info &getShapeType() { return typeid(shape); }
+    PrimitiveType type() const override { return PrimitiveType::ShapePrimitive; }
+    MatType mattype() const { return material->type(); }
+    ShapeType shapetype() const { return shape->type(); }
 private:
     std::shared_ptr<Shape> shape;
     std::shared_ptr<Material> material;
@@ -54,6 +76,8 @@ public:
     AABB bounding() const override {
         return boundary->bounding();
     }
+
+    PrimitiveType type() const override { return PrimitiveType::ConstantMedium; }
 private:
     std::shared_ptr<Shape> boundary;
     std::shared_ptr<Material> phase_function;

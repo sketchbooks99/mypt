@@ -14,6 +14,8 @@ public:
     double scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) override;
     vec3 emitted(const Ray& r_in, const HitRecord& rec) override;
 
+    MatType type() const override { return MatType::Normal; }
+
 private:
     bool is_emit;
 };

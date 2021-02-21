@@ -52,6 +52,8 @@ public:
         return { mesh->vertices[face[0]], mesh->vertices[face[1]], mesh->vertices[face[2]] };
     }
 
+    ShapeType type() const override { return ShapeType::Triangle; }
+
 private:
     std::shared_ptr<TriangleMesh> mesh;
     int3 face;

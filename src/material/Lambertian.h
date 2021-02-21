@@ -14,6 +14,7 @@ public:
     Lambertian(std::shared_ptr<Texture> a) : albedo(a) {}
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
     double scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) override;
+    MatType type() const override { return MatType::Lambertian; }
 private:
     std::shared_ptr<Texture> albedo;
 };

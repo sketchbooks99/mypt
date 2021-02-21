@@ -21,12 +21,13 @@ inline bool box_z_compare(const std::shared_ptr<Primitive> a, const std::shared_
     return box_compare(a, b, 2);
 }
 
-class BVH : public Primitive {
+class BVHNode : public Primitive {
 public:
     enum class SplitMethod { MIDDLE, SAH };
-    BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
+    BVHNode(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
     bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const override;
     AABB bounding() const override;
+    PrimitiveType type() const override { return PrimitiveType::BVHNode; }
 private:
     std::shared_ptr<Primitive> left;
     std::shared_ptr<Primitive> right;

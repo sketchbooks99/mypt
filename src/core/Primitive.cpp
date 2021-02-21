@@ -1,15 +1,5 @@
 #include "Primitive.h"
 
-/** NOTE: 
- * The ray origins must be inside the volume, so we have to carefully
- * treat intersection algorithm.
- * 
- * This code assumes that once a ray exists the constant medium boundary,
- * it will continue forever outside the boundary. Put another way,
- * it assumes that the boundary shape is convex. So this particular 
- * implemention will work for boundaries like boxes or spheres, but will
- * not work with toruses or shapes that contain voids. **/
-
 namespace mypt {
 
 // ShapePrimitive ----------------------------------------------------------------------
@@ -70,6 +60,17 @@ vec3 ShapePrimitive::random(const vec3& o) const {
 }
 
 // ConstantMedium ----------------------------------------------------------------------
+
+/** NOTE: 
+ *  The ray origins must be inside the volume, so we have to carefully
+ *  treat intersection algorithm.
+ * 
+ *  This code assumes that once a ray exists the constant medium boundary,
+ *  it will continue forever outside the boundary. Put another way,
+ *  it assumes that the boundary shape is convex. So this particular 
+ *  implemention will work for boundaries like boxes or spheres, but will
+ *  not work with toruses or shapes that contain voids. **/
+
 bool ConstantMedium::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     // Print occasional samples when debugging. To enable, set enableDebug true.
     const bool enableDebug = false;

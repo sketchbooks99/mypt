@@ -86,7 +86,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                  *  more than 4. */ 
                 else
                 {
-                    for (int i = 0; i<int(temp_vert_faces.size() / 4); i++)
+                    for (int i = 0; i < int(temp_vert_faces.size()/4); i++)
                     {
                         // The index value of 0th vertex in quad
                         auto base_idx = i * 4;
@@ -146,7 +146,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
         }
     }
     if(isSmooth) {
-        for (auto i = 0; i < normals.size(); i++)
+        for (size_t i = 0; i < normals.size(); i++)
         {
             normals[i] /= counts[i];
             normals[i] = normalize(normals[i]);

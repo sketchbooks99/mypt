@@ -529,7 +529,7 @@ void Scene::render() {
     std::cout << "primitives: " << this->primitives.size() << std::endl;
     std::cout << "lights: " << this->lights.size() << std::endl;
 
-    BVH bvh(this->primitives, 0, this->primitives.size(), 1, BVH::SplitMethod::MIDDLE);
+    BVHNode bvh(this->primitives, 0, this->primitives.size(), 1, BVHNode::SplitMethod::MIDDLE);
 
     struct timespec start_time, end_time;
     clock_gettime(CLOCK_REALTIME, &start_time);

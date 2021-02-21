@@ -2,7 +2,7 @@
 
 namespace mypt {
 
-BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, 
+BVHNode::BVHNode(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, 
          int axis, SplitMethod splitMethod) {
     auto compare_axis = (axis == 0) ? box_x_compare
                       : (axis == 1) ? box_y_compare
@@ -27,8 +27,8 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
         switch(splitMethod) {
         case SplitMethod::MIDDLE: {
             auto mid = start + primitive_span/2;
-            left = std::make_shared<BVH>(p, start, mid, axis, splitMethod);
-            right = std::make_shared<BVH>(p, mid, end, axis, splitMethod);
+            left = std::make_shared<BVHNode>(p, start, mid, axis, splitMethod);
+            right = std::make_shared<BVHNode>(p, mid, end, axis, splitMethod);
             break;
         }
         case SplitMethod::SAH: {
@@ -55,8 +55,8 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
                 }
             }
             
-            left = std::make_shared<BVH>(p, start, splitIndex, axis, splitMethod);
-            right = std::make_shared<BVH>(p, splitIndex, end, axis, splitMethod);
+            left = std::make_shared<BVHNode>(p, start, splitIndex, axis, splitMethod);
+            right = std::make_shared<BVHNode>(p, splitIndex, end, axis, splitMethod);
             break;
         }
         }
@@ -69,7 +69,7 @@ BVH::BVH(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     box = surrounding(box_left, box_right);
 }
 
-bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool BVHNode::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
     if(!box.intersect(r, t_min, t_max))
         return false;
     
@@ -79,7 +79,7 @@ bool BVH::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) co
     return hit_left | hit_right;
 }
 
-AABB BVH::bounding() const {
+AABB BVHNode::bounding() const {
     return box;
 }
 

@@ -31,51 +31,42 @@ struct ScatterRecord {
 
 // Abstract class 
 
-/**
- * NOTE:
- *  Disable const function to modify member variables in functions.
- *  This is especially for `Absorber`.
- */
+/** NOTE:
+ *  Disable const directive of member functions to modify member variables.
+ *  This is especially for `Absorber`. */
 
-enum MatType {
-    LAMBERTIAN,
-    DIELECTRIC,
-    METAL,
-    EMITTER,
-    MMAPS,
-    ABSORBER,
-    ISOTROPIC,
-    NORMAL
+enum class MatType {
+    None,
+    Lambertian,
+    Dielectric,
+    Metal,
+    Emitter,
+    MMAPs,
+    Absorber,
+    Isotropic,
+    Normal
 };
 
 inline std::ostream& operator<<(std::ostream& out, const MatType &mt) {
     switch(mt) {
-    case MatType::LAMBERTIAN:
-        return out << "LAMBERTIAN" << std::endl;
-        break;
-    case MatType::DIELECTRIC:
-        return out << "DIELECTRIC" << std::endl;
-        break;
-    case MatType::METAL:
-        return out << "METAL" << std::endl;
-        break;
-    case MatType::EMITTER:
-        return out << "EMITTER" << std::endl;
-        break;
-    case MatType::MMAPS:
-        return out << "MMAPS" << std::endl;
-        break;
-    case MatType::ABSORBER:
-        return out << "ABSORBER" << std::endl;
-        break;
-    case MatType::ISOTROPIC:
-        return out << "ISOTROPIC" << std::endl;
-        break;
-    case MatType::NORMAL:
-        return out << "NORMAL" << std::endl;
-        break;
+    case MatType::Lambertian:
+        return out << "Lambertian";
+    case MatType::Dielectric:
+        return out << "Dielectric";
+    case MatType::Metal:
+        return out << "Metal";
+    case MatType::Emitter:
+        return out << "Emitter";
+    case MatType::MMAPs:
+        return out << "MMAPs";
+    case MatType::Absorber:
+        return out << "Absorber";
+    case MatType::Isotropic:
+        return out << "Isotropic";
+    case MatType::Normal:
+        return out << "Normal";
     default:
-        break;
+        return out << "";
     }
 }
 
@@ -90,7 +81,7 @@ inline void stream_intersection(const Ray& r, const HitRecord& rec, const Scatte
 
 class Material {
 public:
-    Material(MatType mattype=MatType::LAMBERTIAN) : mattype(mattype) {}
+    Material() {}
     virtual vec3 emitted(
         const Ray& /* r_in */, const HitRecord& /* rec */
     ) {
@@ -110,10 +101,7 @@ public:
         return 0;
     }
 
-    MatType get_type() const { return mattype; }
-
-private:
-    MatType mattype;
+    virtual MatType type() const = 0;
 };
 
 }

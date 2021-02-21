@@ -21,6 +21,8 @@ public:
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
 
+    MatType type() const override { return MatType::Dielectric; }
+
 private:
     vec3 albedo;
     double ref_idx;

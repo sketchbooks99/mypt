@@ -17,6 +17,8 @@ public:
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
     vec3 emitted(const Ray& r_in, const HitRecord& rec) override;
+
+    MatType type() const override { return MatType::Emitter; }
     
 private:
     std::shared_ptr<Texture> albedo;
