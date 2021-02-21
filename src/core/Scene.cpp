@@ -103,7 +103,7 @@ Scene::Scene(const std::string& filename) {
         }
     }
     integrator = Integrator();
-    image.second.build(image_width, image_height);
+    image.second.allocate(image_width, image_height);
 }
 
 // -----------------------------------------------------------------------------------------

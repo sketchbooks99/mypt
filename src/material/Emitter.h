@@ -27,7 +27,7 @@ public:
         return oss.str();
     }
 
-    MatType type() const override { MatType::Emitter; }
+    MatType type() const override { return MatType::Emitter; }
     
 private:
     std::shared_ptr<Texture> albedo;

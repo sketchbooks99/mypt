@@ -32,15 +32,15 @@ template Image<RGBA>::Image(const std::string&);
 
 // --------------------------------------------------------------------------------
 template <typename PixelType>
-void Image<PixelType>::build(int width, int height) {
+void Image<PixelType>::allocate(int width, int height) {
     this->width = width; 
     this->height = height;
     nChannels = static_cast<int>(sizeof(PixelType));
     data = new PixelType[width*height];
 }
-template void Image<GRAY>::build(int, int);
-template void Image<RGB>::build(int, int);
-template void Image<RGBA>::build(int, int);
+template void Image<GRAY>::allocate(int, int);
+template void Image<RGB>::allocate(int, int);
+template void Image<RGBA>::allocate(int, int);
 
 // --------------------------------------------------------------------------------
 template <typename PixelType>
