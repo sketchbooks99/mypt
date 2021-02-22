@@ -8,7 +8,7 @@ bool Emitter::scatter(const Ray& /* r_in */, HitRecord& /* rec */, ScatterRecord
 }
 
 vec3 Emitter::emitted(const Ray& /* r_in */, const HitRecord& rec) {
-    return albedo->value(rec.u, rec.v, rec.p) * intensity;
+    return albedo->value(rec.uv.x, rec.uv.y, rec.p) * intensity;
 }
 
 }

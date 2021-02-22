@@ -25,9 +25,9 @@ class BVHNode : public Primitive {
 public:
     enum class SplitMethod { MIDDLE, SAH };
     BVHNode(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
-    bool intersect(const Ray& r, double tmin, double tmax, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float tmin, Float tmax, HitRecord& rec) const override;
     AABB bounding() const override;
-    PrimitiveType type() const override { return PrimitiveType::BVHNode; }
+    Type type() const override { return Type::BVHNode; }
 private:
     std::shared_ptr<Primitive> left;
     std::shared_ptr<Primitive> right;

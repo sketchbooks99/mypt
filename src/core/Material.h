@@ -11,9 +11,8 @@ struct HitRecord {
     vec3 p;
     vec3 normal;
     std::shared_ptr<Material> mat_ptr;
-    double t;
-    double u;
-    double v;
+    Float t;
+    vec2 uv;
     bool front_face;
 
     inline void set_face_normal(const Ray& r, const vec3& outward_normal) {
@@ -29,47 +28,6 @@ struct ScatterRecord {
     std::shared_ptr<PDF> pdf;
 };
 
-// Abstract class 
-
-/** NOTE:
- *  Disable const directive of member functions to modify member variables.
- *  This is especially for `Absorber`. */
-
-enum class MatType {
-    None,
-    Lambertian,
-    Dielectric,
-    Metal,
-    Emitter,
-    MMAPs,
-    Absorber,
-    Isotropic,
-    Normal
-};
-
-inline std::ostream& operator<<(std::ostream& out, const MatType &mt) {
-    switch(mt) {
-    case MatType::Lambertian:
-        return out << "Lambertian";
-    case MatType::Dielectric:
-        return out << "Dielectric";
-    case MatType::Metal:
-        return out << "Metal";
-    case MatType::Emitter:
-        return out << "Emitter";
-    case MatType::MMAPs:
-        return out << "MMAPs";
-    case MatType::Absorber:
-        return out << "Absorber";
-    case MatType::Isotropic:
-        return out << "Isotropic";
-    case MatType::Normal:
-        return out << "Normal";
-    default:
-        return out << "";
-    }
-}
-
 inline void stream_intersection(const Ray& r, const HitRecord& rec, const ScatterRecord& srec) {
     std::cout << "time:" << rec.t;
     std::cout << ",p:" << rec.p;
@@ -81,6 +39,18 @@ inline void stream_intersection(const Ray& r, const HitRecord& rec, const Scatte
 
 class Material {
 public:
+    enum class Type { 
+        None, 
+        Lambertian, 
+        Dielectric, 
+        Metal, 
+        Emitter, 
+        MMAPs, 
+        Absorber, 
+        Isotropic, 
+        Normal
+    };
+
     Material() {}
     virtual vec3 emitted(
         const Ray& /* r_in */, const HitRecord& /* rec */
@@ -95,14 +65,37 @@ public:
     }
 
     // Probability distribution function
-    virtual double scattering_pdf (
+    virtual Float scattering_pdf (
         const Ray& /* r_in */, const HitRecord& /* rec */, const Ray& /* scattered */
     ) {
         return 0;
     }
 
-    virtual MatType type() const = 0;
+    virtual Type type() const = 0;
 };
+
+inline std::ostream& operator<<(std::ostream& out, const Material::Type &type) {
+    switch(type) {
+    case Material::Type::Lambertian:
+        return out << "Lambertian";
+    case Material::Type::Dielectric:
+        return out << "Dielectric";
+    case Material::Type::Metal:
+        return out << "Metal";
+    case Material::Type::Emitter:
+        return out << "Emitter";
+    case Material::Type::MMAPs:
+        return out << "MMAPs";
+    case Material::Type::Absorber:
+        return out << "Absorber";
+    case Material::Type::Isotropic:
+        return out << "Isotropic";
+    case Material::Type::Normal:
+        return out << "Normal";
+    default:
+        return out << "";
+    }
+}
 
 }
 

@@ -9,10 +9,11 @@ public:
     ConstantTexture(){}
     ConstantTexture(vec3 c) : color(c) {}
 
-    virtual vec3 value(double /* u */, double /* v */, const vec3& /* p */) const {
+    vec3 value(Float /* u */, Float /* v */, const vec3& /* p */) const override {
         return color;
     }
 
+    Type type() const override { return Type::Constant; }
 private:
     vec3 color;
 };

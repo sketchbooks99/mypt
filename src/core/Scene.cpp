@@ -27,7 +27,7 @@ namespace mypt {
 // -----------------------------------------------------------------------------------------
 Scene::Scene(const std::string& filename) {    
     std::ifstream ifs(filename, std::ios::in);
-    ASSERT(ifs.is_open(), "The scene file '"+filename+"' is not existed\n");
+    Assert(ifs.is_open(), "The scene file '"+filename+"' is not existed\n");
 
     int image_width = 512, image_height = 512;
     depth = 5;
@@ -70,7 +70,7 @@ Scene::Scene(const std::string& filename) {
         else if(header == "depth")
             iss >> depth;
         else if(header == "beginCamera")
-            createCamera(ifs, double(image_width)/image_height);
+            createCamera(ifs, Float(image_width)/image_height);
         else if(header == "beginPrimitive")
             createPrimitive(ifs);
         else if(header == "beginLight")
@@ -105,16 +105,14 @@ Scene::Scene(const std::string& filename) {
             while(true) {
                 float s;
                 iss >> s;
-                /** Add validation by scale.size() to ensure that 
-                 *  scale inputs have at least one value. */
-                if(iss.eof() && scale.size() != 0) break;
+                if(iss.eof()) break;
 
                 scale.push_back(s);
             }
-            ASSERT(scale.size() == 1 || scale.size() == 3, "Input scale value was incorrect!\n");
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
+            else Throw("Input value for scale was incorrect!\n");
         }
     }
     integrator = Integrator();
@@ -128,14 +126,14 @@ Scene::Scene(const std::string& filename) {
 }
 
 // -----------------------------------------------------------------------------------------
-void Scene::createCamera(std::ifstream& ifs, double aspect) {
+void Scene::createCamera(std::ifstream& ifs, Float aspect) {
     // Default configuration of camera.
     vec3 origin(0, 0, 100);
     vec3 lookat(0, 0, 0);
     vec3 up(0, 1, 0);
-    double focus_length = 15.0;
-    double aperture = 0.0;
-    double vfov = 20.0;
+    Float focus_length = 15.0;
+    Float aperture = 0.0;
+    Float vfov = 20.0;
 
     while(true)
     {
@@ -180,7 +178,7 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
             shapes.emplace_back(createPlaneShape(min, max));
         } 
         else if(type == "sphere") {
-            double radius = 1.0;
+            Float radius = 1.0;
             while(!iss.eof()) {
                 iss >> header;
                 if(header == "radius")
@@ -248,7 +246,7 @@ auto Scene::createMaterial(std::istringstream& iss) {
                     texture = std::make_shared<ImageTexture>(filename);
                 }
                 else if(header == "noise") {
-                    double scale = 1.0f;
+                    Float scale = 1.0f;
                     iss >> header;
                     if(header == "scale") iss >> scale;
                     iss >> header;
@@ -368,21 +366,18 @@ void Scene::createPrimitive(std::ifstream& ifs) {
             while(true) {
                 float s;
                 iss >> s;
-                /** Add validation by scale.size() to ensure that 
-                 *  scale inputs have at least one value. */
-                if(iss.eof() && scale.size() != 0) break;
+                if(iss.eof()) break;
 
                 scale.push_back(s);
             }
-            std::cout << scale.size() << std::endl;
-            ASSERT(scale.size() == 1 || scale.size() == 3, "Input scale value was incorrect!\n");
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
+            else Throw("Input value for scale was incorrect!\n");
         }
     }
 
-    ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
+    Assert(!shapes.empty(), "Shape object is required to primitive\n");
     if(!material) material = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
@@ -436,7 +431,7 @@ void Scene::createLight(std::ifstream& ifs) {
             texture = std::make_shared<ImageTexture>(filename);
         }
         else if(header == "noise") {
-            double scale = 1.0f;
+            Float scale = 1.0f;
             iss >> header;
             if(header == "scale") iss >> scale;
             iss >> header;
@@ -477,20 +472,18 @@ void Scene::createLight(std::ifstream& ifs) {
             while(true) {
                 float s;
                 iss >> s;
-                /** Add validation by scale.size() to ensure that 
-                 *  scale inputs have at least one value. */
-                if(iss.eof() && scale.size() != 0) break;
+                if(iss.eof()) break;
 
                 scale.push_back(s);
             }
-            ASSERT(scale.size() == 1 || scale.size() == 3, "Input scale value was incorrect!\n");
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
+            else Throw("Input value for scale was incorrect!\n");
         }
     }
 
-    ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
+    Assert(!shapes.empty(), "Shape object is required to primitive\n");
     if(!texture) texture = std::make_shared<ConstantTexture>(vec3(1.0f));
     emitter = std::make_shared<Emitter>(texture, intensity);
 
@@ -505,7 +498,7 @@ void Scene::createLight(std::ifstream& ifs) {
 }
 
 // -----------------------------------------------------------------------------------------
-void Scene::streamProgress(int currentLine, int maxLine, double elapsedTime, int progressLen) {    
+void Scene::streamProgress(int currentLine, int maxLine, Float elapsedTime, int progressLen) {    
     // Display progress bar
     std::cerr << "\rRendering: [";
     int progress = static_cast<int>(((float)(currentLine+1) / maxLine) * progressLen);
@@ -543,14 +536,14 @@ void Scene::render() {
     int n_threads = omp_get_max_threads();
     #endif
 
-    // ASSERT(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");
+    // Assert(refimage.getWidth() == width && refimage.getHeight() == height, "The reference image and rendering image should have same dimensions!");
 
     // declare reduction for vec3
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
-        double sec = end_time.tv_sec - start_time.tv_sec;
-        double nsec = (double)(end_time.tv_nsec - start_time.tv_nsec) / 1000000000;
-        double elapsed_time = sec + nsec;
+        Float sec = end_time.tv_sec - start_time.tv_sec;
+        Float nsec = (Float)(end_time.tv_nsec - start_time.tv_nsec) / 1000000000;
+        Float elapsed_time = sec + nsec;
         this->streamProgress(y, height, elapsed_time, progress_len);
 
         #ifdef _OPENMP
@@ -566,8 +559,8 @@ void Scene::render() {
             }
                 
             for(int s=0; s<samples_per_pixel; s++) {
-                auto u = (x + random_double()) / width;
-                auto v = (y + random_double()) / height;
+                auto u = (x + random_Float()) / width;
+                auto v = (y + random_Float()) / height;
 
                 Ray r = camera.get_ray(u, v);
                 r.set_color(pixel_color);
@@ -581,10 +574,6 @@ void Scene::render() {
     std::string file_format = split(image.first, '.').back();
     image.second.write(image.first, file_format);
     
-    // if(is_invert) {
-    //     std::cout << "\nWrite absorbed result" << std::endl;
-    //     absorbed_image.second->write(absorbed_image.first, split(absorbed_image.first, '.').back());
-    // }
     std::cerr << "\nDone\n";
 }
 

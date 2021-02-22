@@ -20,11 +20,11 @@ public:
     
     type3 operator-() const { return type3(-x, -y, -z); }
     Type operator[](int i) const {
-        ASSERT(i < 3, "Invalid index number to access vec3 members!\n");
+        Assert(i < 3, "Invalid index number to access type3 members!\n");
         return (&x)[i];
     }
     Type& operator[](int i) {
-        ASSERT(i < 3, "Invalid index number to access vec3 members!\n");
+        Assert(i < 3, "Invalid index number to access type3 members!\n");
         return (&x)[i];
     }
 
@@ -55,7 +55,7 @@ public:
         return *this *= 1/t;
     }
     
-    double length() const {
+    Float length() const {
         return sqrt(length_squared());
     }
     
@@ -64,11 +64,11 @@ public:
     }
 
     inline static type3 random() {
-        return type3(random_double(), random_double(), random_double());
+        return type3(random_Float(), random_Float(), random_Float());
     }
 
     inline static type3 random(Type min, Type max) {
-        return type3(random_double(min, max), random_double(min, max), random_double(min, max));
+        return type3(random_Float(min, max), random_Float(min, max), random_Float(min, max));
     }
     
 public:
@@ -109,22 +109,22 @@ inline type3<Type> operator*(const type3<Type> &u, const type3<Type> &v) {
 }
 
 template <typename Type>
-inline type3<Type> operator*(double t, const type3<Type> &v) {
+inline type3<Type> operator*(Float t, const type3<Type> &v) {
     return type3<Type>(t*v.x, t*v.y, t*v.z);
 }
 
 template <typename Type>
-inline type3<Type> operator*(const type3<Type> &v, double t) {
+inline type3<Type> operator*(const type3<Type> &v, Float t) {
     return t * v;
 }
 
 template <typename Type>
-inline type3<Type> operator/(type3<Type> v, double t) {
+inline type3<Type> operator/(type3<Type> v, Float t) {
     return (1/t) * v;
 }
 
 template <typename Type>
-inline double dot(const type3<Type> &u, const type3<Type> &v) {
+inline Float dot(const type3<Type> &u, const type3<Type> &v) {
     return u.x * v.x
     + u.y * v.y
     + u.z * v.z;
@@ -137,7 +137,7 @@ inline type3<Type> cross(const type3<Type> &u, const type3<Type> &v) {
                 u.x * v.y - u.y * v.x);
 }
 
-using vec3 = type3<double>;
+using vec3 = type3<Float>;
 using uint3 = type3<unsigned int>;
 using int3 = type3<int>;
 using RGB = type3<unsigned char>;
@@ -151,8 +151,8 @@ inline vec3 abs(vec3 v) {
 }
 
 inline vec3 random_unit_vector() {
-    auto a = random_double(0, 2*pi);
-    auto z = random_double(-1,1);
+    auto a = random_Float(0, 2*pi);
+    auto z = random_Float(-1,1);
     auto r = sqrt(1 - z * z);
     return vec3(r * cos(a), r * sin(a), z);
 }
@@ -173,9 +173,9 @@ inline vec3 random_in_hemisphere(const vec3& normal) {
         return -in_unit_sphere;
 }
 
-inline vec3 random_to_sphere(double radius, double distance_squared) {
-    auto r1 = random_double();
-    auto r2 = random_double();
+inline vec3 random_to_sphere(Float radius, Float distance_squared) {
+    auto r1 = random_Float();
+    auto r2 = random_Float();
     auto z = 1 + r2*(sqrt(1-radius*radius/distance_squared) - 1);
 
     auto phi = 2*pi*r1;
@@ -187,15 +187,15 @@ inline vec3 random_to_sphere(double radius, double distance_squared) {
 
 inline vec3 random_in_unit_disk() {
     while(true) {
-        auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
+        auto p = vec3(random_Float(-1, 1), random_Float(-1, 1), 0);
         if(p.length_squared() >= 1) continue;
         return p;
     }
 }
 
 inline vec3 random_cosine_direction() {
-    auto r1 = random_double();
-    auto r2 = random_double();
+    auto r1 = random_Float();
+    auto r2 = random_Float();
     auto z = sqrt(1-r2);
 
     auto phi = 2*pi*r1;

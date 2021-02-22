@@ -8,10 +8,10 @@ namespace mypt {
 template <typename PixelType>
 class Image {
 public:
-    Image() {}
+    Image(); 
     Image(int width, int height);
     Image(const std::string& filename);
-    ~Image() { if(data) delete[] data; }
+    ~Image() { if (data != nullptr) delete[] data; }
     void set(int x, int y, PixelType val)
     {
         assert(x < width && y < height);

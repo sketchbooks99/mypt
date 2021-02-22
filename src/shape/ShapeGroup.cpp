@@ -4,7 +4,7 @@ namespace mypt {
 
 /// \public
 // ----------------------------------------------------------------------------------
-bool ShapeGroup::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ShapeGroup::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     for(auto& shape : group) {
         if(shape->intersect(r, t_min, t_max, rec)) return true;
     }
@@ -17,7 +17,7 @@ AABB ShapeGroup::bounding() const {
 }
 
 // ----------------------------------------------------------------------------------
-double ShapeGroup::pdf_value(const vec3& origin, const vec3& v) const {
+Float ShapeGroup::pdf_value(const vec3& origin, const vec3& v) const {
     int idx = random_int(0, group.size());
     return group[idx]->pdf_value(origin, v);
 }

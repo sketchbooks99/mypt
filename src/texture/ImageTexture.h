@@ -13,7 +13,9 @@ public:
     ImageTexture() : Image<RGB>(0, 0){}
     ImageTexture(const std::string& filename) : Image<RGB>(filename) {}
 
-    virtual vec3 value(double u, double v, const vec3& p) const override;
+    vec3 value(Float u, Float v, const vec3& p) const override;
+
+    Type type() const override { return Type::Image; }
 };
 
 }

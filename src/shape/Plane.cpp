@@ -3,19 +3,19 @@
 namespace mypt {
 
 // ----------------------------------------------------------------------------------
-bool Plane::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool Plane::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     auto t = -r.origin().y / r.direction().y;
     if(t < t_min || t > t_max) 
         return false;
     
-    double x = r.origin().x + t * r.direction().x;
-    double z = r.origin().z + t * r.direction().z;
+    Float x = r.origin().x + t * r.direction().x;
+    Float z = r.origin().z + t * r.direction().z;
     if(x < min[0] || x > max[0] || z < min[1] || z > max[1]) 
         return false;
 
     // Store ray information at intesection point
-    rec.u = (x-min[0]) / (max[0]-min[0]);
-    rec.v = (z-min[1]) / (max[1]-min[1]);
+    rec.uv.x = (x-min[0]) / (max[0]-min[0]);
+    rec.uv.y = (z-min[1]) / (max[1]-min[1]);
     rec.t = t;
     vec3 outward_normal(0, 1, 0);
     rec.set_face_normal(r, outward_normal);
@@ -33,7 +33,7 @@ AABB Plane::bounding() const {
 }
 
 // ----------------------------------------------------------------------------------
-double Plane::pdf_value(const vec3& origin, const vec3& v) const {
+Float Plane::pdf_value(const vec3& origin, const vec3& v) const {
     HitRecord rec;
     if(!this->intersect(Ray(origin, v), eps, infinity, rec))
         return 0;
@@ -47,7 +47,7 @@ double Plane::pdf_value(const vec3& origin, const vec3& v) const {
 
 // ----------------------------------------------------------------------------------
 vec3 Plane::random(const vec3& origin) const {
-    auto random_point = vec3(random_double(min[0],max[0]), 0.0f, random_double(min[1], max[1]));
+    auto random_point = vec3(random_Float(min[0],max[0]), 0.0f, random_Float(min[1], max[1]));
     return random_point - origin;
 }
 

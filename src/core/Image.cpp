@@ -8,9 +8,20 @@ namespace mypt {
 
 // --------------------------------------------------------------------------------
 template <typename PixelType>
+Image<PixelType>::Image() {
+    nChannels = 0;
+    width = 0; height = 0;
+    data = nullptr;
+}
+template Image<GRAY>::Image();
+template Image<RGB>::Image();
+template Image<RGBA>::Image();
+
+// --------------------------------------------------------------------------------
+template <typename PixelType>
 Image<PixelType>::Image(int width, int height)
 : width(width), height(height){
-    ASSERT(width > 0 && height > 0, "Image class must have at least 1 pixel\n");
+    Assert(width > 0 && height > 0, "Image class must have at least 1 pixel\n");
 
     nChannels = static_cast<int>(sizeof(PixelType));
     data = new PixelType[width*height];
@@ -25,7 +36,7 @@ Image<PixelType>::Image(const std::string& filename)
 {
     nChannels = static_cast<int>(sizeof(PixelType));
     data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, nChannels));
-    ASSERT(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
+    Assert(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
 }
 template Image<GRAY>::Image(const std::string&);
 template Image<RGB>::Image(const std::string&);
@@ -49,7 +60,7 @@ void Image<PixelType>::load(const std::string& filename)
 {   
     nChannels = static_cast<int>(sizeof(PixelType));
     data = reinterpret_cast<PixelType*>(stbi_load(filename.c_str(), &width, &height, &nChannels, 0));
-    ASSERT(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
+    Assert(data, "Image file '"+filename+"' can't be loaded! Please check file path or format!\n");
 }
 template void Image<GRAY>::load(const std::string&);
 template void Image<RGB>::load(const std::string&);

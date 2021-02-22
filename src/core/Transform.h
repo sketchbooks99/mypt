@@ -16,17 +16,20 @@ public:
 
     static Transform translate(vec3 t);
 
-    static Transform rotateX(double theta);
-    static Transform rotateY(double theta);
-    static Transform rotateZ(double theta);
-    static Transform rotate(double theta, vec3 axis);
+    static Transform rotateX(Float theta);
+    static Transform rotateY(Float theta);
+    static Transform rotateZ(Float theta);
+    static Transform rotate(Float theta, vec3 axis);
 
-    static Transform scale(double s);
+    static Transform scale(Float s);
     static Transform scale(vec3 s);
 
     mat4 mat, matInv;
 };
 
+/** When the order of transformation directive in the scene file is T->R->S,
+ *  `mat` will be multiplied with the same order, and `matInv` will be
+ *  multiplied with the inverted order. */
 inline Transform operator*(Transform t1, Transform t2) {
     auto mat = t1.mat * t2.mat;
     auto matInv = t2.matInv * t1.matInv;
@@ -53,12 +56,12 @@ public:
 
     void translate(vec3 t);
 
-    void rotateX(double theta);
-    void rotateY(double theta);
-    void rotateZ(double theta);
-    void rotate(double theta, vec3 axis);
+    void rotateX(Float theta);
+    void rotateY(Float theta);
+    void rotateZ(Float theta);
+    void rotate(Float theta, vec3 axis);
 
-    void scale(double s);
+    void scale(Float s);
     void scale(vec3 s);
 
 private:

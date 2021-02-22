@@ -21,28 +21,21 @@ bool Dielectric::scatter(
     bool cannot_refract = ni_over_nt * sine > 1.0;
 
     float reflect_prob = schlick(cosine, ref_idx);
-    bool is_reflect = false;
+    // bool is_reflect = false;
     vec3 direction;
 
-    // if(into) rec.p -= rec.normal * 0.01;
-    // else     rec.p += rec.normal * 0.01;
+    if(into) rec.p -= rec.normal * 0.001;
+    else     rec.p += rec.normal * 0.001;
 
-    if(cannot_refract || reflect_prob > random_double()) {
+    if(cannot_refract || reflect_prob > random_Float()) {
         direction = reflect(r_in.direction(), outward_normal);
         srec.scattered = Ray(rec.p, direction, r_in.time(), r_in.color());
-        is_reflect = true;
+        // is_reflect = true;
     }
     else {
         direction = refract(r_in.direction(), outward_normal, ni_over_nt);
         srec.scattered = Ray(rec.p, direction, r_in.time(), r_in.color());
     }
-
-    /// MEMO: Normal of Triangle was not correct ...?
-    #if 0
-    std::cout << "into:" << into;
-    std::cout << ",is_reflect:" << is_reflect;
-    stream_intersection(r_in, rec, srec);
-    #endif 
     
     return true;
 }

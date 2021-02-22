@@ -1815,7 +1815,7 @@ static stbi_uc *stbi__hdr_to_ldr(float   *data, int x, int y, int comp)
 //    simple implementation
 //      - doesn't support delayed output of y-dimension
 //      - simple interface (only one output format: 8-bit interleaved RGB)
-//      - doesn't try to recover corrupt jpegs
+//      - doesn't try to rec.uv.yer corrupt jpegs
 //      - doesn't allow partial loading, loading multiple at once
 //      - still fast on x86 (copying globals into locals doesn't help x86)
 //      - allocates lots of intermediate memory (full size of all components)

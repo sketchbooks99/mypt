@@ -27,7 +27,7 @@ ShapePrimitive::ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Mat
     bbox = AABB(min, max);
 }
 
-bool ShapePrimitive::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ShapePrimitive::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     Ray tr_ray = *transform * r;
     if(!shape->intersect(tr_ray, t_min, t_max, rec))
         return false;
@@ -49,7 +49,7 @@ AABB ShapePrimitive::bounding() const {
     return this->bbox;
 }
 
-double ShapePrimitive::pdf_value(const vec3& o, const vec3& v) const {
+Float ShapePrimitive::pdf_value(const vec3& o, const vec3& v) const {
     vec3 origin = mat4::point_mul(transform->getInvMatrix(), o);
     vec3 vec = mat4::vector_mul(transform->getInvMatrix(), v);
     return shape->pdf_value(origin, vec);
@@ -71,10 +71,10 @@ vec3 ShapePrimitive::random(const vec3& o) const {
  *  implemention will work for boundaries like boxes or spheres, but will
  *  not work with toruses or shapes that contain voids. **/
 
-bool ConstantMedium::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool ConstantMedium::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     // Print occasional samples when debugging. To enable, set enableDebug true.
     const bool enableDebug = false;
-    const bool debugging = enableDebug && random_double() < 1e-4f;
+    const bool debugging = enableDebug && random_Float() < 1e-4f;
 
     HitRecord rec1, rec2;
 
@@ -96,7 +96,7 @@ bool ConstantMedium::intersect(const Ray& r, double t_min, double t_max, HitReco
 
     const auto ray_length = r.direction().length();
     const auto distance_inside_boundary = (rec2.t - rec1.t) * ray_length;
-    const auto hit_distance = neg_inv_density * log(random_double());
+    const auto hit_distance = neg_inv_density * log(random_Float());
 
     if (hit_distance > distance_inside_boundary)
         return false;

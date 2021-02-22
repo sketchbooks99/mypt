@@ -11,7 +11,7 @@ public:
 
     inline vec3 operator[](int i) const { return (&u)[i]; }
 
-    vec3 local(double a, double b, double c) const {
+    vec3 local(Float a, Float b, Float c) const {
         return a*u + b*v + c*w;
     }
 

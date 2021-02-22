@@ -6,7 +6,7 @@ namespace mypt {
 
 struct HitRecord;
 
-inline double schlick(double cosine, double ref_idx) {
+inline Float schlick(Float cosine, Float ref_idx) {
     auto r0 = (1-ref_idx) / (1+ref_idx);
     r0 = r0 * r0;
     return r0 + (1-r0)*pow((1-cosine),5);
@@ -14,18 +14,18 @@ inline double schlick(double cosine, double ref_idx) {
 
 class Dielectric final : public Material {
 public:
-    Dielectric(double ri, bool is_normal=false)
+    Dielectric(Float ri, bool is_normal=false)
     : albedo(vec3(1.0f)), ref_idx(ri), is_normal(is_normal) {}
-    Dielectric(vec3 a, double ri, bool is_normal=false)
+    Dielectric(vec3 a, Float ri, bool is_normal=false)
     : albedo(a), ref_idx(ri), is_normal(is_normal) {}
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) override;
 
-    MatType type() const override { return MatType::Dielectric; }
+    Type type() const override { return Type::Dielectric; }
 
 private:
     vec3 albedo;
-    double ref_idx;
+    Float ref_idx;
     bool is_normal;
 };
 

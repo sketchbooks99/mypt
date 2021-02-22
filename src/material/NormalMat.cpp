@@ -12,7 +12,7 @@ bool NormalMat::scatter(
     return !is_emit;
 }
 
-double NormalMat::scattering_pdf(
+Float NormalMat::scattering_pdf(
     const Ray& /* r_in */, const HitRecord& rec, const Ray& scattered
 ) {
     auto cosine = dot(rec.normal, normalize(scattered.direction()));

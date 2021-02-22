@@ -6,7 +6,7 @@ vec3 reflect(const vec3& v, const vec3& n) {
     return v - 2*dot(v,n) * n;
 }
 
-bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refracted) {
+bool refract(const vec3& v, const vec3& n, Float ni_over_nt, vec3& refracted) {
     vec3 uv = normalize(v);
     float dt = dot(v, n);
     float discriminant = 1.0 - ni_over_nt*ni_over_nt*(1.0-dt*dt);
@@ -17,7 +17,7 @@ bool refract(const vec3& v, const vec3& n, double ni_over_nt, vec3& refracted) {
         return false;
 }
 
-vec3 refract(const vec3& v, const vec3& n, double ni_over_nt) {
+vec3 refract(const vec3& v, const vec3& n, Float ni_over_nt) {
     auto nv = normalize(v);
     auto cosine = dot(-nv, n);
 

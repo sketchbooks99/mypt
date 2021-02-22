@@ -2,7 +2,7 @@
 
 namespace mypt {
 
-bool AABB::intersect(const Ray& r, double tmin, double tmax) const {
+bool AABB::intersect(const Ray& r, Float tmin, Float tmax) const {
     /** TIPS: The computation time in this intersection test 
      *        is significantly improved by closely storing values 
      *        in memory space. */

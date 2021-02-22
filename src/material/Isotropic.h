@@ -13,11 +13,11 @@ public:
     bool scatter(const Ray& /* r_in */, HitRecord& rec, ScatterRecord& srec) override
     {
         // scattered = Ray(rec.p, random_in_unit_sphere(), r_in.time());
-        srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
+        srec.attenuation = albedo->value(rec.uv.x, rec.uv.y, rec.p);
         return true;
     } 
 
-    MatType type() const override { return MatType::Isotropic; }
+    Type type() const override { return Type::Isotropic; }
 private:
     std::shared_ptr<Texture> albedo;
 };

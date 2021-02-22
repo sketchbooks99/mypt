@@ -18,7 +18,7 @@ public:
     std::shared_ptr<Image<PixelType>> getImagePtr() { return image; }
     Image<PixelType> getImage() { return *image; }
 
-    MatType type() const override { return MatType::Absorber; }
+    Type type() const override { return Type::Absorber; }
 private:
     std::shared_ptr<Image<PixelType>> image;
     std::string filename;

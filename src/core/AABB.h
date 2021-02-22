@@ -11,9 +11,9 @@ struct AABB {
     vec3 min() const { return _min; }
     vec3 max() const { return _max; }
 
-    bool intersect(const Ray& r, double tmin, double tmax) const;
+    bool intersect(const Ray& r, Float tmin, Float tmax) const;
 
-    double surface_area() {
+    Float surface_area() {
         return 2*(_max - _min).length_squared();
     }
 private:

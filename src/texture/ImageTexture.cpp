@@ -3,7 +3,7 @@
 namespace mypt {
 
 // ----------------------------------------------------------------
-vec3 ImageTexture::value(double u, double v, const vec3& /* p */) const {
+vec3 ImageTexture::value(Float u, Float v, const vec3& /* p */) const {
     // If data is not allocated, then return solid magenta as a debugging aid
     if(data == nullptr) return vec3(1, 0, 1);
 

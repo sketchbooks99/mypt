@@ -4,8 +4,8 @@ namespace mypt {
 
 Camera::Camera(
     vec3 lookfrom, vec3 lookat, vec3 vup,
-    double vfov, // top to botton, in degrees
-    double aspect, double aperture, double focus_dist, double t0, double t1
+    Float vfov, // top to botton, in degrees
+    Float aspect, Float aperture, Float focus_dist, Float t0, Float t1
 ) {
     origin = lookfrom;
     lens_radius = aperture / 2;
@@ -29,7 +29,7 @@ Camera::Camera(
     vertical = 2 * half_height * focus_dist * v;
 }
 
-Ray Camera::get_ray(double s, double t) {
+Ray Camera::get_ray(Float s, Float t) {
     vec3 rd = lens_radius * random_in_unit_disk();
     vec3 offset = u * rd.x + v * rd.y;
     vec3 dir = normalize(lower_left_corner + s*horizontal + t*vertical - origin - offset);
@@ -37,7 +37,7 @@ Ray Camera::get_ray(double s, double t) {
     return Ray(
         origin + offset, 
         dir,
-        random_double(time0, time1), 
+        random_Float(time0, time1), 
         RGBA(0, 0, 0, 0)
     );
 }

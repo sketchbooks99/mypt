@@ -2,13 +2,13 @@
 filename result/teapot.png
 width 768
 height 768
-spp 16
+spp 128
 depth 12
 background 0.5 0.5 0.5
 
 # Camera 
 beginCamera 
-origin 0 0 100
+origin 0 0 190
 lookat 0 0 0
 up 0 1 0
 focus_length 15.0
@@ -16,7 +16,6 @@ aperture 0.0
 vfov 10
 endCamera
 
-beginComment
 # Top
 beginPrimitive 
 shape plane min -50 -50 max 50 50
@@ -55,14 +54,6 @@ rotate_x 90
 material lambertian color 1 1 1
 endPrimitive
 
-beginComment
-# Sphere 
-beginPrimitive 
-shape sphere radius 2.5
-material lambertian color 0.8 0.05 0.05
-endPrimitive
-endComment
-
 beginPrimitive
 shape plane min -0.5 -0.5 max 0.5 0.5
 rotate_x 90
@@ -76,13 +67,10 @@ translate 0 49.9 0
 color 1 1 1
 intensity 10
 endLight
-endComment
 
 # OBJ
 beginPrimitive
-shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth size 1
+shape mesh filename data/model/teapot_normal_merged.obj axis 1 1 1 smooth 
 translate 0 -1 0
-#material dielectric color 1 1 1 ior 1.49
-#material lambertian color 1 1 1
-material normal emit
+material dielectric color 1 1 1 ior 1.49
 endPrimitive

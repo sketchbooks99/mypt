@@ -2,7 +2,7 @@
 
 # NOTE
 
-This branch is for `InFloasion Extend Project`. The key idea of this branch is to **project** `reference image` to texture of the light source. This system will allow us to improve the performance of an optimazation pipeline and store the ray directions which produce a mid-air image in a transparent object.
+This branch is for `InFloasion Extend Project`. The key idea of this branch is to **project** `reference image` to texture of the light source. This system will allow us to display an undistorted mid-air image in a transparent object by using generated texture at the light source position.
 
 ---
 

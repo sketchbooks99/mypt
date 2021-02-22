@@ -7,7 +7,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
     if(filename.substr(filename.length() - 4) == ".obj")
     {
         std::ifstream ifs(filename, std::ios::in);
-        ASSERT(ifs.is_open(), "The obj file '"+filename+"' is not existed!\n");
+        Assert(ifs.is_open(), "The obj file '"+filename+"' is not existed!\n");
         while (!ifs.eof())
         {
             std::string line;
@@ -70,7 +70,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                         throw std::runtime_error("Invalid format in face information input.\n");
                 }
 
-                ASSERT(temp_vert_faces.size() >= 3, "The number of faces were less than 3.\n");
+                Assert(temp_vert_faces.size() >= 3, "The number of faces were less than 3.\n");
 
                 if (temp_vert_faces.size() == 3) {
                     int3 face;
@@ -156,7 +156,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
 
 // ---------------------------------------------------------------------------
 /// \ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
-bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& rec) const {
+bool Triangle::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
     auto p0 = mesh->vertices[face[0]];
     auto p1 = mesh->vertices[face[1]];
     auto p2 = mesh->vertices[face[2]];
@@ -189,8 +189,8 @@ bool Triangle::intersect(const Ray& r, double t_min, double t_max, HitRecord& re
 
     rec.t = t;
     rec.p = r.at(rec.t);
-    rec.u = u;
-    rec.v = v;
+    rec.uv.x = u;
+    rec.uv.y = v;
 
     // ===== Flat shading =====
     if(mesh->normals.empty()) {

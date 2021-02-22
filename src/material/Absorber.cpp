@@ -12,8 +12,8 @@ template Absorber<RGBA>::~Absorber();
 template <typename PixelType>
 bool Absorber<PixelType>::scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& /* srec */) {
     // Absorb propagated color by ray
-    auto x = static_cast<int>(image->getWidth() * rec.u);
-    auto y = static_cast<int>(image->getHeight() * rec.v);
+    auto x = static_cast<int>(image->getWidth() * rec.uv.x);
+    auto y = static_cast<int>(image->getHeight() * rec.uv.y);
     image->set(x, y, r_in.color());
     std::cout << "p:" << rec.p << ",dir:" << r_in.direction() << std::endl;
     return false;

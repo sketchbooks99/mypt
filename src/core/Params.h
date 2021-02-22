@@ -17,7 +17,7 @@ private:
     std::vector<std::shared_ptr<ParamItem<bool>>> bools;
     std::vector<std::shared_ptr<ParamItem<int>>> ints;
     std::vector<std::shared_ptr<ParamItem<float>>> floats;
-    std::vector<std::shared_ptr<ParamItem<double>>> doubles;
+    std::vector<std::shared_ptr<ParamItem<Float>>> Floats;
     std::vector<std::shared_ptr<ParamItem<vec3>>> vec3s;
     std::vector<std::shared_ptr<ParamItem<RGBA>>> rgbas;
     std::vector<std::shared_ptr<ParamItem<RGB>>> rgbs;

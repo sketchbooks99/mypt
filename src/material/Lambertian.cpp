@@ -8,13 +8,13 @@ bool Lambertian::scatter(
     const Ray& r_in, HitRecord& rec, ScatterRecord& srec
 ) {
     srec.is_specular = false;
-    srec.attenuation = albedo->value(rec.u, rec.v, rec.p);
+    srec.attenuation = albedo->value(rec.uv.x, rec.uv.y, rec.p);
     rec.set_face_normal(r_in, rec.normal);
     srec.pdf = std::make_shared<CosinePDF>(rec.normal);
     return true;
 }
 
-double Lambertian::scattering_pdf(
+Float Lambertian::scattering_pdf(
     const Ray& /* r_in */, const HitRecord& rec, const Ray& scattered
 ) {
     auto cosine = dot(rec.normal, normalize(scattered.direction()));
