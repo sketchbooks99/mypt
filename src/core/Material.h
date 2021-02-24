@@ -77,21 +77,21 @@ public:
 inline std::ostream& operator<<(std::ostream& out, const Material::Type &type) {
     switch(type) {
     case Material::Type::Lambertian:
-        return out << "Lambertian";
+        return out << "Material::Type::Lambertian";
     case Material::Type::Dielectric:
-        return out << "Dielectric";
+        return out << "Material::Type::Dielectric";
     case Material::Type::Metal:
-        return out << "Metal";
+        return out << "Material::Type::Metal";
     case Material::Type::Emitter:
-        return out << "Emitter";
+        return out << "Material::Type::Emitter";
     case Material::Type::MMAPs:
-        return out << "MMAPs";
+        return out << "Material::Type::MMAPs";
     case Material::Type::Absorber:
-        return out << "Absorber";
+        return out << "Material::Type::Absorber";
     case Material::Type::Isotropic:
-        return out << "Isotropic";
+        return out << "Material::Type::Isotropic";
     case Material::Type::Normal:
-        return out << "Normal";
+        return out << "Material::Type::Normal";
     default:
         return out << "";
     }
