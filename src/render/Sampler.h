@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../core/MathUtil.h"
+
 /** Abstract class for several sampling strategies
  * 
  * TODO:
@@ -15,7 +17,7 @@ namespace mypt {
 
 class Sampler {
 public:
-    Sampler(int spp) : samples_per_pixels(spp) {}
+    explicit Sampler(int spp) : samples_per_pixels(spp) {}
     virtual Float sample() const = 0;
 private:
     int samples_per_pixels;

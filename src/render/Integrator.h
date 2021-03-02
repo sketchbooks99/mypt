@@ -21,8 +21,8 @@ class LightPDF;
 class Integrator {
 public:
     enum class TraceType { PATH };
-    Integrator() {}
-    // Integrator(TraceType type) {}
+    explicit Integrator() {}
+    explicit Integrator(TraceType type) : type(type) {}
     vec3 trace(
         Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
     ) const;

@@ -6,8 +6,8 @@ namespace mypt {
 
 class MovingSphere final : public Shape {
 public:
-    MovingSphere() {}
-    MovingSphere(
+    explicit MovingSphere() {}
+    explicit MovingSphere(
         vec3 cen0, vec3 cen1, Float t0, Float t1, Float r)
         : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r)
     {};

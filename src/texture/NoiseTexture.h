@@ -8,8 +8,8 @@ namespace mypt {
 class NoiseTexture final : public Texture {
 public:
     enum class Mode { NOISE, TURB };
-    NoiseTexture() {}
-    NoiseTexture(Float sc, Mode mode=Mode::NOISE) : scale(sc), mode(mode) {}
+    explicit NoiseTexture() {}
+    explicit NoiseTexture(Float sc, Mode mode=Mode::NOISE) : scale(sc), mode(mode) {}
 
     vec3 value(Float /* u */, Float /* v */, const vec3& p) const override;
 

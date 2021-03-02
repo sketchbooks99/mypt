@@ -6,10 +6,10 @@ namespace mypt {
 
 class CheckerTexture final : public Texture {
 public:
-    CheckerTexture() {}
-    CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5)
+    explicit CheckerTexture() {}
+    explicit CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5)
     : color1(t1), color2(t0), step(step) {}
-    CheckerTexture(const vec3& color1, const vec3& color2, int step=5)
+    explicit CheckerTexture(const vec3& color1, const vec3& color2, int step=5)
     : color1(std::make_shared<ConstantTexture>(color1)), 
       color2(std::make_shared<ConstantTexture>(color2)), 
       step(step) {}

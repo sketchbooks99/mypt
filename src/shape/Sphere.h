@@ -6,8 +6,8 @@ namespace mypt {
 
 class Sphere final : public Shape {
 public:
-    Sphere() {}
-    Sphere(Float r) : radius(r) {};
+    explicit Sphere() {}
+    explicit Sphere(Float r) : radius(r) {};
 
     bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const;
     AABB bounding() const;

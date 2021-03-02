@@ -6,8 +6,8 @@ namespace mypt {
 
 class Plane final : public Shape {
 public:
-    Plane() {}
-    Plane(vec2 min, vec2 max) : min(min), max(max) {}
+    explicit Plane() {}
+    explicit Plane(vec2 min, vec2 max) : min(min), max(max) {}
 
     bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
     AABB bounding() const override;

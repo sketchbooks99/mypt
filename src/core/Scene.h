@@ -12,7 +12,7 @@ namespace mypt {
 
 class Scene {
 public:
-    Scene(const std::string& filename);
+    explicit Scene(const std::string& filename);
     void render();
 
 private:

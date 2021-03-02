@@ -21,8 +21,8 @@ struct TriangleMesh {
 
 class Triangle final : public Shape {
 public:
-    Triangle() {}
-    Triangle(std::shared_ptr<TriangleMesh> &mesh, int3 face)
+    explicit Triangle() {}
+    explicit Triangle(std::shared_ptr<TriangleMesh> &mesh, int3 face)
         : mesh(mesh), face(face) {
         // Calculate corner vertex of AABB
         vec3 p0 = mesh->vertices[face[0]];
