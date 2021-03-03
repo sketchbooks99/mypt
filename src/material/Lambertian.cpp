@@ -8,7 +8,7 @@ bool Lambertian::scatter(
     const Ray& /* r_in */, SurfaceInteraction& si
 ) const {
     si.is_specular = false;
-    si.attenuation *= albedo->value(si.uv, si.p);
+    si.attenuation = albedo->value(si.uv, si.p);
     si.pdf_ptr = std::make_shared<CosinePDF>(si.n);
     // rec.p += rec.normal * eps;
     return true;
