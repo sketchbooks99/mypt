@@ -14,6 +14,9 @@ vec3 ImageTexture::value(Float u, Float v, const vec3& /* p */) const {
     int i = static_cast<int>(u * width);
     int j = static_cast<int>(v * height);
 
+    /** TODO: 
+     * The different ways to clamp texture should be implemented, such as repeat/edge.
+     */
     if(i >= width) i = width-1;
     if(j >= height) j = height-1;
 
