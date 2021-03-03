@@ -29,6 +29,8 @@ vec3 Integrator::trace(
     Ray scattered = Ray(rec.p, p.generate(), r.time());
     auto pdf = p.value(scattered.direction());
 
+    /// TODO: Launch shadow ray from diffuse surface to lights.
+
     if(pdf > 0) {
         return emitted
             + srec.attenuation * rec.mat_ptr->scattering_pdf(r, rec, scattered)
@@ -36,6 +38,30 @@ vec3 Integrator::trace(
     } else {
         return emitted;
     }
+}
+
+vec3 Integrator::trace(
+    Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
+) const {
+    vec3 result;
+    for (int i = 0; i < depth; i++) {
+        HitRecord hrec;
+        ScatterRecord srec;
+        vec3 radiance;
+        vec3 emission;
+        if(!bvh_node.intersect(r, eps, infinity, hrec)) {
+            emission = vec3();
+            radiance = vec3();
+        }
+
+        vec3 emission = rec.mat_ptr->emitted(r, rec, rec.u, rec.v, rec.p);
+        result += emission + radiance * srec.attenuation;
+    }
+}
+
+bool Integrator::trace_occlusion(Ray& r, const BVHNode& bvh_node, Float t_min, Float t_max) const {
+    HitRecord rec;
+    return bvh_node.intersect(r, t_min, t_max, rec);
 }
 
 }

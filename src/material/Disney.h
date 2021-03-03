@@ -12,7 +12,7 @@ public:
     : base(b), subsurface(ss), metallic(m), specular(sp), specularTint(spT), 
       roughness(r), anisotropic(a), sheen(sh), sheenTint(shT), clearCoat(cl), clearCoatGloss(clcg) {}
 
-    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
+    bool scatter(const Ray& r_in, SurfaceInteraction& si) const override;
 
     MatType type() const override { return MatType::Disney; }
 private:

@@ -4,6 +4,10 @@
 
 namespace mypt {
 
+/** TODO: 
+ * Implement derivatives on texture coordiantes space to achieve mipmap.
+ */ 
+
 enum class TextureType {
     None,
     Constant,

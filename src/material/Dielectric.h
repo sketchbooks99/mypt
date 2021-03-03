@@ -17,7 +17,7 @@ public:
     explicit Dielectric(Float ri) : albedo(vec3(1.0f)), ior(ri) {}
     explicit Dielectric(vec3 a, Float ri) : albedo(a), ior(ri) {}
 
-    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
+    bool scatter(const Ray& r_in, SurfaceInteraction& si) const override;
 
     std::string to_string() const override {
         std::ostringstream oss;

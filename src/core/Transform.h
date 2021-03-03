@@ -8,8 +8,8 @@ namespace mypt {
 struct Transform {
 public:
     Transform() : mat(mat4()), matInv(mat4()) {}
-    Transform(mat4 m) : mat(m.mat), matInv(inverse(m).mat) {}
-    Transform(mat4 m, mat4 mInv) : mat(m.mat), matInv(mInv) {}
+    explicit Transform(mat4 m) : mat(m.mat), matInv(inverse(m).mat) {}
+    explicit Transform(mat4 m, mat4 mInv) : mat(m.mat), matInv(mInv) {}
 
     mat4 getMatrix() { return mat; }
     mat4 getInvMatrix() { return matInv; }
@@ -42,7 +42,7 @@ inline Ray operator*(Transform t, Ray r) {
 class TransformSystem {
 public:
     TransformSystem();
-    TransformSystem(mat4 m);
+    explicit TransformSystem(mat4 m);
 
     void pushMatrix();
     void popMatrix();

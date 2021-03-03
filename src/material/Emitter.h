@@ -15,8 +15,8 @@ public:
     explicit Emitter(vec3 a, float intensity=1.0f)
      : albedo(std::make_shared<ConstantTexture>(a)), intensity(intensity) {};
 
-    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
-    vec3 emitted(const Ray& r_in, const HitRecord& rec, Float u, Float v, const vec3& p) const override;
+    vec3 emitted(const Ray& r_in, const SurfaceInteraction& si) const override;
+    bool scatter(const Ray& r_in, SurfaceInteraction& si) const override;
 
     std::string to_string() const override {
         std::ostringstream oss;

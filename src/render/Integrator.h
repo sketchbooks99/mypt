@@ -26,6 +26,9 @@ public:
     vec3 trace(
         Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
     ) const;
+
+    /// \brief Check if surface is occluded by the other primitives.
+    bool trace_occlusion(Ray& r, const BVHNode& bvh_node, Float t_min, Float t_max) const;
 private:
     TraceType type;
 };
