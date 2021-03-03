@@ -10,8 +10,8 @@ struct HitRecord;
 
 class Lambertian final : public Material {
 public: 
-    Lambertian(vec3 albedo) : albedo(std::make_shared<ConstantTexture>(albedo)) {}
-    Lambertian(std::shared_ptr<Texture> a) : albedo(a) {}
+    explicit Lambertian(vec3 albedo) : albedo(std::make_shared<ConstantTexture>(albedo)) {}
+    explicit Lambertian(std::shared_ptr<Texture> a) : albedo(a) {}
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
     Float scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) const override;
     

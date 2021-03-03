@@ -8,7 +8,7 @@ struct HitRecord;
 
 class Metal final : public Material {
 public:
-    Metal(const vec3& a, Float f) : albedo(a), fuzz(f < 1 ? f : 1) {};
+    explicit Metal(const vec3& a, Float f) : albedo(a), fuzz(f < 1 ? f : 1) {};
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
 

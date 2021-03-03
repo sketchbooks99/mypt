@@ -8,7 +8,7 @@ struct HitRecord;
 
 class NormalMat final : public Material {
 public:
-    NormalMat(){};
+    explicit NormalMat(){};
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
     Float scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) const override;

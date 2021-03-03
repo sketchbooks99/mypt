@@ -7,8 +7,8 @@ namespace mypt {
 
 class Isotropic : public Material {
 public:
-    Isotropic(vec3 c) : albedo(std::make_shared<ConstantTexture>(c)){}
-    Isotropic(std::shared_ptr<Texture> a) : albedo(a) {}
+    explicit Isotropic(vec3 c) : albedo(std::make_shared<ConstantTexture>(c)){}
+    explicit Isotropic(std::shared_ptr<Texture> a) : albedo(a) {}
 
     virtual bool scatter(const Ray& /* r_in */, HitRecord& rec, ScatterRecord& srec) const override
     {

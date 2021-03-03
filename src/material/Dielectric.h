@@ -14,8 +14,8 @@ inline Float schlick(Float cosine, Float ior) {
 
 class Dielectric final : public Material {
 public:
-    Dielectric(Float ri) : albedo(vec3(1.0f)), ior(ri) {}
-    Dielectric(vec3 a, Float ri) : albedo(a), ior(ri) {}
+    explicit Dielectric(Float ri) : albedo(vec3(1.0f)), ior(ri) {}
+    explicit Dielectric(vec3 a, Float ri) : albedo(a), ior(ri) {}
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
 

@@ -10,9 +10,9 @@ struct HitRecord;
 
 class Emitter final : public Material {
 public:
-    Emitter(std::shared_ptr<Texture> a, float intensity=1.0f) 
+    explicit Emitter(std::shared_ptr<Texture> a, float intensity=1.0f) 
      : albedo(a), intensity(intensity) {};
-    Emitter(vec3 a, float intensity=1.0f)
+    explicit Emitter(vec3 a, float intensity=1.0f)
      : albedo(std::make_shared<ConstantTexture>(a)), intensity(intensity) {};
 
     bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
