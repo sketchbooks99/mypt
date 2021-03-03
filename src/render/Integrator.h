@@ -9,10 +9,10 @@
  * 
  **/
 
-#include "../core/Material.h"
-#include "../core/Ray.h"
-#include "../core/BVH.h"
-#include "../core/Primitive.h"
+#include "../core/material.h"
+#include "../core/ray.h"
+#include "../core/bvh.h"
+#include "../core/primitive.h"
 
 namespace mypt {
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../core/Material.h"
-#include "../core/Texture.h"
-#include "../texture/ConstantTexture.h"
+#include "../core/material.h"
+#include "../core/texture.h"
+#include "../texture/constant.h"
 
 namespace mypt {
 

@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../core/Shape.h"
+#include "../core/shape.h"
 
 namespace mypt {
 
@@ -9,7 +9,7 @@ public:
     explicit Plane() {}
     explicit Plane(vec2 min, vec2 max) : min(min), max(max) {}
 
-    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const override;
     AABB bounding() const override;
 
     Float pdf_value(const vec3&, const vec3&) const override;

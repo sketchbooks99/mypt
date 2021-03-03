@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/Texture.h"
+#include "../core/texture.h"
 
 namespace mypt {
 
@@ -9,7 +9,7 @@ public:
     explicit ConstantTexture(){}
     explicit ConstantTexture(vec3 c) : color(c) {}
 
-    vec3 value(Float /* u */, Float /* v */, const vec3& /* p */) const {
+    vec3 value(const vec2& /* uv */, const vec3& /* p */) const {
         return color;
     }
 

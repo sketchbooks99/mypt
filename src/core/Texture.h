@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MathUtil.h"
+#include "math_util.h"
 
 namespace mypt {
 
@@ -31,14 +31,14 @@ inline std::ostream& operator<<(std::ostream& out, TextureType type) {
         return out << "TextureType::Noise";
         break;
     default:
-        THROW("This texture type is not supported.");
+        Throw("This texture type is not supported.");
         break;
     }
 }
 
 class Texture {
 public:
-    virtual vec3 value(Float u, Float v, const vec3& p) const = 0;
+    virtual vec3 value(const vec2& uv, const vec3& p) const = 0;
     virtual std::string to_string() const = 0;
     virtual TextureType type() const = 0;
 };

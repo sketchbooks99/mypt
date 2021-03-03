@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../core/Shape.h"
+#include "../core/shape.h"
 
 namespace mypt {
 
@@ -8,11 +8,11 @@ class FlipFace final : public Shape {
 public:
     FlipFace(std::shared_ptr<Shape> s) : s(s) {}
 
-    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override {
-        if(!s->intersect(r, t_min, t_max, rec))
+    bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const override {
+        if(!s->intersect(r, t_min, t_max, si))
             return false;
 
-        rec.front_face = !rec.front_face;
+        si.front_face = !si.front_face;
         return true;
     }
 

@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../core/Material.h"
+#include "../core/material.h"
 
 namespace mypt {
 
@@ -10,8 +10,8 @@ class NormalMat final : public Material {
 public:
     explicit NormalMat(){};
 
-    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
-    Float scattering_pdf(const Ray& r_in, const HitRecord& rec, const Ray& scattered) const override;
+    bool scatter(const Ray& r_in, SurfaceInteraction& si) const override;
+    Float scattering_pdf(const Ray& r_in, const SurfaceInteraction& si) const override;
 
     std::string to_string() const override {
         std::ostringstream oss;

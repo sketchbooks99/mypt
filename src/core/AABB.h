@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ray.h"
+#include "ray.h"
 
 namespace mypt {
 
@@ -12,7 +12,7 @@ struct AABB {
     vec3 min() const { return _min; }
     vec3 max() const { return _max; }
 
-    bool intersect(const Ray& r, Float tmin, Float tmax) const;
+    bool intersect(const Ray& r, Float t_min, Float t_max) const;
     
     Float surface_area() {
         Float dx = _max.x - _min.x;

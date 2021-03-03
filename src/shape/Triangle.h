@@ -1,9 +1,6 @@
 #pragma once
 
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include "../core/Shape.h"
+#include "../core/shape.h"
 
 namespace mypt {
 
@@ -38,9 +35,10 @@ public:
         }
     }
     
-    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const override;
     AABB bounding() const override { return AABB(min, max); }
 
+    /** TODO: Switch returned normal whether normals are allocated or not. */
     vec3 get_normal() const {
         auto p0 = mesh->vertices[face[0]];
         auto p1 = mesh->vertices[face[1]];

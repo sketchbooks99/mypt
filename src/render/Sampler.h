@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/MathUtil.h"
+#include "../core/math_util.h"
 
 /** Abstract class for several sampling strategies
  * 

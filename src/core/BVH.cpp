@@ -1,9 +1,11 @@
-#include "BVH.h"
+#include "bvh.h"
 
 namespace mypt {
 
+// ----------------------------------------------------------------------------
 BVHNode::BVHNode(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, 
-         int axis, SplitMethod splitMethod) {
+         int axis, SplitMethod splitMethod) 
+{
     auto compare_axis = (axis == 0) ? box_x_compare
                       : (axis == 1) ? box_y_compare
                                     : box_z_compare;
@@ -79,18 +81,21 @@ BVHNode::BVHNode(std::vector<std::shared_ptr<Primitive>>& p, int start, int end,
     box = surrounding(box_left, box_right);
 }
 
-bool BVHNode::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
+// ----------------------------------------------------------------------------
+bool BVHNode::intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const 
+{
     if(!box.intersect(r, t_min, t_max))
         return false;
     
-    bool hit_left = left->intersect(r, t_min, t_max, rec);
-    bool hit_right = right->intersect(r, t_min, hit_left ? rec.t : t_max, rec);
+    bool hit_left = left->intersect(r, t_min, t_max, si);
+    bool hit_right = right->intersect(r, t_min, hit_left ? si.t : t_max, si);
 
     return hit_left | hit_right;
 }
 
-
-AABB BVHNode::bounding() const {
+// ----------------------------------------------------------------------------
+AABB BVHNode::bounding() const 
+{
     return box;
 }
 

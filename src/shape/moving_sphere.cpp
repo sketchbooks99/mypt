@@ -1,4 +1,4 @@
-#include "MovingSphere.h"
+#include "moving_sphere.h"
 
 namespace mypt {
 
@@ -6,7 +6,7 @@ vec3 MovingSphere::center(Float time) const {
     return center0 + ((time - time0) / (time1 - time0)) * (center1 - center0);
 }
 
-bool MovingSphere::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
+bool MovingSphere::intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const {
     vec3 oc = r.origin() - center(r.time());
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
@@ -19,19 +19,19 @@ bool MovingSphere::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& 
 
         auto temp = (-half_b - root) / a;
         if(temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.at(rec.t);
-            vec3 outward_normal = (rec.p - center(r.time())) / radius;
-            rec.set_face_normal(r, outward_normal);
+            si.t = temp;
+            si.p = r.at(si.t);
+            vec3 outward_normal = (si.p - center(r.time())) / radius;
+            si.set_face_normal(r, outward_normal);
             return true;
         }
 
         temp = (-half_b + root) / a;
         if(temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.at(rec.t);
-            vec3 outward_normal = (rec.p - center(r.time())) / radius;
-            rec.set_face_normal(r, outward_normal);
+            si.t = temp;
+            si.p = r.at(si.t);
+            vec3 outward_normal = (si.p - center(r.time())) / radius;
+            si.set_face_normal(r, outward_normal);
             return true;
         }
     }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/Material.h"
+#include "../core/material.h"
 
 namespace mypt {
 
@@ -10,7 +10,10 @@ class Metal final : public Material {
 public:
     explicit Metal(const vec3& a, Float f) : albedo(a), fuzz(f < 1 ? f : 1) {};
 
-    bool scatter(const Ray& r_in, HitRecord& rec, ScatterRecord& srec) const override;
+    bool scatter(const Ray& r_in, SurfaceInteraction& si) const override;
+    Float scattering_pdf(const Ray& /* r_in */, const SurfaceInteraction& /* si */) const override {
+        return 1.0f;
+    }
 
     std::string to_string() const override {
         std::ostringstream oss;

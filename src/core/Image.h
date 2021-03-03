@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MathUtil.h"
+#include "math_util.h"
 
 namespace mypt {
 
@@ -11,9 +11,9 @@ namespace mypt {
 template <typename PixelType>
 class Image {
 public:
-    Image() {}
-    Image(int width, int height);
-    Image(const std::string& filename);
+    explicit Image() {}
+    explicit Image(int width, int height);
+    explicit Image(const std::string& filename);
     ~Image() { if(data) delete[] data; }
     void set(int x, int y, PixelType val)
     {

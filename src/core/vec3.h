@@ -1,9 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <cmath>
-
-#include "Util.h"
+#include "util.h"
 
 namespace mypt {
 
@@ -20,11 +17,11 @@ public:
     
     type3 operator-() const { return type3(-x, -y, -z); }
     Type operator[](int i) const {
-        ASSERT(i < 3, "Invalid index number to access vec3 members!\n");
+        Assert(i < 3, "Invalid index number to access vec3 members!\n");
         return (&x)[i];
     }
     Type& operator[](int i) {
-        ASSERT(i < 3, "Invalid index number to access vec3 members!\n");
+        Assert(i < 3, "Invalid index number to access vec3 members!\n");
         return (&x)[i];
     }
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../core/Material.h"
-#include "../core/Texture.h"
-#include "../texture/ConstantTexture.h"
+#include "../core/material.h"
+#include "../core/texture.h"
+#include "../texture/constant.h"
 
 namespace mypt {
 
@@ -12,6 +12,7 @@ class Lambertian final : public Material {
 public: 
     explicit Lambertian(vec3 albedo) : albedo(std::make_shared<ConstantTexture>(albedo)) {}
     explicit Lambertian(std::shared_ptr<Texture> a) : albedo(a) {}
+
     bool scatter(const Ray& r_in, SurfaceInteraction& si) const override;
     Float scattering_pdf(const Ray& r_in, const SurfaceInteraction& si) const override;
     

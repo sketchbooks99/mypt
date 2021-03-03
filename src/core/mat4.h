@@ -1,13 +1,13 @@
 #pragma once
 
-#include "MathUtil.h"
+#include "math_util.h"
 
 namespace mypt {
 
 struct mat4 {
 public:
-    mat4();
-    mat4(Float m[4][4]);
+    explicit mat4();
+    explicit mat4(Float m[4][4]);
     mat4(Float e00, Float e01, Float e02, Float e03,
          Float e10, Float e11, Float e12, Float e13,
          Float e20, Float e21, Float e22, Float e23,
@@ -27,7 +27,7 @@ public:
         Float y = m.mat[1][0]*p.x + m.mat[1][1]*p.y + m.mat[1][2]*p.z + m.mat[1][3];
         Float z = m.mat[2][0]*p.x + m.mat[2][1]*p.y + m.mat[2][2]*p.z + m.mat[2][3];
         Float w = m.mat[3][0]*p.x + m.mat[3][1]*p.y + m.mat[3][2]*p.z + m.mat[3][3];
-        ASSERT(w != 0, "This mat4 doesn't have proper value!\n");
+        Assert(w != 0, "This mat4 doesn't have proper value!\n");
         if(w == 1) {
             return vec3(x, y, z);
         } else {

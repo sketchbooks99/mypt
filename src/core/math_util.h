@@ -7,6 +7,7 @@
 #include "mat4.h"
 
 namespace mypt {
+    
 using GRAY = unsigned char;
 
 }

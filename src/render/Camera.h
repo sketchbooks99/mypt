@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/Ray.h"
+#include "../core/ray.h"
 
 namespace mypt {
 

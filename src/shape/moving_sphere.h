@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/Shape.h"
+#include "../core/shape.h"
 
 namespace mypt {
 
@@ -12,7 +12,7 @@ public:
         : center0(cen0), center1(cen1), time0(t0), time1(t1), radius(r)
     {};
 
-    bool intersect(const Ray& r, Float tmin, Float tmax, HitRecord& rec) const;
+    bool intersect(const Ray& r, Float tmin, Float tmax, SurfaceInteraction& si) const;
     AABB bounding() const;
 
     vec3 center(Float time) const;

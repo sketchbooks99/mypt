@@ -1,17 +1,17 @@
-#include "Dielectric.h"
+#include "dielectric.h"
 #include "../core/bsdf.h"
 
 namespace mypt {
 
 bool Dielectric::scatter(
-    const Ray& r_in, HitRecord& rec, ScatterRecord& srec
+    const Ray& r_in, SurfaceInteraction& si
 ) const  {
-    srec.is_specular = true;
-    srec.pdf = 0;
-    srec.attenuation = albedo;
-    bool into = dot(r_in.direction(), rec.normal) < 0;
+    si.is_specular = true;
+    si.pdf_ptr = 0;
+    si.attenuation = albedo;
+    bool into = dot(r_in.direction(), si.n) < 0;
     float ni_over_nt = into ? 1.0 / ior : ior;
-    auto outward_normal = into ? rec.normal : -rec.normal;
+    auto outward_normal = into ? si.n : -si.n;
     
     float cosine = fmin(dot(-normalize(r_in.direction()), outward_normal), 1.0);
     float sine = sqrt(1.0 - cosine*cosine);
@@ -20,10 +20,11 @@ bool Dielectric::scatter(
 
     float reflect_prob = schlick(cosine, ior);
     if(cannot_refract || reflect_prob > random_float()) 
-        srec.specular_ray = Ray(rec.p, reflect(r_in.direction(), outward_normal));
+        si.scattered = Ray(si.p, reflect(r_in.direction(), outward_normal));
     else
-        srec.specular_ray = Ray(rec.p, refract(r_in.direction(), outward_normal, ni_over_nt));
+        si.scattered = Ray(si.p, refract(r_in.direction(), outward_normal, ni_over_nt));
     return true;
 }
+
 
 }

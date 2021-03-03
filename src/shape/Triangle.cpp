@@ -1,4 +1,4 @@
-#include "Triangle.h"
+#include "triangle.h"
 
 namespace mypt {
 
@@ -7,7 +7,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
     if(filename.substr(filename.length() - 4) == ".obj")
     {
         std::ifstream ifs(filename, std::ios::in);
-        ASSERT(ifs.is_open(), "The obj file '"+filename+"' is not existed!\n");
+        Assert(ifs.is_open(), "The obj file '"+filename+"' is not existed!\n");
         while (!ifs.eof())
         {
             std::string line;
@@ -67,10 +67,10 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
                         temp_vert_faces.emplace_back(vert_idx - 1);
                     }
                     else
-                        THROW("Invalid format in face information input.\n");
+                        Throw("Invalid format in face information input.\n");
                 }
 
-                ASSERT(temp_vert_faces.size() >= 3, "The number of faces is less than 3.\n");
+                Assert(temp_vert_faces.size() >= 3, "The number of faces is less than 3.\n");
 
                 if (temp_vert_faces.size() == 3) {
                     int3 face;
@@ -147,7 +147,7 @@ TriangleMesh::TriangleMesh(const std::string &filename, float size, vec3 axis, b
 
 // ---------------------------------------------------------------------------
 // ref: https://pheema.hatenablog.jp/entry/ray-tdriangle-intersection
-bool Triangle::intersect(const Ray& r, Float t_min , Float t_max, HitRecord& rec) const {
+bool Triangle::intersect(const Ray& r, Float t_min , Float t_max, SurfaceInteraction& si) const {
     auto p0 = mesh->vertices[face[0]];
     auto p1 = mesh->vertices[face[1]];
     auto p2 = mesh->vertices[face[2]];
@@ -178,8 +178,8 @@ bool Triangle::intersect(const Ray& r, Float t_min , Float t_max, HitRecord& rec
     float t = dot(e2, beta) * invDet;
     if (t < t_min || t > t_max) return false;
 
-    rec.t = t;
-    rec.p = r.at(rec.t);
+    si.t = t;
+    si.p = r.at(si.t);
 
     vec3 normal;
     // ===== Flat shading =====
@@ -193,7 +193,7 @@ bool Triangle::intersect(const Ray& r, Float t_min , Float t_max, HitRecord& rec
         auto n2 = mesh->normals[face[2]];
         normal = normalize((1.0f - u - v)*n0 + u*n1 + v*n2);
     }
-    rec.set_face_normal(r, normal);
+    si.set_face_normal(r, normal);
     return true;
 }
 

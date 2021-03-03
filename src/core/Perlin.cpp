@@ -1,4 +1,4 @@
-#include "Perlin.h"
+#include "perlin.h"
 
 namespace mypt {
 

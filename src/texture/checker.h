@@ -1,25 +1,25 @@
 #pragma once
 
-#include "../core/Texture.h"
+#include "../core/texture.h"
 
 namespace mypt {
 
 class CheckerTexture final : public Texture {
 public:
     explicit CheckerTexture() {}
-    explicit CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5)
+    CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5)
     : color1(t1), color2(t0), step(step) {}
-    explicit CheckerTexture(const vec3& color1, const vec3& color2, int step=5)
+    CheckerTexture(const vec3& color1, const vec3& color2, int step=5)
     : color1(std::make_shared<ConstantTexture>(color1)), 
       color2(std::make_shared<ConstantTexture>(color2)), 
       step(step) {}
 
-    vec3 value(Float u, Float v, const vec3& p) const override {
-        auto sines = sin(step*u) * sin(step*v);
+    vec3 value(const vec2& uv, const vec3& p) const override {
+        auto sines = sin(step*uv.x) * sin(step*uv.y);
         if(sines < 0) 
-            return color1->value(u, v, p);
+            return color1->value(uv, p);
         else
-            return color2->value(u, v, p);
+            return color2->value(uv, p);
     }
 
     std::string to_string() const override {

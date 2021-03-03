@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core/Material.h"
-#include "../texture/ConstantTexture.h"
+#include "../core/material.h"
+#include "../texture/constant.h"
 
 namespace mypt {
 
@@ -13,7 +13,7 @@ public:
     virtual bool scatter(const Ray& /* r_in */, SurfaceInteraction& si) const override
     {
         // scattered = Ray(rec.p, random_in_unit_sphere(), r_in.time());
-        si.attenuation = albedo->value(si.uv.x, si.uv.y, si.p);
+        si.attenuation = albedo->value(si.uv, si.p);
         return true;
     } 
 

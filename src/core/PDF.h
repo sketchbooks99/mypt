@@ -1,8 +1,8 @@
 #pragma once 
 
-#include "MathUtil.h"
-#include "ONB.h"
-#include "Primitive.h"
+#include "math_util.h"
+#include "onb.h"
+#include "primitive.h"
 
 namespace mypt {
 
@@ -18,7 +18,7 @@ public:
 // --------------------------------------------------------------------
 class CosinePDF final : public PDF {
 public:
-    CosinePDF(const vec3& w) { onb.build_from_w(w); }
+    explicit CosinePDF(const vec3& w) { onb.build_from_w(w); }
 
     Float value(const vec3& direction) const override {
         auto cosine = dot(normalize(direction), onb.w);
@@ -35,7 +35,7 @@ private:
 // ---------------------------------------------------------------------
 class PrimitivePDF final : public PDF {
 public:
-    PrimitivePDF(std::shared_ptr<Primitive> p, const vec3& origin) : p(p), origin(origin) {}
+    explicit PrimitivePDF(std::shared_ptr<Primitive> p, const vec3& origin) : p(p), origin(origin) {}
     Float value(const vec3& direction) const override {
         return p->pdf_value(origin, direction);
     }
@@ -51,8 +51,10 @@ private:
 // --------------------------------------------------------------
 class LightPDF final : public PDF {
 public:
-    LightPDF(std::vector<std::shared_ptr<Primitive>> lights, const vec3& origin) : lights(lights), origin(origin) {
-        ASSERT(lights.size() > 0, "There is no light in constructor\n");
+    explicit LightPDF(std::vector<std::shared_ptr<Primitive>> lights, const vec3& origin)
+    : lights(lights), origin(origin)
+    {
+        Assert(lights.size() > 0, "There is no light in constructor\n");
     }
     Float value(const vec3& direction) const override {
         auto weight = 1.0 / lights.size();
@@ -76,7 +78,8 @@ private:
 // --------------------------------------------------------------
 class MixturePDF final : public PDF {
 public:
-    MixturePDF(std::shared_ptr<PDF> p0, std::shared_ptr<PDF> p1) : p0(p0), p1(p1) {}
+    explicit MixturePDF(std::shared_ptr<PDF> p0, std::shared_ptr<PDF> p1)
+    : p0(p0), p1(p1) {}
 
     Float value(const vec3& direction) const override {
         return 0.5 * p0->value(direction) + 0.5 * p1->value(direction);
@@ -84,7 +87,7 @@ public:
 
     vec3 generate() const override {
         if(random_float() < 0.5) return p0->generate();
-        else                      return p1->generate();
+        else                     return p1->generate();
     }
 private:
     std::shared_ptr<PDF> p0, p1;

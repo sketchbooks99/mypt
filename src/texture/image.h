@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core/Texture.h"
-#include "../core/Image.h"
+#include "../core/texture.h"
+#include "../core/image.h"
 
 /// TODO: 
 ///  - Treatment of UV (clamp, Loop, etc...) should be configured
@@ -13,7 +13,7 @@ public:
     explicit ImageTexture() : Image<RGB>(0, 0){}
     explicit ImageTexture(const std::string& filename) : Image<RGB>(filename) {}
 
-    vec3 value(Float u, Float v, const vec3& p) const override;
+    vec3 value(const vec2& uv, const vec3& p) const override;
 
     std::string to_string() const override {
         std::ostringstream oss;

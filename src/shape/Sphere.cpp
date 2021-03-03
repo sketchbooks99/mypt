@@ -1,5 +1,5 @@
-#include "Sphere.h"
-#include "../core/ONB.h"
+#include "sphere.h"
+#include "../core/onb.h"
 
 namespace mypt {
 
@@ -14,7 +14,7 @@ vec2 Sphere::getUV(const vec3& p) const {
 }
 
 /// \public function --------------------------------------------------
-bool Sphere::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const {
+bool Sphere::intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const {
     // vector from origin to center
     vec3 oc = r.origin();
     auto a = r.direction().length_squared();
@@ -33,18 +33,18 @@ bool Sphere::intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) c
             return false;
     }
 
-    rec.t = root;
-    rec.p = r.at(rec.t);
-    vec3 outward_normal = rec.p / radius;
-    rec.normal = outward_normal;
+    si.t = root;
+    si.p = r.at(si.t);
+    vec3 outward_normal = si.p / radius;
+    si.n = outward_normal;
 
     return true;
 }
 
 // -----------------------------------------------------------------------
 Float Sphere::pdf_value(const vec3& o, const vec3& v) const {
-    HitRecord rec;
-    if(!this->intersect(Ray(o, v), eps, infinity, rec)) 
+    SurfaceInteraction si;
+    if(!this->intersect(Ray(o, v), eps, infinity, si)) 
         return 0;
     auto cos_theta_max = sqrt(1 - radius*radius/o.length_squared());
     auto solid_angle = 2*pi*(1-cos_theta_max);

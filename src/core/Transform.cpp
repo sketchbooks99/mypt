@@ -1,4 +1,4 @@
-#include "Transform.h"
+#include "transform.h"
 
 namespace mypt {
 
@@ -21,11 +21,11 @@ Transform Transform::rotate(Float theta, vec3 axis) {
 }
 
 Transform Transform::scale(Float s) {
-    ASSERT(s != 0, "Scale value must be non-zero!\n");
+    Assert(s != 0, "Scale value must be non-zero!\n");
     return Transform(scale_mat(s), scale_mat(1.0f / s));
 }
 Transform Transform::scale(vec3 s) {
-    ASSERT(s.x != 0 && s.y != 0 && s.z != 0, "Scale value must be non-zero!\n");
+    Assert(s.x != 0 && s.y != 0 && s.z != 0, "Scale value must be non-zero!\n");
     return Transform(scale_mat(s), scale_mat(vec3(1.0f/s.x, 1.0f/s.y, 1.0f/s.z)));
 }
 
@@ -40,12 +40,12 @@ TransformSystem::TransformSystem(mat4 m) {
 
 // ----------------------------------------------------------------------
 void TransformSystem::pushMatrix() {
-    ASSERT(transformStack.size() < 32, "The maximum number of matrices is 32\n");
+    Assert(transformStack.size() < 32, "The maximum number of matrices is 32\n");
     transformStack.push_back(getCurrentTransform());
 }
 
 void TransformSystem::popMatrix() {
-    ASSERT(transformStack.size() > 1, "Transform class must have at least 1 matrix.\n");
+    Assert(transformStack.size() > 1, "Transform class must have at least 1 matrix.\n");
     transformStack.pop_back();
 }
 

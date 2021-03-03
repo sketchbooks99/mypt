@@ -1,14 +1,14 @@
-#include "Emitter.h"
+#include "emitter.h"
 
 namespace mypt {
 
-bool Emitter::scatter(const Ray& /* r_in */, HitRecord& /* rec */, ScatterRecord& /* srec */) const
+bool Emitter::scatter(const Ray& /* r_in */, SurfaceInteraction& /* si */) const
 {
     return false;
 }
 
-vec3 Emitter::emitted(const Ray& /* r_in */, const HitRecord& /* rec */, Float u, Float v, const vec3& p) const {
-    return albedo->value(u, v, p) * intensity;
+vec3 Emitter::emitted(const Ray& /* r_in */, const SurfaceInteraction& si) const {
+    return albedo->value(si.uv, si.p) * intensity;
 }
 
 }

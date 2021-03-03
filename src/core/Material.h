@@ -1,33 +1,11 @@
 #pragma once
 
-#include "Ray.h"
+#include "ray.h"
 
 namespace mypt {
 
 class Material;
 class PDF;
-
-struct HitRecord {
-    vec3 p;
-    vec3 normal;
-    std::shared_ptr<Material> mat_ptr;
-    Float t;
-    Float u;
-    Float v;
-    bool front_face;
-
-    inline void set_face_normal(const Ray& r, const vec3& outward_normal) {
-        front_face = dot(r.direction(), outward_normal) < 0;
-        normal = front_face ? outward_normal : -outward_normal;
-    }
-};
-
-struct ScatterRecord {
-    Ray specular_ray;
-    bool is_specular;
-    vec3 attenuation;
-    std::shared_ptr<PDF> pdf;
-};
 
 struct SurfaceInteraction {
     vec3 p;
@@ -35,7 +13,7 @@ struct SurfaceInteraction {
     vec2 uv;
     Float t;
     vec3 attenuation;
-    vec3 scattered;
+    Ray scattered;
     bool is_specular;
     bool front_face;
     std::shared_ptr<Material> mat_ptr;

@@ -1,28 +1,28 @@
 #include "Scene.h"
 
-#include "../shape/MovingSphere.h"
-#include "../shape/Plane.h"
-#include "../shape/Sphere.h"
-#include "../shape/Triangle.h"
+#include "../shape/moving_sphere.h"
+#include "../shape/plane.h"
+#include "../shape/sphere.h"
+#include "../shape/triangle.h"
 
-#include "../material/Lambertian.h"
-#include "../material/Metal.h"
-#include "../material/Dielectric.h"
-#include "../material/NormalMat.h"
-#include "../material/Emitter.h"
-#include "../material/Isotropic.h"
+#include "../material/lambertian.h"
+#include "../material/metal.h"
+#include "../material/dielectric.h"
+#include "../material/normal.h"
+#include "../material/emitter.h"
+#include "../material/isotropic.h"
 
-#include "../texture/ConstantTexture.h"
-#include "../texture/ImageTexture.h"
-#include "../texture/CheckerTexture.h"
-#include "../texture/NoiseTexture.h"
+#include "../texture/constant.h"
+#include "../texture/image.h"
+#include "../texture/checker.h"
+#include "../texture/noise.h"
 
 namespace mypt {
 
 // -----------------------------------------------------------------------------------------
 Scene::Scene(const std::string& filename) {    
     std::ifstream ifs(filename, std::ios::in);
-    ASSERT(ifs.is_open(), "The scene file '"+filename+"' is not existed\n");
+    Assert(ifs.is_open(), "The scene file '"+filename+"' is not existed\n");
 
     int image_width = 512, image_height = 512;
     depth = 5;
@@ -99,7 +99,7 @@ Scene::Scene(const std::string& filename) {
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else THROW("Input value for scale was incorrect!\n");
+            else Throw("Input value for scale was incorrect!\n");
         }
     }
     integrator = Integrator();
@@ -328,11 +328,11 @@ void Scene::createPrimitive(std::ifstream& ifs) {
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else THROW("Input value for scale was incorrect!\n");
+            else Throw("Input value for scale was incorrect!\n");
         }
     }
 
-    ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
+    Assert(!shapes.empty(), "Shape object is required to primitive\n");
     if(!material) material = std::make_shared<Lambertian>(vec3(0.8f));
 
     for(auto &shape : shapes) {
@@ -434,11 +434,11 @@ void Scene::createLight(std::ifstream& ifs) {
 
             if(scale.size() == 1) ts.scale(scale[0]);
             else if(scale.size() == 3) ts.scale(vec3(scale[0], scale[1], scale[2]));
-            else THROW("Input value for scale was incorrect!\n");
+            else Throw("Input value for scale was incorrect!\n");
         }
     }
 
-    ASSERT(!shapes.empty(), "Shape object is required to primitive\n");
+    Assert(!shapes.empty(), "Shape object is required to primitive\n");
     if(!texture) texture = std::make_shared<ConstantTexture>(vec3(1.0f));
     emitter = std::make_shared<Emitter>(texture, intensity);
 

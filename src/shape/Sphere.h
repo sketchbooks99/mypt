@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/Shape.h"
+#include "../core/shape.h"
 
 namespace mypt {
 
@@ -9,7 +9,7 @@ public:
     explicit Sphere() {}
     explicit Sphere(Float r) : radius(r) {};
 
-    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const;
+    bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const;
     AABB bounding() const;
     Float pdf_value(const vec3& o, const vec3& v) const override;
     vec3 random(const vec3& o) const override;

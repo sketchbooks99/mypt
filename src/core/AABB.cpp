@@ -1,8 +1,8 @@
-#include "AABB.h"
+#include "aabb.h"
 
 namespace mypt {
 
-bool AABB::intersect(const Ray& r, Float tmin, Float tmax) const {
+bool AABB::intersect(const Ray& r, Float t_min, Float t_max) const {
     /** TIPS: The computation time in this intersection test 
      *        is significantly improved by closely storing values 
      *        in memory space. */
@@ -30,9 +30,9 @@ bool AABB::intersect(const Ray& r, Float tmin, Float tmax) const {
         // auto t1 = ffmax((_min[a] - r.origin()[a]) / r.direction()[a],
         //                 (_max[a] - r.origin()[a]) / r.direction()[a]);
 
-        tmin = ffmax(t0, tmin);
-        tmax = ffmin(t1, tmax);
-        if(tmax <= tmin)
+        t_min = ffmax(t0, t_min);
+        t_max = ffmin(t1, t_max);
+        if(t_max <= t_min)
             return false;
     }
     return true;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "MathUtil.h"
-#include "Ray.h"
+#include "math_util.h"
+#include "ray.h"
 
 namespace mypt {
 

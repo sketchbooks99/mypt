@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algorithm>
-#include "Primitive.h"
+#include "primitive.h"
 
 namespace mypt {
 
@@ -27,8 +27,12 @@ inline bool box_z_compare(const std::shared_ptr<Primitive> a, const std::shared_
 class BVHNode : public Primitive {
 public:
     enum class SplitMethod { MIDDLE, SAH };
-    BVHNode(std::vector<std::shared_ptr<Primitive>>& p, int start, int end, int axis=0, SplitMethod splitMethod=SplitMethod::MIDDLE);
-    bool intersect(const Ray& r, Float tmin, Float tmax, HitRecord& rec) const override;
+
+    BVHNode(std::vector<std::shared_ptr<Primitive>>& p, 
+            int start, int end, int axis=0, 
+            SplitMethod splitMethod=SplitMethod::MIDDLE);
+
+    bool intersect(const Ray& r, Float tmin, Float tmax, SurfaceInteraction& si) const override;
     AABB bounding() const override;
 
     PrimitiveType type() const override { return PrimitiveType::BVHNode; }

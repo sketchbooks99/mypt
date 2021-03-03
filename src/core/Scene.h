@@ -1,11 +1,11 @@
 #pragma once 
 
-#include "Util.h"
-#include "Primitive.h"
-#include "Material.h"
-#include "../render/Camera.h"
-#include "../render/Integrator.h"
-#include "../core/Image.h"
+#include "util.h"
+#include "primitive.h"
+#include "material.h"
+#include "../render/camera.h"
+#include "../render/integrator.h"
+#include "../core/image.h"
 #include <omp.h>
 
 namespace mypt {

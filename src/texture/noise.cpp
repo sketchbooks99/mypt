@@ -1,8 +1,8 @@
-#include "NoiseTexture.h"
+#include "noise.h"
 
 namespace mypt {
 
-vec3 NoiseTexture::value(Float /* u */, Float /* v */, const vec3& p) const {
+vec3 NoiseTexture::value(const vec2& /* uv */, const vec3& p) const {
     switch(mode) {
     case Mode::NOISE:
         return vec3(1,1,1) * noise.noise(scale * p);
@@ -11,7 +11,7 @@ vec3 NoiseTexture::value(Float /* u */, Float /* v */, const vec3& p) const {
         return vec3(1,1,1) * noise.turb(scale * p);
         break;
     default:
-        THROW("This noise mode is not supported!\n");
+        Throw("This noise mode is not supported!\n");
         return vec3();
         break;
     }

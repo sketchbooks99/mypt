@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <typeinfo>
-#include "Shape.h"
-#include "Material.h"
-#include "Ray.h"
-#include "Transform.h"
-#include "../material/Isotropic.h"
+#include "shape.h"
+#include "material.h"
+#include "ray.h"
+#include "transform.h"
+#include "../material/isotropic.h"
 
 namespace mypt {
 
@@ -32,7 +32,7 @@ inline std::ostream& operator<<(std::ostream& out, PrimitiveType type) {
         return out << "PrimitiveType::BVHNode";
         break;
     default:
-        THROW("This PrimitiveType doesn't exist.");
+        Throw("This PrimitiveType doesn't exist.");
         break;
     }
 }
@@ -40,7 +40,7 @@ inline std::ostream& operator<<(std::ostream& out, PrimitiveType type) {
 // -------------------------------------------------------------------------------------
 class Primitive {
 public:
-    virtual bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const = 0;
+    virtual bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const = 0;
     virtual AABB bounding() const = 0;
 
     // Compute pdf value of primitive
@@ -59,7 +59,8 @@ public:
 class ShapePrimitive final : public Primitive {
 public:
     ShapePrimitive(std::shared_ptr<Shape> shape, std::shared_ptr<Material> material, std::shared_ptr<Transform> transform);
-    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
+    
+    bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const override;
     AABB bounding() const override;
 
     Float pdf_value(const vec3& o, const vec3& v) const override;
@@ -97,7 +98,7 @@ public:
       phase_function(std::make_shared<Isotropic>(c)), 
       neg_inv_density(-1.0/d) {}
     
-    bool intersect(const Ray& r, Float t_min, Float t_max, HitRecord& rec) const override;
+    bool intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const override;
     AABB bounding() const override {
         return boundary->bounding();
     }

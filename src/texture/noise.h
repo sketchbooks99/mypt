@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../core/Texture.h"
-#include "../core/Perlin.h"
+#include "../core/texture.h"
+#include "../core/perlin.h"
 
 namespace mypt {
 
@@ -11,7 +11,7 @@ public:
     explicit NoiseTexture() {}
     explicit NoiseTexture(Float sc, Mode mode=Mode::NOISE) : scale(sc), mode(mode) {}
 
-    vec3 value(Float /* u */, Float /* v */, const vec3& p) const override;
+    vec3 value(const vec2& /* uv */, const vec3& p) const override;
 
     std::string to_string() const override;
 
