@@ -1,4 +1,4 @@
-#include "Scene.h"
+#include "scene.h"
 
 #include "../shape/moving_sphere.h"
 #include "../shape/plane.h"
