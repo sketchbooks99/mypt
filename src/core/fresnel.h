@@ -23,9 +23,7 @@ inline Float fresnel_reflectance(Float cosine, Float f0) {
     return f0 + (1-f0)*pow((1-cosine),5);
 }
 
-/** Compute fresnel reflactance from cosine and index of refraction
- *  MEMO: Is this computation correct? A lot of texts refer to above 
- *        equation as fresnel reflectance. */
+/** Compute fresnel reflactance from cosine and index of refraction */
 inline Float fresnel_dielectric(Float cosine, Float ior) {
     auto r0 = (1-ior) / (1+ior);
     r0 = r0 * r0;
