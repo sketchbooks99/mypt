@@ -3,6 +3,7 @@
 // Core include 
 #include "util.h"
 #include "math_util.h"
+#include "vec.h"
 #include "perlin.h"
 #include "ray.h"
 #include "image.h"

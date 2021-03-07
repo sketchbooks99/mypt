@@ -1,6 +1,7 @@
 #pragma once
 
-#include "math_util.h"
+#include "vec.h"
+#include "mat4.h"
 #include "ray.h"
 
 namespace mypt {

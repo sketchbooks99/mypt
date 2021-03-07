@@ -1,11 +1,15 @@
 #pragma once
 
-#include "vec3.h"
+#include "vec.h"
 
 namespace mypt {
 
-/** \note cos_i should be positive and checking if ray goes into 
- *  dielectric surface (is cos_i negative?) is never performed in this function. */
+/** 
+ * \ref: http://www.pbr-book.org/3ed-2018/Reflection_Models/Specular_Reflection_and_Transmission.html
+ * 
+ * \note cos_i should be positive and checking if ray goes into 
+ * dielectric surface (is cos_i negative?) is never performed in this function. 
+ **/
 inline Float Fr(Float cos_i, Float ni, Float nt) {
     Float sin_i = sqrt(fmax((Float)0, 1-cos_i*cos_i));
     Float sin_t = ni / nt * sin_i;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math_util.h"
+#include "vec.h"
 
 namespace mypt {
 
