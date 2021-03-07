@@ -35,7 +35,7 @@ constexpr Float infinity = std::numeric_limits<Float>::infinity();
 constexpr Float pi = 3.1415926535897932385;
 constexpr Float eps = 1e-10f;
 
-// Utility Functions
+// Functions
 inline Float degrees_to_radians(Float degrees) {
     return degrees * pi / 180;
 }
@@ -60,6 +60,12 @@ inline Float clamp(Float x, Float min, Float max) {
     if(x < min) return min;
     if(x > max) return max;
     return x;
+}
+
+template <typename T>
+inline T lerp(T a, T b, Float t) {
+    t = clamp(0, 1, t);
+    return t * a + (1-t) * b;
 }
 
 // ----- Utility functions -----

@@ -20,7 +20,6 @@ set(mypt_src
     src/core/transform.cpp
     src/core/primitive.cpp
     src/core/scene.cpp
-    src/core/bsdf.cpp
 
     src/render/camera.cpp 
     src/render/integrator.cpp

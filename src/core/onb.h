@@ -5,11 +5,13 @@
 namespace mypt {
 
 // Orthonormal basis class
-class ONB {
-public:
-    ONB() {}
+struct ONB {
+    explicit ONB() {}
+    explicit ONB(const vec3& n) {
+        build_from_w(n);
+    }
 
-    inline vec3 operator[](int i) const { return (&u)[i]; }
+    vec3 operator[](int i) const { return (&u)[i]; }
 
     vec3 local(Float a, Float b, Float c) const {
         return a*u + b*v + c*w;

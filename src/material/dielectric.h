@@ -6,12 +6,6 @@ namespace mypt {
 
 struct HitRecord;
 
-inline Float schlick(Float cosine, Float ior) {
-    auto r0 = (1-ior) / (1+ior);
-    r0 = r0 * r0;
-    return r0 + (1-r0)*pow((1-cosine),5);
-}
-
 class Dielectric final : public Material {
 public:
     explicit Dielectric(Float ri) : albedo(vec3(1.0f)), ior(ri) {}

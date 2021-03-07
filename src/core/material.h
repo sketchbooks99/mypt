@@ -1,12 +1,15 @@
 #pragma once
 
 #include "ray.h"
+#include "texture.h"
 
 namespace mypt {
 
 class Material;
 class PDF;
 
+/** MEMO: 
+ *  Should SurfaceInteraction store the derivatives on texture coordinates? */
 struct SurfaceInteraction {
     vec3 p;
     vec3 n;
@@ -76,6 +79,10 @@ public:
     ) const {
         return 0;
     }
+
+    /** TODO: Implementation of Bump mapping. 
+     *  Transform normal by using bumpmap texture. */
+    // static void bump(const std::shared_ptr<Texture>& bumpmap, SurfaceInteraction& si);
 
     virtual std::string to_string() const = 0;
 

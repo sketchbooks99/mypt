@@ -1,28 +1,35 @@
 #include "dielectric.h"
-#include "../core/bsdf.h"
+#include "../core/fresnel.h"
 
 namespace mypt {
 
 bool Dielectric::scatter(
     const Ray& r_in, SurfaceInteraction& si
-) const  {
+) const {
+    auto wi = normalize(r_in.direction());
+
     si.is_specular = true;
     si.pdf_ptr = 0;
     si.attenuation = albedo;
-    bool into = dot(r_in.direction(), si.n) < 0;
-    float ni_over_nt = into ? 1.0 / ior : ior;
+
+    Float ni = 1.0; // Air
+    Float nt = ior; // Material specific IOR
+    Float cosine = dot(wi, si.n);
+    bool into = cosine < 0;
     auto outward_normal = into ? si.n : -si.n;
-    
-    float cosine = fmin(dot(-normalize(r_in.direction()), outward_normal), 1.0);
-    float sine = sqrt(1.0 - cosine*cosine);
 
-    bool cannot_refract = ni_over_nt * sine > 1.0;
+    // swap ni and nt due to the order of mediums.
+    if (!into) std::swap(ni, nt);
 
-    float reflect_prob = schlick(cosine, ior);
-    if(cannot_refract || reflect_prob > random_float()) 
-        si.scattered = Ray(si.p, reflect(r_in.direction(), outward_normal));
+    cosine = fabs(cosine);
+    Float sine = sqrt(1.0 - cosine*cosine);
+    bool cannot_refract = (ni / nt) * sine > 1.0;
+
+    Float reflect_prob = fresnel_dielectric(cosine, nt / ni);
+    if (cannot_refract || reflect_prob > random_float())
+        si.scattered = Ray(si.p, reflect(wi, outward_normal));
     else
-        si.scattered = Ray(si.p, refract(r_in.direction(), outward_normal, ni_over_nt));
+        si.scattered = Ray(si.p, refract(wi, outward_normal, cosine, ni, nt));
     return true;
 }
 

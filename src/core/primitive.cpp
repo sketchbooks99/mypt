@@ -40,18 +40,20 @@ ShapePrimitive::ShapePrimitive(
 
 // ShapePrimitive ----------------------------------------------------------------------
 bool ShapePrimitive::intersect(const Ray& r, Float t_min, Float t_max, SurfaceInteraction& si) const {
+    // Transform ray from world to local coordinates of shape.
     Ray tr_ray = *transform * r;
-    if(!shape->intersect(tr_ray, t_min, t_max, si))
+    if (!shape->intersect(tr_ray, t_min, t_max, si))
         return false;
     
     auto p = si.p;
-    auto normal = si.n;
+    auto n = si.n;
     
+    // Transform intersection information from local to world coordinates.
     p = mat4::point_mul(transform->getMatrix(), si.p);
-    normal = normalize(mat4::normal_mul(transform->getInvMatrix(), si.n));
+    n = normalize(mat4::normal_mul(transform->getInvMatrix(), si.n));
 
     si.p = p;
-    si.n = normal;
+    si.n = n;
     si.mat_ptr = material;
 
     return true;
