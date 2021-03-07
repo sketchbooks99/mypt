@@ -4,6 +4,21 @@
 
 namespace mypt {
 
+/** \note cos_i should be positive and checking if ray goes into 
+ *  dielectric surface (is cos_i negative?) is never performed in this function. */
+inline Float Fr(Float cos_i, Float ni, Float nt) {
+    Float sin_i = sqrt(fmax((Float)0, 1-cos_i*cos_i));
+    Float sin_t = ni / nt * sin_i;
+    Float cos_t = sqrt(fmax((Float)0, 1-sin_t*sin_t));
+
+    Float r_parl = ((nt * cos_i) - (ni * cos_t)) / 
+                   ((nt * cos_i) + (ni * cos_t));
+    Float r_perp = ((ni * cos_i) - (nt * cos_t)) / 
+                   ((ni * cos_i) + (nt * cos_t));
+
+    return (Float)0.5 * (r_parl*r_parl + r_perp*r_perp);
+}
+
 inline Float fresnel_reflectance(Float cosine, Float f0) {
     return f0 + (1-f0)*pow((1-cosine),5);
 }

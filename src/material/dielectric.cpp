@@ -25,7 +25,7 @@ bool Dielectric::scatter(
     Float sine = sqrt(1.0 - cosine*cosine);
     bool cannot_refract = (ni / nt) * sine > 1.0;
 
-    Float reflect_prob = fresnel_dielectric(cosine, nt / ni);
+    Float reflect_prob = Fr(cosine, ni, nt);
     if (cannot_refract || reflect_prob > random_float())
         si.scattered = Ray(si.p, reflect(wi, outward_normal));
     else
