@@ -18,8 +18,9 @@ inline RGB vec2color(const vec3& c, float scale) {
 }
 
 // Conversion from RGB to luminance
-inline Float luminance(const vec3& c) {
-    return 0.2126*c.x + 0.7152*c.y + 0.0722*c.z;
+template <typename T>
+inline Float luminance(const type3<T>& c) {
+    return 0.2126*(Float)c.x + 0.7152*(Float)c.y + 0.0722*(Float)c.z;
 }
 
 }

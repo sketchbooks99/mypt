@@ -12,7 +12,10 @@ namespace mypt {
  */
 bool Disney::scatter(const Ray& r_in, SurfaceInteraction& si) const {
     auto wi = normalize(r_in.direction());
-    auto fd90 = 0.5 + 2*m_roughness*
+    auto h = normalize(vec3()); 
+    /// \note cos_d is dot product of wi(wo) and half vector.
+    auto cos_d = dot(si.n, h);
+    auto fd90 = 0.5 + 2*m_roughness*cos_d*cos_d;
 }
 
 }
