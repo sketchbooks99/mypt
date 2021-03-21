@@ -5,6 +5,7 @@
 
 #define OK 1
 
+// ----------------------------------------------------------------------
 struct Base {
     virtual void print_member() const = 0;
 };
@@ -35,6 +36,7 @@ struct Fuga : public Base {
     }
 };
 
+// ----------------------------------------------------------------------
 class FugaFuga {
 public:
     // OK   
@@ -93,6 +95,7 @@ private:
     std::string d { "Default" };
 };
 
+// ----------------------------------------------------------------------
 template <typename T, typename... Args>
 void construct(T** ptr, Args... args) {
     (*ptr) = new T(args...);
@@ -110,6 +113,45 @@ std::ostream& operator<<(std::ostream& out, const Hoge& hoge) {
 
 std::ostream& operator<<(std::ostream& out, const Fuga& fuga) {
     return out << (int)fuga.a << ' ' << fuga.b << ' ' << fuga.c << ' ' << fuga.d << ' ' << fuga.str << std::endl;
+}
+
+// ----------------------------------------------------------------------
+template <typename T>
+void free_object(T* obj) {
+    delete obj;
+}
+
+void free_objects() {
+    std::cout << "End of recursive free." << std::endl;
+}
+
+template <typename Head, typename... Args>
+void free_objects(Head* head, Args... args)
+{
+    free_object(head);
+    free_objects(args...);
+}
+
+// ----------------------------------------------------------------------
+void print_something() { 
+    std::cout << "The end of print_something()" << std::endl;
+}
+
+template <typename Head, typename... Args>
+void print_something(Head head, Args... args) {
+    std::cout << head << std::endl;
+    print_something(args...);
+}
+
+template <typename T, typename... Args>
+void call_variadic(T data, Args... args) {
+    std::cout << data << std::endl;
+    print_something(args...);
+}
+
+template <typename T, typename ...Args>
+void call_variadic_wrapper(T data, Args... args) {
+    call_variadic(data, args...);
 }
 
 int main() {
@@ -135,5 +177,25 @@ int main() {
     fugas[2].create2(1, 2.f, 3.0);
     fugas[3].create2(1, 2.f, 3.0, "Not default");
     for (auto& f : fugas) f.print_members();
+
+    // pointer test
+    std::cout << "Construct hoges..." << std::endl;
+    Hoge* h1 = new Hoge(1,2,"hoge1");
+    Hoge* h2 = new Hoge(3,4,"hoge2");
+    Hoge* h3 = new Hoge(5,6,"hoge3");
+    Hoge* h4 = new Hoge(7,8,"hoge4");
+    Hoge* h5 = new Hoge(9,10,"hoge5");
+    h1->print_member();
+    h2->print_member();
+    h3->print_member();
+    h4->print_member();
+    h5->print_member();
+
+    std::cout << "Start free hoges..." << std::endl;
+    free_objects(h1, h2, h3, h4, h5);
+
+    // h5->print_member(); // NG ... Segmentation fault
+
+    call_variadic_wrapper(1,2,3,4,5,6);
 }
 

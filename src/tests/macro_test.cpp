@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 
 #define RG_FUNC(name) __raygen__ ## name
 #define IS_FUNC(name) __intersection__ ## name
@@ -18,6 +19,18 @@
 #define DC_FUNC_STR(name) "__direct_callable__" name
 #define CC_FUNC_STR(name) "__continuation_callable__" name
 
+enum class Type {
+    A,
+    B,
+    C,
+};
+
+static std::map<Type, const char*> type_map = {
+    {Type::A, "A"},
+    {Type::B, "B"}, 
+    {Type::C, "C"}
+};
+
 void RG_FUNC(hoge)() {
     std::cout << "hoge" << std::endl;
 }
@@ -25,5 +38,11 @@ void RG_FUNC(hoge)() {
 int main() {
     RG_FUNC(hoge)();
     __raygen__hoge();
+
+    // ok
+    std::cout << CH_FUNC_STR("hoge") << std::endl;
+    // ng
+    const char* hoge = type_map[Type::A];
+    std::cout << CH_FUNC_STR(hoge) << std::endl;
     return 0;
 }
