@@ -2,8 +2,11 @@
 #include <tuple>
 #include <string>
 #include <vector>
+#include "../core/vec.h"
 
 #define OK 1
+
+using namespace mypt;
 
 // ----------------------------------------------------------------------
 struct Base {
@@ -153,6 +156,7 @@ template <typename T, typename ...Args>
 void call_variadic_wrapper(T data, Args... args) {
     call_variadic(data, args...);
 }
+
 
 int main() {
     Hoge* hoge = new Hoge(1,2,"hoge1");
