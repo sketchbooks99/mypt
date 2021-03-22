@@ -2,11 +2,8 @@
 #include <tuple>
 #include <string>
 #include <vector>
-#include "../core/vec.h"
 
 #define OK 1
-
-using namespace mypt;
 
 // ----------------------------------------------------------------------
 struct Base {
@@ -157,7 +154,13 @@ void call_variadic_wrapper(T data, Args... args) {
     call_variadic(data, args...);
 }
 
+template <typename... Args>
+void func(const Hoge& h, Args... args) {
+    std::cout << h << std::endl;
+    print_something(args...);
+}
 
+// ----------------------------------------------------------------------
 int main() {
     Hoge* hoge = new Hoge(1,2,"hoge1");
     std::cout << *hoge << std::endl;
@@ -201,5 +204,9 @@ int main() {
     // h5->print_member(); // NG ... Segmentation fault
 
     call_variadic_wrapper(1,2,3,4,5,6);
+
+    func(*hoge, 1,2,3,4,5);
+
+    return 0;
 }
 

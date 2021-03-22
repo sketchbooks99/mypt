@@ -31,10 +31,23 @@ void func(const vec2& v1, const vec3& v2) {
     std::cout << v2 << std::endl;
 }
 
+template <typename T>
+bool is_true(T val) {
+    return (bool)val;
+}
+
 int main() {
     vec2 v1(1,2);
     vec3 v2(3,4,5);
     func(v1, v2);
     func((vec2)v2, vec3(v1.x, v1.y, 1.0));
+
+    unsigned long long a = 0;
+    unsigned long long b = 1;
+    unsigned long long c = 1000;
+    std::cout << is_true(a) << std::endl; 
+    std::cout << is_true(b) << std::endl; 
+    std::cout << is_true(c) << std::endl; 
+
     return 0;
 }
