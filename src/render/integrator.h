@@ -2,10 +2,10 @@
 
 /** Abstract class for several integrators.
  * 
- * TODO:
- *  - Basic implementation
- *  - Bidirectional path tracing
- *  - Metropolis Light transport
+ * \todo
+ *  - [x] Basic implementation
+ *  - [ ] Bidirectional path tracing
+ *  - [ ] Metropolis Light transport
  * 
  **/
 

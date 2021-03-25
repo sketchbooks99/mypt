@@ -5,11 +5,11 @@
 /** Abstract class for several sampling strategies
  * 
  * TODO:
- *  - Basic implementation
- *  - Uniform
- *  - Random
- *  - Jitter
- *  - SOBOL
+ *  - [ ] Basic implementation
+ *  - [ ] Uniform
+ *  - [ ] Random
+ *  - [ ] Jitter
+ *  - [ ] Sobol
  * 
  **/
 

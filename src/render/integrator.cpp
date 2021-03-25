@@ -3,7 +3,8 @@
 
 namespace mypt {
 
-/** TODO: 
+/** 
+ * \todo 
  * Recursive tracing is not good at implementaion of next event estimation.
  */
 
