@@ -12,32 +12,31 @@ project(mypt)
 # Set 
 set(mypt_src
     src/mypt.cpp
-    src/core/AABB.cpp
-    src/core/BVH.cpp
-    src/core/Image.cpp
-    src/core/Perlin.cpp
+    src/core/aabb.cpp
+    src/core/bvh.cpp
+    src/core/image.cpp
+    src/core/perlin.cpp
     src/core/mat4.cpp
-    src/core/Transform.cpp
-    src/core/Primitive.cpp
-    src/core/Scene.cpp
-    src/core/bsdf.cpp
+    src/core/transform.cpp
+    src/core/primitive.cpp
+    src/core/scene.cpp
 
-    src/render/Camera.cpp 
-    src/render/Integrator.cpp
+    src/render/camera.cpp 
+    src/render/integrator.cpp
 
-    src/material/Dielectric.cpp 
-    src/material/Emitter.cpp
-    src/material/Lambertian.cpp 
-    src/material/Metal.cpp
-    src/material/NormalMat.cpp
+    src/material/dielectric.cpp 
+    src/material/emitter.cpp
+    src/material/lambertian.cpp 
+    src/material/metal.cpp
+    src/material/normal.cpp
 
     # src/shape/MovingSphere.cpp 
-    src/shape/Plane.cpp
-    src/shape/Sphere.cpp 
-    src/shape/Triangle.cpp
+    src/shape/plane.cpp
+    src/shape/sphere.cpp 
+    src/shape/triangle.cpp
 
-    src/texture/ImageTexture.cpp
-    src/texture/NoiseTexture.cpp
+    src/texture/image.cpp
+    src/texture/noise.cpp
 )
 
 # For use of OPENMP
@@ -45,6 +44,7 @@ find_package(OpenMP REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast")
+# Please add `-pg` option to profile the performance of this renderer. 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -Wall -Wextra -Ofast")
 
 add_executable(mypt ${mypt_src})

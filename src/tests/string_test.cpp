@@ -1,6 +1,12 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <stdio.h>
+
+std::string ch_str(const std::string& str) { 
+    std::string temp = "__closesthit__" + str;
+    return temp;
+}
 
 class Type {
 public:
@@ -20,4 +26,8 @@ private:
 int main() {
     Type type(3,5);
     std::cout << type.to_string() << std::endl;
+
+    std::cout << ch_str("hoge").c_str() << std::endl;
+
+    return 0;
 }
