@@ -24,11 +24,13 @@ build/mypt scene.txt
 ```
 
 - How to render
-`Example`
+
 ```
+# Example scene (simple ground plane with checker texture and glass sphere)
+
 filename result/simple.png
 # Image resolution
-width 1024
+width 768
 height 768
 # The number of samples per pixel
 spp 8 
