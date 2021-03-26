@@ -33,15 +33,15 @@ filename result/simple.png
 width 768
 height 768
 # The number of samples per pixel
-spp 8 
+spp 64
 # The number of maximum depth to track rays
 depth 5
 # Background color
-background 0.5 0.5 0.5
+background 0 0 0
 
 # Camera settings
 beginCamera
-origin 0 0 -70
+origin 10 10 -70
 lookat 0 0 0 
 up 0 1 0
 focus_length 15.0
@@ -51,13 +51,21 @@ endCamera
 # Ground plane
 beginPrimitive 
 shape plane min -100 -100 max 100 100
-material checker color1 0.3 0.3 0.3 color2 0.9 0.9 0.9
+translate 0 -10 0
+material lambertian checker color1 0.3 0.3 0.3 color2 0.9 0.9 0.9 scale 100
 endPrimitive
 
 # Sphere
 beginPrimitive
-shape sphere 1
+shape sphere radius 3
 translate 0 1 0
-maaterial dielectric color 1 1 1 ior 1.5
+material dielectric color 1 1 1 ior 1.5
 endPrimitive
+
+beginLight
+shape plane min -2.5 -2.5 max 2.5 2.5
+translate 0 8 0
+color 1 1 1
+intensity 30
+endLight
 ```

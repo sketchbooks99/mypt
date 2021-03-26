@@ -5,7 +5,10 @@ namespace mypt {
 
 /** 
  * \todo 
- * Recursive tracing is not good at implementaion of next event estimation.
+ * - Recursive tracing is not good at implementaion of next event estimation.
+ * 
+ * - Terminating ray tracing when ray intersect with an emitter will result in incorrect result
+ *   because the contribution from background color will be not reflected.
  */
 
 vec3 Integrator::trace(
@@ -32,7 +35,7 @@ vec3 Integrator::trace(
     si.scattered = Ray(si.p, p.generate(), r.time());
     auto pdf = p.value(si.scattered.direction());
 
-    /// TODO: Launch shadow ray from diffuse surface to lights.
+    /// \todo NEE: Launch shadow ray from diffuse surface to lights.
 
     if(pdf > 0) {
         return emitted
@@ -43,7 +46,7 @@ vec3 Integrator::trace(
     }
 }
 
-/** TODO: This implementation still don't release correct result. */
+/** \todo This implementation still don't release correct result. */
 // vec3 Integrator::trace(
 //     Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
 // ) const {

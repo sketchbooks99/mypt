@@ -7,15 +7,15 @@ namespace mypt {
 class CheckerTexture final : public Texture {
 public:
     explicit CheckerTexture() {}
-    CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, int step=5)
-    : color1(t1), color2(t0), step(step) {}
-    CheckerTexture(const vec3& color1, const vec3& color2, int step=5)
+    CheckerTexture(std::shared_ptr<Texture> t0, std::shared_ptr<Texture> t1, Float scale=5)
+    : color1(t1), color2(t0), m_scale(scale) {}
+    CheckerTexture(const vec3& color1, const vec3& color2, Float scale=5)
     : color1(std::make_shared<ConstantTexture>(color1)), 
       color2(std::make_shared<ConstantTexture>(color2)), 
-      step(step) {}
+      m_scale(scale) {}
 
     vec3 value(const vec2& uv, const vec3& p) const override {
-        auto sines = sin(step*uv.x) * sin(step*uv.y);
+        auto sines = sin(m_scale*uv.x) * sin(m_scale*uv.y);
         if(sines < 0) 
             return color1->value(uv, p);
         else
@@ -27,7 +27,7 @@ public:
         oss << "CheckerTexture : {" << std::endl;
         oss << "\tColor1 : " << color1 << std::endl;
         oss << "\tColor2 : " << color2 << std::endl;
-        oss << "\tStep : " << step << std::endl;
+        oss << "\tm_scale : " << m_scale << std::endl;
         oss << "}";
         return oss.str();
     }
@@ -37,7 +37,7 @@ public:
 private:
     std::shared_ptr<Texture> color1;
     std::shared_ptr<Texture> color2;
-    int step;
+    Float m_scale;
 };
 
 }

@@ -29,6 +29,7 @@ Scene::Scene(const std::string& filename) {
     depth = 5;
     samples_per_pixel = 1;
     bool is_comment = false;
+    background = vec3(0.f);
 
     while(!ifs.eof()) {
         std::string line;
@@ -57,6 +58,8 @@ Scene::Scene(const std::string& filename) {
             iss >> samples_per_pixel;
         else if(header == "depth")
             iss >> depth;
+        else if (header == "background")
+            iss >> background.x >> background.y >> background.z;
         else if(header == "beginCamera")
             createCamera(ifs, Float(image_width)/image_height);
         else if(header == "beginPrimitive")
@@ -210,12 +213,17 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 }
                 else if(header == "checker") {
                     vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
-                    iss >> header;
-                    if(header == "color1") 
-                        iss >> color1.x >> color1.y >> color1.z;
-                    if(header == "color2") 
-                        iss >> color2.x >> color2.y >> color2.z;
-                    texture = std::make_shared<CheckerTexture>(color1, color2);
+                    Float scale = 5.0f;
+                    while (!iss.eof()) {
+                        iss >> header;
+                        if (header == "color1") 
+                            iss >> color1.x >> color1.y >> color1.z;
+                        if (header == "color2") 
+                            iss >> color2.x >> color2.y >> color2.z;
+                        if (header == "scale")
+                            iss >> scale;
+                    }
+                    texture = std::make_shared<CheckerTexture>(color1, color2, scale);
                 }
                 else if(header == "image") {
                     std::string filename;
@@ -374,12 +382,17 @@ void Scene::createLight(std::ifstream& ifs) {
         }
         else if(header == "checker") {
             vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
-            iss >> header;
-            if(header == "color1") 
-                iss >> color1.x >> color1.y >> color1.z;
-            if(header == "color2") 
-                iss >> color2.x >> color2.y >> color2.z;
-            texture = std::make_shared<CheckerTexture>(color1, color2);
+            Float scale = 5.0f;
+            while (!iss.eof()) {
+                iss >> header;
+                if (header == "color1") 
+                    iss >> color1.x >> color1.y >> color1.z;
+                if (header == "color2") 
+                    iss >> color2.x >> color2.y >> color2.z;
+                if (header == "scale")
+                    iss >> scale;
+            }
+            texture = std::make_shared<CheckerTexture>(color1, color2, scale);
         }
         else if(header == "image") {
             std::string filename;
