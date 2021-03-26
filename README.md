@@ -37,7 +37,7 @@ spp 64
 # The number of maximum depth to track rays
 depth 5
 # Background color
-background 0 0 0
+background 0.7 0.8 0.9
 
 # Camera settings
 beginCamera
