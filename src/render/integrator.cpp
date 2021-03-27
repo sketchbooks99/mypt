@@ -30,10 +30,15 @@ vec3 Integrator::trace(
             * trace(si.scattered, bvh_node, lights, background, depth-1);
     } 
 
-    auto light_ptr = std::make_shared<LightPDF>(lights, si.p);
-    MixturePDF p(light_ptr, si.pdf_ptr);
-    si.scattered = Ray(si.p, p.generate(), r.time());
-    auto pdf = p.value(si.scattered.direction());
+    std::shared_ptr<PDF> pdf_ptr;
+    if (lights.size() > 0) {
+        auto light_ptr = std::make_shared<LightPDF>(lights, si.p);
+        pdf_ptr = std::make_shared<MixturePDF>(light_ptr, si.pdf_ptr);
+    } else {
+        pdf_ptr = std::make_shared<CosinePDF>(si.n);
+    }
+    si.scattered = Ray(si.p, pdf_ptr->generate(), r.time());
+    auto pdf = pdf_ptr->value(si.scattered.direction());
 
     /// \todo NEE: Launch shadow ray from diffuse surface to lights.
 
