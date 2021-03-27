@@ -173,22 +173,16 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
         }
         else if(type == "mesh") {
             std::string filename;
-            vec3 axis = vec3(1,1,1);
-            float size = 1.f;
             bool isSmooth = false;
             iss >> header;
             while(!iss.eof()) {
                 if(header == "filename")
                     iss >> filename;
-                else if(header == "axis") 
-                    iss >> axis.x >> axis.y >> axis.z;
-                else if(header == "size")
-                    iss >> size;
                 else if(header == "smooth")
                     isSmooth = true;
                 iss >> header;
             }
-            for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
+            for(auto &triangle : createTriangleMesh(filename, isSmooth)) 
                 shapes.emplace_back(triangle);
         }
     }
