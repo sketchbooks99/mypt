@@ -120,13 +120,13 @@ void loadPly(
     std::vector<vec2>& texcoords
 )
 {
-    std::ifstream ifs(filename, std::ios::in);
+    std::ifstream ifs( filename, std::ios::in | std::ios::binary );
     Assert(ifs.is_open(), "The PLY file '"+filename+"' is not found");
     while (!ifs.eof()) {
         std::string line;
         if (!std::getline(ifs, line))
             break;
-        Message(line.c_str());
+
     }
 }
 
