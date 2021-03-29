@@ -1,4 +1,6 @@
 #include "vec.h"
+#include "../ext/happly/happly.h"
+#include <algorithm>
 
 namespace mypt {
 
@@ -120,14 +122,25 @@ void loadPly(
     std::vector<vec2>& texcoords
 )
 {
-    std::ifstream ifs( filename, std::ios::in | std::ios::binary );
-    Assert(ifs.is_open(), "The PLY file '"+filename+"' is not found");
-    while (!ifs.eof()) {
-        std::string line;
-        if (!std::getline(ifs, line))
-            break;
-
+    happly::PLYData plyIn(filename);
+    try {
+        plyIn.validate();
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        Throw("The error occured while loading the PLY file");
     }
+
+    // Load vertices from happly
+    std::vector<std::array<double, 3>> src_vertices = plyIn.getVertexPositions();
+    std::transform(src_vertices.begin(), src_vertices.end(), std::back_inserter(vertices),
+        [](const std::array<double, 3>& v) { return vec3(v[0], v[1], v[2]); });
+    
+    // Load faces from happly
+    std::vector<std::vector<size_t>> src_faces = plyIn.getFaceIndices();
+    std::transform(src_faces.begin(), src_faces.end(), std::back_inserter(faces),
+        [](const std::vector<size_t>& f) { return int3(f[0], f[1], f[2]); });
+
+    
 }
 
 }

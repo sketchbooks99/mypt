@@ -11,5 +11,8 @@ int main() {
     std::vector<vec2> texcoords;
     loadPly(filename, vertices, normals, faces, texcoords);
 
+    for (auto &v : vertices) Message(v);
+    for (auto &f : faces) Message(f);
+
     return 0;
 }

@@ -5,10 +5,14 @@ namespace mypt {
 
 // ---------------------------------------------------------------------------
 TriangleMesh::TriangleMesh(const std::string &filename, bool isSmooth) {
-    if (filename.substr(filename.length() - 4) == ".obj")
+    if (filename.substr(filename.length() - 4) == ".obj") {
+        Message("Loading OBJ file '", filename, "' ...");
         loadObj(filename, vertices, normals, faces, texcoords);
-    else if (filename.substr(filename.length() - 4) == ".ply")
+    }
+    else if (filename.substr(filename.length() - 4) == ".ply") {
+        Message("Loading PLY file '", filename, "' ...");
         loadPly(filename, vertices, normals, faces, texcoords);
+    }
     
     if(isSmooth) {
         normals.resize(vertices.size());

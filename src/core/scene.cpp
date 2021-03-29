@@ -482,9 +482,10 @@ void Scene::streamProgress(int currentLine, int maxLine, Float elapsedTime, int 
 // -----------------------------------------------------------------------------------------
 void Scene::render() {
 
-    std::cout << "PRIMITIVES: " << this->primitives.size() << std::endl;
-    std::cout << "LIGHTS: " << this->lights.size() << std::endl;
+    Message("PRIMITIVES: ", this->primitives.size());
+    Message("LIGHTS: ", this->lights.size());
 
+    Message("Constructing acceleration structure...");
     BVHNode bvh_node(this->primitives, 0, this->primitives.size(), 1, BVHNode::SplitMethod::SAH);
 
     struct timespec start_time, end_time;
@@ -500,6 +501,7 @@ void Scene::render() {
     std::cout << "[OpenMP] NUM_THREADS: " << n_threads << std::endl;
     #endif
 
+    Message("Start rendering...");
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
         Float sec = end_time.tv_sec - start_time.tv_sec;

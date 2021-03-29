@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "math_util.h"
+#include <array>
 
 namespace mypt {
 
