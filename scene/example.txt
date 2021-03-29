@@ -5,7 +5,7 @@ filename result/example.png
 width 640   
 height 320
 # The number of samples per pixel
-spp 1
+spp 256
 # The number of maximum depth to track rays
 depth 5
 # Background color
@@ -13,8 +13,8 @@ background 0.7 0.8 0.9
 
 # Camera settings
 beginCamera
-origin 30 10 -70
-lookat -2 0 0
+origin 20 10 -50
+lookat 2.5 0 0
 up 0 1 0
 focus_length 15.0
 aperture 0
