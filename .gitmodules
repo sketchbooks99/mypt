@@ -1,0 +1,6 @@
+[submodule "src/ext/stb"]
+	path = src/ext/stb
+	url = https://github.com/nothings/stb.git
+[submodule "src/ext/happly"]
+	path = src/ext/happly
+	url = https://github.com/nmwsharp/happly.git
