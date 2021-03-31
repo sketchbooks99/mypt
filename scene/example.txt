@@ -2,14 +2,14 @@
 
 filename result/example.png
 # Image resolution
-width 640   
-height 320
+width 1920
+height 1080
 # The number of samples per pixel
-spp 256
+spp 512
 # The number of maximum depth to track rays
 depth 5
 # Background color
-background 0.7 0.8 0.9
+background 1 1 1
 
 # Camera settings
 beginCamera
