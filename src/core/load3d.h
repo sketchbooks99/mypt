@@ -1,3 +1,5 @@
+#pragma once 
+
 #include "vec.h"
 #include "../ext/happly/happly.h"
 #include <algorithm>
