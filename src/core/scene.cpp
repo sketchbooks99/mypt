@@ -501,6 +501,11 @@ void Scene::render() {
     std::cout << "[OpenMP] NUM_THREADS: " << n_threads << std::endl;
     #endif
 
+    /**
+     * @todo
+     * Change a method of counting time from the current way to std::chrono.
+     */
+
     Message("Start rendering...");
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
