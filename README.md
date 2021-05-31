@@ -2,7 +2,8 @@
 
 ![current_thumbnail](result/example.png)
 
-- This is offline renderer for learning rendering algorithms, which include global illuminations, effective techniques (i.e., Next Event Estimation, Bounding Volume Hierarchy, etc...), several integrators (i.e., MLT, Bidirectional path tracing), several sampling strategies.
+- Simple path tracer implemented by C++/OpenMP. 
+- For future work, I'd like to implement several techniques for efficient rendering, such as, next event estimation, multiple importance sampling. I also plan to implement several rendering and/or sampling strategies (i.e., MLT, BDPT, Sobol, Uniform sampling).
 - If I finished basic learning of path tracing, I'd like to implement GPU path tracing techniques using OptiX or CUDA.
 - Currently, this doesn't support spectrum rendering, so all color management is performed by RGB representation.
 
