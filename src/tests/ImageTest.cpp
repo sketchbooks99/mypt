@@ -1,8 +1,11 @@
-#include "../core/Image.h"
+#include "../core/math_util.h"
 
-int main(int argc, const char* argv[]) {
-    std::string filename = "../../data/image/image.png";
-    Image<RGBA> img(filename);
-    img.write("./debug.png", "PNG");
+using namespace mypt;
+
+int main() {
+    for (int i=-5; i<=5; i++) {
+        auto val = (float)i + random_float();
+        Message("before:", val, "floored:", floorf(val));
+    }
     return 0;
 }
