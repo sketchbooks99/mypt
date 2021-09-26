@@ -11,9 +11,9 @@ public:
     : orig(origin), dir(direction), tm(time)
     {}
     
-    vec3 origin() const     { return orig; }
-    vec3 direction() const  { return dir; }
-    Float time() const     { return tm; }
+    const vec3& origin() const     { return orig; }
+    const vec3& direction() const  { return dir; }
+    const Float& time() const     { return tm; }
     
     vec3 at(Float t) const {
         return orig + t * dir;
