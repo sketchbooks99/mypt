@@ -168,15 +168,15 @@ int main() {
     std::cout << *hoge << std::endl;
 
     // Basic pointer
-    std::vector<Base*> bases(10);
+    std::vector<Base**> bases(10);
     for(size_t i=0; i<bases.size(); i++) {
-        bases[i] = (Base*)malloc(sizeof(Base*));
+        bases[i] = (Base**)malloc(sizeof(Base**));
         if (i%2 == 0)
-            construct((Hoge**)&bases[i], (char)i*2, i*2+1, "hoge"+std::to_string(i));
+            construct((Hoge**)bases[i], (char)i*2, i*2+1, "hoge"+std::to_string(i));
         else 
-            construct((Fuga**)&bases[i], (char)i*2, i*2+1, (float)(i*2+2), (double)(i*2+3), "fuga"+std::to_string(i));
+            construct((Fuga**)bases[i], (char)i*2, i*2+1, (float)(i*2+2), (double)(i*2+3), "fuga"+std::to_string(i));
     }
-    for(auto& b : bases) b->print_member();
+    for(auto& b : bases) (*b)->print_member();
 
     std::vector<FugaFuga> fugas(4);
     fugas[0].create2(1);

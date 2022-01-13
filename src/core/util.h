@@ -29,7 +29,20 @@ using Float = double;
 using Float = float;
 #endif
 
-// ----- Utility functions -----
+// ----- Utility functions ----
+template <typename T>
+inline void Message_once(T val) {
+    std::cout << val;
+}
+
+template <typename Head, typename... Args>
+inline void Message(Head head, Args... args) {
+    const size_t num_args = sizeof...(args);
+    Message_once(head);
+    if constexpr (num_args > 0)  Message(args...);
+    if constexpr (num_args == 0) std::cout << std::endl;
+}
+
 inline void Throw(const std::string& msg) {
     throw std::runtime_error(msg);
 }

@@ -2,6 +2,12 @@
 
 namespace mypt {
 
+/** 
+ * @todo 
+ * The different ways to clamp texture should be implemented, such as repeat/edge.
+ */
+
+
 // ----------------------------------------------------------------
 vec3 ImageTexture::value(const vec2& uv, const vec3& /* p */) const {
     // If data aren't allocated, then return solid magenta as a debugging aid
@@ -13,12 +19,6 @@ vec3 ImageTexture::value(const vec2& uv, const vec3& /* p */) const {
 
     int i = static_cast<int>(u * width);
     int j = static_cast<int>(v * height);
-
-    /** TODO: 
-     * The different ways to clamp texture should be implemented, such as repeat/edge.
-     */
-    if(i >= width) i = width-1;
-    if(j >= height) j = height-1;
 
     auto pixel = static_cast<vec3>(this->get(i, j));
     return pixel / 255.0f;

@@ -29,6 +29,7 @@ Scene::Scene(const std::string& filename) {
     depth = 5;
     samples_per_pixel = 1;
     bool is_comment = false;
+    background = vec3(0.f);
 
     while(!ifs.eof()) {
         std::string line;
@@ -57,6 +58,8 @@ Scene::Scene(const std::string& filename) {
             iss >> samples_per_pixel;
         else if(header == "depth")
             iss >> depth;
+        else if (header == "background")
+            iss >> background.x >> background.y >> background.z;
         else if(header == "beginCamera")
             createCamera(ifs, Float(image_width)/image_height);
         else if(header == "beginPrimitive")
@@ -170,22 +173,16 @@ void Scene::createShapes(std::istringstream& iss, std::vector<std::shared_ptr<Sh
         }
         else if(type == "mesh") {
             std::string filename;
-            vec3 axis = vec3(1,1,1);
-            float size = 1.f;
             bool isSmooth = false;
             iss >> header;
             while(!iss.eof()) {
                 if(header == "filename")
                     iss >> filename;
-                else if(header == "axis") 
-                    iss >> axis.x >> axis.y >> axis.z;
-                else if(header == "size")
-                    iss >> size;
                 else if(header == "smooth")
                     isSmooth = true;
                 iss >> header;
             }
-            for(auto &triangle : createTriangleMesh(filename, size, axis, isSmooth)) 
+            for(auto &triangle : createTriangleMesh(filename, isSmooth)) 
                 shapes.emplace_back(triangle);
         }
     }
@@ -210,12 +207,17 @@ auto Scene::createMaterial(std::istringstream& iss) {
                 }
                 else if(header == "checker") {
                     vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
-                    iss >> header;
-                    if(header == "color1") 
-                        iss >> color1.x >> color1.y >> color1.z;
-                    if(header == "color2") 
-                        iss >> color2.x >> color2.y >> color2.z;
-                    texture = std::make_shared<CheckerTexture>(color1, color2);
+                    Float scale = 5.0f;
+                    while (!iss.eof()) {
+                        iss >> header;
+                        if (header == "color1") 
+                            iss >> color1.x >> color1.y >> color1.z;
+                        if (header == "color2") 
+                            iss >> color2.x >> color2.y >> color2.z;
+                        if (header == "scale")
+                            iss >> scale;
+                    }
+                    texture = std::make_shared<CheckerTexture>(color1, color2, scale);
                 }
                 else if(header == "image") {
                     std::string filename;
@@ -374,12 +376,17 @@ void Scene::createLight(std::ifstream& ifs) {
         }
         else if(header == "checker") {
             vec3 color1 = vec3(0.3f), color2 = vec3(1.0f);
-            iss >> header;
-            if(header == "color1") 
-                iss >> color1.x >> color1.y >> color1.z;
-            if(header == "color2") 
-                iss >> color2.x >> color2.y >> color2.z;
-            texture = std::make_shared<CheckerTexture>(color1, color2);
+            Float scale = 5.0f;
+            while (!iss.eof()) {
+                iss >> header;
+                if (header == "color1") 
+                    iss >> color1.x >> color1.y >> color1.z;
+                if (header == "color2") 
+                    iss >> color2.x >> color2.y >> color2.z;
+                if (header == "scale")
+                    iss >> scale;
+            }
+            texture = std::make_shared<CheckerTexture>(color1, color2, scale);
         }
         else if(header == "image") {
             std::string filename;
@@ -475,9 +482,10 @@ void Scene::streamProgress(int currentLine, int maxLine, Float elapsedTime, int 
 // -----------------------------------------------------------------------------------------
 void Scene::render() {
 
-    std::cout << "PRIMITIVES: " << this->primitives.size() << std::endl;
-    std::cout << "LIGHTS: " << this->lights.size() << std::endl;
+    Message("PRIMITIVES: ", this->primitives.size());
+    Message("LIGHTS: ", this->lights.size());
 
+    Message("Constructing acceleration structure...");
     BVHNode bvh_node(this->primitives, 0, this->primitives.size(), 1, BVHNode::SplitMethod::SAH);
 
     struct timespec start_time, end_time;
@@ -493,6 +501,12 @@ void Scene::render() {
     std::cout << "[OpenMP] NUM_THREADS: " << n_threads << std::endl;
     #endif
 
+    /**
+     * @todo
+     * Change a method of counting time from the current way to std::chrono.
+     */
+
+    Message("Start rendering...");
     for(int y=0; y<height; y++) {
         clock_gettime(CLOCK_REALTIME, &end_time);
         Float sec = end_time.tv_sec - start_time.tv_sec;

@@ -4,6 +4,8 @@
 namespace mypt {
 
 /** 
+ * \todo Implemetation this.
+ * 
  * \ref: https://rayspace.xyz/CG/contents/Disney_principled_BRDF/
  * 
  * EQUATION:

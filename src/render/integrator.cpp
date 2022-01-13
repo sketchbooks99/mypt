@@ -3,8 +3,12 @@
 
 namespace mypt {
 
-/** TODO: 
- * Recursive tracing is not good at implementaion of next event estimation.
+/** 
+ * \todo 
+ * - Recursive tracing is not good at implementaion of next event estimation.
+ * 
+ * - Terminating ray tracing when ray intersect with an emitter will result in incorrect result
+ *   because the contribution from background color will be not reflected.
  */
 
 vec3 Integrator::trace(
@@ -26,12 +30,17 @@ vec3 Integrator::trace(
             * trace(si.scattered, bvh_node, lights, background, depth-1);
     } 
 
-    auto light_ptr = std::make_shared<LightPDF>(lights, si.p);
-    MixturePDF p(light_ptr, si.pdf_ptr);
-    si.scattered = Ray(si.p, p.generate(), r.time());
-    auto pdf = p.value(si.scattered.direction());
+    std::shared_ptr<PDF> pdf_ptr;
+    if (lights.size() > 0) {
+        auto light_ptr = std::make_shared<LightPDF>(lights, si.p);
+        pdf_ptr = std::make_shared<MixturePDF>(light_ptr, si.pdf_ptr);
+    } else {
+        pdf_ptr = std::make_shared<CosinePDF>(si.n);
+    }
+    si.scattered = Ray(si.p, pdf_ptr->generate(), r.time());
+    auto pdf = pdf_ptr->value(si.scattered.direction());
 
-    /// TODO: Launch shadow ray from diffuse surface to lights.
+    /// \todo NEE: Launch shadow ray from diffuse surface to lights.
 
     if(pdf > 0) {
         return emitted
@@ -42,7 +51,7 @@ vec3 Integrator::trace(
     }
 }
 
-/** TODO: This implementation still don't release correct result. */
+/** \todo This implementation still don't release correct result. */
 // vec3 Integrator::trace(
 //     Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
 // ) const {
