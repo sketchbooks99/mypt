@@ -15,7 +15,7 @@ public:
     const vec3& direction() const  { return dir; }
     const Float& time() const     { return tm; }
     
-    vec3 at(Float t) const {
+    vec3 at(const Float& t) const {
         return orig + t * dir;
     }
     

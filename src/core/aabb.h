@@ -6,34 +6,34 @@ namespace mypt {
 
 /** \brief Axis Aligned Bounding Box. */
 struct AABB {
-    AABB() : _min(vec3()), _max(vec3()) {}
-    AABB(const vec3& a, const vec3& b) : _min(a), _max(b) {}
+    AABB() : m_min(vec3()), m_max(vec3()) {}
+    AABB(const vec3& a, const vec3& b) : m_min(a), m_max(b) {}
 
-    vec3 min() const { return _min; }
-    vec3 max() const { return _max; }
+    vec3 min() const { return m_min; }
+    vec3 max() const { return m_max; }
 
     bool intersect(const Ray& r, Float t_min, Float t_max) const;
     
     Float surface_area() {
-        Float dx = _max.x - _min.x;
-        Float dy = _max.y - _min.y;
-        Float dz = _max.z - _min.z;
+        Float dx = m_max.x - m_min.x;
+        Float dy = m_max.y - m_min.y;
+        Float dz = m_max.z - m_min.z;
         return 2*(dx*dy + dy*dz + dz*dx);
     }
 
     std::string to_string() const {
         std::ostringstream oss;
         oss << "AABB : {" << std::endl;
-        oss << "\tMin : " << _min << "," << std::endl;
-        oss << "\tMax : " << _max << std::endl;
+        oss << "\tMin : " << m_min << "," << std::endl;
+        oss << "\tMax : " << m_max << std::endl;
         oss << "}";
         return oss.str();
     }
 private:
-    vec3 _min;
-    vec3 _max;
+    vec3 m_min;
+    vec3 m_max;
 };
 
-AABB surrounding(AABB box0, AABB box1);
+AABB surrounding(const AABB& box0, const AABB& box1);
 
 }
