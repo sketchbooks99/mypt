@@ -20,7 +20,7 @@ vec3 ImageTexture::value(const vec2& uv, const vec3& /* p */) const {
     int i = static_cast<int>(u * width);
     int j = static_cast<int>(v * height);
 
-    auto pixel = static_cast<vec3>(this->get(i, j));
+    auto pixel = this->get(i, j);
     return pixel / 255.0f;
 }
 

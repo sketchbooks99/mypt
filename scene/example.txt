@@ -5,7 +5,7 @@ filename result/example.png
 width 1920
 height 1080
 # The number of samples per pixel
-spp 512
+spp 1
 # The number of maximum depth to track rays
 depth 5
 # Background color

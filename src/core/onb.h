@@ -11,7 +11,7 @@ struct ONB {
         build_from_w(n);
     }
 
-    vec3 operator[](int i) const { return (&u)[i]; }
+    const vec3& operator[](int i) const { return (&u)[i]; }
 
     vec3 local(Float a, Float b, Float c) const {
         return a*u + b*v + c*w;

@@ -16,7 +16,7 @@ public:
     template <typename OtherType>
     operator type2<OtherType>() { return type2<OtherType>(x, y); }
 
-    Type operator[](int i) const { 
+    const Type& operator[](int i) const { 
         return (&x)[i];
     }
     Type& operator[](int i) {
@@ -107,7 +107,7 @@ public:
     operator type3<OtherType>() { return type3<OtherType>(x, y, z); }
     
     type3 operator-() const { return type3(-x, -y, -z); }
-    Type operator[](int i) const {
+    const Type& operator[](int i) const {
         return (&x)[i];
     }
     Type& operator[](int i) {
@@ -227,7 +227,7 @@ using int3 = type3<int>;
 using RGB = type3<unsigned char>;
 
 inline vec3 normalize(vec3 v) {
-    return v.length() != 0 ? v / v.length() : vec3();
+    return v / v.length();
 }
 
 inline vec3 random_unit_vector() {
@@ -297,7 +297,7 @@ public:
     operator type4<OtherType>() { return type4<OtherType>(x, y, z, w); }
     
     type4 operator-() const { return type4(-x, -y, -z); }
-    Type operator[](int i) const { 
+    const Type& operator[](int i) const { 
         return (&x)[i];
     }
     Type& operator[](int i) {

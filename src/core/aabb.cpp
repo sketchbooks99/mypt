@@ -9,12 +9,12 @@ bool AABB::intersect(const Ray& r, Float t_min, Float t_max) const {
     
     /// FASTCODE:
     vec3 v[6] = {
-        vec3(_min.x, r.origin().x, r.direction().x),
-        vec3(_max.x, r.origin().x, r.direction().x),
-        vec3(_min.y, r.origin().y, r.direction().y),
-        vec3(_max.y, r.origin().y, r.direction().y),
-        vec3(_min.z, r.origin().z, r.direction().z),
-        vec3(_max.z, r.origin().z, r.direction().z)
+        vec3(m_min.x, r.origin().x, r.direction().x),
+        vec3(m_max.x, r.origin().x, r.direction().x),
+        vec3(m_min.y, r.origin().y, r.direction().y),
+        vec3(m_max.y, r.origin().y, r.direction().y),
+        vec3(m_min.z, r.origin().z, r.direction().z),
+        vec3(m_max.z, r.origin().z, r.direction().z)
     };
 
     for(int a = 0; a < 3; a++) {
@@ -38,7 +38,7 @@ bool AABB::intersect(const Ray& r, Float t_min, Float t_max) const {
     return true;
 }
 
-AABB surrounding(AABB box0, AABB box1) {
+AABB surrounding(const AABB& box0, const AABB& box1) {
     vec3 small(ffmin(box0.min().x, box1.min().x),
                ffmin(box0.min().y, box1.min().y),
                ffmin(box0.min().z, box1.min().z));
