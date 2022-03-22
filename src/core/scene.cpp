@@ -106,7 +106,7 @@ Scene::Scene(const std::string& filename) {
             else Throw("Input value for scale was incorrect!\n");
         }
     }
-    integrator = Integrator();
+    integrator = std::make_unique<PathIntegrator>();
     image.second.allocate(image_width, image_height);
 }
 
@@ -525,7 +525,7 @@ void Scene::render() {
                 auto v = (y + random_float()) / height;
 
                 Ray r = camera.get_ray(u, v);
-                color += integrator.trace(r, bvh_node, lights, background, depth);
+                color += integrator->trace(r, bvh_node, lights, background, depth);
             }
             RGBA rgb_color = RGBA(vec2color(color, 1.0 / samples_per_pixel), 255);
             image.second.set(x, height-(y+1), rgb_color);

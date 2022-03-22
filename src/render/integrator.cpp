@@ -11,12 +11,14 @@ namespace mypt {
  *   because the contribution from background color will be not reflected.
  */
 
-vec3 Integrator::trace(
-    Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
-) const {
+vec3 PathIntegrator::trace(
+    const Ray& r, const BVHNode& bvh_node, 
+    const std::vector<std::shared_ptr<Primitive>>& lights, 
+    const vec3& background, int depth) const 
+{
     SurfaceInteraction si;
     if(depth <= 0)
-        return vec3(0.0, 0.0, 0.0);
+        return vec3(0.0f);
 
     if(!bvh_node.intersect(r, eps, infinity, si))
         return background;
@@ -89,9 +91,18 @@ vec3 Integrator::trace(
 //     return result;
 // }
 
-bool Integrator::trace_occlusion(Ray& r, const BVHNode& bvh_node, Float t_min, Float t_max) const {
+bool PathIntegrator::trace_shadow(const Ray& r, const BVHNode& bvh_node, Float tmin, Float tmax) const 
+{
     SurfaceInteraction si;
-    return bvh_node.intersect(r, t_min, t_max, si);
+    return bvh_node.intersect(r, tmin, tmax, si);
+}
+
+vec3 BiPathIntegrator::trace(
+    const Ray& r, const BVHNode& bvh_node, 
+    const std::vector<std::shared_ptr<Primitive>>& lights, 
+    const vec3& background, int depth) const 
+{
+
 }
 
 }

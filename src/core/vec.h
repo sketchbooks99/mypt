@@ -7,7 +7,7 @@ namespace mypt {
 
 // vec2 ------------------------------------------------------------------------------ 
 template <typename Type>
-class type2 {
+class alignas(sizeof(Type) * 2) type2 {
 public:
     type2() : x(0), y(0) {}
     type2(Type e0, Type e1) : x(e0), y(e1) {}
@@ -286,7 +286,7 @@ inline vec3 random_cosine_direction() {
 
 // vec4 ------------------------------------------------------------------------------ 
 template <typename Type>
-class type4 {
+class alignas(sizeof(Type) * 4) type4 {
 public:
     type4() : x(0), y(0), z(0), w(0) {}
     type4(Type e0, Type e1, Type e2, Type e3) : x(e0), y(e1), z(e2), w(e3) {}

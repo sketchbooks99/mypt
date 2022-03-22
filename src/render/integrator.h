@@ -20,17 +20,35 @@ class LightPDF;
 
 class Integrator {
 public:
-    enum class TraceType { PATH };
-    explicit Integrator() {}
-    explicit Integrator(TraceType type) : type(type) {}
-    vec3 trace(
-        Ray& r, const BVHNode& bvh_node, std::vector<std::shared_ptr<Primitive>>& lights, const vec3& background, int depth
-    ) const;
+    Integrator() = default;
+    virtual vec3 trace(
+        const Ray& r, const BVHNode& bvh_node, 
+        const std::vector<std::shared_ptr<Primitive>>& lights, 
+        const vec3& background, int depth
+    ) const = 0;
+};
 
-    /// \brief Check if surface is occluded by the other primitives.
-    bool trace_occlusion(Ray& r, const BVHNode& bvh_node, Float t_min, Float t_max) const;
-private:
-    TraceType type;
+class PathIntegrator : public Integrator {
+public:
+    PathIntegrator() {}
+    vec3 trace(
+        const Ray& r, const BVHNode& bvh_node, 
+        const std::vector<std::shared_ptr<Primitive>>& lights, 
+        const vec3& background, int depth
+    ) const override;
+
+    bool trace_shadow(const Ray& r, const BVHNode& bvh_node, Float tmin, Float tmax) const;
+};
+
+class BiPathIntegrator : public Integrator {
+public:
+    BiPathIntegrator() {}
+
+    vec3 trace(
+        const Ray& r, const BVHNode& bvh_node, 
+        const std::vector<std::shared_ptr<Primitive>>& lights, 
+        const vec3& background, int depth
+    ) const override;
 };
 
 }

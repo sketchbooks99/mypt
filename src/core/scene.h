@@ -28,7 +28,7 @@ private:
     std::vector<std::shared_ptr<Primitive>> primitives;
     std::vector<std::shared_ptr<Primitive>> lights;
     Camera camera;
-    Integrator integrator;
+    std::unique_ptr<Integrator> integrator;
     std::pair<std::string, Image<RGBA>> image;
     int samples_per_pixel, depth;
     vec3 background;
