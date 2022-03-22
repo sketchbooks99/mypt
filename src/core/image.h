@@ -2,6 +2,7 @@
 
 #include "math_util.h"
 #include "vec.h"
+#include <memory>
 
 namespace mypt {
 
@@ -12,17 +13,17 @@ namespace mypt {
 template <typename PixelType>
 class Image {
 public:
-    explicit Image() {}
+    explicit Image() = default;
     explicit Image(int width, int height);
     explicit Image(const std::string& filename);
-    ~Image() { if(data) delete[] data; }
-    void set(int x, int y, PixelType val)
+    ~Image() { if(data) data.reset(); }
+    void set(int x, int y, const PixelType& val)
     {
         assert(x < width && y < height);
         int idx = y * width + x;
         data[idx] = val;
     }
-    PixelType get(int x, int y) const 
+    const PixelType& get(int x, int y) const 
     {
         assert(x < width && y < height);
         int idx = y * width + x;
@@ -38,10 +39,10 @@ public:
     void load(const std::string& filename);
     void write(const std::string& filename, const std::string& format);
 
-    PixelType* getData() { return data; }
+    const PixelType* getData() { return data.get(); }
 protected:
     int nChannels;
-    PixelType* data;
+    std::unique_ptr<PixelType[]> data;
     int width, height;
 };
 

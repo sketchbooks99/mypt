@@ -11,15 +11,41 @@ class PDF;
 /** MEMO: 
  *  Should SurfaceInteraction store the derivatives on texture coordinates? */
 struct SurfaceInteraction {
+    // Surface point
     vec3 p;
+
+    // Surface normal
     vec3 n;
+
+    // Texture coordinate
     vec2 uv;
+
+    // Ray time
     Float t;
+
+    // Surface albedo
+    /// @todo : must be attenuation -> @c albedo
     vec3 attenuation;
+
+    // Partial derivative on texture coordinate.
+    vec3 dpdu;
+    vec3 dpdv;
+
+    // Scatterd ray information
+    /// @note It can be change from Ray to vec3 struct, 
+    ///       because the ray origin is defined as @c p
     Ray scattered;
+
+    // Flag to determine if the surface is specular or not
     bool is_specular;
+
+    // Flag to determine if the surface is front face or not
     bool front_face;
+
+    // Material pointer associated with the surface
     std::shared_ptr<Material> mat_ptr;
+
+    // PDF pointer associated with the material
     std::shared_ptr<PDF> pdf_ptr;
 
     inline void set_face_normal(const Ray& r, const vec3& outward_normal) {

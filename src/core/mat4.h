@@ -5,7 +5,6 @@
 namespace mypt {
 
 struct mat4 {
-public:
     explicit mat4();
     explicit mat4(Float m[4][4]);
     mat4(Float e00, Float e01, Float e02, Float e03,

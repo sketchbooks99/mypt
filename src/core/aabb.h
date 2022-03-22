@@ -9,8 +9,8 @@ struct AABB {
     AABB() : m_min(vec3()), m_max(vec3()) {}
     AABB(const vec3& a, const vec3& b) : m_min(a), m_max(b) {}
 
-    vec3 min() const { return m_min; }
-    vec3 max() const { return m_max; }
+    const vec3& min() const { return m_min; }
+    const vec3& max() const { return m_max; }
 
     bool intersect(const Ray& r, Float t_min, Float t_max) const;
     
