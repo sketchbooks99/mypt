@@ -3,6 +3,8 @@
 */*.log
 */gcc
 
+*/.DS_Store
+
 build/
 profile/
 .vscode/
